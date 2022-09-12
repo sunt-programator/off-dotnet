@@ -1,4 +1,3 @@
-using Newtonsoft.Json.Linq;
 using System;
 using Off.Net.Pdf.Core.Primitives;
 using Xunit;
@@ -150,28 +149,12 @@ public class PdfBooleanTests
     [Theory(DisplayName = "Check if comparison operators works properly")]
     [InlineData(false, false, "==", true)]
     [InlineData(false, false, "!=", false)]
-    [InlineData(false, false, "<", false)]
-    [InlineData(false, false, "<=", true)]
-    [InlineData(false, false, ">", false)]
-    [InlineData(false, false, ">=", true)]
     [InlineData(false, true, "==", false)]
     [InlineData(false, true, "!=", true)]
-    [InlineData(false, true, "<", true)]
-    [InlineData(false, true, "<=", true)]
-    [InlineData(false, true, ">", false)]
-    [InlineData(false, true, ">=", false)]
     [InlineData(true, false, "==", false)]
     [InlineData(true, false, "!=", true)]
-    [InlineData(true, false, "<", false)]
-    [InlineData(true, false, "<=", false)]
-    [InlineData(true, false, ">", true)]
-    [InlineData(true, false, ">=", true)]
     [InlineData(true, true, "==", true)]
     [InlineData(true, true, "!=", false)]
-    [InlineData(true, true, "<", false)]
-    [InlineData(true, true, "<=", true)]
-    [InlineData(true, true, ">", false)]
-    [InlineData(true, true, ">=", true)]
     public void PdfBoolean_Operators_CheckValidity(bool value1, bool value2, string op, bool expectedResult)
     {
         // Arrange
@@ -183,10 +166,6 @@ public class PdfBooleanTests
         {
             "==" => pdfBoolean1 == pdfBoolean2,
             "!=" => pdfBoolean1 != pdfBoolean2,
-            "<" => pdfBoolean1 < pdfBoolean2,
-            "<=" => pdfBoolean1 <= pdfBoolean2,
-            ">" => pdfBoolean1 > pdfBoolean2,
-            ">=" => pdfBoolean1 >= pdfBoolean2,
             _ => throw new ArgumentException("Invalid operation", nameof(op)),
         };
 
@@ -240,5 +219,20 @@ public class PdfBooleanTests
 
         // Assert
         Assert.Throws<ArgumentException>(actualValueDelegate);
+    }
+
+    [Theory(DisplayName = "Check ToString method for equality")]
+    [InlineData(false, "false")]
+    [InlineData(true, "true")]
+    public void PdfBoolean_ToString_CheckEquality(bool value1, string expectedPdfBooleanStringValue)
+    {
+        // Arrange
+        PdfBoolean pdfBoolean1 = value1; // Use an implicit conversion from bool to PdfBoolean
+
+        // Act
+        string actualPdfBooleanStringValue = pdfBoolean1.ToString();
+
+        // Assert
+        Assert.Equal(expectedPdfBooleanStringValue, actualPdfBooleanStringValue);
     }
 }

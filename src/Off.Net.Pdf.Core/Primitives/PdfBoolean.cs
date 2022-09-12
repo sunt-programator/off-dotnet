@@ -6,17 +6,15 @@ using Off.Net.Pdf.Core.Interfaces;
 /// <summary>
 /// Represents a PDF Boolean object.
 /// </summary>
-/// <seealso cref="IPdfObject{bool}" />
+/// <seealso cref="IPdfObject{T}" />
+[System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S1210:\"Equals\" and the comparison operators should be overridden when implementing \"IComparable\"", Justification = "Other operators, except == and !=, are not required.")]
 public struct PdfBoolean : IPdfObject<bool>, IEquatable<PdfBoolean>, IComparable, IComparable<PdfBoolean>
 {
-    private const string FalseLiteral = "false";
-    private const string TrueLiteral = "true";
-    private static readonly byte[] FalseBytes = Encoding.ASCII.GetBytes(FalseLiteral);
-    private static readonly byte[] TrueBytes = Encoding.ASCII.GetBytes(TrueLiteral);
-    private static readonly int primitiveHashCodePrefix = nameof(PdfBoolean).GetHashCode();
+    private readonly string stringValue;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PdfBoolean"/> struct.
+    /// The value will be set to <see langword="false"/>.
     /// </summary>
     public PdfBoolean() : this(false)
     {
@@ -29,22 +27,24 @@ public struct PdfBoolean : IPdfObject<bool>, IEquatable<PdfBoolean>, IComparable
     public PdfBoolean(bool value)
     {
         Value = value;
+        stringValue = value ? "true" : "false";
+        Bytes = Encoding.ASCII.GetBytes(stringValue);
     }
 
     /// <inheritdoc/>
-    public int Length => ToString().Length;
+    public int Length => stringValue.Length;
 
     /// <inheritdoc/>
     public bool Value { get; }
 
     /// <inheritdoc/>
-    public byte[] Bytes => Value ? TrueBytes : FalseBytes;
+    public byte[] Bytes { get; }
 
     /// <inheritdoc/>
-    public override int GetHashCode() => HashCode.Combine(primitiveHashCodePrefix, Value.GetHashCode());
+    public override int GetHashCode() => HashCode.Combine(nameof(PdfBoolean).GetHashCode(), Value.GetHashCode());
 
     /// <inheritdoc/>
-    public override string ToString() => Value ? TrueLiteral : FalseLiteral;
+    public override string ToString() => stringValue;
 
     #region Operators
     /// <summary>
@@ -62,38 +62,6 @@ public struct PdfBoolean : IPdfObject<bool>, IEquatable<PdfBoolean>, IComparable
     /// <param name="rightOperator">The right operator.</param>
     /// <returns>The result of the operator.</returns>
     public static bool operator !=(PdfBoolean leftOperator, PdfBoolean rightOperator) => leftOperator.CompareTo(rightOperator) != 0;
-
-    /// <summary>
-    /// Implements the operator ==.
-    /// </summary>
-    /// <param name="leftOperator">The left operator.</param>
-    /// <param name="rightOperator">The right operator.</param>
-    /// <returns>The result of the operator.</returns>
-    public static bool operator <(PdfBoolean leftOperator, PdfBoolean rightOperator) => leftOperator.CompareTo(rightOperator) < 0;
-
-    /// <summary>
-    /// Implements the operator ==.
-    /// </summary>
-    /// <param name="leftOperator">The left operator.</param>
-    /// <param name="rightOperator">The right operator.</param>
-    /// <returns>The result of the operator.</returns>
-    public static bool operator <=(PdfBoolean leftOperator, PdfBoolean rightOperator) => leftOperator.CompareTo(rightOperator) <= 0;
-
-    /// <summary>
-    /// Implements the operator ==.
-    /// </summary>
-    /// <param name="leftOperator">The left operator.</param>
-    /// <param name="rightOperator">The right operator.</param>
-    /// <returns>The result of the operator.</returns>
-    public static bool operator >(PdfBoolean leftOperator, PdfBoolean rightOperator) => leftOperator.CompareTo(rightOperator) > 0;
-
-    /// <summary>
-    /// Implements the operator ==.
-    /// </summary>
-    /// <param name="leftOperator">The left operator.</param>
-    /// <param name="rightOperator">The right operator.</param>
-    /// <returns>The result of the operator.</returns>
-    public static bool operator >=(PdfBoolean leftOperator, PdfBoolean rightOperator) => leftOperator.CompareTo(rightOperator) >= 0;
 
     /// <summary>
     /// Performs an implicit conversion from <see cref="PdfBoolean"/> to <see cref="bool"/>.
