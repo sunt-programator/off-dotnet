@@ -61,7 +61,7 @@ namespace Off.Net.Pdf.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Object must be a PDF Boolean type..
+        ///   Looks up a localized string similar to Object must be a PDF Boolean type.
         /// </summary>
         internal static string Arg_MustBePdfBoolean {
             get {
@@ -70,11 +70,20 @@ namespace Off.Net.Pdf.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Object must be a PDF Integer type..
+        ///   Looks up a localized string similar to Object must be a PDF Integer type.
         /// </summary>
         internal static string Arg_MustBePdfInteger {
             get {
                 return ResourceManager.GetString("Arg_MustBePdfInteger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Object must be a PDF Real type.
+        /// </summary>
+        internal static string Arg_MustBePdfReal {
+            get {
+                return ResourceManager.GetString("Arg_MustBePdfReal", resourceCulture);
             }
         }
     }
