@@ -1,2 +1,2 @@
-Powershell.exe -executionpolicy unrestricted -File code-coverage.ps1
+Powershell.exe -executionpolicy unrestricted -File %~dp0\code-coverage.ps1
 pause
