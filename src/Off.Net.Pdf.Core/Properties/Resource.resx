@@ -118,9 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Arg_MustBePdfBoolean" xml:space="preserve">
-    <value>Object must be a PDF Boolean type.</value>
+    <value>Object must be a PDF Boolean type</value>
   </data>
   <data name="Arg_MustBePdfInteger" xml:space="preserve">
-    <value>Object must be a PDF Integer type.</value>
+    <value>Object must be a PDF Integer type</value>
+  </data>
+  <data name="Arg_MustBePdfReal" xml:space="preserve">
+    <value>Object must be a PDF Real type</value>
   </data>
 </root>
