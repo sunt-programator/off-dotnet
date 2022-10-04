@@ -63,17 +63,17 @@ public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, ICo
 
     public override bool Equals(object? obj)
     {
-        return (obj is PdfReal integerObject) && Equals(integerObject);
+        return (obj is PdfReal pdfReal) && Equals(pdfReal);
     }
 
     public int CompareTo(object? obj)
     {
-        if (obj is not PdfReal pdfInteger)
+        if (obj is not PdfReal pdfReal)
         {
             throw new ArgumentException(Resource.Arg_MustBePdfReal);
         }
 
-        return CompareTo(pdfInteger);
+        return CompareTo(pdfReal);
     }
 
     public int CompareTo(PdfReal other)
@@ -118,9 +118,9 @@ public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, ICo
         return leftOperator.CompareTo(rightOperator) >= 0;
     }
 
-    public static implicit operator float(PdfReal pdfInteger)
+    public static implicit operator float(PdfReal pdfReal)
     {
-        return pdfInteger.Value;
+        return pdfReal.Value;
     }
 
     public static implicit operator PdfReal(float value)
