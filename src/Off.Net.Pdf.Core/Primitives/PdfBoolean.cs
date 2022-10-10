@@ -3,8 +3,7 @@ namespace Off.Net.Pdf.Core.Primitives;
 using System.Text;
 using Off.Net.Pdf.Core.Interfaces;
 
-[System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S1210:\"Equals\" and the comparison operators should be overridden when implementing \"IComparable\"", Justification = "Other operators, except == and !=, are not required.")]
-public struct PdfBoolean : IPdfObject<bool>, IEquatable<PdfBoolean>, IComparable, IComparable<PdfBoolean>
+public struct PdfBoolean : IPdfObject<bool>, IEquatable<PdfBoolean>
 {
     #region Fields
     private readonly string stringValue;
@@ -51,37 +50,17 @@ public struct PdfBoolean : IPdfObject<bool>, IEquatable<PdfBoolean>, IComparable
     {
         return (obj is PdfBoolean booleanObject) && Equals(booleanObject);
     }
-
-    public int CompareTo(PdfBoolean other)
-    {
-        if (Value == other.Value)
-        {
-            return 0;
-        }
-
-        return Value ? 1 : -1;
-    }
-
-    public int CompareTo(object? obj)
-    {
-        if (obj is not PdfBoolean pdfBoolean)
-        {
-            throw new ArgumentException(Resource.Arg_MustBePdfBoolean);
-        }
-
-        return CompareTo(pdfBoolean);
-    }
     #endregion
 
     #region Operators
     public static bool operator ==(PdfBoolean leftOperator, PdfBoolean rightOperator)
     {
-        return leftOperator.CompareTo(rightOperator) == 0;
+        return leftOperator.Equals(rightOperator);
     }
 
     public static bool operator !=(PdfBoolean leftOperator, PdfBoolean rightOperator)
     {
-        return leftOperator.CompareTo(rightOperator) != 0;
+        return !leftOperator.Equals(rightOperator);
     }
 
     public static implicit operator bool(PdfBoolean pdfBoolean)

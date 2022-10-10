@@ -18,7 +18,7 @@ public class PdfBooleanTests
         Assert.False(pdfBoolean1.Value);
     }
 
-    [Theory(DisplayName = "Create a instance using parametrized constructor and check the Value property")]
+    [Theory(DisplayName = "Create an instance using parametrized constructor and check the Value property")]
     [InlineData(true)]
     [InlineData(false)]
     public void PdfBoolean_ParameterizedContructor_CheckValue(bool value)
@@ -187,38 +187,6 @@ public class PdfBooleanTests
 
         // Assert
         Assert.Equal(expectedValue, actualValue);
-    }
-
-    [Theory(DisplayName = "Check CompareTo method")]
-    [InlineData(false, false, 0)]
-    [InlineData(false, true, -1)]
-    [InlineData(true, false, 1)]
-    [InlineData(true, true, 0)]
-    public void PdfBoolean_CompareTo_CheckValidity(bool value1, bool value2, int expectedValue)
-    {
-        // Arrange
-        var pdfBoolean1 = new PdfBoolean(value1);
-        object pdfBoolean2 = new PdfBoolean(value2);
-
-        // Act
-        int actualValue = pdfBoolean1.CompareTo(pdfBoolean2);
-
-        // Assert
-        Assert.Equal(expectedValue, actualValue);
-    }
-
-    [Fact(DisplayName = "Check CompareTo method should throw an exception")]
-    public void PdfBoolean_CompareTo_ThrowsException()
-    {
-        // Arrange
-        var pdfBoolean1 = new PdfBoolean();
-        object pdfBoolean2 = 5;
-
-        // Act
-        Action actualValueDelegate = () => pdfBoolean1.CompareTo(pdfBoolean2);
-
-        // Assert
-        Assert.Throws<ArgumentException>(actualValueDelegate);
     }
 
     [Theory(DisplayName = "Check ToString method for equality")]

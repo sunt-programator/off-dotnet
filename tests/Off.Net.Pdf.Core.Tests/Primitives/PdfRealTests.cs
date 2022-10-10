@@ -18,7 +18,7 @@ public class PdfRealTests
         Assert.Equal(0, pdfReal1.Value);
     }
 
-    [Theory(DisplayName = "Create a instance using parametrized constructor and check the Value property")]
+    [Theory(DisplayName = "Create an instance using parametrized constructor and check the Value property")]
     [InlineData(34.5)]
     [InlineData(-3.62)]
     [InlineData(+123.6)] // Plus sign is automatically removed by C#.
@@ -124,7 +124,7 @@ public class PdfRealTests
         Assert.Equal(expectedHashCode, actualHashCode);
     }
 
-    [Theory(DisplayName = "Compare the hash codes of two integer objects.")]
+    [Theory(DisplayName = "Compare the hash codes of two real objects.")]
     [InlineData(34.5, 34.5, true)]
     [InlineData(0.0, -0.000, true)]
     [InlineData(-3.62, 3.62, false)]

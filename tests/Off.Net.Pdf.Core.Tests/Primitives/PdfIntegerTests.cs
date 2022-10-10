@@ -18,7 +18,7 @@ public class PdfIntegerTests
         Assert.Equal(0, pdfInteger1.Value);
     }
 
-    [Theory(DisplayName = "Create a instance using parametrized constructor and check the Value property")]
+    [Theory(DisplayName = "Create an instance using parametrized constructor and check the Value property")]
     [InlineData(123)]
     [InlineData(43445)]
     [InlineData(+17)]
