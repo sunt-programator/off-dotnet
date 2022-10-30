@@ -61,29 +61,56 @@ namespace Off.Net.Pdf.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Object must be a PDF Boolean type.
+        ///   Looks up a localized string similar to The object must be a PDF Integer type.
         /// </summary>
-        internal static string Arg_MustBePdfBoolean {
+        internal static string PdfInteger_MustBePdfInteger {
             get {
-                return ResourceManager.GetString("Arg_MustBePdfBoolean", resourceCulture);
+                return ResourceManager.GetString("PdfInteger_MustBePdfInteger", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Object must be a PDF Integer type.
+        ///   Looks up a localized string similar to The object must be a PDF Real type.
         /// </summary>
-        internal static string Arg_MustBePdfInteger {
+        internal static string PdfReal_MustBePdfReal {
             get {
-                return ResourceManager.GetString("Arg_MustBePdfInteger", resourceCulture);
+                return ResourceManager.GetString("PdfReal_MustBePdfReal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Object must be a PDF Real type.
+        ///   Looks up a localized string similar to The PDF string type must have balanced parentheses.
         /// </summary>
-        internal static string Arg_MustBePdfReal {
+        internal static string PdfString_MustHaveBalancedParentheses {
             get {
-                return ResourceManager.GetString("Arg_MustBePdfReal", resourceCulture);
+                return ResourceManager.GetString("PdfString_MustHaveBalancedParentheses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The object must be a PDF String type with a valid Hex value.
+        /// </summary>
+        internal static string PdfString_MustHaveValidHexValue {
+            get {
+                return ResourceManager.GetString("PdfString_MustHaveValidHexValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The PDF string type must have valid solidus characters.
+        /// </summary>
+        internal static string PdfString_MustHaveValidSolidusChars {
+            get {
+                return ResourceManager.GetString("PdfString_MustHaveValidSolidusChars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The PDF string type with Hex representation should have a value provided.
+        /// </summary>
+        internal static string PdfString_MustNotBeEmpty {
+            get {
+                return ResourceManager.GetString("PdfString_MustNotBeEmpty", resourceCulture);
             }
         }
     }
