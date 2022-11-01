@@ -70,7 +70,7 @@ public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, ICo
     {
         if (obj is not PdfReal pdfReal)
         {
-            throw new ArgumentException(Resource.Arg_MustBePdfReal);
+            throw new ArgumentException(Resource.PdfReal_MustBePdfReal);
         }
 
         return CompareTo(pdfReal);

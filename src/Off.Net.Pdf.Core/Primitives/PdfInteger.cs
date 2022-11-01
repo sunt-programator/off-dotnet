@@ -63,7 +63,7 @@ public struct PdfInteger : IPdfObject<int>, IEquatable<PdfInteger>, IComparable,
     {
         if (obj is not PdfInteger pdfInteger)
         {
-            throw new ArgumentException(Resource.Arg_MustBePdfInteger);
+            throw new ArgumentException(Resource.PdfInteger_MustBePdfInteger);
         }
 
         return CompareTo(pdfInteger);
