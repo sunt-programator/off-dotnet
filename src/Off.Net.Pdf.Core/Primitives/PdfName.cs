@@ -26,6 +26,11 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
     #region Constructors
     public PdfName(string value)
     {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentNullException(nameof(value), Resource.PdfName_CannotBeNullOrWhitespace);
+        }
+
         Value = value;
         hashCode = HashCode.Combine(nameof(PdfName).GetHashCode(), value.GetHashCode());
         bytes = null;
@@ -33,32 +38,16 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
     #endregion
 
     #region Properties
-    public int Length => ToString().Length;
+    public int Length => Content.Length;
 
     public string Value { get; }
 
-    public byte[] Bytes => bytes ??= Encoding.ASCII.GetBytes(ToString());
+    public byte[] Bytes => bytes ??= Encoding.ASCII.GetBytes(Content);
+
+    public string Content => GenerateContent();
     #endregion
 
     #region Public Methods
-    public override string ToString()
-    {
-        if (literalValue.Length != 0)
-        {
-            return literalValue;
-        }
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        foreach (char ch in Value)
-        {
-            stringBuilder.Append(ConvertCharToString(ch));
-        }
-
-        literalValue = stringBuilder.ToString();
-        return literalValue;
-    }
-
     public override int GetHashCode()
     {
         return hashCode;
@@ -104,6 +93,27 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
     #endregion
 
     #region Private Methods
+    private string GenerateContent()
+    {
+        if (literalValue.Length != 0)
+        {
+            return literalValue;
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        foreach (char ch in Value)
+        {
+            stringBuilder.Append(ConvertCharToString(ch));
+        }
+
+        literalValue = stringBuilder
+            .Insert(0, '/')
+            .ToString();
+
+        return literalValue;
+    }
+
     private static string ConvertCharToString(char ch)
     {
         return ch switch

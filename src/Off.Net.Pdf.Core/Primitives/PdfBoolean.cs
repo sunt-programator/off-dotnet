@@ -1,14 +1,10 @@
-namespace Off.Net.Pdf.Core.Primitives;
-
 using System.Text;
 using Off.Net.Pdf.Core.Interfaces;
 
+namespace Off.Net.Pdf.Core.Primitives;
+
 public struct PdfBoolean : IPdfObject<bool>, IEquatable<PdfBoolean>
 {
-    #region Fields
-    private readonly string stringValue;
-    #endregion
-
     #region Constructors
     public PdfBoolean() : this(false)
     {
@@ -17,28 +13,25 @@ public struct PdfBoolean : IPdfObject<bool>, IEquatable<PdfBoolean>
     public PdfBoolean(bool value)
     {
         Value = value;
-        stringValue = value ? "true" : "false";
-        Bytes = Encoding.ASCII.GetBytes(stringValue);
+        Content = value ? "true" : "false";
+        Bytes = Encoding.ASCII.GetBytes(Content);
     }
     #endregion
 
     #region Properties
-    public int Length => stringValue.Length;
+    public int Length => Content.Length;
 
     public bool Value { get; }
 
     public byte[] Bytes { get; }
+
+    public string Content { get; }
     #endregion
 
     #region Public Methods
     public override int GetHashCode()
     {
         return HashCode.Combine(nameof(PdfBoolean).GetHashCode(), Value.GetHashCode());
-    }
-
-    public override string ToString()
-    {
-        return stringValue;
     }
 
     public bool Equals(PdfBoolean other)

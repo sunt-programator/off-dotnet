@@ -90,15 +90,15 @@ public class PdfNullTests
         Assert.True(areHashCodeEquals);
     }
 
-    [Fact(DisplayName = "Check ToString method for equality")]
-    public void PdfNull_ToString_CheckEquality()
+    [Fact(DisplayName = "Check Content property for equality")]
+    public void PdfNull_Content_CheckEquality()
     {
         // Arrange
         PdfNull pdfNull1 = new PdfNull();
         const string expectedStringValue = "null";
 
         // Act
-        string actualPdfNullStringValue = pdfNull1.ToString();
+        string actualPdfNullStringValue = pdfNull1.Content;
 
         // Assert
         Assert.Equal(expectedStringValue, actualPdfNullStringValue);

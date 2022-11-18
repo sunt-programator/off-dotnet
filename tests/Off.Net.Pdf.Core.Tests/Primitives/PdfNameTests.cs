@@ -29,18 +29,33 @@ public class PdfNameTests
         Assert.Equal(expectedValue, pdfName.Value);
     }
 
+    [Theory(DisplayName = "Constructor should throw and exception when the value is null or contain whitespaces")]
+    [InlineData("")]
+    [InlineData(" ")]
+    [InlineData(null)]
+    public void PdfName_ParameterizedContructor_NullOrWhitespace_ShouldThrowArgumentNullException(string inputValue)
+    {
+        // Arrange
+
+        // Act
+        Action pdfNameDelegate = () => new PdfName(inputValue);
+
+        // Assert
+        Assert.Throws<ArgumentNullException>(pdfNameDelegate);
+    }
+
     [Theory(DisplayName = "Check the length of the PDF name primitive")]
-    [InlineData("Name1", 5)]
-    [InlineData("ASomewhatLongerName", 19)]
-    [InlineData("A;Name_With-Various***Characters?", 33)]
-    [InlineData("1.2", 3)]
-    [InlineData("$$", 2)]
-    [InlineData("@pattern", 8)]
-    [InlineData(".notdef", 7)]
-    [InlineData("Lime Green", 12)]
-    [InlineData("paired()parentheses", 23)]
-    [InlineData("The_Key_of_F#_Minor", 21)]
-    [InlineData("/NameWithSolidus", 18)]
+    [InlineData("Name1", 6)] // Solidus character + Name1
+    [InlineData("ASomewhatLongerName", 20)]
+    [InlineData("A;Name_With-Various***Characters?", 34)]
+    [InlineData("1.2", 4)]
+    [InlineData("$$", 3)]
+    [InlineData("@pattern", 9)]
+    [InlineData(".notdef", 8)]
+    [InlineData("Lime Green", 13)]
+    [InlineData("paired()parentheses", 24)]
+    [InlineData("The_Key_of_F#_Minor", 22)]
+    [InlineData("/NameWithSolidus", 19)]
     public void PdfName_Length_CheckValue(string value, int expectedLength)
     {
         // Arrange
@@ -97,17 +112,17 @@ public class PdfNameTests
     }
 
     [Theory(DisplayName = "Check if Bytes property returns valid data")]
-    [InlineData("Name1", new byte[] { 78, 97, 109, 101, 49 })]
-    [InlineData("ASomewhatLongerName", new byte[] { 65, 83, 111, 109, 101, 119, 104, 97, 116, 76, 111, 110, 103, 101, 114, 78, 97, 109, 101 })]
-    [InlineData("A;Name_With-Various***Characters?", new byte[] { 65, 59, 78, 97, 109, 101, 95, 87, 105, 116, 104, 45, 86, 97, 114, 105, 111, 117, 115, 42, 42, 42, 67, 104, 97, 114, 97, 99, 116, 101, 114, 115, 63 })]
-    [InlineData("1.2", new byte[] { 49, 46, 50 })]
-    [InlineData("$$", new byte[] { 36, 36 })]
-    [InlineData("@pattern", new byte[] { 64, 112, 97, 116, 116, 101, 114, 110 })]
-    [InlineData(".notdef", new byte[] { 46, 110, 111, 116, 100, 101, 102 })]
-    [InlineData("Lime Green", new byte[] { 76, 105, 109, 101, 35, 50, 48, 71, 114, 101, 101, 110 })]
-    [InlineData("paired()parentheses", new byte[] { 112, 97, 105, 114, 101, 100, 35, 50, 56, 35, 50, 57, 112, 97, 114, 101, 110, 116, 104, 101, 115, 101, 115 })]
-    [InlineData("The_Key_of_F#_Minor", new byte[] { 84, 104, 101, 95, 75, 101, 121, 95, 111, 102, 95, 70, 35, 50, 51, 95, 77, 105, 110, 111, 114 })]
-    [InlineData("/NameWithSolidus", new byte[] { 35, 50, 70, 78, 97, 109, 101, 87, 105, 116, 104, 83, 111, 108, 105, 100, 117, 115 })]
+    [InlineData("Name1", new byte[] { 47, 78, 97, 109, 101, 49 })]
+    [InlineData("ASomewhatLongerName", new byte[] { 47, 65, 83, 111, 109, 101, 119, 104, 97, 116, 76, 111, 110, 103, 101, 114, 78, 97, 109, 101 })]
+    [InlineData("A;Name_With-Various***Characters?", new byte[] { 47, 65, 59, 78, 97, 109, 101, 95, 87, 105, 116, 104, 45, 86, 97, 114, 105, 111, 117, 115, 42, 42, 42, 67, 104, 97, 114, 97, 99, 116, 101, 114, 115, 63 })]
+    [InlineData("1.2", new byte[] { 47, 49, 46, 50 })]
+    [InlineData("$$", new byte[] { 47, 36, 36 })]
+    [InlineData("@pattern", new byte[] { 47, 64, 112, 97, 116, 116, 101, 114, 110 })]
+    [InlineData(".notdef", new byte[] { 47, 46, 110, 111, 116, 100, 101, 102 })]
+    [InlineData("Lime Green", new byte[] { 47, 76, 105, 109, 101, 35, 50, 48, 71, 114, 101, 101, 110 })]
+    [InlineData("paired()parentheses", new byte[] { 47, 112, 97, 105, 114, 101, 100, 35, 50, 56, 35, 50, 57, 112, 97, 114, 101, 110, 116, 104, 101, 115, 101, 115 })]
+    [InlineData("The_Key_of_F#_Minor", new byte[] { 47, 84, 104, 101, 95, 75, 101, 121, 95, 111, 102, 95, 70, 35, 50, 51, 95, 77, 105, 110, 111, 114 })]
+    [InlineData("/NameWithSolidus", new byte[] { 47, 35, 50, 70, 78, 97, 109, 101, 87, 105, 116, 104, 83, 111, 108, 105, 100, 117, 115 })]
     public void PdfName_Bytes_CheckValidity(string value1, byte[] expectedBytes)
     {
         // Arrange
@@ -223,47 +238,47 @@ public class PdfNameTests
         Assert.Equal(expectedValue, actualValue);
     }
 
-    [Theory(DisplayName = "Check ToString method for equality")]
-    [InlineData("Name1", "Name1")]
-    [InlineData("ASomewhatLongerName", "ASomewhatLongerName")]
-    [InlineData("A;Name_With-Various***Characters?", "A;Name_With-Various***Characters?")]
-    [InlineData("1.2", "1.2")]
-    [InlineData("$$", "$$")]
-    [InlineData("@pattern", "@pattern")]
-    [InlineData(".notdef", ".notdef")]
-    [InlineData("Lime Green", "Lime#20Green")]
-    [InlineData("paired()parentheses", "paired#28#29parentheses")]
-    [InlineData("The_Key_of_F#_Minor", "The_Key_of_F#23_Minor")]
-    [InlineData("/NameWithSolidus", "#2FNameWithSolidus")]
-    [InlineData("NameWith%Percent", "NameWith#25Percent")]
-    [InlineData("NameWith>GreaterThanChar", "NameWith#3EGreaterThanChar")]
-    [InlineData("NameWith<LessThanChar", "NameWith#3CLessThanChar")]
-    [InlineData("NameWith[LeftSquareBracket", "NameWith#5BLeftSquareBracket")]
-    [InlineData("NameWith]RightSquareBracket", "NameWith#5DRightSquareBracket")]
-    [InlineData("NameWith{LeftCurlyBracket", "NameWith#7BLeftCurlyBracket")]
-    [InlineData("NameWith}RightCurlyBracket", "NameWith#7DRightCurlyBracket")]
-    [InlineData("NameWith\x007FDeleteChar", "NameWith#7FDeleteChar")]
-    public void PdfName_ToString_CheckEquality(string value1, string expectedPdfNameStringValue)
+    [Theory(DisplayName = "Check Content property for equality")]
+    [InlineData("Name1", "/Name1")]
+    [InlineData("ASomewhatLongerName", "/ASomewhatLongerName")]
+    [InlineData("A;Name_With-Various***Characters?", "/A;Name_With-Various***Characters?")]
+    [InlineData("1.2", "/1.2")]
+    [InlineData("$$", "/$$")]
+    [InlineData("@pattern", "/@pattern")]
+    [InlineData(".notdef", "/.notdef")]
+    [InlineData("Lime Green", "/Lime#20Green")]
+    [InlineData("paired()parentheses", "/paired#28#29parentheses")]
+    [InlineData("The_Key_of_F#_Minor", "/The_Key_of_F#23_Minor")]
+    [InlineData("/NameWithSolidus", "/#2FNameWithSolidus")]
+    [InlineData("NameWith%Percent", "/NameWith#25Percent")]
+    [InlineData("NameWith>GreaterThanChar", "/NameWith#3EGreaterThanChar")]
+    [InlineData("NameWith<LessThanChar", "/NameWith#3CLessThanChar")]
+    [InlineData("NameWith[LeftSquareBracket", "/NameWith#5BLeftSquareBracket")]
+    [InlineData("NameWith]RightSquareBracket", "/NameWith#5DRightSquareBracket")]
+    [InlineData("NameWith{LeftCurlyBracket", "/NameWith#7BLeftCurlyBracket")]
+    [InlineData("NameWith}RightCurlyBracket", "/NameWith#7DRightCurlyBracket")]
+    [InlineData("NameWith\x007FDeleteChar", "/NameWith#7FDeleteChar")]
+    public void PdfName_Content_CheckEquality(string value1, string expectedPdfNameStringValue)
     {
         // Arrange
         PdfName pdfName1 = value1; // Use an implicit conversion from string to PdfName
 
         // Act
-        string actualPdfNameStringValue = pdfName1.ToString();
+        string actualPdfNameStringValue = pdfName1.Content;
 
         // Assert
         Assert.Equal(expectedPdfNameStringValue, actualPdfNameStringValue);
     }
 
-    [Fact(DisplayName = "Check ToString method for multiple accessing")]
-    public void PdfName_ToString_CheckMultipleAccessing()
+    [Fact(DisplayName = "Check Content property for multiple accessing")]
+    public void PdfName_Content_CheckMultipleAccessing()
     {
         // Arrange
         PdfName pdfName1 = "CustomName"; // Use an implicit conversion from string to PdfName
 
         // Act
-        string firstString = pdfName1.ToString();
-        string secondString = pdfName1.ToString();
+        string firstString = pdfName1.Content;
+        string secondString = pdfName1.Content;
 
         // Assert
         Assert.Equal(firstString, secondString);

@@ -120,6 +120,9 @@
   <data name="PdfInteger_MustBePdfInteger" xml:space="preserve">
     <value>The object must be a PDF Integer type</value>
   </data>
+  <data name="PdfName_CannotBeNullOrWhitespace" xml:space="preserve">
+    <value>The PDF name type cannot be null or contain whitespaces</value>
+  </data>
   <data name="PdfReal_MustBePdfReal" xml:space="preserve">
     <value>The object must be a PDF Real type</value>
   </data>

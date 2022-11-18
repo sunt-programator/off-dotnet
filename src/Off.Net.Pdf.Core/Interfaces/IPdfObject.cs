@@ -11,6 +11,8 @@ public interface IPdfObject
     /// Gets the bytes array representation of the Pdf object.
     /// </summary>
     byte[] Bytes { get; }
+
+    string Content { get; }
 }
 
 public interface IPdfObject<out T> : IPdfObject

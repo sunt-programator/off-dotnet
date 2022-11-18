@@ -70,6 +70,15 @@ namespace Off.Net.Pdf.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The PDF name type cannot be null or contain whitespaces.
+        /// </summary>
+        internal static string PdfName_CannotBeNullOrWhitespace {
+            get {
+                return ResourceManager.GetString("PdfName_CannotBeNullOrWhitespace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The object must be a PDF Real type.
         /// </summary>
         internal static string PdfReal_MustBePdfReal {
