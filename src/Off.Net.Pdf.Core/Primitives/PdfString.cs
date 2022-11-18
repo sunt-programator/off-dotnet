@@ -28,36 +28,16 @@ public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
     #endregion
 
     #region Properties
-    public int Length => ToString().Length;
+    public int Length => Content.Length;
 
     public string Value { get; }
 
-    public byte[] Bytes => bytes ??= Encoding.ASCII.GetBytes(ToString());
+    public byte[] Bytes => bytes ??= Encoding.ASCII.GetBytes(Content);
+
+    public string Content => GenerateContent();
     #endregion
 
     #region Public Methods
-    public override string ToString()
-    {
-        if (literalValue.Length != 0)
-        {
-            return literalValue;
-        }
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (int i = 0; i < Value.Length; i++)
-        {
-            stringBuilder.Append(Value[i]);
-        }
-
-        literalValue = stringBuilder
-            .Insert(0, isHexString ? '<' : '(')
-            .Append(isHexString ? '>' : ')')
-            .ToString();
-
-        return literalValue;
-    }
-
     public override int GetHashCode()
     {
         return hashCode;
@@ -103,6 +83,28 @@ public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
     #endregion
 
     #region Private Methods
+    private string GenerateContent()
+    {
+        if (literalValue.Length != 0)
+        {
+            return literalValue;
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < Value.Length; i++)
+        {
+            stringBuilder.Append(Value[i]);
+        }
+
+        literalValue = stringBuilder
+            .Insert(0, isHexString ? '<' : '(')
+            .Append(isHexString ? '>' : ')')
+            .ToString();
+
+        return literalValue;
+    }
+
     private static void ThrowExceptionIfValueIsNotValid(string value, bool isHexString)
     {
         if (!isHexString)

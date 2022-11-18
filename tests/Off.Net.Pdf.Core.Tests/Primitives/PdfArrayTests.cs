@@ -1,0 +1,219 @@
+using System;
+using System.Collections.Generic;
+using Off.Net.Pdf.Core.Interfaces;
+using Off.Net.Pdf.Core.Primitives;
+using Xunit;
+
+namespace Off.Net.Pdf.Core.Tests.Primitives;
+
+public class PdfArrayTests
+{
+    public static IEnumerable<object[]> PdfArray_ParameterizedContructor_TestCases()
+    {
+        yield return new object[] { new List<IPdfObject>() { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfName("SomeName") } };
+    }
+
+    [Theory(DisplayName = "Create an instance using parametrized constructor and check the Value property")]
+    [MemberData(nameof(PdfArray_ParameterizedContructor_TestCases))]
+    public void PdfArray_ParameterizedContructor_CheckValue(IEnumerable<IPdfObject> inputValue)
+    {
+        // Arrange
+        PdfArray pdfArray = PdfArray.CreateRange(inputValue); // Use the CreateRange static method to initialize an PdfArray instance
+
+        // Act
+
+        // Assert
+        Assert.Equal(inputValue, pdfArray.Value); // Checks if reference is equal
+    }
+
+    public static IEnumerable<object[]> PdfArray_Length_TestCases()
+    {
+        yield return new object[] { new List<IPdfObject>() { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfString("Ralph"), new PdfName("SomeName") }, 34 };
+        yield return new object[] { new List<IPdfObject>() { new PdfBoolean(true), new PdfArray(new List<IPdfObject> { new PdfNull() }) }, 13 };
+    }
+
+    [Theory(DisplayName = "Check the length of the PDF name primitive")]
+    [MemberData(nameof(PdfArray_Length_TestCases))]
+    public void PdfArray_Length_CheckValue(IEnumerable<IPdfObject> inputValue, int expectedLength)
+    {
+        // Arrange
+        PdfArray pdfArray = inputValue.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+
+        // Act
+        int actualLength = pdfArray.Length;
+
+        // Assert
+        Assert.Equal(expectedLength, actualLength);
+    }
+
+    [Fact(DisplayName = "Check Equals method if the argument is null")]
+    public void PdfArray_Equals_NullArgument_ShouldReturnFalse()
+    {
+        // Arrange
+        PdfArray pdfArray1 = new PdfName("Name1").ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+
+        // Act
+        bool actualResult = pdfArray1.Equals(null);
+
+        // Assert
+        Assert.False(actualResult);
+    }
+
+    [Fact(DisplayName = "Check Equals method if the argument is null")]
+    public void PdfArray_Equals2_NullArgument_ShouldReturnFalse()
+    {
+        // Arrange
+        PdfArray pdfArray1 = PdfArray.Create(new PdfString("901FA", isHexString: true)); // Use the Create static method to initialize an PdfArray instance
+
+        // Act
+        bool actualResult = pdfArray1.Equals((object?)null);
+
+        // Assert
+        Assert.False(actualResult);
+    }
+
+    [Fact(DisplayName = "Check Equals method that has the same reference as a value")]
+    public void PdfArray_Equals_SameReference_ShouldReturnTrue()
+    {
+        // Arrange
+        IReadOnlyCollection<IPdfObject> objects1 = new List<IPdfObject> { new PdfInteger(-65), new PdfName("#ABC") };
+        PdfArray pdfArray1 = objects1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+        PdfArray pdfArray2 = pdfArray1; // Use the ToPdfArray extension method to initialize an PdfArray instance
+
+        // Act
+        bool actualResult = pdfArray1.Equals((object)pdfArray2);
+
+        // Assert
+        Assert.True(actualResult);
+    }
+
+    [Fact(DisplayName = "Check Equals method that has different references as values")]
+    public void PdfArray_Equals_DifferrentReferences_ShouldReturnFalse()
+    {
+        // Arrange
+        IReadOnlyCollection<IPdfObject> objects1 = new List<IPdfObject> { new PdfInteger(-65), new PdfName("#ABC") };
+        PdfArray pdfArray1 = objects1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+        PdfArray pdfArray2 = objects1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+
+        // Act
+        bool actualResult = pdfArray1.Equals((object)pdfArray2);
+
+        // Assert
+        Assert.False(actualResult);
+    }
+
+    public static IEnumerable<object[]> PdfArray_Bytes_TestCases()
+    {
+        yield return new object[] { new List<IPdfObject>() { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfString("Ralph"), new PdfName("SomeName") }, new byte[] { 91, 53, 52, 57, 32, 51, 46, 49, 52, 32, 102, 97, 108, 115, 101, 32, 40, 82, 97, 108, 112, 104, 41, 32, 47, 83, 111, 109, 101, 78, 97, 109, 101, 93 } };
+        yield return new object[] { new List<IPdfObject>() { new PdfBoolean(true), new PdfArray(new List<IPdfObject> { new PdfNull() }) }, new byte[] { 91, 116, 114, 117, 101, 32, 91, 110, 117, 108, 108, 93, 93 } };
+    }
+
+    [Theory(DisplayName = "Check if Bytes property returns valid data")]
+    [MemberData(nameof(PdfArray_Bytes_TestCases))]
+    public void PdfArray_Bytes_CheckValidity(IReadOnlyCollection<IPdfObject> value1, byte[] expectedBytes)
+    {
+        // Arrange
+        PdfArray pdfArray1 = value1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+
+        // Act
+        byte[] actualBytes = pdfArray1.Bytes;
+
+        // Assert
+        Assert.Equal(expectedBytes, actualBytes);
+    }
+
+    public static IEnumerable<object[]> PdfArray_GetHashCode_TestCases()
+    {
+        yield return new object[] { new List<IPdfObject>() { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfString("Ralph"), new PdfName("SomeName") }};
+        yield return new object[] { new List<IPdfObject>() { new PdfBoolean(true), new PdfArray(new List<IPdfObject> { new PdfNull() }) } };
+    }
+
+    [Theory(DisplayName = "Check if GetHashCode method returns valid value")]
+    [MemberData(nameof(PdfArray_GetHashCode_TestCases))]
+    public void PdfArray_GetHashCode_CheckValidity(IReadOnlyCollection<IPdfObject> value1)
+    {
+        // Arrange
+        PdfArray pdfArray1 = new PdfArray(value1);
+        int expectedHashCode = HashCode.Combine(nameof(PdfArray).GetHashCode(), value1.GetHashCode());
+
+        // Act
+        int actualHashCode = pdfArray1.GetHashCode();
+
+        // Assert
+        Assert.Equal(expectedHashCode, actualHashCode);
+    }
+
+    [Fact(DisplayName = "Compare the hash codes of two array objects.")]
+    public void PdfArray_GetHashCode_CompareHashes_ShouldBeEqual()
+    {
+        // Arrange
+        List<IPdfObject> value1 = new List<IPdfObject>() { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfString("Ralph"), new PdfName("SomeName") };
+        PdfArray pdfArray1 = new PdfArray(value1);
+        PdfArray pdfArray2 = new PdfArray(value1);
+        int expectedHashCode = HashCode.Combine(nameof(PdfArray).GetHashCode(), value1.GetHashCode());
+
+        // Act
+        int actualHashCode1 = pdfArray1.GetHashCode();
+        int actualHashCode2 = pdfArray2.GetHashCode();
+        bool areHashCodeEquals = actualHashCode1 == actualHashCode2;
+
+        // Assert
+        Assert.True(areHashCodeEquals);
+        Assert.Equal(expectedHashCode, actualHashCode1);
+        Assert.Equal(expectedHashCode, actualHashCode2);
+    }
+
+    [Fact(DisplayName = "Compare the hash codes of two array objects.")]
+    public void PdfArray_GetHashCode_CompareHashes_ShouldNotBeEqual()
+    {
+        // Arrange
+        List<IPdfObject> value1 = new List<IPdfObject>() { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfString("Ralph"), new PdfName("SomeName") };
+        List<IPdfObject> value2 = new List<IPdfObject>() { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfString("Ralph"), new PdfName("SomeName") };
+        PdfArray pdfArray1 = new PdfArray(value1);
+        PdfArray pdfArray2 = new PdfArray(value2);
+
+        // Act
+        int actualHashCode1 = pdfArray1.GetHashCode();
+        int actualHashCode2 = pdfArray2.GetHashCode();
+        bool areHashCodeEquals = actualHashCode1 == actualHashCode2;
+
+        // Assert
+        Assert.False(areHashCodeEquals);
+    }
+
+    [Fact(DisplayName = "Check the Value property.")]
+    public void PdfArray_Value_Count_ShouldReturn1()
+    {
+        // Arrange
+        PdfArray pdfArray1 = PdfArray.Create(new PdfInteger(549));
+
+        // Act
+        int actualValueCount = pdfArray1.Value.Count;
+
+        // Assert
+        Assert.Equal(1, actualValueCount);
+    }
+
+    public static IEnumerable<object[]> PdfArray_Content_TestCases()
+    {
+        yield return new object[] { new List<IPdfObject>() { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfString("Ralph"), new PdfName("SomeName") }, "[549 3.14 false (Ralph) /SomeName]" };
+        yield return new object[] { new List<IPdfObject>() { new PdfBoolean(true), new PdfArray(new List<IPdfObject> { new PdfNull() }) }, "[true [null]]" };
+        yield return new object[] { new List<IPdfObject>() { }, "[]" };
+    }
+
+    [Theory(DisplayName = "Check the Content property.")]
+    [MemberData(nameof(PdfArray_Content_TestCases))]
+    public void PdfArray_Content_Check(IReadOnlyCollection<IPdfObject> inputValues, string expectedContentValue)
+    {
+        // Arrange
+        PdfArray pdfArray1 = inputValues.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+
+        // Act
+        string actualContentValue = pdfArray1.Content;
+        string actualContentValue2 = pdfArray1.Content;
+
+        // Assert
+        Assert.Equal(expectedContentValue, actualContentValue);
+        Assert.Equal(actualContentValue.GetHashCode(), actualContentValue2.GetHashCode());
+    }
+}

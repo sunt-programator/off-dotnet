@@ -26,24 +26,16 @@ public struct PdfInteger : IPdfObject<int>, IEquatable<PdfInteger>, IComparable,
     #endregion
 
     #region Properties
-    public int Length => ToString().Length;
+    public int Length => Content.Length;
 
     public int Value { get; }
 
-    public byte[] Bytes => bytes ??= Encoding.ASCII.GetBytes(ToString());
+    public byte[] Bytes => bytes ??= Encoding.ASCII.GetBytes(Content);
+
+    public string Content => GenerateContent();
     #endregion
 
     #region Public Methods
-    public override string ToString()
-    {
-        if (literalValue.Length == 0)
-        {
-            literalValue = Value.ToString(CultureInfo.InvariantCulture);
-        }
-
-        return literalValue;
-    }
-
     public override int GetHashCode()
     {
         return hashCode;
@@ -119,6 +111,18 @@ public struct PdfInteger : IPdfObject<int>, IEquatable<PdfInteger>, IComparable,
     public static implicit operator PdfInteger(int value)
     {
         return new(value);
+    }
+    #endregion
+
+    #region Private Methods
+    private string GenerateContent()
+    {
+        if (literalValue.Length == 0)
+        {
+            literalValue = Value.ToString(CultureInfo.InvariantCulture);
+        }
+
+        return literalValue;
     }
     #endregion
 }

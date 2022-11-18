@@ -237,19 +237,19 @@ public class PdfIntegerTests
         Assert.Throws<ArgumentException>(actualValueDelegate);
     }
 
-    [Theory(DisplayName = "Check ToString method for equality")]
+    [Theory(DisplayName = "Check Content property for equality")]
     [InlineData(123, "123")]
     [InlineData(43445, "43445")]
     [InlineData(+17, "17")] // Plus sign is automatically removed by C#.
     [InlineData(-98, "-98")] // Minus sign + two digits.
     [InlineData(0, "0")]
-    public void PdfInteger_ToString_CheckEquality(int value1, string expectedPdfIntegerStringValue)
+    public void PdfInteger_Content_CheckEquality(int value1, string expectedPdfIntegerStringValue)
     {
         // Arrange
         PdfInteger pdfInteger1 = value1; // Use an implicit conversion from int to PdfInteger
 
         // Act
-        string actualPdfIntegerStringValue = pdfInteger1.ToString();
+        string actualPdfIntegerStringValue = pdfInteger1.Content;
 
         // Assert
         Assert.Equal(expectedPdfIntegerStringValue, actualPdfIntegerStringValue);

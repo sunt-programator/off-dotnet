@@ -189,16 +189,16 @@ public class PdfBooleanTests
         Assert.Equal(expectedValue, actualValue);
     }
 
-    [Theory(DisplayName = "Check ToString method for equality")]
+    [Theory(DisplayName = "Check Content property for equality")]
     [InlineData(false, "false")]
     [InlineData(true, "true")]
-    public void PdfBoolean_ToString_CheckEquality(bool value1, string expectedPdfBooleanStringValue)
+    public void PdfBoolean_Content_CheckEquality(bool value1, string expectedPdfBooleanStringValue)
     {
         // Arrange
         PdfBoolean pdfBoolean1 = value1; // Use an implicit conversion from bool to PdfBoolean
 
         // Act
-        string actualPdfBooleanStringValue = pdfBoolean1.ToString();
+        string actualPdfBooleanStringValue = pdfBoolean1.Content;
 
         // Assert
         Assert.Equal(expectedPdfBooleanStringValue, actualPdfBooleanStringValue);

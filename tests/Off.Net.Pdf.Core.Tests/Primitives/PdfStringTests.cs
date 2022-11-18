@@ -225,7 +225,7 @@ public class PdfStringTests
         Assert.Equal(expectedValue, actualValue);
     }
 
-    [Theory(DisplayName = "Check ToString method for equality")]
+    [Theory(DisplayName = "Check Content property for equality")]
     [InlineData("This is a string", "(This is a string)", false)]
     [InlineData("Strings may contain newlines\r\nand such.", "(Strings may contain newlines\r\nand such.)", false)]
     [InlineData("Strings may contain balanced parentheses ( ) and\r\nspecial characters (*!&}^% and so on).", "(Strings may contain balanced parentheses ( ) and\r\nspecial characters (*!&}^% and so on).)", false)]
@@ -241,27 +241,27 @@ public class PdfStringTests
     [InlineData("\t90\n1F\rA3\r\n\f", "<\t90\n1F\rA3\r\n\f>", true)] // White-spaces should be ignored in hex string
     [InlineData("901FA", "<901FA>", true)] // If the last digit is missing, the last digit is considered 0, i.e. 901FA0
     [InlineData("901fa", "<901fa>", true)] // If the last digit is missing, the last digit is considered 0, i.e. 901fa0
-    public void PdfString_ToString_CheckEquality(string value1, string expectedPdfStringStringValue, bool isHexValue)
+    public void PdfString_Content_CheckEquality(string value1, string expectedPdfStringStringValue, bool isHexValue)
     {
         // Arrange
         PdfString pdfString1 = new PdfString(value1, isHexValue);
 
         // Act
-        string actualPdfStringStringValue = pdfString1.ToString();
+        string actualPdfStringStringValue = pdfString1.Content;
 
         // Assert
         Assert.Equal(expectedPdfStringStringValue, actualPdfStringStringValue);
     }
 
-    [Fact(DisplayName = "Check ToString method for multiple accessing")]
-    public void PdfString_ToString_CheckMultipleAccessing()
+    [Fact(DisplayName = "Check Content property for multiple accessing")]
+    public void PdfString_Content_CheckMultipleAccessing()
     {
         // Arrange
         PdfString pdfString1 = "CustomString"; // Use an implicit conversion from string to PdfString
 
         // Act
-        string firstString = pdfString1.ToString();
-        string secondString = pdfString1.ToString();
+        string firstString = pdfString1.Content;
+        string secondString = pdfString1.Content;
 
         // Assert
         Assert.Equal(firstString, secondString);

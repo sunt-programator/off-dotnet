@@ -229,19 +229,19 @@ public class PdfRealTests
         Assert.Throws<ArgumentException>(actualValueDelegate);
     }
 
-    [Theory(DisplayName = "Check ToString method for equality")]
+    [Theory(DisplayName = "Check Content property for equality")]
     [InlineData(34.5, "34.5")]
     [InlineData(-3.62, "-3.62")]
     [InlineData(+123.6, "123.6")] // Plus sign is automatically removed by C#.
     [InlineData(4.0, "4")]
     [InlineData(-.002, "-0.002")]
-    public void PdfReal_ToString_CheckEquality(float value1, string expectedPdfRealStringValue)
+    public void PdfReal_Content_CheckEquality(float value1, string expectedPdfRealStringValue)
     {
         // Arrange
         PdfReal pdfReal1 = value1; // Use an implicit conversion from float to PdfReal
 
         // Act
-        string actualPdfRealStringValue = pdfReal1.ToString();
+        string actualPdfRealStringValue = pdfReal1.Content;
 
         // Assert
         Assert.Equal(expectedPdfRealStringValue, actualPdfRealStringValue);

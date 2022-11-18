@@ -12,17 +12,14 @@ public struct PdfNull : IPdfObject
     #endregion
 
     #region Properties
-    public int Length => ToString().Length;
+    public int Length => 4;
 
     public byte[] Bytes => bytes;
+
+    public string Content => literalValue;
     #endregion
 
     #region Public Methods
-    public override string ToString()
-    {
-        return literalValue;
-    }
-
     public override int GetHashCode()
     {
         return hashCode;
