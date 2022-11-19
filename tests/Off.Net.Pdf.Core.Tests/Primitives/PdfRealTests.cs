@@ -24,7 +24,7 @@ public class PdfRealTests
     [InlineData(+123.6)] // Plus sign is automatically removed by C#.
     [InlineData(4.0)]
     [InlineData(-.002)]
-    public void PdfReal_ParameterizedContructor_CheckValue(float value)
+    public void PdfReal_ParameterizedConstructor_CheckValue(float value)
     {
         // Arrange
         PdfReal pdfReal = value; // Use an implicit conversion from float to PdfReal
@@ -138,8 +138,8 @@ public class PdfRealTests
         PdfReal pdfReal2 = value2; // Use an implicit conversion from float to PdfReal
 
         // Act
-        float actualHashCode1 = pdfReal1.GetHashCode();
-        float actualHashCode2 = pdfReal2.GetHashCode();
+        int actualHashCode1 = pdfReal1.GetHashCode();
+        int actualHashCode2 = pdfReal2.GetHashCode();
         bool areHashCodeEquals = actualHashCode1 == actualHashCode2;
 
         // Assert
@@ -223,6 +223,7 @@ public class PdfRealTests
         object pdfReal2 = 5;
 
         // Act
+        // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
         Action actualValueDelegate = () => pdfReal1.CompareTo(pdfReal2);
 
         // Assert

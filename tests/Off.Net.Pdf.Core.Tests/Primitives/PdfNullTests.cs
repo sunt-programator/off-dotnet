@@ -40,6 +40,7 @@ public class PdfNullTests
         PdfNull pdfNull2 = new PdfNull();
 
         // Act
+        // ReSharper disable once RedundantCast
         bool actualResult = pdfNull1.Equals((object)pdfNull2);
 
         // Assert
@@ -82,8 +83,8 @@ public class PdfNullTests
         PdfNull pdfNull2 = new PdfNull();
 
         // Act
-        float actualHashCode1 = pdfNull1.GetHashCode();
-        float actualHashCode2 = pdfNull2.GetHashCode();
+        int actualHashCode1 = pdfNull1.GetHashCode();
+        int actualHashCode2 = pdfNull2.GetHashCode();
         bool areHashCodeEquals = actualHashCode1 == actualHashCode2;
 
         // Assert

@@ -18,7 +18,7 @@ public class PdfNameTests
     [InlineData("paired()parentheses", "paired()parentheses")]
     [InlineData("The_Key_of_F#_Minor", "The_Key_of_F#_Minor")]
     [InlineData("/NameWithSolidus", "/NameWithSolidus")]
-    public void PdfName_ParameterizedContructor_CheckValue(string inputValue, string expectedValue)
+    public void PdfName_ParameterizedConstructor_CheckValue(string inputValue, string expectedValue)
     {
         // Arrange
         PdfName pdfName = inputValue; // Use an implicit conversion from string to PdfName
@@ -33,15 +33,16 @@ public class PdfNameTests
     [InlineData("")]
     [InlineData(" ")]
     [InlineData(null)]
-    public void PdfName_ParameterizedContructor_NullOrWhitespace_ShouldThrowArgumentNullException(string inputValue)
+    public void PdfName_ParameterizedConstructor_NullOrWhitespace_ShouldThrowArgumentNullException(string inputValue)
     {
         // Arrange
 
         // Act
-        Action pdfNameDelegate = () => new PdfName(inputValue);
+        // ReSharper disable once ObjectCreationAsStatement
+        void PdfNameDelegate() => new PdfName(inputValue);
 
         // Assert
-        Assert.Throws<ArgumentNullException>(pdfNameDelegate);
+        Assert.Throws<ArgumentNullException>(PdfNameDelegate);
     }
 
     [Theory(DisplayName = "Check the length of the PDF name primitive")]

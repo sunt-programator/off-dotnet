@@ -18,7 +18,7 @@ public class PdfStringTests
     [InlineData("paired()parentheses", "paired()parentheses")]
     [InlineData("The_Key_of_F#_Minor", "The_Key_of_F#_Minor")]
     [InlineData("/NameWithSolidus", "/NameWithSolidus")]
-    public void PdfString_ParameterizedContructor_CheckValue(string inputValue, string expectedValue)
+    public void PdfString_ParameterizedConstructor_CheckValue(string inputValue, string expectedValue)
     {
         // Arrange
         PdfString pdfString = inputValue; // Use an implicit conversion from string to PdfString
@@ -276,10 +276,11 @@ public class PdfStringTests
         // Arrange
 
         // Act
-        Action pdfStringValueDelegate = () => new PdfString(value1);
+        // ReSharper disable once ObjectCreationAsStatement
+        void PdfStringValueDelegate() => new PdfString(value1);
 
         // Assert
-        Assert.Throws<ArgumentException>(pdfStringValueDelegate);
+        Assert.Throws<ArgumentException>(PdfStringValueDelegate);
     }
 
     [Theory(DisplayName = "Check if string with unbalanced parentheses will throw an exception")]
@@ -290,10 +291,11 @@ public class PdfStringTests
         // Arrange
 
         // Act
-        Action pdfStringValueDelegate = () => new PdfString(value1);
+        // ReSharper disable once ObjectCreationAsStatement
+        void PdfStringValueDelegate() => new PdfString(value1);
 
         // Assert
-        Assert.Throws<ArgumentException>(pdfStringValueDelegate);
+        Assert.Throws<ArgumentException>(PdfStringValueDelegate);
     }
 
     [Theory(DisplayName = "Check if constructor will throw an exception when invalid Hex value is provided")]
@@ -304,10 +306,11 @@ public class PdfStringTests
         // Arrange
 
         // Act
-        Action pdfStringValueDelegate = () => new PdfString(value1, true);
+        // ReSharper disable once ObjectCreationAsStatement
+        void StringValueDelegate() => new PdfString(value1, true);
 
         // Assert
-        Assert.Throws<ArgumentException>(pdfStringValueDelegate);
+        Assert.Throws<ArgumentException>(StringValueDelegate);
     }
 
     [Fact(DisplayName = "Check if constructor will throw an exception when invalid Hex value is provided")]
@@ -316,9 +319,10 @@ public class PdfStringTests
         // Arrange
 
         // Act
-        Action pdfStringValueDelegate = () => new PdfString(string.Empty, true);
+        // ReSharper disable once ObjectCreationAsStatement
+        void PdfStringValueDelegate() => new PdfString(string.Empty, true);
 
         // Assert
-        Assert.Throws<ArgumentNullException>(pdfStringValueDelegate);
+        Assert.Throws<ArgumentNullException>(PdfStringValueDelegate);
     }
 }

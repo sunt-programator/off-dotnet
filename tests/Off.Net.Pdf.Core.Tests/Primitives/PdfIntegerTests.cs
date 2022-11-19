@@ -24,7 +24,7 @@ public class PdfIntegerTests
     [InlineData(+17)]
     [InlineData(-98)]
     [InlineData(0)]
-    public void PdfInteger_ParameterizedContructor_CheckValue(int value)
+    public void PdfInteger_ParameterizedConstructor_CheckValue(int value)
     {
         // Arrange
         PdfInteger pdfInteger = value; // Use an implicit conversion from int to PdfInteger
@@ -231,6 +231,7 @@ public class PdfIntegerTests
         object pdfInteger2 = 5;
 
         // Act
+        // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
         Action actualValueDelegate = () => pdfInteger1.CompareTo(pdfInteger2);
 
         // Assert

@@ -21,7 +21,7 @@ public class PdfBooleanTests
     [Theory(DisplayName = "Create an instance using parametrized constructor and check the Value property")]
     [InlineData(true)]
     [InlineData(false)]
-    public void PdfBoolean_ParameterizedContructor_CheckValue(bool value)
+    public void PdfBoolean_ParameterizedConstructor_CheckValue(bool value)
     {
         // Arrange
         PdfBoolean pdfBoolean = value; // Use an implicit conversion from bool to PdfBoolean
@@ -71,7 +71,7 @@ public class PdfBooleanTests
     [InlineData(false, true, true)]
     [InlineData(true, false, true)]
     [InlineData(true, true, false)]
-    public void PdfBoolean_Equality_CheckInequal(bool value1, bool value2, bool expectedResult)
+    public void PdfBoolean_Equality_CheckNotEqual(bool value1, bool value2, bool expectedResult)
     {
         // Arrange
         PdfBoolean pdfBoolean1 = value1; // Use an implicit conversion from bool to PdfBoolean
@@ -166,7 +166,7 @@ public class PdfBooleanTests
         {
             "==" => pdfBoolean1 == pdfBoolean2,
             "!=" => pdfBoolean1 != pdfBoolean2,
-            _ => throw new ArgumentException("Invalid operation", nameof(op)),
+            _ => throw new ArgumentException(null, nameof(op)),
         };
 
         // Assert
