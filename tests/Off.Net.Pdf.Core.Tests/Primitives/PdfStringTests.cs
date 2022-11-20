@@ -29,7 +29,7 @@ public class PdfStringTests
         Assert.Equal(expectedValue, pdfString.Value);
     }
 
-    [Theory(DisplayName = "Check the length of the PDF name primitive")]
+    [Theory(DisplayName = "Check the length of the PDF string primitive")]
     [InlineData("Name1", false, 7)] // 5 characters + 2 parentheses
     [InlineData("ASomewhatLongerName", false, 21)] // 19 characters + 2 parentheses
     [InlineData("A;Name_With-Various***Characters?", false, 35)] // 33 characters + 2 parentheses
