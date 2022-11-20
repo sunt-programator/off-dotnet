@@ -32,7 +32,7 @@ public class PdfArrayTests
         yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray(new List<IPdfObject> { new PdfNull() }) }, 13 };
     }
 
-    [Theory(DisplayName = "Check the length of the PDF name primitive")]
+    [Theory(DisplayName = "Check the length of the PDF array primitive")]
     [MemberData(nameof(PdfArray_Length_TestCases))]
     public void PdfArray_Length_CheckValue(IEnumerable<IPdfObject> inputValue, int expectedLength)
     {
