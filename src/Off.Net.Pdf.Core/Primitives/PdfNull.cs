@@ -6,23 +6,23 @@ namespace Off.Net.Pdf.Core.Primitives;
 public struct PdfNull : IPdfObject
 {
     #region Fields
-    private const string literalValue = "null";
-    private static readonly int hashCode = HashCode.Combine(nameof(PdfNull).GetHashCode(), literalValue.GetHashCode());
-    private static readonly byte[] bytes = Encoding.ASCII.GetBytes(literalValue);
+    private const string LiteralValue = "null";
+    private static readonly int HashCode = System.HashCode.Combine(nameof(PdfNull).GetHashCode(), LiteralValue.GetHashCode());
+    private static readonly byte[] BytesArray = Encoding.ASCII.GetBytes(LiteralValue);
     #endregion
 
     #region Properties
     public int Length => 4;
 
-    public byte[] Bytes => bytes;
+    public byte[] Bytes => BytesArray;
 
-    public string Content => literalValue;
+    public string Content => LiteralValue;
     #endregion
 
     #region Public Methods
     public override int GetHashCode()
     {
-        return hashCode;
+        return HashCode;
     }
 
     public override bool Equals(object? obj)

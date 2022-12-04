@@ -6,17 +6,17 @@ namespace Off.Net.Pdf.Core.Primitives;
 public sealed class PdfArray : IPdfObject<IReadOnlyCollection<IPdfObject>>, IEquatable<PdfArray?>
 {
     #region Fields
-    private readonly int hashCode;
-    private string literalValue = string.Empty;
-    private byte[]? bytes;
+    private readonly int _hashCode;
+    private string _literalValue = string.Empty;
+    private byte[]? _bytes;
     #endregion
 
     #region Constructors
     public PdfArray(IReadOnlyCollection<IPdfObject> value)
     {
         Value = value;
-        hashCode = HashCode.Combine(nameof(PdfArray).GetHashCode(), value.GetHashCode());
-        bytes = null;
+        _hashCode = HashCode.Combine(nameof(PdfArray).GetHashCode(), value.GetHashCode());
+        _bytes = null;
     }
     #endregion
 
@@ -25,7 +25,7 @@ public sealed class PdfArray : IPdfObject<IReadOnlyCollection<IPdfObject>>, IEqu
 
     public IReadOnlyCollection<IPdfObject> Value { get; }
 
-    public byte[] Bytes => bytes ??= Encoding.ASCII.GetBytes(Content);
+    public byte[] Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
 
     public string Content => GenerateContent();
     #endregion
@@ -33,7 +33,7 @@ public sealed class PdfArray : IPdfObject<IReadOnlyCollection<IPdfObject>>, IEqu
     #region Public Methods
     public override int GetHashCode()
     {
-        return hashCode;
+        return _hashCode;
     }
 
     public override bool Equals(object? obj)
@@ -61,9 +61,9 @@ public sealed class PdfArray : IPdfObject<IReadOnlyCollection<IPdfObject>>, IEqu
     #region Private Methods
     private string GenerateContent()
     {
-        if (literalValue.Length != 0)
+        if (_literalValue.Length != 0)
         {
-            return literalValue;
+            return _literalValue;
         }
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -80,25 +80,12 @@ public sealed class PdfArray : IPdfObject<IReadOnlyCollection<IPdfObject>>, IEqu
             stringBuilder.Remove(stringBuilder.Length - 1, 1);
         }
 
-        literalValue = stringBuilder
+        _literalValue = stringBuilder
             .Insert(0, '[')
             .Append(']')
             .ToString();
 
-        return literalValue;
+        return _literalValue;
     }
     #endregion
-}
-
-public static class PdfArrayExtensions
-{
-    public static PdfArray ToPdfArray(this IEnumerable<IPdfObject> items)
-    {
-        return PdfArray.CreateRange(items.ToList());
-    }
-
-    public static PdfArray ToPdfArray(this IPdfObject item)
-    {
-        return PdfArray.Create(item);
-    }
 }

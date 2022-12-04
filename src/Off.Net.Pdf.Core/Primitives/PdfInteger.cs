@@ -7,9 +7,9 @@ namespace Off.Net.Pdf.Core.Primitives;
 public struct PdfInteger : IPdfObject<int>, IEquatable<PdfInteger>, IComparable, IComparable<PdfInteger>
 {
     #region Fields
-    private readonly int hashCode;
-    private string literalValue = string.Empty;
-    private byte[]? bytes;
+    private readonly int _hashCode;
+    private string _literalValue = string.Empty;
+    private byte[]? _bytes;
     #endregion
 
     #region Constructors
@@ -20,8 +20,8 @@ public struct PdfInteger : IPdfObject<int>, IEquatable<PdfInteger>, IComparable,
     public PdfInteger(int value)
     {
         Value = value;
-        hashCode = HashCode.Combine(nameof(PdfInteger).GetHashCode(), value.GetHashCode());
-        bytes = null;
+        _hashCode = HashCode.Combine(nameof(PdfInteger).GetHashCode(), value.GetHashCode());
+        _bytes = null;
     }
     #endregion
 
@@ -30,7 +30,7 @@ public struct PdfInteger : IPdfObject<int>, IEquatable<PdfInteger>, IComparable,
 
     public int Value { get; }
 
-    public byte[] Bytes => bytes ??= Encoding.ASCII.GetBytes(Content);
+    public byte[] Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
 
     public string Content => GenerateContent();
     #endregion
@@ -38,7 +38,7 @@ public struct PdfInteger : IPdfObject<int>, IEquatable<PdfInteger>, IComparable,
     #region Public Methods
     public override int GetHashCode()
     {
-        return hashCode;
+        return _hashCode;
     }
 
     public bool Equals(PdfInteger other)
@@ -117,12 +117,12 @@ public struct PdfInteger : IPdfObject<int>, IEquatable<PdfInteger>, IComparable,
     #region Private Methods
     private string GenerateContent()
     {
-        if (literalValue.Length == 0)
+        if (_literalValue.Length == 0)
         {
-            literalValue = Value.ToString(CultureInfo.InvariantCulture);
+            _literalValue = Value.ToString(CultureInfo.InvariantCulture);
         }
 
-        return literalValue;
+        return _literalValue;
     }
     #endregion
 }

@@ -1,7 +1,6 @@
 ﻿using Off.Net.Pdf.Core.Interfaces;
-using Off.Net.Pdf.Core.Primitives;
 
-namespace Off.Net.Pdf.Core.Extensions;
+namespace Off.Net.Pdf.Core.Primitives;
 
 public static class PdfIndirectExtensions
 {

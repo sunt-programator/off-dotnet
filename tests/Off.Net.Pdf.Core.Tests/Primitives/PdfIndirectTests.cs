@@ -1,5 +1,4 @@
 ﻿using System;
-using Off.Net.Pdf.Core.Extensions;
 using Off.Net.Pdf.Core.Primitives;
 using Xunit;
 
@@ -167,7 +166,7 @@ public class PdfIndirectTests
     public void PdfIndirect_Constructor_NegativeObjectNumber_ShouldThrowException(int objectNumber)
     {
         // Arrange
-        PdfString pdfString = new PdfString("Test String");
+        PdfString pdfString = new("Test String");
 
         // Act
         Action pdfIndirectFunc = () => pdfString.ToPdfIndirect(objectNumber);
@@ -183,7 +182,7 @@ public class PdfIndirectTests
     public void PdfIndirect_Constructor_NegativeGenerationNumber_ShouldThrowException(int generationNumber)
     {
         // Arrange
-        PdfString pdfString = new PdfString("Test String");
+        PdfString pdfString = new("Test String");
 
         // Act
         Action pdfIndirectFunc = () => pdfString.ToPdfIndirect(5, generationNumber);

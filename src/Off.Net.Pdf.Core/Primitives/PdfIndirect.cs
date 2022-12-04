@@ -7,9 +7,9 @@ public sealed class PdfIndirect : IPdfObject<IPdfObject>, IEquatable<PdfIndirect
 {
     #region Fields
 
-    private readonly int hashCode;
-    private string literalValue = string.Empty;
-    private byte[]? bytes;
+    private readonly int _hashCode;
+    private string _literalValue = string.Empty;
+    private byte[]? _bytes;
 
     #endregion
 
@@ -30,8 +30,8 @@ public sealed class PdfIndirect : IPdfObject<IPdfObject>, IEquatable<PdfIndirect
         ObjectNumber = objectNumber;
         GenerationNumber = generationNumber;
         Value = pdfObject;
-        hashCode = HashCode.Combine(nameof(PdfIndirect).GetHashCode(), objectNumber.GetHashCode(), generationNumber.GetHashCode());
-        bytes = null;
+        _hashCode = HashCode.Combine(nameof(PdfIndirect).GetHashCode(), objectNumber.GetHashCode(), generationNumber.GetHashCode());
+        _bytes = null;
         ReferenceIdentifier = $"{ObjectNumber} {GenerationNumber} R";
     }
 
@@ -47,7 +47,7 @@ public sealed class PdfIndirect : IPdfObject<IPdfObject>, IEquatable<PdfIndirect
 
     public int Length => Content.Length;
 
-    public byte[] Bytes => bytes ??= Encoding.ASCII.GetBytes(Content);
+    public byte[] Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
 
     public string Content => GenerateContent();
 
@@ -59,7 +59,7 @@ public sealed class PdfIndirect : IPdfObject<IPdfObject>, IEquatable<PdfIndirect
 
     public override int GetHashCode()
     {
-        return hashCode;
+        return _hashCode;
     }
 
     public bool Equals(PdfIndirect? other)
@@ -80,14 +80,14 @@ public sealed class PdfIndirect : IPdfObject<IPdfObject>, IEquatable<PdfIndirect
 
     private string GenerateContent()
     {
-        if (literalValue.Length != 0)
+        if (_literalValue.Length != 0)
         {
-            return literalValue;
+            return _literalValue;
         }
 
         string objectIdentifier = $"{ObjectNumber} {GenerationNumber} obj";
 
-        literalValue = new StringBuilder()
+        _literalValue = new StringBuilder()
             .Append(objectIdentifier)
             .Append('\n')
             .Append(Value.Content)
@@ -95,7 +95,7 @@ public sealed class PdfIndirect : IPdfObject<IPdfObject>, IEquatable<PdfIndirect
             .Append("endobj")
             .ToString();
 
-        return literalValue;
+        return _literalValue;
     }
 
     #endregion

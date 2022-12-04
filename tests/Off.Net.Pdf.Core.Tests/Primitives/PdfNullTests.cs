@@ -10,7 +10,7 @@ public class PdfNullTests
     public void PdfNull_Length_CheckValue()
     {
         // Arrange
-        PdfNull pdfNull = new PdfNull();
+        PdfNull pdfNull = new();
 
         // Act
         float actualLength = pdfNull.Length;
@@ -23,7 +23,7 @@ public class PdfNullTests
     public void PdfNull_Equals_NullArgument_ShouldReturnFalse()
     {
         // Arrange
-        PdfNull pdfNull1 = new PdfNull();
+        PdfNull pdfNull1 = new();
 
         // Act
         bool actualResult = pdfNull1.Equals(null);
@@ -36,8 +36,8 @@ public class PdfNullTests
     public void PdfNull_Equality_CheckEquals()
     {
         // Arrange
-        PdfNull pdfNull1 = new PdfNull();
-        PdfNull pdfNull2 = new PdfNull();
+        PdfNull pdfNull1 = new();
+        PdfNull pdfNull2 = new();
 
         // Act
         // ReSharper disable once RedundantCast
@@ -51,8 +51,8 @@ public class PdfNullTests
     public void PdfNull_Bytes_CheckValidity()
     {
         // Arrange
-        byte[] expectedBytes = new byte[] { 110, 117, 108, 108 };
-        PdfNull pdfNull1 = new PdfNull();
+        byte[] expectedBytes = { 110, 117, 108, 108 };
+        PdfNull pdfNull1 = new();
 
         // Act
         byte[] actualBytes = pdfNull1.Bytes;
@@ -65,7 +65,7 @@ public class PdfNullTests
     public void PdfNull_GetHashCode_CheckValidity()
     {
         // Arrange
-        PdfNull pdfNull1 = new PdfNull();
+        PdfNull pdfNull1 = new();
         float expectedHashCode = HashCode.Combine(nameof(PdfNull).GetHashCode(), "null");
 
         // Act
@@ -79,8 +79,8 @@ public class PdfNullTests
     public void PdfNull_GetHashCode_CompareHashes()
     {
         // Arrange
-        PdfNull pdfNull1 = new PdfNull();
-        PdfNull pdfNull2 = new PdfNull();
+        PdfNull pdfNull1 = new();
+        PdfNull pdfNull2 = new();
 
         // Act
         int actualHashCode1 = pdfNull1.GetHashCode();
@@ -95,7 +95,7 @@ public class PdfNullTests
     public void PdfNull_Content_CheckEquality()
     {
         // Arrange
-        PdfNull pdfNull1 = new PdfNull();
+        PdfNull pdfNull1 = new();
         const string expectedStringValue = "null";
 
         // Act

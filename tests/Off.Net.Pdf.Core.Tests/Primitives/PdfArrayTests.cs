@@ -8,13 +8,8 @@ namespace Off.Net.Pdf.Core.Tests.Primitives;
 
 public class PdfArrayTests
 {
-    public static IEnumerable<object[]> PdfArray_ParameterizedConstructor_TestCases()
-    {
-        yield return new object[] { new List<IPdfObject> { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfName("SomeName") } };
-    }
-
     [Theory(DisplayName = "Create an instance using parametrized constructor and check the Value property")]
-    [MemberData(nameof(PdfArray_ParameterizedConstructor_TestCases))]
+    [MemberData(nameof(PdfArrayTestDataGenerator.PdfArray_ParameterizedConstructor_TestCases), MemberType = typeof(PdfArrayTestDataGenerator))]
     public void PdfArray_ParameterizedConstructor_CheckValue(List<IPdfObject> inputValue)
     {
         // Arrange
@@ -26,14 +21,8 @@ public class PdfArrayTests
         Assert.Equal(inputValue, pdfArray.Value); // Checks if reference is equal
     }
 
-    public static IEnumerable<object[]> PdfArray_Length_TestCases()
-    {
-        yield return new object[] { new List<IPdfObject> { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfString("Ralph"), new PdfName("SomeName") }, 34 };
-        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray(new List<IPdfObject> { new PdfNull() }) }, 13 };
-    }
-
     [Theory(DisplayName = "Check the length of the PDF array primitive")]
-    [MemberData(nameof(PdfArray_Length_TestCases))]
+    [MemberData(nameof(PdfArrayTestDataGenerator.PdfArray_Length_TestCases), MemberType = typeof(PdfArrayTestDataGenerator))]
     public void PdfArray_Length_CheckValue(IEnumerable<IPdfObject> inputValue, int expectedLength)
     {
         // Arrange
@@ -63,7 +52,7 @@ public class PdfArrayTests
     public void PdfArray_Equals2_NullArgument_ShouldReturnFalse()
     {
         // Arrange
-        PdfArray pdfArray1 = PdfArray.Create(new PdfString("901FA", isHexString: true)); // Use the Create static method to initialize an PdfArray instance
+        PdfArray pdfArray1 = PdfArray.Create(new PdfString("901FA", true)); // Use the Create static method to initialize an PdfArray instance
 
         // Act
         bool actualResult = pdfArray1.Equals((object?)null);
@@ -102,14 +91,8 @@ public class PdfArrayTests
         Assert.False(actualResult);
     }
 
-    public static IEnumerable<object[]> PdfArray_Bytes_TestCases()
-    {
-        yield return new object[] { new List<IPdfObject> { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfString("Ralph"), new PdfName("SomeName") }, new byte[] { 91, 53, 52, 57, 32, 51, 46, 49, 52, 32, 102, 97, 108, 115, 101, 32, 40, 82, 97, 108, 112, 104, 41, 32, 47, 83, 111, 109, 101, 78, 97, 109, 101, 93 } };
-        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray(new List<IPdfObject> { new PdfNull() }) }, new byte[] { 91, 116, 114, 117, 101, 32, 91, 110, 117, 108, 108, 93, 93 } };
-    }
-
     [Theory(DisplayName = "Check if Bytes property returns valid data")]
-    [MemberData(nameof(PdfArray_Bytes_TestCases))]
+    [MemberData(nameof(PdfArrayTestDataGenerator.PdfArray_Bytes_TestCases), MemberType = typeof(PdfArrayTestDataGenerator))]
     public void PdfArray_Bytes_CheckValidity(IReadOnlyCollection<IPdfObject> value1, byte[] expectedBytes)
     {
         // Arrange
@@ -122,18 +105,12 @@ public class PdfArrayTests
         Assert.Equal(expectedBytes, actualBytes);
     }
 
-    public static IEnumerable<object[]> PdfArray_GetHashCode_TestCases()
-    {
-        yield return new object[] { new List<IPdfObject> { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfString("Ralph"), new PdfName("SomeName") }};
-        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray(new List<IPdfObject> { new PdfNull() }) } };
-    }
-
     [Theory(DisplayName = "Check if GetHashCode method returns valid value")]
-    [MemberData(nameof(PdfArray_GetHashCode_TestCases))]
+    [MemberData(nameof(PdfArrayTestDataGenerator.PdfArray_GetHashCode_TestCases), MemberType = typeof(PdfArrayTestDataGenerator))]
     public void PdfArray_GetHashCode_CheckValidity(IReadOnlyCollection<IPdfObject> value1)
     {
         // Arrange
-        PdfArray pdfArray1 = new PdfArray(value1);
+        PdfArray pdfArray1 = new(value1);
         int expectedHashCode = HashCode.Combine(nameof(PdfArray).GetHashCode(), value1.GetHashCode());
 
         // Act
@@ -147,9 +124,16 @@ public class PdfArrayTests
     public void PdfArray_GetHashCode_CompareHashes_ShouldBeEqual()
     {
         // Arrange
-        List<IPdfObject> value1 = new List<IPdfObject> { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfString("Ralph"), new PdfName("SomeName") };
-        PdfArray pdfArray1 = new PdfArray(value1);
-        PdfArray pdfArray2 = new PdfArray(value1);
+        List<IPdfObject> value1 = new()
+        {
+            new PdfInteger(549),
+            new PdfReal(3.14f),
+            new PdfBoolean(),
+            new PdfString("Ralph"),
+            new PdfName("SomeName")
+        };
+        PdfArray pdfArray1 = new(value1);
+        PdfArray pdfArray2 = new(value1);
         int expectedHashCode = HashCode.Combine(nameof(PdfArray).GetHashCode(), value1.GetHashCode());
 
         // Act
@@ -167,10 +151,24 @@ public class PdfArrayTests
     public void PdfArray_GetHashCode_CompareHashes_ShouldNotBeEqual()
     {
         // Arrange
-        List<IPdfObject> value1 = new List<IPdfObject> { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfString("Ralph"), new PdfName("SomeName") };
-        List<IPdfObject> value2 = new List<IPdfObject> { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfString("Ralph"), new PdfName("SomeName") };
-        PdfArray pdfArray1 = new PdfArray(value1);
-        PdfArray pdfArray2 = new PdfArray(value2);
+        List<IPdfObject> value1 = new()
+        {
+            new PdfInteger(549),
+            new PdfReal(3.14f),
+            new PdfBoolean(),
+            new PdfString("Ralph"),
+            new PdfName("SomeName")
+        };
+        List<IPdfObject> value2 = new()
+        {
+            new PdfInteger(549),
+            new PdfReal(3.14f),
+            new PdfBoolean(),
+            new PdfString("Ralph"),
+            new PdfName("SomeName")
+        };
+        PdfArray pdfArray1 = new(value1);
+        PdfArray pdfArray2 = new(value2);
 
         // Act
         int actualHashCode1 = pdfArray1.GetHashCode();
@@ -194,15 +192,8 @@ public class PdfArrayTests
         Assert.Equal(1, actualValueCount);
     }
 
-    public static IEnumerable<object[]> PdfArray_Content_TestCases()
-    {
-        yield return new object[] { new List<IPdfObject> { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfString("Ralph"), new PdfName("SomeName") }, "[549 3.14 false (Ralph) /SomeName]" };
-        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray(new List<IPdfObject> { new PdfNull() }) }, "[true [null]]" };
-        yield return new object[] { new List<IPdfObject>(0), "[]" };
-    }
-
     [Theory(DisplayName = "Check the Content property.")]
-    [MemberData(nameof(PdfArray_Content_TestCases))]
+    [MemberData(nameof(PdfArrayTestDataGenerator.PdfArray_Content_TestCases), MemberType = typeof(PdfArrayTestDataGenerator))]
     public void PdfArray_Content_Check(IReadOnlyCollection<IPdfObject> inputValues, string expectedContentValue)
     {
         // Arrange
@@ -215,5 +206,84 @@ public class PdfArrayTests
         // Assert
         Assert.Equal(expectedContentValue, actualContentValue);
         Assert.Equal(actualContentValue.GetHashCode(), actualContentValue2.GetHashCode());
+    }
+}
+
+internal static class PdfArrayTestDataGenerator
+{
+    public static IEnumerable<object[]> PdfArray_ParameterizedConstructor_TestCases()
+    {
+        yield return new object[] { new List<IPdfObject> { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfName("SomeName") } };
+    }
+
+    public static IEnumerable<object[]> PdfArray_Length_TestCases()
+    {
+        yield return new object[]
+        {
+            new List<IPdfObject>
+            {
+                new PdfInteger(549),
+                new PdfReal(3.14f),
+                new PdfBoolean(),
+                new PdfString("Ralph"),
+                new PdfName("SomeName")
+            },
+            34
+        };
+        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray(new List<IPdfObject> { new PdfNull() }) }, 13 };
+    }
+
+    public static IEnumerable<object[]> PdfArray_Bytes_TestCases()
+    {
+        yield return new object[]
+        {
+            new List<IPdfObject>
+            {
+                new PdfInteger(549),
+                new PdfReal(3.14f),
+                new PdfBoolean(),
+                new PdfString("Ralph"),
+                new PdfName("SomeName")
+            },
+            new byte[] { 91, 53, 52, 57, 32, 51, 46, 49, 52, 32, 102, 97, 108, 115, 101, 32, 40, 82, 97, 108, 112, 104, 41, 32, 47, 83, 111, 109, 101, 78, 97, 109, 101, 93 }
+        };
+        yield return new object[]
+        {
+            new List<IPdfObject> { new PdfBoolean(true), new PdfArray(new List<IPdfObject> { new PdfNull() }) }, new byte[] { 91, 116, 114, 117, 101, 32, 91, 110, 117, 108, 108, 93, 93 }
+        };
+    }
+
+    public static IEnumerable<object[]> PdfArray_GetHashCode_TestCases()
+    {
+        yield return new object[]
+        {
+            new List<IPdfObject>
+            {
+                new PdfInteger(549),
+                new PdfReal(3.14f),
+                new PdfBoolean(),
+                new PdfString("Ralph"),
+                new PdfName("SomeName")
+            }
+        };
+        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray(new List<IPdfObject> { new PdfNull() }) } };
+    }
+
+    public static IEnumerable<object[]> PdfArray_Content_TestCases()
+    {
+        yield return new object[]
+        {
+            new List<IPdfObject>
+            {
+                new PdfInteger(549),
+                new PdfReal(3.14f),
+                new PdfBoolean(),
+                new PdfString("Ralph"),
+                new PdfName("SomeName")
+            },
+            "[549 3.14 false (Ralph) /SomeName]"
+        };
+        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray(new List<IPdfObject> { new PdfNull() }) }, "[true [null]]" };
+        yield return new object[] { new List<IPdfObject>(0), "[]" };
     }
 }

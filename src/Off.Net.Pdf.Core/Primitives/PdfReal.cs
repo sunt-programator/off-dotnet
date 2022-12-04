@@ -6,12 +6,12 @@ namespace Off.Net.Pdf.Core.Primitives;
 
 public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, IComparable<PdfReal>
 {
-    private const float approximationValue = 1.175e-38f;
+    private const float ApproximationValue = 1.175e-38f;
 
     #region Fields
-    private readonly int hashCode;
-    private string literalValue = string.Empty;
-    private byte[]? bytes;
+    private readonly int _hashCode;
+    private string _literalValue = string.Empty;
+    private byte[]? _bytes;
     #endregion
 
     #region Constructors
@@ -21,14 +21,14 @@ public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, ICo
 
     public PdfReal(float value)
     {
-        if (value >= -approximationValue && value <= approximationValue)
+        if (value >= -ApproximationValue && value <= ApproximationValue)
         {
             value = 0;
         }
 
         Value = value;
-        hashCode = HashCode.Combine(nameof(PdfReal).GetHashCode(), value.GetHashCode());
-        bytes = null;
+        _hashCode = HashCode.Combine(nameof(PdfReal).GetHashCode(), value.GetHashCode());
+        _bytes = null;
     }
     #endregion
 
@@ -37,7 +37,7 @@ public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, ICo
 
     public float Value { get; }
 
-    public byte[] Bytes => bytes ??= Encoding.ASCII.GetBytes(Content);
+    public byte[] Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
 
     public string Content => GenerateContent();
     #endregion
@@ -45,7 +45,7 @@ public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, ICo
     #region Public Methods
     public override int GetHashCode()
     {
-        return hashCode;
+        return _hashCode;
     }
 
     public bool Equals(PdfReal other)
@@ -124,12 +124,12 @@ public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, ICo
     #region Private Methods
     private string GenerateContent()
     {
-        if (literalValue.Length == 0)
+        if (_literalValue.Length == 0)
         {
-            literalValue = Value.ToString(CultureInfo.InvariantCulture);
+            _literalValue = Value.ToString(CultureInfo.InvariantCulture);
         }
 
-        return literalValue;
+        return _literalValue;
     }
     #endregion
 }

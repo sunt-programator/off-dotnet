@@ -2,9 +2,9 @@ name: .NET
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.head_ref || github.run_id }}
@@ -16,8 +16,8 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        operating-system: [ubuntu-latest, windows-latest, macOS-latest]
-        dotnet-version: ["6.0.x", "7.0.x"]
+        operating-system: [ ubuntu-latest, windows-latest, macOS-latest ]
+        dotnet-version: [ "6.0.x", "7.0.x" ]
 
     steps:
       - name: Checkout

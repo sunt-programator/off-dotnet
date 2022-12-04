@@ -10,7 +10,7 @@ public class PdfBooleanTests
     public void PdfBoolean_ParameterlessConstructor_ShouldSetFalseToValueProperty()
     {
         // Arrange
-        PdfBoolean pdfBoolean1 = new PdfBoolean();
+        PdfBoolean pdfBoolean1 = new();
 
         // Act
 
@@ -166,7 +166,7 @@ public class PdfBooleanTests
         {
             "==" => pdfBoolean1 == pdfBoolean2,
             "!=" => pdfBoolean1 != pdfBoolean2,
-            _ => throw new ArgumentException(null, nameof(op)),
+            _ => throw new ArgumentException(null, nameof(op))
         };
 
         // Assert
@@ -179,7 +179,7 @@ public class PdfBooleanTests
     public void PdfBoolean_CheckImplicitOperator(bool value1)
     {
         // Arrange
-        var pdfBoolean1 = new PdfBoolean(value1);
+        PdfBoolean pdfBoolean1 = new PdfBoolean(value1);
 
         // Act
         bool actualValue = pdfBoolean1; // Use an implicit conversion from PdfBoolean to bool

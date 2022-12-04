@@ -10,7 +10,7 @@ public class PdfIntegerTests
     public void PdfInteger_ParameterlessConstructor_ShouldSetZeroToValueProperty()
     {
         // Arrange
-        PdfInteger pdfInteger1 = new PdfInteger();
+        PdfInteger pdfInteger1 = new();
 
         // Act
 
@@ -191,7 +191,7 @@ public class PdfIntegerTests
     public void PdfInteger_CheckImplicitOperator(int value1)
     {
         // Arrange
-        var pdfInteger1 = new PdfInteger(value1);
+        PdfInteger pdfInteger1 = new PdfInteger(value1);
 
         // Act
         int actualValue = pdfInteger1; // Use an implicit conversion from PdfInteger to int
@@ -213,7 +213,7 @@ public class PdfIntegerTests
     public void PdfInteger_CompareTo_CheckValidity(int value1, int value2, int expectedValue)
     {
         // Arrange
-        var pdfInteger1 = new PdfInteger(value1);
+        PdfInteger pdfInteger1 = new PdfInteger(value1);
         object pdfInteger2 = new PdfInteger(value2);
 
         // Act
@@ -227,7 +227,7 @@ public class PdfIntegerTests
     public void PdfInteger_CompareTo_ThrowsException()
     {
         // Arrange
-        var pdfInteger1 = new PdfInteger();
+        PdfInteger pdfInteger1 = new PdfInteger();
         object pdfInteger2 = 5;
 
         // Act
