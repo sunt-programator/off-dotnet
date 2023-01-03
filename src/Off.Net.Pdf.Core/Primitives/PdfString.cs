@@ -55,7 +55,7 @@ public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
 
     public override bool Equals(object? obj)
     {
-        return (obj is PdfString pdfName) && Equals(pdfName);
+        return obj is PdfString pdfName && Equals(pdfName);
     }
 
     #endregion

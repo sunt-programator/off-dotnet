@@ -19,6 +19,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9AD1AB50
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Off.Net.Pdf.Core.Tests", "tests\Off.Net.Pdf.Core.Tests\Off.Net.Pdf.Core.Tests.csproj", "{C09DDCF0-700D-46DA-BD9A-B3340E2E76B6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".config", ".config", "{4B4AC601-355C-4D3B-BB6D-9F220648952B}"
+	ProjectSection(SolutionItems) = preProject
+		.config\dotnet-tools.json = .config\dotnet-tools.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{E5BBC6F7-E046-48B6-A870-D115644713DD}"
+	ProjectSection(SolutionItems) = preProject
+		.github\CODEOWNERS = .github\CODEOWNERS
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{9BFC64AB-0E3C-4EE2-959E-7D5F0455ADC4}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		.github\workflows\sonar.yml = .github\workflows\sonar.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +55,9 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C09DDCF0-700D-46DA-BD9A-B3340E2E76B6} = {9AD1AB50-CB0F-43D9-B721-DE1572FC6875}
+		{4B4AC601-355C-4D3B-BB6D-9F220648952B} = {D587B5E1-06B4-4CA7-8FE4-62B0DF71BAD6}
+		{E5BBC6F7-E046-48B6-A870-D115644713DD} = {D587B5E1-06B4-4CA7-8FE4-62B0DF71BAD6}
+		{9BFC64AB-0E3C-4EE2-959E-7D5F0455ADC4} = {E5BBC6F7-E046-48B6-A870-D115644713DD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1C5CCEAE-E0B4-4074-9291-2AAD38F9117F}
