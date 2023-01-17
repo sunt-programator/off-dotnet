@@ -38,8 +38,7 @@ public class PdfNameTests
         // Arrange
 
         // Act
-        // ReSharper disable once ObjectCreationAsStatement
-        void PdfNameDelegate() => new PdfName(inputValue);
+        PdfName PdfNameDelegate() => new(inputValue);
 
         // Assert
         Assert.Throws<ArgumentNullException>(PdfNameDelegate);
@@ -115,7 +114,8 @@ public class PdfNameTests
     [Theory(DisplayName = "Check if Bytes property returns valid data")]
     [InlineData("Name1", new byte[] { 47, 78, 97, 109, 101, 49 })]
     [InlineData("ASomewhatLongerName", new byte[] { 47, 65, 83, 111, 109, 101, 119, 104, 97, 116, 76, 111, 110, 103, 101, 114, 78, 97, 109, 101 })]
-    [InlineData("A;Name_With-Various***Characters?", new byte[] { 47, 65, 59, 78, 97, 109, 101, 95, 87, 105, 116, 104, 45, 86, 97, 114, 105, 111, 117, 115, 42, 42, 42, 67, 104, 97, 114, 97, 99, 116, 101, 114, 115, 63 })]
+    [InlineData("A;Name_With-Various***Characters?",
+        new byte[] { 47, 65, 59, 78, 97, 109, 101, 95, 87, 105, 116, 104, 45, 86, 97, 114, 105, 111, 117, 115, 42, 42, 42, 67, 104, 97, 114, 97, 99, 116, 101, 114, 115, 63 })]
     [InlineData("1.2", new byte[] { 47, 49, 46, 50 })]
     [InlineData("$$", new byte[] { 47, 36, 36 })]
     [InlineData("@pattern", new byte[] { 47, 64, 112, 97, 116, 116, 101, 114, 110 })]
@@ -229,7 +229,7 @@ public class PdfNameTests
     public void PdfName_CheckImplicitOperator(string value1)
     {
         // Arrange
-        var pdfName1 = new PdfName(value1);
+        PdfName pdfName1 = new PdfName(value1);
 
         // Act
         string actualValue = pdfName1; // Use an implicit conversion from PdfName to string

@@ -8,9 +8,9 @@ public sealed class PdfDictionary : IPdfObject<IReadOnlyDictionary<PdfName, IPdf
 {
     #region Fields
 
-    private readonly int hashCode;
-    private string literalValue = string.Empty;
-    private byte[]? bytes;
+    private readonly int _hashCode;
+    private string _literalValue = string.Empty;
+    private byte[]? _bytes;
 
     #endregion
 
@@ -19,8 +19,8 @@ public sealed class PdfDictionary : IPdfObject<IReadOnlyDictionary<PdfName, IPdf
     public PdfDictionary(IReadOnlyDictionary<PdfName, IPdfObject> value)
     {
         Value = value;
-        hashCode = HashCode.Combine(nameof(PdfDictionary).GetHashCode(), value.GetHashCode());
-        bytes = null;
+        _hashCode = HashCode.Combine(nameof(PdfDictionary).GetHashCode(), value.GetHashCode());
+        _bytes = null;
     }
 
     #endregion
@@ -31,7 +31,7 @@ public sealed class PdfDictionary : IPdfObject<IReadOnlyDictionary<PdfName, IPdf
 
     public IReadOnlyDictionary<PdfName, IPdfObject> Value { get; }
 
-    public byte[] Bytes => bytes ??= Encoding.ASCII.GetBytes(Content);
+    public byte[] Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
 
     public string Content => GenerateContent();
 
@@ -41,7 +41,7 @@ public sealed class PdfDictionary : IPdfObject<IReadOnlyDictionary<PdfName, IPdf
 
     public override int GetHashCode()
     {
-        return hashCode;
+        return _hashCode;
     }
 
     public override bool Equals(object? obj)
@@ -72,9 +72,9 @@ public sealed class PdfDictionary : IPdfObject<IReadOnlyDictionary<PdfName, IPdf
 
     private string GenerateContent()
     {
-        if (literalValue.Length != 0)
+        if (_literalValue.Length != 0)
         {
-            return literalValue;
+            return _literalValue;
         }
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -93,26 +93,13 @@ public sealed class PdfDictionary : IPdfObject<IReadOnlyDictionary<PdfName, IPdf
             stringBuilder.Remove(stringBuilder.Length - 1, 1);
         }
 
-        literalValue = stringBuilder
+        _literalValue = stringBuilder
             .Insert(0, "<<")
             .Append(">>")
             .ToString();
 
-        return literalValue;
+        return _literalValue;
     }
 
     #endregion
-}
-
-public static class PdfDictionaryExtensions
-{
-    public static PdfDictionary ToPdfDictionary(this IDictionary<PdfName, IPdfObject> items)
-    {
-        return PdfDictionary.CreateRange(items);
-    }
-
-    public static PdfDictionary ToPdfDictionary(this KeyValuePair<PdfName, IPdfObject> item)
-    {
-        return PdfDictionary.Create(item);
-    }
 }

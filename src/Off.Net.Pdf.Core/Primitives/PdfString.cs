@@ -6,10 +6,10 @@ namespace Off.Net.Pdf.Core.Primitives;
 public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
 {
     #region Fields
-    private readonly int hashCode;
-    private readonly bool isHexString;
-    private string literalValue = string.Empty;
-    private byte[]? bytes;
+    private readonly int _hashCode;
+    private readonly bool _isHexString;
+    private string _literalValue = string.Empty;
+    private byte[]? _bytes;
     #endregion
 
     #region Constructors
@@ -21,9 +21,9 @@ public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
     {
         ThrowExceptionIfValueIsNotValid(value, isHexString);
         Value = value;
-        hashCode = HashCode.Combine(nameof(PdfString).GetHashCode(), value.GetHashCode());
-        bytes = null;
-        this.isHexString = isHexString;
+        _hashCode = HashCode.Combine(nameof(PdfString).GetHashCode(), value.GetHashCode());
+        _bytes = null;
+        this._isHexString = isHexString;
     }
     #endregion
 
@@ -32,7 +32,7 @@ public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
 
     public string Value { get; }
 
-    public byte[] Bytes => bytes ??= Encoding.ASCII.GetBytes(Content);
+    public byte[] Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
 
     public string Content => GenerateContent();
     #endregion
@@ -40,7 +40,7 @@ public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
     #region Public Methods
     public override int GetHashCode()
     {
-        return hashCode;
+        return _hashCode;
     }
 
     public bool Equals(PdfString? other)
@@ -85,9 +85,9 @@ public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
     #region Private Methods
     private string GenerateContent()
     {
-        if (literalValue.Length != 0)
+        if (_literalValue.Length != 0)
         {
-            return literalValue;
+            return _literalValue;
         }
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -97,12 +97,12 @@ public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
             stringBuilder.Append(Value[i]);
         }
 
-        literalValue = stringBuilder
-            .Insert(0, isHexString ? '<' : '(')
-            .Append(isHexString ? '>' : ')')
+        _literalValue = stringBuilder
+            .Insert(0, _isHexString ? '<' : '(')
+            .Append(_isHexString ? '>' : ')')
             .ToString();
 
-        return literalValue;
+        return _literalValue;
     }
 
     private static void ThrowExceptionIfValueIsNotValid(string value, bool isHexString)

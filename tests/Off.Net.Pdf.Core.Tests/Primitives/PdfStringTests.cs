@@ -46,7 +46,7 @@ public class PdfStringTests
     public void PdfString_Length_CheckValue(string value, bool isHexString, int expectedLength)
     {
         // Arrange
-        PdfString pdfString = new PdfString(value, isHexString);
+        PdfString pdfString = new(value, isHexString);
 
         // Act
         int actualLength = pdfString.Length;
@@ -99,9 +99,10 @@ public class PdfStringTests
     }
 
     [Theory(DisplayName = "Check if Bytes property returns valid data")]
-    [InlineData("Name1", new byte[] { 40, 78, 97, 109, 101, 49, 41})]
+    [InlineData("Name1", new byte[] { 40, 78, 97, 109, 101, 49, 41 })]
     [InlineData("ASomewhatLongerName", new byte[] { 40, 65, 83, 111, 109, 101, 119, 104, 97, 116, 76, 111, 110, 103, 101, 114, 78, 97, 109, 101, 41 })]
-    [InlineData("A;Name_With-Various***Characters?", new byte[] { 40, 65, 59, 78, 97, 109, 101, 95, 87, 105, 116, 104, 45, 86, 97, 114, 105, 111, 117, 115, 42, 42, 42, 67, 104, 97, 114, 97, 99, 116, 101, 114, 115, 63, 41 })]
+    [InlineData("A;Name_With-Various***Characters?",
+        new byte[] { 40, 65, 59, 78, 97, 109, 101, 95, 87, 105, 116, 104, 45, 86, 97, 114, 105, 111, 117, 115, 42, 42, 42, 67, 104, 97, 114, 97, 99, 116, 101, 114, 115, 63, 41 })]
     [InlineData("1.2", new byte[] { 40, 49, 46, 50, 41 })]
     [InlineData("$$", new byte[] { 40, 36, 36, 41 })]
     [InlineData("@pattern", new byte[] { 40, 64, 112, 97, 116, 116, 101, 114, 110, 41 })]
@@ -215,7 +216,7 @@ public class PdfStringTests
     public void PdfString_CheckImplicitOperator(string value1)
     {
         // Arrange
-        var pdfString1 = new PdfString(value1);
+        PdfString pdfString1 = new PdfString(value1);
 
         // Act
         string actualValue = pdfString1; // Use an implicit conversion from PdfString to string
@@ -228,7 +229,8 @@ public class PdfStringTests
     [Theory(DisplayName = "Check Content property for equality")]
     [InlineData("This is a string", "(This is a string)", false)]
     [InlineData("Strings may contain newlines\r\nand such.", "(Strings may contain newlines\r\nand such.)", false)]
-    [InlineData("Strings may contain balanced parentheses ( ) and\r\nspecial characters (*!&}^% and so on).", "(Strings may contain balanced parentheses ( ) and\r\nspecial characters (*!&}^% and so on).)", false)]
+    [InlineData("Strings may contain balanced parentheses ( ) and\r\nspecial characters (*!&}^% and so on).",
+        "(Strings may contain balanced parentheses ( ) and\r\nspecial characters (*!&}^% and so on).)", false)]
     [InlineData("", "()", false)]
     [InlineData("These \\\r\ntwo strings \\\r\nare the same.", "(These \\\r\ntwo strings \\\r\nare the same.)", false)]
     [InlineData("These \\\ntwo strings \\\rare the same.", "(These \\\ntwo strings \\\rare the same.)", false)]
@@ -244,7 +246,7 @@ public class PdfStringTests
     public void PdfString_Content_CheckEquality(string value1, string expectedPdfStringStringValue, bool isHexValue)
     {
         // Arrange
-        PdfString pdfString1 = new PdfString(value1, isHexValue);
+        PdfString pdfString1 = new(value1, isHexValue);
 
         // Act
         string actualPdfStringStringValue = pdfString1.Content;
@@ -276,11 +278,10 @@ public class PdfStringTests
         // Arrange
 
         // Act
-        // ReSharper disable once ObjectCreationAsStatement
-        void PdfStringValueDelegate() => new PdfString(value1);
+        PdfString PdfStringDelegate() => new(value1);
 
         // Assert
-        Assert.Throws<ArgumentException>(PdfStringValueDelegate);
+        Assert.Throws<ArgumentException>(PdfStringDelegate);
     }
 
     [Theory(DisplayName = "Check if string with unbalanced parentheses will throw an exception")]
@@ -291,11 +292,10 @@ public class PdfStringTests
         // Arrange
 
         // Act
-        // ReSharper disable once ObjectCreationAsStatement
-        void PdfStringValueDelegate() => new PdfString(value1);
+        PdfString PdfStringDelegate() => new(value1);
 
         // Assert
-        Assert.Throws<ArgumentException>(PdfStringValueDelegate);
+        Assert.Throws<ArgumentException>(PdfStringDelegate);
     }
 
     [Theory(DisplayName = "Check if constructor will throw an exception when invalid Hex value is provided")]
@@ -306,11 +306,10 @@ public class PdfStringTests
         // Arrange
 
         // Act
-        // ReSharper disable once ObjectCreationAsStatement
-        void StringValueDelegate() => new PdfString(value1, true);
+        PdfString PdfStringDelegate() => new(value1, isHexString: true);
 
         // Assert
-        Assert.Throws<ArgumentException>(StringValueDelegate);
+        Assert.Throws<ArgumentException>(PdfStringDelegate);
     }
 
     [Fact(DisplayName = "Check if constructor will throw an exception when invalid Hex value is provided")]
@@ -319,10 +318,9 @@ public class PdfStringTests
         // Arrange
 
         // Act
-        // ReSharper disable once ObjectCreationAsStatement
-        void PdfStringValueDelegate() => new PdfString(string.Empty, true);
+        PdfString PdfStringDelegate() => new(string.Empty, true);
 
         // Assert
-        Assert.Throws<ArgumentNullException>(PdfStringValueDelegate);
+        Assert.Throws<ArgumentNullException>(PdfStringDelegate);
     }
 }

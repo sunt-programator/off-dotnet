@@ -18,9 +18,9 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
     private const string RightSquareBracketChar = "#5D"; // ']'
     private const string LeftCurlyBracketChar = "#7B"; // '{'
     private const string RightCurlyBracketChar = "#7D"; // '}'
-    private readonly int hashCode;
-    private string literalValue = string.Empty;
-    private byte[]? bytes;
+    private readonly int _hashCode;
+    private string _literalValue = string.Empty;
+    private byte[]? _bytes;
     #endregion
 
     #region Constructors
@@ -32,8 +32,8 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
         }
 
         Value = value;
-        hashCode = HashCode.Combine(nameof(PdfName).GetHashCode(), value.GetHashCode());
-        bytes = null;
+        _hashCode = HashCode.Combine(nameof(PdfName).GetHashCode(), value.GetHashCode());
+        _bytes = null;
     }
     #endregion
 
@@ -42,7 +42,7 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
 
     public string Value { get; }
 
-    public byte[] Bytes => bytes ??= Encoding.ASCII.GetBytes(Content);
+    public byte[] Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
 
     public string Content => GenerateContent();
     #endregion
@@ -50,7 +50,7 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
     #region Public Methods
     public override int GetHashCode()
     {
-        return hashCode;
+        return _hashCode;
     }
 
     public bool Equals(PdfName? other)
@@ -95,9 +95,9 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
     #region Private Methods
     private string GenerateContent()
     {
-        if (literalValue.Length != 0)
+        if (_literalValue.Length != 0)
         {
-            return literalValue;
+            return _literalValue;
         }
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -107,11 +107,11 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
             stringBuilder.Append(ConvertCharToString(ch));
         }
 
-        literalValue = stringBuilder
+        _literalValue = stringBuilder
             .Insert(0, '/')
             .ToString();
 
-        return literalValue;
+        return _literalValue;
     }
 
     private static string ConvertCharToString(char ch)
