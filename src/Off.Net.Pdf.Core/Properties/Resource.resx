@@ -147,6 +147,15 @@
     <value>The object number of the PDF indirect type must be positive</value>
   </data>
   <data name="PdfIndirect_GenerationNumberMustBePositive" xml:space="preserve">
-    <value>The generation number of the PDF indirect type must be positive</value>
+    <value>The generation number must be positive</value>
+  </data>
+  <data name="PdfIndirect_GenerationNumberMustNotExceedMaxAllowedValue" xml:space="preserve">
+    <value>The generation number must not exceed 65535</value>
+  </data>
+  <data name="XRefEntry_ByteOffsetMustBePositive" xml:space="preserve">
+    <value>The byte offset of the XRef entry must be positive</value>
+  </data>
+  <data name="XRefEntry_ByteOffsetMustNotExceedMaxAllowedValue" xml:space="preserve">
+    <value>The byte offset must not exceed 9999999999</value>
   </data>
 </root>

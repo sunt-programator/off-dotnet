@@ -356,24 +356,10 @@ public class PdfStreamTests
         PdfStream pdfStream = new PdfString(pdfStringValue).ToPdfStream();
 
         // Act
-        byte[] actualBytes = pdfStream.Bytes;
+         ReadOnlyMemory<byte> actualBytes = pdfStream.Bytes;
 
         // Assert
-        Assert.Equal(expectedBytes, actualBytes);
-    }
-
-    [Fact(DisplayName = $"{nameof(PdfStream.Bytes)} property, accessed multiple times, should return the same reference")]
-    public void PdfStream_Bytes_MultipleAccesses_ShouldReturnSameReference()
-    {
-        // Arrange
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream();
-
-        // Act
-        byte[] actualStreamBytes1 = pdfStream.Bytes;
-        byte[] actualStreamBytes2 = pdfStream.Bytes;
-
-        // Assert
-        Assert.True(ReferenceEquals(actualStreamBytes1, actualStreamBytes2));
+        Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
     }
 
     [Fact(DisplayName = "Check Equals method if the argument is null")]

@@ -8,13 +8,13 @@ public struct PdfNull : IPdfObject
     #region Fields
     private const string LiteralValue = "null";
     private static readonly int HashCode = System.HashCode.Combine(nameof(PdfNull).GetHashCode(), LiteralValue.GetHashCode());
-    private static readonly byte[] BytesArray = Encoding.ASCII.GetBytes(LiteralValue);
+    private static readonly ReadOnlyMemory<byte> BytesArray = Encoding.ASCII.GetBytes(LiteralValue);
     #endregion
 
     #region Properties
     public int Length => 4;
 
-    public byte[] Bytes => BytesArray;
+    public ReadOnlyMemory<byte> Bytes => BytesArray;
 
     public string Content => LiteralValue;
     #endregion

@@ -124,10 +124,10 @@ public class PdfBooleanTests
         PdfBoolean pdfBoolean1 = value1; // Use an implicit conversion from bool to PdfBoolean
 
         // Act
-        byte[] actualBytes = pdfBoolean1.Bytes;
+         ReadOnlyMemory<byte> actualBytes = pdfBoolean1.Bytes;
 
         // Assert
-        Assert.Equal(expectedBytes, actualBytes);
+        Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
     }
 
     [Theory(DisplayName = "Check if GetHashCode method returns valid value")]

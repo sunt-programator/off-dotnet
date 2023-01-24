@@ -99,10 +99,10 @@ public class PdfArrayTests
         PdfArray pdfArray1 = value1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
 
         // Act
-        byte[] actualBytes = pdfArray1.Bytes;
+        ReadOnlyMemory<byte> actualBytes = pdfArray1.Bytes;
 
         // Assert
-        Assert.Equal(expectedBytes, actualBytes);
+        Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
     }
 
     [Theory(DisplayName = "Check if GetHashCode method returns valid value")]

@@ -117,10 +117,10 @@ public class PdfStringTests
         PdfString pdfString1 = value1; // Use an implicit conversion from string to PdfString
 
         // Act
-        byte[] actualBytes = pdfString1.Bytes;
+         ReadOnlyMemory<byte> actualBytes = pdfString1.Bytes;
 
         // Assert
-        Assert.Equal(expectedBytes, actualBytes);
+        Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
     }
 
     [Theory(DisplayName = "Check if GetHashCode method returns valid value")]

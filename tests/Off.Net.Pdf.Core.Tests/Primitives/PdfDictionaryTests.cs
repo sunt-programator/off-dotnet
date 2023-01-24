@@ -99,10 +99,10 @@ public class PdfDictionaryTests
         PdfDictionary pdfDictionary1 = value1.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
 
         // Act
-        byte[] actualBytes = pdfDictionary1.Bytes;
+         ReadOnlyMemory<byte> actualBytes = pdfDictionary1.Bytes;
 
         // Assert
-        Assert.Equal(expectedBytes, actualBytes);
+        Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
     }
 
     [Theory(DisplayName = "Check if GetHashCode method returns valid value")]

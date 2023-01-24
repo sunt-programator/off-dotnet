@@ -55,10 +55,10 @@ public class PdfNullTests
         PdfNull pdfNull1 = new();
 
         // Act
-        byte[] actualBytes = pdfNull1.Bytes;
+         ReadOnlyMemory<byte> actualBytes = pdfNull1.Bytes;
 
         // Assert
-        Assert.Equal(expectedBytes, actualBytes);
+        Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
     }
 
     [Fact(DisplayName = "Check if GetHashCode method returns valid value")]
