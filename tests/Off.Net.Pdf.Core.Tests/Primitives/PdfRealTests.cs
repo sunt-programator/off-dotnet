@@ -99,10 +99,10 @@ public class PdfRealTests
         PdfReal pdfReal1 = value1; // Use an implicit conversion from float to PdfReal
 
         // Act
-        byte[] actualBytes = pdfReal1.Bytes;
+         ReadOnlyMemory<byte> actualBytes = pdfReal1.Bytes;
 
         // Assert
-        Assert.Equal(expectedBytes, actualBytes);
+        Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
     }
 
     [Theory(DisplayName = "Check if GetHashCode method returns valid value")]

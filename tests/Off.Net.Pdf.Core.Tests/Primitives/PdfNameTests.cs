@@ -130,10 +130,10 @@ public class PdfNameTests
         PdfName pdfName1 = value1; // Use an implicit conversion from string to PdfName
 
         // Act
-        byte[] actualBytes = pdfName1.Bytes;
+         ReadOnlyMemory<byte> actualBytes = pdfName1.Bytes;
 
         // Assert
-        Assert.Equal(expectedBytes, actualBytes);
+        Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
     }
 
     [Theory(DisplayName = "Check if GetHashCode method returns valid value")]

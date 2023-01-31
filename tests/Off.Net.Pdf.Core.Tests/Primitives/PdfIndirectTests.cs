@@ -153,10 +153,10 @@ public class PdfIndirectTests
         PdfIndirect pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber);
 
         // Act
-        byte[] actualBytes = pdfIndirect.Bytes;
+         ReadOnlyMemory<byte> actualBytes = pdfIndirect.Bytes;
 
         // Assert
-        Assert.Equal(expectedBytes, actualBytes);
+        Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
     }
 
     [Theory(DisplayName = "Throw exception if object number is not positive")]
@@ -172,13 +172,14 @@ public class PdfIndirectTests
         Action pdfIndirectFunc = () => pdfString.ToPdfIndirect(objectNumber);
 
         // Assert
-        Assert.Throws<ArgumentException>(pdfIndirectFunc);
+        Assert.Throws<ArgumentOutOfRangeException>(pdfIndirectFunc);
     }
 
-    [Theory(DisplayName = "Throw exception if generation number is not positive")]
+    [Theory(DisplayName = "Throw exception if generation number is out of range")]
     [InlineData(-1)]
     [InlineData(-7)]
     [InlineData(-2465)]
+    [InlineData(65536)]
     public void PdfIndirect_Constructor_NegativeGenerationNumber_ShouldThrowException(int generationNumber)
     {
         // Arrange
@@ -188,6 +189,6 @@ public class PdfIndirectTests
         Action pdfIndirectFunc = () => pdfString.ToPdfIndirect(5, generationNumber);
 
         // Assert
-        Assert.Throws<ArgumentException>(pdfIndirectFunc);
+        Assert.Throws<ArgumentOutOfRangeException>(pdfIndirectFunc);
     }
 }

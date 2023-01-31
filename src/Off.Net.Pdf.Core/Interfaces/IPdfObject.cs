@@ -10,7 +10,7 @@ public interface IPdfObject
     /// <summary>
     ///     Gets the bytes array representation of the Pdf object.
     /// </summary>
-    byte[] Bytes { get; }
+    ReadOnlyMemory<byte> Bytes { get; }
 
     string Content { get; }
 }

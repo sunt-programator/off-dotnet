@@ -101,10 +101,10 @@ public class PdfIntegerTests
         PdfInteger pdfInteger1 = value1; // Use an implicit conversion from int to PdfInteger
 
         // Act
-        byte[] actualBytes = pdfInteger1.Bytes;
+         ReadOnlyMemory<byte> actualBytes = pdfInteger1.Bytes;
 
         // Assert
-        Assert.Equal(expectedBytes, actualBytes);
+        Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
     }
 
     [Theory(DisplayName = "Check if GetHashCode method returns valid value")]

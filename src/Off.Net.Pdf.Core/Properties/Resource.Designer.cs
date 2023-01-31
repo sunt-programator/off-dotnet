@@ -60,11 +60,20 @@ namespace Off.Net.Pdf.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The generation number of the PDF indirect type must be positive.
+        ///   Looks up a localized string similar to The generation number must be positive.
         /// </summary>
         internal static string PdfIndirect_GenerationNumberMustBePositive {
             get {
                 return ResourceManager.GetString("PdfIndirect_GenerationNumberMustBePositive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The generation number must not exceed 65535.
+        /// </summary>
+        internal static string PdfIndirect_GenerationNumberMustNotExceedMaxAllowedValue {
+            get {
+                return ResourceManager.GetString("PdfIndirect_GenerationNumberMustNotExceedMaxAllowedValue", resourceCulture);
             }
         }
         
@@ -137,6 +146,24 @@ namespace Off.Net.Pdf.Core {
         internal static string PdfString_MustNotBeEmpty {
             get {
                 return ResourceManager.GetString("PdfString_MustNotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The byte offset of the XRef entry must be positive.
+        /// </summary>
+        internal static string XRefEntry_ByteOffsetMustBePositive {
+            get {
+                return ResourceManager.GetString("XRefEntry_ByteOffsetMustBePositive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The byte offset must not exceed 9999999999.
+        /// </summary>
+        internal static string XRefEntry_ByteOffsetMustNotExceedMaxAllowedValue {
+            get {
+                return ResourceManager.GetString("XRefEntry_ByteOffsetMustNotExceedMaxAllowedValue", resourceCulture);
             }
         }
     }

@@ -23,7 +23,7 @@ public struct PdfBoolean : IPdfObject<bool>, IEquatable<PdfBoolean>
 
     public bool Value { get; }
 
-    public byte[] Bytes { get; }
+    public ReadOnlyMemory<byte> Bytes { get; }
 
     public string Content { get; }
     #endregion

@@ -31,7 +31,7 @@ public sealed class PdfDictionary : IPdfObject<IReadOnlyDictionary<PdfName, IPdf
 
     public IReadOnlyDictionary<PdfName, IPdfObject> Value { get; }
 
-    public byte[] Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
+    public ReadOnlyMemory<byte> Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
 
     public string Content => GenerateContent();
 

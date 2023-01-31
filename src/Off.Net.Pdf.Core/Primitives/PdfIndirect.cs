@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Off.Net.Pdf.Core.Extensions;
 using Off.Net.Pdf.Core.Interfaces;
 
 namespace Off.Net.Pdf.Core.Primitives;
@@ -17,18 +18,13 @@ public sealed class PdfIndirect : IPdfObject<IPdfObject>, IEquatable<PdfIndirect
 
     public PdfIndirect(IPdfObject pdfObject, int objectNumber, int generationNumber = 0)
     {
-        if (objectNumber < 0)
-        {
-            throw new ArgumentException(Resource.PdfIndirect_ObjectNumberMustBePositive, nameof(objectNumber));
-        }
+        ObjectNumber = objectNumber
+            .CheckConstraints(num => num >= 0, Resource.PdfIndirect_ObjectNumberMustBePositive);
 
-        if (generationNumber < 0)
-        {
-            throw new ArgumentException(Resource.PdfIndirect_GenerationNumberMustBePositive, nameof(objectNumber));
-        }
+        GenerationNumber = generationNumber
+            .CheckConstraints(num => num >= 0, Resource.PdfIndirect_ObjectNumberMustBePositive)
+            .CheckConstraints(num => num <= 65535, Resource.PdfIndirect_GenerationNumberMustNotExceedMaxAllowedValue);
 
-        ObjectNumber = objectNumber;
-        GenerationNumber = generationNumber;
         Value = pdfObject;
         _hashCode = HashCode.Combine(nameof(PdfIndirect).GetHashCode(), objectNumber.GetHashCode(), generationNumber.GetHashCode());
         _bytes = null;
@@ -47,7 +43,7 @@ public sealed class PdfIndirect : IPdfObject<IPdfObject>, IEquatable<PdfIndirect
 
     public int Length => Content.Length;
 
-    public byte[] Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
+    public ReadOnlyMemory<byte> Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
 
     public string Content => GenerateContent();
 

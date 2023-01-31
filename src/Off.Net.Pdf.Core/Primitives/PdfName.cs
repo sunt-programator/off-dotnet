@@ -42,7 +42,7 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
 
     public string Value { get; }
 
-    public byte[] Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
+    public ReadOnlyMemory<byte> Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
 
     public string Content => GenerateContent();
     #endregion
