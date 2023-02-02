@@ -78,7 +78,7 @@ namespace Off.Net.Pdf.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The object number of the PDF indirect type must be positive.
+        ///   Looks up a localized string similar to The object number must be positive.
         /// </summary>
         internal static string PdfIndirect_ObjectNumberMustBePositive {
             get {
@@ -164,6 +164,15 @@ namespace Off.Net.Pdf.Core {
         internal static string XRefEntry_ByteOffsetMustNotExceedMaxAllowedValue {
             get {
                 return ResourceManager.GetString("XRefEntry_ByteOffsetMustNotExceedMaxAllowedValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The cross-reference subsection must have non-empty list of entries.
+        /// </summary>
+        internal static string XRefSubSection_MustHaveNonEmptyEntriesCollection {
+            get {
+                return ResourceManager.GetString("XRefSubSection_MustHaveNonEmptyEntriesCollection", resourceCulture);
             }
         }
     }

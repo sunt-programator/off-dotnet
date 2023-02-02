@@ -144,7 +144,7 @@
     <value>The PDF string type with Hex representation should have a value provided</value>
   </data>
   <data name="PdfIndirect_ObjectNumberMustBePositive" xml:space="preserve">
-    <value>The object number of the PDF indirect type must be positive</value>
+    <value>The object number must be positive</value>
   </data>
   <data name="PdfIndirect_GenerationNumberMustBePositive" xml:space="preserve">
     <value>The generation number must be positive</value>
@@ -157,5 +157,8 @@
   </data>
   <data name="XRefEntry_ByteOffsetMustNotExceedMaxAllowedValue" xml:space="preserve">
     <value>The byte offset must not exceed 9999999999</value>
+  </data>
+  <data name="XRefSubSection_MustHaveNonEmptyEntriesCollection" xml:space="preserve">
+    <value>The cross-reference subsection must have non-empty list of entries</value>
   </data>
 </root>

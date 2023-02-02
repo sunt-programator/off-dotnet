@@ -14,7 +14,7 @@ public sealed class XRefEntry : IPdfObject, IEquatable<XRefEntry>
 {
     #region Fields
 
-    private readonly int _hashCode;
+    private readonly Lazy<int> _hashCode;
     private readonly Lazy<string> _literalValue;
     private readonly Lazy<byte[]> _bytes;
 
@@ -29,12 +29,12 @@ public sealed class XRefEntry : IPdfObject, IEquatable<XRefEntry>
             .CheckConstraints(num => num <= 9999999999, Resource.XRefEntry_ByteOffsetMustNotExceedMaxAllowedValue);
 
         GenerationNumber = generationNumber
-            .CheckConstraints(num => num >= 0, Resource.PdfIndirect_ObjectNumberMustBePositive)
+            .CheckConstraints(num => num >= 0, Resource.PdfIndirect_GenerationNumberMustBePositive)
             .CheckConstraints(num => num <= 65535, Resource.PdfIndirect_GenerationNumberMustNotExceedMaxAllowedValue);
 
         EntryType = entryType;
 
-        _hashCode = HashCode.Combine(nameof(XRefEntry).GetHashCode(), byteOffset.GetHashCode(), generationNumber.GetHashCode());
+        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(XRefEntry).GetHashCode(), byteOffset.GetHashCode(), generationNumber.GetHashCode()));
         _literalValue = new Lazy<string>(GenerateContent);
         _bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(Content));
     }
@@ -61,7 +61,7 @@ public sealed class XRefEntry : IPdfObject, IEquatable<XRefEntry>
 
     public override int GetHashCode()
     {
-        return _hashCode;
+        return _hashCode.Value;
     }
 
     public override bool Equals(object? obj)
