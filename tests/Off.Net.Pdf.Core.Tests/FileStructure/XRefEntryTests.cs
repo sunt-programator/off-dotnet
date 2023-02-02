@@ -53,7 +53,7 @@ public class XRefEntryTests
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(XRefEntryFunction);
-        Assert.StartsWith(Resource.PdfIndirect_ObjectNumberMustBePositive, exception.Message);
+        Assert.StartsWith(Resource.PdfIndirect_GenerationNumberMustBePositive, exception.Message);
     }
 
     [Theory(DisplayName = $"Constructor with overflowed {nameof(XRefEntry.GenerationNumber)} should throw an {nameof(ArgumentOutOfRangeException)}")]
