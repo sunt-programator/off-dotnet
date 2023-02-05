@@ -53,7 +53,7 @@ public class XRefSubSectionTests
         Assert.Equal(expectedContent, actualContent);
     }
 
-    [Theory(DisplayName = $"{nameof(XRefSubSection.Length)} property should return always 20")]
+    [Theory(DisplayName = $"{nameof(XRefSubSection.Length)} property should return a valid value")]
     [MemberData(nameof(XRefSubSectionTestsDataGenerator.XRefSubSection_Length_TestCases), MemberType = typeof(XRefSubSectionTestsDataGenerator))]
     public void XRefSubSection_Length_ShouldReturnValidValue(int objectNumber, List<XRefEntry> entries, int expectedLength)
     {

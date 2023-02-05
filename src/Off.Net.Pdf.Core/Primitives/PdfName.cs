@@ -100,7 +100,7 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
             return _literalValue;
         }
 
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new();
 
         foreach (char ch in Value)
         {

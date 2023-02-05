@@ -185,7 +185,7 @@ public class PdfRealTests
     public void PdfReal_CheckImplicitOperator(float value1)
     {
         // Arrange
-        PdfReal pdfReal1 = new PdfReal(value1);
+        PdfReal pdfReal1 = new(value1);
 
         // Act
         float actualValue = pdfReal1; // Use an implicit conversion from PdfReal to float
@@ -205,7 +205,7 @@ public class PdfRealTests
     public void PdfReal_CompareTo_CheckValidity(float value1, float value2, float expectedValue)
     {
         // Arrange
-        PdfReal pdfReal1 = new PdfReal(value1);
+        PdfReal pdfReal1 = new(value1);
         object pdfReal2 = new PdfReal(value2);
 
         // Act
@@ -219,7 +219,7 @@ public class PdfRealTests
     public void PdfReal_CompareTo_ThrowsException()
     {
         // Arrange
-        PdfReal pdfReal1 = new PdfReal();
+        PdfReal pdfReal1 = new();
         object pdfReal2 = 5;
 
         // Act
@@ -256,7 +256,7 @@ public class PdfRealTests
     public void PdfReal_Constructor_CheckApproximation(float value1)
     {
         // Arrange
-        PdfReal pdfReal1 = new PdfReal(value1);
+        PdfReal pdfReal1 = new(value1);
 
         // Act
         float actualValue = pdfReal1.Value;

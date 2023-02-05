@@ -216,7 +216,7 @@ public class PdfStringTests
     public void PdfString_CheckImplicitOperator(string value1)
     {
         // Arrange
-        PdfString pdfString1 = new PdfString(value1);
+        PdfString pdfString1 = new(value1);
 
         // Act
         string actualValue = pdfString1; // Use an implicit conversion from PdfString to string

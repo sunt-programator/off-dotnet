@@ -90,7 +90,7 @@ public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
             return _literalValue;
         }
 
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new();
 
         for (int i = 0; i < Value.Length; i++)
         {

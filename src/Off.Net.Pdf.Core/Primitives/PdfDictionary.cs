@@ -77,7 +77,7 @@ public sealed class PdfDictionary : IPdfObject<IReadOnlyDictionary<PdfName, IPdf
             return _literalValue;
         }
 
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new();
 
         foreach (var item in Value)
         {

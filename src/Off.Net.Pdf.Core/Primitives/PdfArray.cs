@@ -66,7 +66,7 @@ public sealed class PdfArray : IPdfObject<IReadOnlyCollection<IPdfObject>>, IEqu
             return _literalValue;
         }
 
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new();
 
         foreach (var item in Value)
         {
