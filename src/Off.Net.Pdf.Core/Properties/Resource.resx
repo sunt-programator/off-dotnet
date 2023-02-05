@@ -161,4 +161,7 @@
   <data name="XRefSubSection_MustHaveNonEmptyEntriesCollection" xml:space="preserve">
     <value>The cross-reference subsection must have non-empty list of entries</value>
   </data>
+  <data name="XRefSection_MustHaveNonEmptyEntriesCollection" xml:space="preserve">
+    <value>The cross-reference section must have non-empty list of entries</value>
+  </data>
 </root>
