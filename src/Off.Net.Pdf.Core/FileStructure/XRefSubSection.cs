@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System.Text;
 using Off.Net.Pdf.Core.Extensions;
 using Off.Net.Pdf.Core.Interfaces;
 
@@ -32,11 +31,11 @@ public sealed class XRefSubSection : IPdfObject<ICollection<XRefEntry>>, IEquata
 
     public int Length => Content.Length;
 
-    public ReadOnlyMemory<byte> Bytes => _bytes.Value;
-
     public int ObjectNumber { get; }
 
     public int NumberOfEntries => Value.Count;
+
+    public ReadOnlyMemory<byte> Bytes => _bytes.Value;
 
     public ICollection<XRefEntry> Value { get; }
 

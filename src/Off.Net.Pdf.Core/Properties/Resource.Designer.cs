@@ -168,6 +168,15 @@ namespace Off.Net.Pdf.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The cross-reference section must have non-empty list of entries.
+        /// </summary>
+        internal static string XRefSection_MustHaveNonEmptyEntriesCollection {
+            get {
+                return ResourceManager.GetString("XRefSection_MustHaveNonEmptyEntriesCollection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The cross-reference subsection must have non-empty list of entries.
         /// </summary>
         internal static string XRefSubSection_MustHaveNonEmptyEntriesCollection {
