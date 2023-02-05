@@ -229,7 +229,7 @@ public class PdfNameTests
     public void PdfName_CheckImplicitOperator(string value1)
     {
         // Arrange
-        PdfName pdfName1 = new PdfName(value1);
+        PdfName pdfName1 = new(value1);
 
         // Act
         string actualValue = pdfName1; // Use an implicit conversion from PdfName to string

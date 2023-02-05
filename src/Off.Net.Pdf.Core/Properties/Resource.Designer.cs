@@ -168,7 +168,7 @@ namespace Off.Net.Pdf.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The cross-reference section must have non-empty list of entries.
+        ///   Looks up a localized string similar to The cross-reference subsection must have non-empty list of subsections.
         /// </summary>
         internal static string XRefSection_MustHaveNonEmptyEntriesCollection {
             get {
@@ -182,6 +182,15 @@ namespace Off.Net.Pdf.Core {
         internal static string XRefSubSection_MustHaveNonEmptyEntriesCollection {
             get {
                 return ResourceManager.GetString("XRefSubSection_MustHaveNonEmptyEntriesCollection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The cross-reference table must have non-empty list of sections.
+        /// </summary>
+        internal static string XRefTable_MustHaveNonEmptyEntriesCollection {
+            get {
+                return ResourceManager.GetString("XRefTable_MustHaveNonEmptyEntriesCollection", resourceCulture);
             }
         }
     }

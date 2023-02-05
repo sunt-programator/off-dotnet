@@ -179,7 +179,7 @@ public class PdfBooleanTests
     public void PdfBoolean_CheckImplicitOperator(bool value1)
     {
         // Arrange
-        PdfBoolean pdfBoolean1 = new PdfBoolean(value1);
+        PdfBoolean pdfBoolean1 = new(value1);
 
         // Act
         bool actualValue = pdfBoolean1; // Use an implicit conversion from PdfBoolean to bool

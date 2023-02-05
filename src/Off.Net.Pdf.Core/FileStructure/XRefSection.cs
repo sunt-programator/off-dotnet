@@ -6,7 +6,7 @@ namespace Off.Net.Pdf.Core.FileStructure;
 
 public sealed class XRefSection : IPdfObject<ICollection<XRefSubSection>>, IEquatable<XRefSection>
 {
-#region Fields
+    #region Fields
 
     private readonly Lazy<int> _hashCode;
     private readonly Lazy<string> _literalValue;
