@@ -6,24 +6,6 @@ namespace Off.Net.Pdf.Core.Tests.Primitives;
 
 public class PdfIndirectTests
 {
-    [Theory(DisplayName = "Constructor initializer check reference identifier")]
-    [InlineData(0, 0, "0 0 R")]
-    [InlineData(0, 65535, "0 65535 R")]
-    [InlineData(21, 6, "21 6 R")]
-    public void PdfIndirect_Constructor_CheckReferenceIdentifier(int objectNumber, int generationNumber, string expectedReferenceIdentifier)
-    {
-        // Arrange
-        PdfIndirect pdfIndirect = new PdfString("Test").ToPdfIndirect(objectNumber, generationNumber);
-
-        // Act
-        string actualReferenceIdentifier = pdfIndirect.ReferenceIdentifier;
-
-        // Assert
-        Assert.Equal(expectedReferenceIdentifier, actualReferenceIdentifier);
-        Assert.Equal(objectNumber, pdfIndirect.ObjectNumber);
-        Assert.Equal(generationNumber, pdfIndirect.GenerationNumber);
-    }
-
     [Theory(DisplayName = "Check Length property")]
     [InlineData(0, 0, "Test", 21)]
     [InlineData(12, 0, "Brillig", 25)]
@@ -31,7 +13,7 @@ public class PdfIndirectTests
     public void PdfIndirect_Length_CheckValue(int objectNumber, int generationNumber, string actualStringValue, int expectedLength)
     {
         // Arrange
-        PdfIndirect pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber);
+        PdfIndirect<PdfString> pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber);
 
         // Act
         int actualLength = pdfIndirect.Length;
@@ -47,7 +29,7 @@ public class PdfIndirectTests
     public void PdfIndirect_Content_CheckValue(int objectNumber, int generationNumber, string actualStringValue, string expectedContent)
     {
         // Arrange
-        PdfIndirect pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber);
+        PdfIndirect<PdfString> pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber);
 
         // Act
         string actualContent = pdfIndirect.Content;
@@ -63,7 +45,7 @@ public class PdfIndirectTests
     public void PdfIndirect_ValueString_CheckContent(int objectNumber, int generationNumber, string actualStringValue, string expectedValueContent)
     {
         // Arrange
-        PdfIndirect pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber);
+        PdfIndirect<PdfString> pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber);
 
         // Act
         string actualValueContent = pdfIndirect.Value.Content;
@@ -79,8 +61,8 @@ public class PdfIndirectTests
     public void PdfIndirect_GetHashCode_CheckValidity(int objectNumber, int generationNumber, string actualStringValue)
     {
         // Arrange
-        PdfIndirect pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber);
-        int expectedHashCode = HashCode.Combine(nameof(PdfIndirect).GetHashCode(), objectNumber.GetHashCode(), generationNumber.GetHashCode());
+        PdfIndirect<PdfString> pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber);
+        int expectedHashCode = HashCode.Combine(nameof(PdfIndirect<PdfString>).GetHashCode(), objectNumber.GetHashCode(), generationNumber.GetHashCode());
 
         // Act
         int actualHashCode = pdfIndirect.GetHashCode();
@@ -93,7 +75,7 @@ public class PdfIndirectTests
     public void PdfIndirect_Equals_Null_ShouldReturnFalse()
     {
         // Arrange
-        PdfIndirect pdfIndirect = new PdfString("Test").ToPdfIndirect(0);
+        PdfIndirect<PdfString> pdfIndirect = new PdfString("Test").ToPdfIndirect(0);
 
         // Act
         bool actualResult1 = pdfIndirect.Equals(null);
@@ -115,8 +97,8 @@ public class PdfIndirectTests
         bool expectedResult)
     {
         // Arrange
-        PdfIndirect pdfIndirect1 = new PdfString(actualStringValue1).ToPdfIndirect(objectNumber1, generationNumber1);
-        PdfIndirect pdfIndirect2 = new PdfString(actualStringValue2).ToPdfIndirect(objectNumber2, generationNumber2);
+        PdfIndirect<PdfString> pdfIndirect1 = new PdfString(actualStringValue1).ToPdfIndirect(objectNumber1, generationNumber1);
+        PdfIndirect<PdfString> pdfIndirect2 = new PdfString(actualStringValue2).ToPdfIndirect(objectNumber2, generationNumber2);
 
         // Act
         bool actualResult = pdfIndirect1.Equals(pdfIndirect2);
@@ -132,7 +114,7 @@ public class PdfIndirectTests
     public void PdfIndirect_Value_CheckValidity(int objectNumber, int generationNumber, string actualStringValue)
     {
         // Arrange
-        PdfIndirect pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber);
+        PdfIndirect<PdfString> pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber);
 
         // Act
         string actualContent1 = pdfIndirect.Content;
@@ -150,7 +132,7 @@ public class PdfIndirectTests
     public void PdfIndirect_Bytes_CheckValue(int objectNumber, int generationNumber, string actualStringValue, byte[] expectedBytes)
     {
         // Arrange
-        PdfIndirect pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber);
+        PdfIndirect<PdfString> pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber);
 
         // Act
          ReadOnlyMemory<byte> actualBytes = pdfIndirect.Bytes;

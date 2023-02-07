@@ -4,7 +4,7 @@ using Off.Net.Pdf.Core.Interfaces;
 
 namespace Off.Net.Pdf.Core.Primitives;
 
-public sealed class PdfDictionary : IPdfObject<IReadOnlyDictionary<PdfName, IPdfObject>>, IEquatable<PdfDictionary?>
+public sealed class PdfDictionary<TValue> : IPdfObject<IReadOnlyDictionary<PdfName, TValue>>, IEquatable<PdfDictionary<TValue>?> where TValue: IPdfObject
 {
     #region Fields
 
@@ -16,10 +16,10 @@ public sealed class PdfDictionary : IPdfObject<IReadOnlyDictionary<PdfName, IPdf
 
     #region Constructors
 
-    public PdfDictionary(IReadOnlyDictionary<PdfName, IPdfObject> value)
+    public PdfDictionary(IReadOnlyDictionary<PdfName, TValue> value)
     {
         Value = value;
-        _hashCode = HashCode.Combine(nameof(PdfDictionary).GetHashCode(), value.GetHashCode());
+        _hashCode = HashCode.Combine(nameof(PdfDictionary<TValue>).GetHashCode(), value.GetHashCode());
         _bytes = null;
     }
 
@@ -29,7 +29,7 @@ public sealed class PdfDictionary : IPdfObject<IReadOnlyDictionary<PdfName, IPdf
 
     public int Length => Content.Length;
 
-    public IReadOnlyDictionary<PdfName, IPdfObject> Value { get; }
+    public IReadOnlyDictionary<PdfName, TValue> Value { get; }
 
     public ReadOnlyMemory<byte> Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
 
@@ -46,24 +46,24 @@ public sealed class PdfDictionary : IPdfObject<IReadOnlyDictionary<PdfName, IPdf
 
     public override bool Equals(object? obj)
     {
-        return Equals(obj as PdfDictionary);
+        return Equals(obj as PdfDictionary<TValue>);
     }
 
-    public bool Equals(PdfDictionary? other)
+    public bool Equals(PdfDictionary<TValue>? other)
     {
         return other is not null &&
-               EqualityComparer<IReadOnlyDictionary<PdfName, IPdfObject>>.Default.Equals(Value, other.Value);
+               EqualityComparer<IReadOnlyDictionary<PdfName, TValue>>.Default.Equals(Value, other.Value);
     }
 
-    public static PdfDictionary CreateRange(IDictionary<PdfName, IPdfObject> items)
+    public static PdfDictionary<TValue> CreateRange(IDictionary<PdfName, TValue> items)
     {
-        return new PdfDictionary(new ReadOnlyDictionary<PdfName, IPdfObject>(items));
+        return new PdfDictionary<TValue>(new ReadOnlyDictionary<PdfName, TValue>(items));
     }
 
-    public static PdfDictionary Create(KeyValuePair<PdfName, IPdfObject> item)
+    public static PdfDictionary<TValue> Create(KeyValuePair<PdfName, TValue> item)
     {
-        IDictionary<PdfName, IPdfObject> dictionary = new Dictionary<PdfName, IPdfObject>(1) { { item.Key, item.Value } };
-        return new PdfDictionary(new ReadOnlyDictionary<PdfName, IPdfObject>(dictionary));
+        IDictionary<PdfName, TValue> dictionary = new Dictionary<PdfName, TValue>(1) { { item.Key, item.Value } };
+        return new PdfDictionary<TValue>(new ReadOnlyDictionary<PdfName, TValue>(dictionary));
     }
 
     #endregion

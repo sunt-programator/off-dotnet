@@ -167,4 +167,19 @@
   <data name="XRefTable_MustHaveNonEmptyEntriesCollection" xml:space="preserve">
     <value>The cross-reference table must have non-empty list of sections</value>
   </data>
+  <data name="FileTrailer_ByteOffsetMustBePositive" xml:space="preserve">
+    <value>The byte offset of the file trailer object must be positive</value>
+  </data>
+  <data name="FileTrailer_SizeMustBeGreaterThanZero" xml:space="preserve">
+    <value>The size key must be a positive and non-zero value</value>
+  </data>
+  <data name="FileTrailer_PrevMustBePositive" xml:space="preserve">
+    <value>The prev key must be a positive number</value>
+  </data>
+  <data name="FileTrailer_IdMustBeAnArrayOfTwoByteStrings" xml:space="preserve">
+    <value>The Id key must be a an array of two byte-strings</value>
+  </data>
+  <data name="FileTrailer_EncryptMustHaveANonEmptyCollection" xml:space="preserve">
+    <value>The encrypt key must be a non-empty collection</value>
+  </data>
 </root>

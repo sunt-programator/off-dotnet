@@ -18,7 +18,7 @@ public sealed class PdfStream : IPdfObject<ReadOnlyMemory<char>>, IEquatable<Pdf
     private readonly int _hashCode;
     private string _literalValue = string.Empty;
     private byte[]? _bytes;
-    private PdfDictionary? _streamExtentDictionary;
+    private PdfDictionary<IPdfObject>? _streamExtentDictionary;
 
     #endregion
 
@@ -44,7 +44,7 @@ public sealed class PdfStream : IPdfObject<ReadOnlyMemory<char>>, IEquatable<Pdf
 
     public string Content => GenerateContent();
 
-    public PdfDictionary StreamExtent => GenerateStreamExtendDictionary();
+    public PdfDictionary<IPdfObject> StreamExtent => GenerateStreamExtendDictionary();
 
     #endregion
 
@@ -91,7 +91,7 @@ public sealed class PdfStream : IPdfObject<ReadOnlyMemory<char>>, IEquatable<Pdf
         return _literalValue;
     }
 
-    private PdfDictionary GenerateStreamExtendDictionary()
+    private PdfDictionary<IPdfObject> GenerateStreamExtendDictionary()
     {
         if (_streamExtentDictionary != null)
         {

@@ -60,6 +60,51 @@ namespace Off.Net.Pdf.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The byte offset of the file trailer object must be positive.
+        /// </summary>
+        internal static string FileTrailer_ByteOffsetMustBePositive {
+            get {
+                return ResourceManager.GetString("FileTrailer_ByteOffsetMustBePositive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The encrypt key must be a non-empty collection.
+        /// </summary>
+        internal static string FileTrailer_EncryptMustHaveANonEmptyCollection {
+            get {
+                return ResourceManager.GetString("FileTrailer_EncryptMustHaveANonEmptyCollection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Id key must be a an array of two byte-strings.
+        /// </summary>
+        internal static string FileTrailer_IdMustBeAnArrayOfTwoByteStrings {
+            get {
+                return ResourceManager.GetString("FileTrailer_IdMustBeAnArrayOfTwoByteStrings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The prev key must be a positive number.
+        /// </summary>
+        internal static string FileTrailer_PrevMustBePositive {
+            get {
+                return ResourceManager.GetString("FileTrailer_PrevMustBePositive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The size key must be a positive and non-zero value.
+        /// </summary>
+        internal static string FileTrailer_SizeMustBeGreaterThanZero {
+            get {
+                return ResourceManager.GetString("FileTrailer_SizeMustBeGreaterThanZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The generation number must be positive.
         /// </summary>
         internal static string PdfIndirect_GenerationNumberMustBePositive {

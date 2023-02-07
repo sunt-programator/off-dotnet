@@ -3,7 +3,7 @@ using Off.Net.Pdf.Core.Interfaces;
 
 namespace Off.Net.Pdf.Core.Primitives;
 
-public sealed class PdfArray : IPdfObject<IReadOnlyCollection<IPdfObject>>, IEquatable<PdfArray?>
+public sealed class PdfArray<TValue> : IPdfObject<IReadOnlyCollection<TValue>>, IEquatable<PdfArray<TValue>?> where TValue: IPdfObject
 {
     #region Fields
     private readonly int _hashCode;
@@ -12,10 +12,10 @@ public sealed class PdfArray : IPdfObject<IReadOnlyCollection<IPdfObject>>, IEqu
     #endregion
 
     #region Constructors
-    public PdfArray(IReadOnlyCollection<IPdfObject> value)
+    public PdfArray(IReadOnlyCollection<TValue> value)
     {
         Value = value;
-        _hashCode = HashCode.Combine(nameof(PdfArray).GetHashCode(), value.GetHashCode());
+        _hashCode = HashCode.Combine(nameof(PdfArray<TValue>).GetHashCode(), value.GetHashCode());
         _bytes = null;
     }
     #endregion
@@ -23,7 +23,7 @@ public sealed class PdfArray : IPdfObject<IReadOnlyCollection<IPdfObject>>, IEqu
     #region Properties
     public int Length => Content.Length;
 
-    public IReadOnlyCollection<IPdfObject> Value { get; }
+    public IReadOnlyCollection<TValue> Value { get; }
 
     public ReadOnlyMemory<byte> Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
 
@@ -38,23 +38,23 @@ public sealed class PdfArray : IPdfObject<IReadOnlyCollection<IPdfObject>>, IEqu
 
     public override bool Equals(object? obj)
     {
-        return Equals(obj as PdfArray);
+        return Equals(obj as PdfArray<TValue>);
     }
 
-    public bool Equals(PdfArray? other)
+    public bool Equals(PdfArray<TValue>? other)
     {
         return other is not null &&
-               EqualityComparer<IReadOnlyCollection<IPdfObject>>.Default.Equals(Value, other.Value);
+               EqualityComparer<IReadOnlyCollection<TValue>>.Default.Equals(Value, other.Value);
     }
 
-    public static PdfArray CreateRange(IEnumerable<IPdfObject> items)
+    public static PdfArray<TValue> CreateRange(IEnumerable<TValue> items)
     {
-        return new PdfArray(items.ToList());
+        return new PdfArray<TValue>(items.ToList());
     }
 
-    public static PdfArray Create(IPdfObject item)
+    public static PdfArray<TValue> Create(TValue item)
     {
-        return new PdfArray(new List<IPdfObject>(1) { item });
+        return new PdfArray<TValue>(new List<TValue>(1) { item });
     }
     #endregion
 

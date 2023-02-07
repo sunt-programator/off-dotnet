@@ -4,11 +4,11 @@ namespace Off.Net.Pdf.Core.Primitives;
 
 public sealed class PdfStreamExtentOptions
 {
-    public EitherType<PdfName, PdfArray>? Filter { get; set; } // Name or Array
-    public EitherType<PdfDictionary, PdfArray>? DecodeParameters { get; set; } // Dictionary or Array
+    public EitherType<PdfName, PdfArray<PdfName>>? Filter { get; set; } // Name or Array
+    public EitherType<PdfDictionary<PdfName>, PdfArray<PdfName>>? DecodeParameters { get; set; } // Dictionary or Array
     public PdfString? FileSpecification { get; set; }
-    public EitherType<PdfName, PdfArray>? FileFilter { get; set; } // Name or Array
-    public EitherType<PdfDictionary, PdfArray>? FileDecodeParameters { get; set; } // Dictionary or Array
+    public EitherType<PdfName, PdfArray<PdfName>>? FileFilter { get; set; } // Name or Array
+    public EitherType<PdfDictionary<PdfName>, PdfArray<PdfName>>? FileDecodeParameters { get; set; } // Dictionary or Array
 }
 
 internal static class PdfStreamInternalExtensions

@@ -13,7 +13,7 @@ public class PdfDictionaryTests
     public void PdfDictionary_ParameterizedConstructor_CheckValue(Dictionary<PdfName, IPdfObject> inputValue)
     {
         // Arrange
-        PdfDictionary pdfDictionary = PdfDictionary.CreateRange(inputValue); // Use the CreateRange static method to initialize an PdfDictionary instance
+        PdfDictionary<IPdfObject> pdfDictionary = PdfDictionary<IPdfObject>.CreateRange(inputValue); // Use the CreateRange static method to initialize an PdfDictionary instance
 
         // Act
 
@@ -26,7 +26,7 @@ public class PdfDictionaryTests
     public void PdfDictionary_Length_CheckValue(Dictionary<PdfName, IPdfObject> inputValue, int expectedLength)
     {
         // Arrange
-        PdfDictionary pdfDictionary = inputValue.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
+        PdfDictionary<IPdfObject> pdfDictionary = inputValue.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
 
         // Act
         int actualLength = pdfDictionary.Length;
@@ -39,7 +39,7 @@ public class PdfDictionaryTests
     public void PdfDictionary_Equals_NullArgument_ShouldReturnFalse()
     {
         // Arrange
-        PdfDictionary pdfDictionary1 = new KeyValuePair<PdfName, IPdfObject>(new PdfName("Name1"), new PdfBoolean()).ToPdfDictionary();
+        PdfDictionary<IPdfObject> pdfDictionary1 = new KeyValuePair<PdfName, IPdfObject>(new PdfName("Name1"), new PdfBoolean()).ToPdfDictionary();
 
         // Act
         bool actualResult = pdfDictionary1.Equals(null);
@@ -52,7 +52,7 @@ public class PdfDictionaryTests
     public void PdfDictionary_Equals2_NullArgument_ShouldReturnFalse()
     {
         // Arrange
-        PdfDictionary pdfDictionary1 = PdfDictionary.Create(new KeyValuePair<PdfName, IPdfObject>(new PdfName("Name1"), new PdfString("Value1")));
+        PdfDictionary<IPdfObject> pdfDictionary1 = PdfDictionary<IPdfObject>.Create(new KeyValuePair<PdfName, IPdfObject>(new PdfName("Name1"), new PdfString("Value1")));
 
         // Act
         bool actualResult = pdfDictionary1.Equals((object?)null);
@@ -66,8 +66,8 @@ public class PdfDictionaryTests
     {
         // Arrange
         Dictionary<PdfName, IPdfObject> objects1 = new() { { new PdfName("Name1"), new PdfNull() } };
-        PdfDictionary pdfDictionary1 = objects1.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
-        PdfDictionary pdfDictionary2 = pdfDictionary1; // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
+        PdfDictionary<IPdfObject> pdfDictionary1 = objects1.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
+        PdfDictionary<IPdfObject> pdfDictionary2 = pdfDictionary1; // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
 
         // Act
         bool actualResult = pdfDictionary1.Equals((object)pdfDictionary2);
@@ -81,8 +81,8 @@ public class PdfDictionaryTests
     {
         // Arrange
         Dictionary<PdfName, IPdfObject> objects1 = new() { { new PdfName("Name1"), new PdfNull() } };
-        PdfDictionary pdfDictionary1 = objects1.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
-        PdfDictionary pdfDictionary2 = objects1.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
+        PdfDictionary<IPdfObject> pdfDictionary1 = objects1.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
+        PdfDictionary<IPdfObject> pdfDictionary2 = objects1.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
 
         // Act
         bool actualResult = pdfDictionary1.Equals((object)pdfDictionary2);
@@ -96,7 +96,7 @@ public class PdfDictionaryTests
     public void PdfDictionary_Bytes_CheckValidity(Dictionary<PdfName, IPdfObject> value1, byte[] expectedBytes)
     {
         // Arrange
-        PdfDictionary pdfDictionary1 = value1.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
+        PdfDictionary<IPdfObject> pdfDictionary1 = value1.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
 
         // Act
          ReadOnlyMemory<byte> actualBytes = pdfDictionary1.Bytes;
@@ -110,8 +110,8 @@ public class PdfDictionaryTests
     public void PdfDictionary_GetHashCode_CheckValidity(IReadOnlyDictionary<PdfName, IPdfObject> value1)
     {
         // Arrange
-        PdfDictionary pdfDictionary1 = new(value1);
-        int expectedHashCode = HashCode.Combine(nameof(PdfDictionary).GetHashCode(), value1.GetHashCode());
+        PdfDictionary<IPdfObject> pdfDictionary1 = new(value1);
+        int expectedHashCode = HashCode.Combine(nameof(PdfDictionary<IPdfObject>).GetHashCode(), value1.GetHashCode());
 
         // Act
         int actualHashCode = pdfDictionary1.GetHashCode();
@@ -125,9 +125,9 @@ public class PdfDictionaryTests
     {
         // Arrange
         Dictionary<PdfName, IPdfObject> value1 = new() { { new PdfName("Type"), new PdfName("Example") }, { new PdfName("SubType"), new PdfName("DictionaryExample") } };
-        PdfDictionary pdfDictionary1 = new(value1);
-        PdfDictionary pdfDictionary2 = new(value1);
-        int expectedHashCode = HashCode.Combine(nameof(PdfDictionary).GetHashCode(), value1.GetHashCode());
+        PdfDictionary<IPdfObject> pdfDictionary1 = new(value1);
+        PdfDictionary<IPdfObject> pdfDictionary2 = new(value1);
+        int expectedHashCode = HashCode.Combine(nameof(PdfDictionary<IPdfObject>).GetHashCode(), value1.GetHashCode());
 
         // Act
         int actualHashCode1 = pdfDictionary1.GetHashCode();
@@ -146,8 +146,8 @@ public class PdfDictionaryTests
         // Arrange
         Dictionary<PdfName, IPdfObject> value1 = new() { { new PdfName("Type"), new PdfName("Example") }, { new PdfName("SubType"), new PdfName("DictionaryExample") } };
         Dictionary<PdfName, IPdfObject> value2 = new() { { new PdfName("Type"), new PdfName("Example") }, { new PdfName("SubType"), new PdfName("DictionaryExample") } };
-        PdfDictionary pdfDictionary1 = new(value1);
-        PdfDictionary pdfDictionary2 = new(value2);
+        PdfDictionary<IPdfObject> pdfDictionary1 = new(value1);
+        PdfDictionary<IPdfObject> pdfDictionary2 = new(value2);
 
         // Act
         int actualHashCode1 = pdfDictionary1.GetHashCode();
@@ -162,7 +162,7 @@ public class PdfDictionaryTests
     public void PdfDictionary_Value_Count_ShouldReturn1()
     {
         // Arrange
-        PdfDictionary pdfDictionary1 = PdfDictionary.Create(new KeyValuePair<PdfName, IPdfObject>(new PdfName("Type"), new PdfName("Example")));
+        PdfDictionary<IPdfObject> pdfDictionary1 = PdfDictionary<IPdfObject>.Create(new KeyValuePair<PdfName, IPdfObject>(new PdfName("Type"), new PdfName("Example")));
 
         // Act
         int actualValueCount = pdfDictionary1.Value.Count;
@@ -176,7 +176,7 @@ public class PdfDictionaryTests
     public void PdfDictionary_Content_Check(Dictionary<PdfName, IPdfObject> inputValues, string expectedContentValue)
     {
         // Arrange
-        PdfDictionary pdfDictionary1 = inputValues.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
+        PdfDictionary<IPdfObject> pdfDictionary1 = inputValues.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
 
         // Act
         string actualContentValue = pdfDictionary1.Content;
@@ -208,7 +208,7 @@ internal static class PdfDictionaryTestDataGenerator
                 { new PdfName("StringItem"), new PdfString("a string") },
                 {
                     new PdfName("Subdictionary"),
-                    PdfDictionary.CreateRange(new Dictionary<PdfName, IPdfObject>
+                    PdfDictionary<IPdfObject>.CreateRange(new Dictionary<PdfName, IPdfObject>
                     {
                         { new PdfName("Item1"), new PdfReal(0.4f) },
                         { new PdfName("Item2"), new PdfBoolean(true) },
@@ -235,7 +235,7 @@ internal static class PdfDictionaryTestDataGenerator
                 { new PdfName("StringItem"), new PdfString("a string") },
                 {
                     new PdfName("Subdictionary"),
-                    PdfDictionary.CreateRange(new Dictionary<PdfName, IPdfObject>
+                    PdfDictionary<IPdfObject>.CreateRange(new Dictionary<PdfName, IPdfObject>
                     {
                         { new PdfName("Item1"), new PdfReal(0.4f) },
                         { new PdfName("Item2"), new PdfBoolean(true) },
@@ -277,7 +277,7 @@ internal static class PdfDictionaryTestDataGenerator
                 { new PdfName("IntegerItem"), new PdfInteger(12) },
                 {
                     new PdfName("Subdictionary"),
-                    PdfDictionary.CreateRange(new Dictionary<PdfName, IPdfObject>
+                    PdfDictionary<IPdfObject>.CreateRange(new Dictionary<PdfName, IPdfObject>
                     {
                         { new PdfName("Item1"), new PdfReal(0.4f) },
                         { new PdfName("Item2"), new PdfBoolean(true) },
@@ -308,7 +308,7 @@ internal static class PdfDictionaryTestDataGenerator
                 { new PdfName("StringItem"), new PdfString("a string") },
                 {
                     new PdfName("Subdictionary"),
-                    PdfDictionary.CreateRange(new Dictionary<PdfName, IPdfObject>
+                    PdfDictionary<IPdfObject>.CreateRange(new Dictionary<PdfName, IPdfObject>
                     {
                         { new PdfName("Item1"), new PdfReal(0.4f) },
                         { new PdfName("Item2"), new PdfBoolean(true) },
