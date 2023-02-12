@@ -4,13 +4,13 @@ namespace Off.Net.Pdf.Core.Primitives;
 
 public static class PdfDictionaryExtensions
 {
-    public static PdfDictionary ToPdfDictionary(this IDictionary<PdfName, IPdfObject> items)
+    public static PdfDictionary<TValue> ToPdfDictionary<TValue>(this IDictionary<PdfName, TValue> items) where TValue: IPdfObject
     {
-        return PdfDictionary.CreateRange(items);
+        return PdfDictionary<TValue>.CreateRange(items);
     }
 
-    public static PdfDictionary ToPdfDictionary(this KeyValuePair<PdfName, IPdfObject> item)
+    public static PdfDictionary<TValue> ToPdfDictionary<TValue>(this KeyValuePair<PdfName, TValue> item) where TValue: IPdfObject
     {
-        return PdfDictionary.Create(item);
+        return PdfDictionary<TValue>.Create(item);
     }
 }

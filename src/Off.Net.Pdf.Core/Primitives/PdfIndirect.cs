@@ -4,7 +4,7 @@ using Off.Net.Pdf.Core.Interfaces;
 
 namespace Off.Net.Pdf.Core.Primitives;
 
-public sealed class PdfIndirect : IPdfObject<IPdfObject>, IEquatable<PdfIndirect>
+public sealed class PdfIndirect<T> : IPdfObject<T>, IEquatable<PdfIndirect<T>> where T: IPdfObject
 {
     #region Fields
 
@@ -16,7 +16,7 @@ public sealed class PdfIndirect : IPdfObject<IPdfObject>, IEquatable<PdfIndirect
 
     #region Constructors
 
-    public PdfIndirect(IPdfObject pdfObject, int objectNumber, int generationNumber = 0)
+    public PdfIndirect(T pdfObject, int objectNumber, int generationNumber = 0)
     {
         ObjectNumber = objectNumber
             .CheckConstraints(num => num >= 0, Resource.PdfIndirect_ObjectNumberMustBePositive);
@@ -26,9 +26,8 @@ public sealed class PdfIndirect : IPdfObject<IPdfObject>, IEquatable<PdfIndirect
             .CheckConstraints(num => num <= 65535, Resource.PdfIndirect_GenerationNumberMustNotExceedMaxAllowedValue);
 
         Value = pdfObject;
-        _hashCode = HashCode.Combine(nameof(PdfIndirect).GetHashCode(), objectNumber.GetHashCode(), generationNumber.GetHashCode());
+        _hashCode = HashCode.Combine(nameof(PdfIndirect<T>).GetHashCode(), objectNumber.GetHashCode(), generationNumber.GetHashCode());
         _bytes = null;
-        ReferenceIdentifier = $"{ObjectNumber} {GenerationNumber} R";
     }
 
     #endregion
@@ -39,15 +38,13 @@ public sealed class PdfIndirect : IPdfObject<IPdfObject>, IEquatable<PdfIndirect
 
     public int ObjectNumber { get; }
 
-    public string ReferenceIdentifier { get; }
-
     public int Length => Content.Length;
 
     public ReadOnlyMemory<byte> Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
 
     public string Content => GenerateContent();
 
-    public IPdfObject Value { get; }
+    public T Value { get; }
 
     #endregion
 
@@ -58,7 +55,7 @@ public sealed class PdfIndirect : IPdfObject<IPdfObject>, IEquatable<PdfIndirect
         return _hashCode;
     }
 
-    public bool Equals(PdfIndirect? other)
+    public bool Equals(PdfIndirect<T>? other)
     {
         return other != null
                && ObjectNumber == other.ObjectNumber
@@ -67,7 +64,7 @@ public sealed class PdfIndirect : IPdfObject<IPdfObject>, IEquatable<PdfIndirect
 
     public override bool Equals(object? obj)
     {
-        return obj is PdfIndirect pdfName && Equals(pdfName);
+        return obj is PdfIndirect<T> pdfIndirect && Equals(pdfIndirect);
     }
 
     #endregion

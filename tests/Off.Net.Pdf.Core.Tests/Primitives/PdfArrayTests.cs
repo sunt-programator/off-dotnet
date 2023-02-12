@@ -13,7 +13,7 @@ public class PdfArrayTests
     public void PdfArray_ParameterizedConstructor_CheckValue(List<IPdfObject> inputValue)
     {
         // Arrange
-        PdfArray pdfArray = PdfArray.CreateRange(inputValue); // Use the CreateRange static method to initialize an PdfArray instance
+        PdfArray<IPdfObject> pdfArray = PdfArray<IPdfObject>.CreateRange(inputValue); // Use the CreateRange static method to initialize an PdfArray instance
 
         // Act
 
@@ -26,7 +26,7 @@ public class PdfArrayTests
     public void PdfArray_Length_CheckValue(IEnumerable<IPdfObject> inputValue, int expectedLength)
     {
         // Arrange
-        PdfArray pdfArray = inputValue.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+        PdfArray<IPdfObject> pdfArray = inputValue.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
 
         // Act
         int actualLength = pdfArray.Length;
@@ -39,7 +39,7 @@ public class PdfArrayTests
     public void PdfArray_Equals_NullArgument_ShouldReturnFalse()
     {
         // Arrange
-        PdfArray pdfArray1 = new PdfName("Name1").ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+        PdfArray<PdfName> pdfArray1 = new PdfName("Name1").ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
 
         // Act
         bool actualResult = pdfArray1.Equals(null);
@@ -52,7 +52,7 @@ public class PdfArrayTests
     public void PdfArray_Equals2_NullArgument_ShouldReturnFalse()
     {
         // Arrange
-        PdfArray pdfArray1 = PdfArray.Create(new PdfString("901FA", true)); // Use the Create static method to initialize an PdfArray instance
+        PdfArray<IPdfObject> pdfArray1 = PdfArray<IPdfObject>.Create(new PdfString("901FA", true)); // Use the Create static method to initialize an PdfArray instance
 
         // Act
         bool actualResult = pdfArray1.Equals((object?)null);
@@ -66,8 +66,8 @@ public class PdfArrayTests
     {
         // Arrange
         IReadOnlyCollection<IPdfObject> objects1 = new List<IPdfObject> { new PdfInteger(-65), new PdfName("#ABC") };
-        PdfArray pdfArray1 = objects1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
-        PdfArray pdfArray2 = pdfArray1; // Use the ToPdfArray extension method to initialize an PdfArray instance
+        PdfArray<IPdfObject> pdfArray1 = objects1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+        PdfArray<IPdfObject> pdfArray2 = pdfArray1; // Use the ToPdfArray extension method to initialize an PdfArray instance
 
         // Act
         bool actualResult = pdfArray1.Equals((object)pdfArray2);
@@ -81,8 +81,8 @@ public class PdfArrayTests
     {
         // Arrange
         IReadOnlyCollection<IPdfObject> objects1 = new List<IPdfObject> { new PdfInteger(-65), new PdfName("#ABC") };
-        PdfArray pdfArray1 = objects1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
-        PdfArray pdfArray2 = objects1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+        PdfArray<IPdfObject> pdfArray1 = objects1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+        PdfArray<IPdfObject> pdfArray2 = objects1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
 
         // Act
         bool actualResult = pdfArray1.Equals((object)pdfArray2);
@@ -96,7 +96,7 @@ public class PdfArrayTests
     public void PdfArray_Bytes_CheckValidity(IReadOnlyCollection<IPdfObject> value1, byte[] expectedBytes)
     {
         // Arrange
-        PdfArray pdfArray1 = value1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+        PdfArray<IPdfObject> pdfArray1 = value1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
 
         // Act
         ReadOnlyMemory<byte> actualBytes = pdfArray1.Bytes;
@@ -110,8 +110,8 @@ public class PdfArrayTests
     public void PdfArray_GetHashCode_CheckValidity(IReadOnlyCollection<IPdfObject> value1)
     {
         // Arrange
-        PdfArray pdfArray1 = new(value1);
-        int expectedHashCode = HashCode.Combine(nameof(PdfArray).GetHashCode(), value1.GetHashCode());
+        PdfArray<IPdfObject> pdfArray1 = new(value1);
+        int expectedHashCode = HashCode.Combine(nameof(PdfArray<IPdfObject>).GetHashCode(), value1.GetHashCode());
 
         // Act
         int actualHashCode = pdfArray1.GetHashCode();
@@ -132,9 +132,9 @@ public class PdfArrayTests
             new PdfString("Ralph"),
             new PdfName("SomeName")
         };
-        PdfArray pdfArray1 = new(value1);
-        PdfArray pdfArray2 = new(value1);
-        int expectedHashCode = HashCode.Combine(nameof(PdfArray).GetHashCode(), value1.GetHashCode());
+        PdfArray<IPdfObject> pdfArray1 = new(value1);
+        PdfArray<IPdfObject> pdfArray2 = new(value1);
+        int expectedHashCode = HashCode.Combine(nameof(PdfArray<IPdfObject>).GetHashCode(), value1.GetHashCode());
 
         // Act
         int actualHashCode1 = pdfArray1.GetHashCode();
@@ -167,8 +167,8 @@ public class PdfArrayTests
             new PdfString("Ralph"),
             new PdfName("SomeName")
         };
-        PdfArray pdfArray1 = new(value1);
-        PdfArray pdfArray2 = new(value2);
+        PdfArray<IPdfObject> pdfArray1 = new(value1);
+        PdfArray<IPdfObject> pdfArray2 = new(value2);
 
         // Act
         int actualHashCode1 = pdfArray1.GetHashCode();
@@ -183,7 +183,7 @@ public class PdfArrayTests
     public void PdfArray_Value_Count_ShouldReturn1()
     {
         // Arrange
-        PdfArray pdfArray1 = PdfArray.Create(new PdfInteger(549));
+        PdfArray<IPdfObject> pdfArray1 = PdfArray<IPdfObject>.Create(new PdfInteger(549));
 
         // Act
         int actualValueCount = pdfArray1.Value.Count;
@@ -197,7 +197,7 @@ public class PdfArrayTests
     public void PdfArray_Content_Check(IReadOnlyCollection<IPdfObject> inputValues, string expectedContentValue)
     {
         // Arrange
-        PdfArray pdfArray1 = inputValues.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+        PdfArray<IPdfObject> pdfArray1 = inputValues.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
 
         // Act
         string actualContentValue = pdfArray1.Content;
@@ -230,7 +230,7 @@ internal static class PdfArrayTestDataGenerator
             },
             34
         };
-        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray(new List<IPdfObject> { new PdfNull() }) }, 13 };
+        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray<IPdfObject>(new List<IPdfObject> { new PdfNull() }) }, 13 };
     }
 
     public static IEnumerable<object[]> PdfArray_Bytes_TestCases()
@@ -249,7 +249,7 @@ internal static class PdfArrayTestDataGenerator
         };
         yield return new object[]
         {
-            new List<IPdfObject> { new PdfBoolean(true), new PdfArray(new List<IPdfObject> { new PdfNull() }) }, new byte[] { 91, 116, 114, 117, 101, 32, 91, 110, 117, 108, 108, 93, 93 }
+            new List<IPdfObject> { new PdfBoolean(true), new PdfArray<IPdfObject>(new List<IPdfObject> { new PdfNull() }) }, new byte[] { 91, 116, 114, 117, 101, 32, 91, 110, 117, 108, 108, 93, 93 }
         };
     }
 
@@ -266,7 +266,7 @@ internal static class PdfArrayTestDataGenerator
                 new PdfName("SomeName")
             }
         };
-        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray(new List<IPdfObject> { new PdfNull() }) } };
+        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray<IPdfObject>(new List<IPdfObject> { new PdfNull() }) } };
     }
 
     public static IEnumerable<object[]> PdfArray_Content_TestCases()
@@ -283,7 +283,7 @@ internal static class PdfArrayTestDataGenerator
             },
             "[549 3.14 false (Ralph) /SomeName]"
         };
-        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray(new List<IPdfObject> { new PdfNull() }) }, "[true [null]]" };
+        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray<IPdfObject>(new List<IPdfObject> { new PdfNull() }) }, "[true [null]]" };
         yield return new object[] { new List<IPdfObject>(0), "[]" };
     }
 }

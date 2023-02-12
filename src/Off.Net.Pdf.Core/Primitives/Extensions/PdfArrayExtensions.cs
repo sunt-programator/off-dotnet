@@ -4,13 +4,13 @@ namespace Off.Net.Pdf.Core.Primitives;
 
 public static class PdfArrayExtensions
 {
-    public static PdfArray ToPdfArray(this IEnumerable<IPdfObject> items)
+    public static PdfArray<TValue> ToPdfArray<TValue>(this IEnumerable<TValue> items) where TValue: IPdfObject
     {
-        return PdfArray.CreateRange(items.ToList());
+        return PdfArray<TValue>.CreateRange(items.ToList());
     }
 
-    public static PdfArray ToPdfArray(this IPdfObject item)
+    public static PdfArray<TValue> ToPdfArray<TValue>(this TValue item) where TValue: IPdfObject
     {
-        return PdfArray.Create(item);
+        return PdfArray<TValue>.Create(item);
     }
 }
