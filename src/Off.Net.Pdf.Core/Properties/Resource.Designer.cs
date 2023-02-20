@@ -60,6 +60,24 @@ namespace Off.Net.Pdf.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The major version must be either 1 or 2.
+        /// </summary>
+        internal static string FileHeader_MajorVersionIsNotValid {
+            get {
+                return ResourceManager.GetString("FileHeader_MajorVersionIsNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The minor version must be between 0 and 9.
+        /// </summary>
+        internal static string FileHeader_MinorVersionIsNotValid {
+            get {
+                return ResourceManager.GetString("FileHeader_MinorVersionIsNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The byte offset of the file trailer object must be positive.
         /// </summary>
         internal static string FileTrailer_ByteOffsetMustBePositive {

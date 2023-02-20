@@ -182,4 +182,10 @@
   <data name="FileTrailer_EncryptMustHaveANonEmptyCollection" xml:space="preserve">
     <value>The encrypt key must be a non-empty collection</value>
   </data>
+  <data name="FileHeader_MajorVersionIsNotValid" xml:space="preserve">
+    <value>The major version must be either 1 or 2</value>
+  </data>
+  <data name="FileHeader_MinorVersionIsNotValid" xml:space="preserve">
+    <value>The minor version must be between 0 and 9</value>
+  </data>
 </root>
