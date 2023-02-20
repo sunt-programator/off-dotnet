@@ -13,6 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.netconfig = .netconfig
 		README.md = README.md
 		Directory.Build.targets = Directory.Build.targets
+		stryker-config.json = stryker-config.json
+		LICENSE = LICENSE
+		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9AD1AB50-CB0F-43D9-B721-DE1572FC6875}"
@@ -34,6 +37,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		.github\workflows\sonar.yml = .github\workflows\sonar.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{293A6DEE-237E-45F8-B770-717F6846A913}"
+	ProjectSection(SolutionItems) = preProject
+		tools\code-coverage.bat = tools\code-coverage.bat
+		tools\code-coverage.ps1 = tools\code-coverage.ps1
+		tools\mutation-testing.bat = tools\mutation-testing.bat
+		tools\mutation-testing.ps1 = tools\mutation-testing.ps1
 	EndProjectSection
 EndProject
 Global
@@ -59,6 +70,7 @@ Global
 		{4B4AC601-355C-4D3B-BB6D-9F220648952B} = {D587B5E1-06B4-4CA7-8FE4-62B0DF71BAD6}
 		{E5BBC6F7-E046-48B6-A870-D115644713DD} = {D587B5E1-06B4-4CA7-8FE4-62B0DF71BAD6}
 		{9BFC64AB-0E3C-4EE2-959E-7D5F0455ADC4} = {E5BBC6F7-E046-48B6-A870-D115644713DD}
+		{293A6DEE-237E-45F8-B770-717F6846A913} = {D587B5E1-06B4-4CA7-8FE4-62B0DF71BAD6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1C5CCEAE-E0B4-4074-9291-2AAD38F9117F}
