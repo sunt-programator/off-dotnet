@@ -31,7 +31,7 @@ public struct PdfBoolean : IPdfObject<bool>, IEquatable<PdfBoolean>
     #region Public Methods
     public override int GetHashCode()
     {
-        return HashCode.Combine(nameof(PdfBoolean).GetHashCode(), Value.GetHashCode());
+        return HashCode.Combine(nameof(PdfBoolean), Value);
     }
 
     public bool Equals(PdfBoolean other)

@@ -40,6 +40,7 @@ jobs:
       - name: Test
         run: dotnet test --no-build --verbosity normal
   mutation-testing:
+    if: true == false # Temp skipping of mutation testing due to https://github.com/stryker-mutator/stryker-net/issues/2005
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: build

@@ -186,7 +186,7 @@ public class XRefEntryTests
         // Arrange
         XRefEntryType xRefEntryType = isInUse ? XRefEntryType.InUse : XRefEntryType.Free;
         XRefEntry xRefEntry = new(byteOffset, generationNumber, xRefEntryType);
-        int expectedHashCode = HashCode.Combine(nameof(XRefEntry).GetHashCode(), byteOffset.GetHashCode(), generationNumber.GetHashCode());
+        int expectedHashCode = HashCode.Combine(nameof(XRefEntry), byteOffset, generationNumber);
 
         // Act
         int actualHashCode = xRefEntry.GetHashCode();

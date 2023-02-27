@@ -115,7 +115,7 @@ public class PdfRealTests
     {
         // Arrange
         PdfReal pdfReal1 = value1; // Use an implicit conversion from float to PdfReal
-        float expectedHashCode = HashCode.Combine(nameof(PdfReal).GetHashCode(), value1.GetHashCode());
+        float expectedHashCode = HashCode.Combine(nameof(PdfReal), value1);
 
         // Act
         float actualHashCode = pdfReal1.GetHashCode();

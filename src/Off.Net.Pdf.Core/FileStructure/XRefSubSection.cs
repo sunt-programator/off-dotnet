@@ -20,7 +20,7 @@ public sealed class XRefSubSection : IPdfObject<ICollection<XRefEntry>>, IEquata
     {
         ObjectNumber = objectNumber.CheckConstraints(num => num >= 0, Resource.PdfIndirect_ObjectNumberMustBePositive);
         Value = xRefEntries.CheckConstraints(entry => entry.Count > 0, Resource.XRefSubSection_MustHaveNonEmptyEntriesCollection);
-        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(XRefSubSection).GetHashCode(), objectNumber.GetHashCode(), xRefEntries.GetHashCode()));
+        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(XRefSubSection), objectNumber, xRefEntries));
         _literalValue = new Lazy<string>(GenerateContent);
         _bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(Content));
     }

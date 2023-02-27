@@ -19,7 +19,7 @@ public sealed class PdfDictionary<TValue> : IPdfObject<IReadOnlyDictionary<PdfNa
     public PdfDictionary(IReadOnlyDictionary<PdfName, TValue> value)
     {
         Value = value;
-        _hashCode = HashCode.Combine(nameof(PdfDictionary<TValue>).GetHashCode(), value.GetHashCode());
+        _hashCode = HashCode.Combine(nameof(PdfDictionary<TValue>), value);
         _bytes = null;
     }
 

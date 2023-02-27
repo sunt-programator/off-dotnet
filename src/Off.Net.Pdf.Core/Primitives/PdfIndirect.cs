@@ -26,7 +26,7 @@ public sealed class PdfIndirect<T> : IPdfObject<T>, IEquatable<PdfIndirect<T>> w
             .CheckConstraints(num => num <= 65535, Resource.PdfIndirect_GenerationNumberMustNotExceedMaxAllowedValue);
 
         Value = pdfObject;
-        _hashCode = HashCode.Combine(nameof(PdfIndirect<T>).GetHashCode(), objectNumber.GetHashCode(), generationNumber.GetHashCode());
+        _hashCode = HashCode.Combine(nameof(PdfIndirect<T>), objectNumber, generationNumber);
         _bytes = null;
     }
 

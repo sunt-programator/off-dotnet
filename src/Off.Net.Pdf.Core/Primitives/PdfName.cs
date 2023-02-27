@@ -32,7 +32,7 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
         }
 
         Value = value;
-        _hashCode = HashCode.Combine(nameof(PdfName).GetHashCode(), value.GetHashCode());
+        _hashCode = HashCode.Combine(nameof(PdfName), value);
         _bytes = null;
     }
     #endregion

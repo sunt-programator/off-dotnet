@@ -17,7 +17,7 @@ public sealed class PdfIndirectIdentifier<T> : IPdfObject, IEquatable<PdfIndirec
 
     public PdfIndirectIdentifier(PdfIndirect<T> pdfObject)
     {
-        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(PdfIndirectIdentifier<T>).GetHashCode(), pdfObject.ObjectNumber, pdfObject.GenerationNumber));
+        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(PdfIndirectIdentifier<T>), pdfObject.ObjectNumber, pdfObject.GenerationNumber));
         _literalValue = new Lazy<string>(GenerateContent);
         _bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(Content));
 
@@ -32,7 +32,6 @@ public sealed class PdfIndirectIdentifier<T> : IPdfObject, IEquatable<PdfIndirec
     public int GenerationNumber { get; }
 
     public int ObjectNumber { get; }
-
 
     public int Length => Content.Length;
 

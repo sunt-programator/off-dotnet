@@ -74,13 +74,12 @@ public class XRefTableTests
         Assert.Equal(expectedBytes, actualBytes);
     }
 
-
     [Theory(DisplayName = "Check if GetHashCode method returns valid value")]
     [MemberData(nameof(XRefTableTestsDataGenerator.XRefTable_NoExpectedData_TestCases), MemberType = typeof(XRefTableTestsDataGenerator))]
     public void XRefTable_GetHashCode_CheckValidity(XRefTable xRefTable)
     {
         // Arrange
-        int expectedHashCode = HashCode.Combine(nameof(XRefTable).GetHashCode(), xRefTable.Value.GetHashCode());
+        int expectedHashCode = HashCode.Combine(nameof(XRefTable), xRefTable.Value);
 
         // Act
         int actualHashCode = xRefTable.GetHashCode();

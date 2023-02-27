@@ -111,7 +111,7 @@ public class PdfArrayTests
     {
         // Arrange
         PdfArray<IPdfObject> pdfArray1 = new(value1);
-        int expectedHashCode = HashCode.Combine(nameof(PdfArray<IPdfObject>).GetHashCode(), value1.GetHashCode());
+        int expectedHashCode = HashCode.Combine(nameof(PdfArray<IPdfObject>), value1);
 
         // Act
         int actualHashCode = pdfArray1.GetHashCode();
@@ -134,7 +134,7 @@ public class PdfArrayTests
         };
         PdfArray<IPdfObject> pdfArray1 = new(value1);
         PdfArray<IPdfObject> pdfArray2 = new(value1);
-        int expectedHashCode = HashCode.Combine(nameof(PdfArray<IPdfObject>).GetHashCode(), value1.GetHashCode());
+        int expectedHashCode = HashCode.Combine(nameof(PdfArray<IPdfObject>), value1);
 
         // Act
         int actualHashCode1 = pdfArray1.GetHashCode();
@@ -205,7 +205,7 @@ public class PdfArrayTests
 
         // Assert
         Assert.Equal(expectedContentValue, actualContentValue);
-        Assert.Equal(actualContentValue.GetHashCode(), actualContentValue2.GetHashCode());
+        Assert.Equal(actualContentValue, actualContentValue2);
     }
 }
 

@@ -7,7 +7,7 @@ public struct PdfNull : IPdfObject
 {
     #region Fields
     private const string LiteralValue = "null";
-    private static readonly int HashCode = System.HashCode.Combine(nameof(PdfNull).GetHashCode(), LiteralValue.GetHashCode());
+    private static readonly int HashCode = System.HashCode.Combine(nameof(PdfNull), LiteralValue);
     private static readonly ReadOnlyMemory<byte> BytesArray = Encoding.ASCII.GetBytes(LiteralValue);
     #endregion
 

@@ -74,7 +74,6 @@ public class PdfStreamTests
     public void PdfStream_ConstructorWithFileFilter_ShouldReturnValidStreamExtend(string fileFilterName)
     {
         // Arrange
-        PdfName pdfOptionName = new(fileFilterName);
         PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.FileFilter = new PdfName(fileFilterName));
         const int expectedDictionaryCount = 2; // Count + Current extent option
         const string expectedLengthKeyName = "Length";
@@ -421,7 +420,7 @@ public class PdfStreamTests
     {
         // Arrange
         PdfStream pdfStream = new PdfString("Test").ToPdfStream();
-        int expectedHashCode = HashCode.Combine(nameof(PdfStream).GetHashCode(), pdfStream.Value.GetHashCode());
+        int expectedHashCode = HashCode.Combine(nameof(PdfStream), pdfStream.Value);
 
         // Act
         int actualHashCode = pdfStream.GetHashCode();
@@ -453,7 +452,6 @@ internal static class PdfStreamTestDataGenerator
             {
                 60, 60, 47, 76, 101, 110, 103, 116, 104, 32, 53, 56, 62, 62, 10, 115, 116, 114, 101, 97, 109, 10, 40, 73, 116, 32, 115, 104, 111, 117, 108, 100, 32, 114, 101, 116, 117, 114,
                 110, 32, 97, 32, 118, 97, 108, 105, 100, 32, 66, 121, 116, 101, 115, 32, 112, 114, 111, 112, 101, 114, 116, 121, 41, 10, 101, 110, 100, 115, 116, 114, 101, 97, 109
-
             }
         };
     }
