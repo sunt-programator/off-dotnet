@@ -117,7 +117,7 @@ public class PdfIntegerTests
     {
         // Arrange
         PdfInteger pdfInteger1 = value1; // Use an implicit conversion from int to PdfInteger
-        int expectedHashCode = HashCode.Combine(nameof(PdfInteger).GetHashCode(), value1.GetHashCode());
+        int expectedHashCode = HashCode.Combine(nameof(PdfInteger), value1);
 
         // Act
         int actualHashCode = pdfInteger1.GetHashCode();
@@ -142,8 +142,8 @@ public class PdfIntegerTests
         PdfInteger pdfInteger2 = value2; // Use an implicit conversion from int to PdfInteger
 
         // Act
-        int actualHashCode1 = pdfInteger1.GetHashCode();
-        int actualHashCode2 = pdfInteger2.GetHashCode();
+        int actualHashCode1 = pdfInteger1;
+        int actualHashCode2 = pdfInteger2;
         bool areHashCodeEquals = actualHashCode1 == actualHashCode2;
 
         // Assert

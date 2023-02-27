@@ -15,7 +15,7 @@ public sealed class PdfArray<TValue> : IPdfObject<IReadOnlyCollection<TValue>>, 
     public PdfArray(IReadOnlyCollection<TValue> value)
     {
         Value = value;
-        _hashCode = HashCode.Combine(nameof(PdfArray<TValue>).GetHashCode(), value.GetHashCode());
+        _hashCode = HashCode.Combine(nameof(PdfArray<TValue>), value);
         _bytes = null;
     }
     #endregion

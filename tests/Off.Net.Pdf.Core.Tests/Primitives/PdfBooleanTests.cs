@@ -137,7 +137,7 @@ public class PdfBooleanTests
     {
         // Arrange
         PdfBoolean pdfBoolean1 = value1; // Use an implicit conversion from bool to PdfBoolean
-        int expectedHashCode = HashCode.Combine(nameof(PdfBoolean).GetHashCode(), value1.GetHashCode());
+        int expectedHashCode = HashCode.Combine(nameof(PdfBoolean), value1);
 
         // Act
         int actualHashCode = pdfBoolean1.GetHashCode();

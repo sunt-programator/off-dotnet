@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Off.Net.Pdf.Core.Primitives;
 using Xunit;
 
@@ -139,7 +140,7 @@ public class PdfStringTests
     {
         // Arrange
         PdfString pdfString1 = value1; // Use an implicit conversion from string to PdfString
-        int expectedHashCode = HashCode.Combine(nameof(PdfString).GetHashCode(), value1.GetHashCode());
+        int expectedHashCode = HashCode.Combine(nameof(PdfString), value1);
 
         // Act
         int actualHashCode = pdfString1.GetHashCode();
@@ -287,6 +288,7 @@ public class PdfStringTests
     [Theory(DisplayName = "Check if string with unbalanced parentheses will throw an exception")]
     [InlineData("Strings with unbalanced parentheses (( ( ), should throw an exception.")]
     [InlineData("Strings with unbalanced parentheses ))((, should throw an exception.")]
+    [SuppressMessage("Major Code Smell", "S4144:Methods should not have identical implementations")]
     public void PdfString_Constructor_UnbalancedParentheses_ShouldThrowException(string value1)
     {
         // Arrange

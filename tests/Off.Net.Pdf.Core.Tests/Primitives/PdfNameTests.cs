@@ -152,7 +152,7 @@ public class PdfNameTests
     {
         // Arrange
         PdfName pdfName1 = value1; // Use an implicit conversion from string to PdfName
-        int expectedHashCode = HashCode.Combine(nameof(PdfName).GetHashCode(), value1.GetHashCode());
+        int expectedHashCode = HashCode.Combine(nameof(PdfName), value1);
 
         // Act
         int actualHashCode = pdfName1.GetHashCode();

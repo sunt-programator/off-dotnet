@@ -21,7 +21,7 @@ public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
     {
         ThrowExceptionIfValueIsNotValid(value, isHexString);
         Value = value;
-        _hashCode = HashCode.Combine(nameof(PdfString).GetHashCode(), value.GetHashCode());
+        _hashCode = HashCode.Combine(nameof(PdfString), value);
         _bytes = null;
         this._isHexString = isHexString;
     }

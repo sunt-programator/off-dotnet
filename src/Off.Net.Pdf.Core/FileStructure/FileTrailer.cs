@@ -41,7 +41,7 @@ public sealed class FileTrailer : IPdfObject, IEquatable<FileTrailer?>
             .CheckConstraints(option => option.Encrypt == null || option.Encrypt.Value.Count > 0, Resource.FileTrailer_EncryptMustHaveANonEmptyCollection)
             .CheckConstraints(option => option.Encrypt == null || option.Id?.Value.Count == 2, Resource.FileTrailer_IdMustBeAnArrayOfTwoByteStrings);
 
-        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(FileTrailer).GetHashCode(), Content.GetHashCode()));
+        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(FileTrailer), Content));
         _literalValue = new Lazy<string>(GenerateContent);
         _bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(Content));
         _fileTrailerDictionary = new Lazy<PdfDictionary<IPdfObject>>(GenerateFileTrailerDictionary);

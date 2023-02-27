@@ -27,7 +27,7 @@ public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, ICo
         }
 
         Value = value;
-        _hashCode = HashCode.Combine(nameof(PdfReal).GetHashCode(), value.GetHashCode());
+        _hashCode = HashCode.Combine(nameof(PdfReal), value);
         _bytes = null;
     }
     #endregion

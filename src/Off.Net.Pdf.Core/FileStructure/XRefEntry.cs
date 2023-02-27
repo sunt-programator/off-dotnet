@@ -34,7 +34,7 @@ public sealed class XRefEntry : IPdfObject, IEquatable<XRefEntry>
 
         EntryType = entryType;
 
-        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(XRefEntry).GetHashCode(), byteOffset.GetHashCode(), generationNumber.GetHashCode()));
+        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(XRefEntry), byteOffset, generationNumber));
         _literalValue = new Lazy<string>(GenerateContent);
         _bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(Content));
     }

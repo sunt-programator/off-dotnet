@@ -19,7 +19,7 @@ public sealed class XRefTable : IPdfObject<ICollection<XRefSection>>, IEquatable
     public XRefTable(ICollection<XRefSection> xRefSections)
     {
         Value = xRefSections.CheckConstraints(sections => sections.Count > 0, Resource.XRefTable_MustHaveNonEmptyEntriesCollection);
-        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(XRefTable).GetHashCode(), xRefSections.GetHashCode()));
+        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(XRefTable), xRefSections));
         _literalValue = new Lazy<string>(GenerateContent);
         _bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(Content));
     }

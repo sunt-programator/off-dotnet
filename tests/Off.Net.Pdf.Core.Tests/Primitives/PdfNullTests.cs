@@ -66,7 +66,7 @@ public class PdfNullTests
     {
         // Arrange
         PdfNull pdfNull1 = new();
-        float expectedHashCode = HashCode.Combine(nameof(PdfNull).GetHashCode(), "null");
+        float expectedHashCode = HashCode.Combine(nameof(PdfNull), "null");
 
         // Act
         float actualHashCode = pdfNull1.GetHashCode();

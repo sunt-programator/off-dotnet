@@ -111,7 +111,7 @@ public class PdfDictionaryTests
     {
         // Arrange
         PdfDictionary<IPdfObject> pdfDictionary1 = new(value1);
-        int expectedHashCode = HashCode.Combine(nameof(PdfDictionary<IPdfObject>).GetHashCode(), value1.GetHashCode());
+        int expectedHashCode = HashCode.Combine(nameof(PdfDictionary<IPdfObject>), value1);
 
         // Act
         int actualHashCode = pdfDictionary1.GetHashCode();
@@ -127,7 +127,7 @@ public class PdfDictionaryTests
         Dictionary<PdfName, IPdfObject> value1 = new() { { new PdfName("Type"), new PdfName("Example") }, { new PdfName("SubType"), new PdfName("DictionaryExample") } };
         PdfDictionary<IPdfObject> pdfDictionary1 = new(value1);
         PdfDictionary<IPdfObject> pdfDictionary2 = new(value1);
-        int expectedHashCode = HashCode.Combine(nameof(PdfDictionary<IPdfObject>).GetHashCode(), value1.GetHashCode());
+        int expectedHashCode = HashCode.Combine(nameof(PdfDictionary<IPdfObject>), value1);
 
         // Act
         int actualHashCode1 = pdfDictionary1.GetHashCode();
@@ -184,7 +184,7 @@ public class PdfDictionaryTests
 
         // Assert
         Assert.Equal(expectedContentValue, actualContentValue);
-        Assert.Equal(actualContentValue.GetHashCode(), actualContentValue2.GetHashCode());
+        Assert.Equal(actualContentValue, actualContentValue2);
     }
 }
 

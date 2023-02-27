@@ -46,7 +46,7 @@ public class PdfIndirectIdentifierTests
     {
         // Arrange
         PdfIndirectIdentifier<PdfString> pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber).ToPdfIndirectIdentifier();
-        int expectedHashCode = HashCode.Combine(nameof(PdfIndirectIdentifier<PdfString>).GetHashCode(), objectNumber.GetHashCode(), generationNumber.GetHashCode());
+        int expectedHashCode = HashCode.Combine(nameof(PdfIndirectIdentifier<PdfString>), objectNumber, generationNumber);
 
         // Act
         int actualHashCode = pdfIndirect.GetHashCode();

@@ -26,7 +26,7 @@ public sealed class PdfStream : IPdfObject<ReadOnlyMemory<char>>, IEquatable<Pdf
 
     public PdfStream(ReadOnlyMemory<char> value, Action<PdfStreamExtentOptions>? options = null)
     {
-        _hashCode = HashCode.Combine(nameof(PdfStream).GetHashCode(), value.GetHashCode());
+        _hashCode = HashCode.Combine(nameof(PdfStream), value);
         _bytes = null;
         Value = value;
         options?.Invoke(_pdfStreamExtentOptions);

@@ -223,7 +223,7 @@ public class FileTrailerTests
     public void XFileTrailer_GetHashCode_CheckValidity(FileTrailer fileTrailer)
     {
         // Arrange
-        int expectedHashCode = HashCode.Combine(nameof(FileTrailer).GetHashCode(), fileTrailer.Content.GetHashCode());
+        int expectedHashCode = HashCode.Combine(nameof(FileTrailer), fileTrailer.Content);
 
         // Act
         int actualHashCode = fileTrailer.GetHashCode();

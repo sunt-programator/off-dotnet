@@ -20,7 +20,7 @@ public struct PdfInteger : IPdfObject<int>, IEquatable<PdfInteger>, IComparable,
     public PdfInteger(int value)
     {
         Value = value;
-        _hashCode = HashCode.Combine(nameof(PdfInteger).GetHashCode(), value.GetHashCode());
+        _hashCode = HashCode.Combine(nameof(PdfInteger), value);
         _bytes = null;
     }
     #endregion

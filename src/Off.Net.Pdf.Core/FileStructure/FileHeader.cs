@@ -44,7 +44,7 @@ public readonly struct FileHeader : IPdfObject, IEquatable<FileHeader>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(nameof(FileHeader).GetHashCode(), MajorVersion, MinorVersion);
+        return HashCode.Combine(nameof(FileHeader), MajorVersion, MinorVersion);
     }
 
     public override bool Equals(object? obj)

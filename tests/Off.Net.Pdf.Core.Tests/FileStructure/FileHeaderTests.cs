@@ -110,7 +110,7 @@ public class FileHeaderTests
         Assert.Equal(expectedBytes, actualBytes);
     }
 
-    [Theory(DisplayName = $"Equals method should return a valid value")]
+    [Theory(DisplayName = "Equals method should return a valid value")]
     [MemberData(nameof(FileHeaderTestsDataGenerator.FileHeader_Equals_TestCases), MemberType = typeof(FileHeaderTestsDataGenerator))]
     public void FileHeader_Equals_ShouldReturnValidValue(FileHeader fileHeader1, FileHeader fileHeader2, bool expectedResult)
     {
@@ -123,7 +123,7 @@ public class FileHeaderTests
         Assert.Equal(expectedResult, actualResult);
     }
 
-    [Theory(DisplayName = $"Equals method should return a valid value")]
+    [Theory(DisplayName = "Equals method should return a valid value")]
     [MemberData(nameof(FileHeaderTestsDataGenerator.FileHeader_Equals_TestCases), MemberType = typeof(FileHeaderTestsDataGenerator))]
     public void FileHeader_EqualsObject_ShouldReturnValidValue(FileHeader fileHeader1, object? fileHeader2, bool expectedResult)
     {
@@ -136,7 +136,7 @@ public class FileHeaderTests
         Assert.Equal(expectedResult, actualResult);
     }
 
-    [Theory(DisplayName = $"The '==' operator should return a valid value")]
+    [Theory(DisplayName = "The '==' operator should return a valid value")]
     [MemberData(nameof(FileHeaderTestsDataGenerator.FileHeader_Equals_TestCases), MemberType = typeof(FileHeaderTestsDataGenerator))]
     public void FileHeader_EqualOperator_ShouldReturnValidValue(FileHeader fileHeader1, FileHeader fileHeader2, bool expectedResult)
     {
@@ -149,7 +149,7 @@ public class FileHeaderTests
         Assert.Equal(expectedResult, actualResult);
     }
 
-    [Theory(DisplayName = $"The '!=' operator should return a valid value")]
+    [Theory(DisplayName = "The '!=' operator should return a valid value")]
     [MemberData(nameof(FileHeaderTestsDataGenerator.FileHeader_Equals_TestCases), MemberType = typeof(FileHeaderTestsDataGenerator))]
     public void FileHeader_NotEqualOperator_ShouldReturnValidValue(FileHeader fileHeader1, FileHeader fileHeader2, bool expectedResult)
     {
@@ -162,12 +162,12 @@ public class FileHeaderTests
         Assert.Equal(!expectedResult, actualResult);
     }
 
-    [Theory(DisplayName = $"GetHashCode method should return a valid value")]
+    [Theory(DisplayName = "GetHashCode method should return a valid value")]
     [MemberData(nameof(FileHeaderTestsDataGenerator.FileHeader_NoExpectedData_TestCases), MemberType = typeof(FileHeaderTestsDataGenerator))]
     public void FileHeader_GetHashCode_ShouldReturnValidValue(FileHeader fileHeader)
     {
         // Arrange
-        int expectedHashCode = HashCode.Combine(nameof(FileHeader).GetHashCode(), fileHeader.MajorVersion, fileHeader.MinorVersion);
+        int expectedHashCode = HashCode.Combine(nameof(FileHeader), fileHeader.MajorVersion, fileHeader.MinorVersion);
 
         // Act
         int actualHashCode = fileHeader.GetHashCode();
