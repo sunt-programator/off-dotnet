@@ -1,4 +1,5 @@
 using System.Text;
+using Off.Net.Pdf.Core.DocumentStructure;
 using Off.Net.Pdf.Core.Extensions;
 using Off.Net.Pdf.Core.Interfaces;
 using Off.Net.Pdf.Core.Primitives;
@@ -39,7 +40,8 @@ public sealed class FileTrailer : IPdfObject, IEquatable<FileTrailer?>
             .CheckConstraints(option => option.Size > 0, Resource.FileTrailer_SizeMustBeGreaterThanZero)
             .CheckConstraints(option => option.Prev == null || option.Prev >= 0, Resource.FileTrailer_PrevMustBePositive)
             .CheckConstraints(option => option.Encrypt == null || option.Encrypt.Value.Count > 0, Resource.FileTrailer_EncryptMustHaveANonEmptyCollection)
-            .CheckConstraints(option => option.Encrypt == null || option.Id?.Value.Count == 2, Resource.FileTrailer_IdMustBeAnArrayOfTwoByteStrings);
+            .CheckConstraints(option => option.Encrypt == null || option.Id?.Value.Count == 2, Resource.FileTrailer_IdMustBeAnArrayOfTwoByteStrings)
+            .NotNull(x => x.Root);
 
         _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(FileTrailer), Content));
         _literalValue = new Lazy<string>(GenerateContent);
@@ -119,4 +121,27 @@ public sealed class FileTrailer : IPdfObject, IEquatable<FileTrailer?>
     }
 
     #endregion
+}
+
+public sealed class FileTrailerOptions
+{
+    public PdfInteger Size { get; set; }
+
+    public PdfInteger? Prev { get; set; }
+
+    public PdfIndirectIdentifier<DocumentCatalog> Root { get; set; } = default!;
+
+    public PdfDictionary<IPdfObject>? Encrypt { get; set; }
+
+    public PdfIndirectIdentifier<PdfDictionary<IPdfObject>>? Info { get; set; }
+
+    public PdfArray<PdfString>? Id { get; set; }
+}
+
+public static class FileTrailerExtensions
+{
+    public static FileTrailer ToFileTrailer(this FileTrailerOptions fileTrailerOptions, long byteOffset)
+    {
+        return new FileTrailer(byteOffset, fileTrailerOptions);
+    }
 }
