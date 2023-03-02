@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using Off.Net.Pdf.Core.DocumentStructure;
 using Off.Net.Pdf.Core.FileStructure;
 using Off.Net.Pdf.Core.Interfaces;
 using Off.Net.Pdf.Core.Primitives;
@@ -10,6 +9,9 @@ namespace Off.Net.Pdf.Core.Tests.FileStructure;
 
 public class FileTrailerTests
 {
+    private static readonly IDictionary<PdfName, IPdfObject> RootDictionaryPages = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } };
+    private static readonly PdfIndirectIdentifier<DocumentCatalog> RootDictionary = new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = RootDictionaryPages.ToPdfDictionary()).ToPdfIndirect(2).ToPdfIndirectIdentifier();
+
     [Theory(DisplayName = $"Constructor with negative {nameof(FileTrailer.ByteOffset)} should throw an {nameof(ArgumentOutOfRangeException)}")]
     [InlineData(-1)]
     [InlineData(-34)]
@@ -17,9 +19,10 @@ public class FileTrailerTests
     public void FileTrailer_ConstructorWithNegativeBytesOffset_ShouldThrowException(long byteOffset)
     {
         // Arrange
+        FileTrailerOptions fileTrailerOptions = new() { Root = RootDictionary };
 
         // Act
-        FileTrailer FileTrailerFunction() => new FileTrailerOptions().ToFileTrailer(byteOffset);
+        FileTrailer FileTrailerFunction() => fileTrailerOptions.ToFileTrailer(byteOffset);
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(FileTrailerFunction);
@@ -67,7 +70,6 @@ public class FileTrailerTests
     public void FileTrailer_ConstructorWithEmptyEncryptDictionary_ShouldThrowException()
     {
         // Arrange
-        var rootDictionary = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } };
         var encryptDictionary = new Dictionary<PdfName, IPdfObject>(1);
 
         // Act
@@ -75,10 +77,7 @@ public class FileTrailerTests
         {
             options.Size = 456;
             options.Prev = 789;
-            options.Root = rootDictionary
-                .ToPdfDictionary()
-                .ToPdfIndirect(012)
-                .ToPdfIndirectIdentifier();
+            options.Root = RootDictionary;
             options.Encrypt = encryptDictionary.ToPdfDictionary();
         });
 
@@ -91,7 +90,6 @@ public class FileTrailerTests
     public void FileTrailer_ConstructorWithInvalidIdWhenEncryptIsPresent_ShouldThrowException()
     {
         // Arrange
-        var rootDictionary = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } };
         var encryptDictionary = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } };
 
         // Act
@@ -99,10 +97,7 @@ public class FileTrailerTests
         {
             options.Size = 456;
             options.Prev = 789;
-            options.Root = rootDictionary
-                .ToPdfDictionary()
-                .ToPdfIndirect(012)
-                .ToPdfIndirectIdentifier();
+            options.Root = RootDictionary;
             options.Encrypt = encryptDictionary.ToPdfDictionary();
         });
 
@@ -118,15 +113,11 @@ public class FileTrailerTests
     public void FileTrailer_ByteOffset_ShouldReturnValidValue(long byteOffset)
     {
         // Arrange
-        var rootDictionary = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } };
         FileTrailerOptions fileTrailerOptions = new()
         {
             Size = 456,
             Prev = 789,
-            Root = rootDictionary
-                .ToPdfDictionary()
-                .ToPdfIndirect(012)
-                .ToPdfIndirectIdentifier()
+            Root = RootDictionary
         };
         FileTrailer fileTrailer = new(byteOffset, fileTrailerOptions);
 
@@ -141,15 +132,11 @@ public class FileTrailerTests
     public void FileTrailer_FileTrailerDictionary_ShouldReturnValidValue()
     {
         // Arrange
-        var rootDictionary = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } };
         FileTrailerOptions fileTrailerOptions = new()
         {
             Size = 456,
             Prev = 789,
-            Root = rootDictionary
-                .ToPdfDictionary()
-                .ToPdfIndirect(012)
-                .ToPdfIndirectIdentifier()
+            Root = RootDictionary
         };
         FileTrailer fileTrailer = new(123, fileTrailerOptions);
 
@@ -265,6 +252,9 @@ public class FileTrailerTests
 
 internal static class FileTrailerTestsDataGenerator
 {
+    private static readonly IDictionary<PdfName, IPdfObject> RootDictionaryPages = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } };
+    private static readonly PdfIndirectIdentifier<DocumentCatalog> RootDictionary = new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = RootDictionaryPages.ToPdfDictionary()).ToPdfIndirect(2).ToPdfIndirectIdentifier();
+
     public static IEnumerable<object[]> FileTrailer_Content_TestCases()
     {
         yield return new object[]
@@ -272,10 +262,7 @@ internal static class FileTrailerTestsDataGenerator
             new FileTrailer(18799, options =>
             {
                 options.Size = 22;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()
                     .ToPdfIndirect(1)
@@ -291,10 +278,7 @@ internal static class FileTrailerTestsDataGenerator
             {
                 options.Size = 22;
                 options.Prev = 196;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()
                     .ToPdfIndirect(1)
@@ -310,10 +294,7 @@ internal static class FileTrailerTestsDataGenerator
             {
                 options.Size = 22;
                 options.Prev = 196;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Encrypt = new Dictionary<PdfName, IPdfObject>(2) { { "Test1", new PdfInteger(1) }, { "Test2", new PdfInteger(2) } }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
@@ -333,10 +314,7 @@ internal static class FileTrailerTestsDataGenerator
             new FileTrailer(18799, options =>
             {
                 options.Size = 22;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()
                     .ToPdfIndirect(1)
@@ -352,10 +330,7 @@ internal static class FileTrailerTestsDataGenerator
             {
                 options.Size = 22;
                 options.Prev = 196;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()
                     .ToPdfIndirect(1)
@@ -371,10 +346,7 @@ internal static class FileTrailerTestsDataGenerator
             {
                 options.Size = 22;
                 options.Prev = 196;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Encrypt = new Dictionary<PdfName, IPdfObject>(2) { { "Test1", new PdfInteger(1) }, { "Test2", new PdfInteger(2) } }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
@@ -394,10 +366,7 @@ internal static class FileTrailerTestsDataGenerator
             new FileTrailer(18799, options =>
             {
                 options.Size = 22;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()
                     .ToPdfIndirect(1)
@@ -420,10 +389,7 @@ internal static class FileTrailerTestsDataGenerator
             {
                 options.Size = 22;
                 options.Prev = 196;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()
                     .ToPdfIndirect(1)
@@ -447,10 +413,7 @@ internal static class FileTrailerTestsDataGenerator
             {
                 options.Size = 22;
                 options.Prev = 196;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Encrypt = new Dictionary<PdfName, IPdfObject>(2) { { "Test1", new PdfInteger(1) }, { "Test2", new PdfInteger(2) } }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
@@ -479,10 +442,7 @@ internal static class FileTrailerTestsDataGenerator
             new FileTrailer(18799, options =>
             {
                 options.Size = 22;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()
                     .ToPdfIndirect(1)
@@ -497,10 +457,7 @@ internal static class FileTrailerTestsDataGenerator
             {
                 options.Size = 22;
                 options.Prev = 196;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()
                     .ToPdfIndirect(1)
@@ -515,10 +472,7 @@ internal static class FileTrailerTestsDataGenerator
             {
                 options.Size = 22;
                 options.Prev = 196;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Encrypt = new Dictionary<PdfName, IPdfObject>(2) { { "Test1", new PdfInteger(1) }, { "Test2", new PdfInteger(2) } }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
@@ -537,10 +491,7 @@ internal static class FileTrailerTestsDataGenerator
             new FileTrailer(18799, options =>
             {
                 options.Size = 22;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()
                     .ToPdfIndirect(1)
@@ -550,10 +501,7 @@ internal static class FileTrailerTestsDataGenerator
             new FileTrailer(18799, options =>
             {
                 options.Size = 22;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()
                     .ToPdfIndirect(1)
@@ -569,10 +517,7 @@ internal static class FileTrailerTestsDataGenerator
             {
                 options.Size = 22;
                 options.Prev = 1;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()
                     .ToPdfIndirect(1)
@@ -583,10 +528,7 @@ internal static class FileTrailerTestsDataGenerator
             {
                 options.Size = 22;
                 options.Prev = 196;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()
                     .ToPdfIndirect(1)
@@ -602,10 +544,7 @@ internal static class FileTrailerTestsDataGenerator
             {
                 options.Size = 22;
                 options.Prev = null;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Encrypt = new Dictionary<PdfName, IPdfObject>(2) { { "Test1", new PdfInteger(1) }, { "Test2", new PdfInteger(2) } }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
@@ -618,10 +557,7 @@ internal static class FileTrailerTestsDataGenerator
             {
                 options.Size = 22;
                 options.Prev = 0;
-                options.Root = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(2)
-                    .ToPdfIndirectIdentifier();
+                options.Root = RootDictionary;
                 options.Encrypt = new Dictionary<PdfName, IPdfObject>(2) { { "Test1", new PdfInteger(1) }, { "Test2", new PdfInteger(2) } }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }

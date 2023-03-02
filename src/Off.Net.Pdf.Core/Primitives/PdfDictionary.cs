@@ -4,7 +4,7 @@ using Off.Net.Pdf.Core.Interfaces;
 
 namespace Off.Net.Pdf.Core.Primitives;
 
-public sealed class PdfDictionary<TValue> : IPdfObject<IReadOnlyDictionary<PdfName, TValue>>, IEquatable<PdfDictionary<TValue>?> where TValue: IPdfObject
+public class PdfDictionary<TValue> : IPdfObject<IReadOnlyDictionary<PdfName, TValue>> where TValue: IPdfObject
 {
     #region Fields
 
@@ -46,13 +46,7 @@ public sealed class PdfDictionary<TValue> : IPdfObject<IReadOnlyDictionary<PdfNa
 
     public override bool Equals(object? obj)
     {
-        return Equals(obj as PdfDictionary<TValue>);
-    }
-
-    public bool Equals(PdfDictionary<TValue>? other)
-    {
-        return other is not null &&
-               EqualityComparer<IReadOnlyDictionary<PdfName, TValue>>.Default.Equals(Value, other.Value);
+        return obj is PdfDictionary<TValue> other && EqualityComparer<IReadOnlyDictionary<PdfName, TValue>>.Default.Equals(Value, other.Value);
     }
 
     public static PdfDictionary<TValue> CreateRange(IDictionary<PdfName, TValue> items)

@@ -188,4 +188,7 @@
   <data name="FileHeader_MinorVersionIsNotValid" xml:space="preserve">
     <value>The minor version must be between 0 and 9</value>
   </data>
+  <data name="DocumentCatalog_Pages_MustNotBeEmpty" xml:space="preserve">
+    <value>The document catalog dictionary must contain a non-empty Pages dictionary</value>
+  </data>
 </root>

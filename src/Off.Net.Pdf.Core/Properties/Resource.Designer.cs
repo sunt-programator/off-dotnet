@@ -60,6 +60,15 @@ namespace Off.Net.Pdf.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The document catalog dictionary must contain a non-empty Pages dictionary.
+        /// </summary>
+        internal static string DocumentCatalog_Pages_MustNotBeEmpty {
+            get {
+                return ResourceManager.GetString("DocumentCatalog_Pages_MustNotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The major version must be either 1 or 2.
         /// </summary>
         internal static string FileHeader_MajorVersionIsNotValid {

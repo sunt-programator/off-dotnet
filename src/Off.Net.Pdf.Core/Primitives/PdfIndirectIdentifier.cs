@@ -23,6 +23,7 @@ public sealed class PdfIndirectIdentifier<T> : IPdfObject, IEquatable<PdfIndirec
 
         ObjectNumber = pdfObject.ObjectNumber;
         GenerationNumber = pdfObject.GenerationNumber;
+        PdfIndirect = pdfObject;
     }
 
     #endregion
@@ -34,6 +35,8 @@ public sealed class PdfIndirectIdentifier<T> : IPdfObject, IEquatable<PdfIndirec
     public int ObjectNumber { get; }
 
     public int Length => Content.Length;
+
+    public PdfIndirect<T> PdfIndirect { get; }
 
     public ReadOnlyMemory<byte> Bytes => _bytes.Value;
 
