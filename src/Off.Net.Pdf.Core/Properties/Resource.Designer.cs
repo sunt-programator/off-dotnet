@@ -222,6 +222,15 @@ namespace Off.Net.Pdf.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The point provided must be a positive number.
+        /// </summary>
+        internal static string Rectangle_PointMustBePositive {
+            get {
+                return ResourceManager.GetString("Rectangle_PointMustBePositive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The byte offset of the XRef entry must be positive.
         /// </summary>
         internal static string XRefEntry_ByteOffsetMustBePositive {
