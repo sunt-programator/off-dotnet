@@ -3,7 +3,7 @@ using Off.Net.Pdf.Core.Interfaces;
 
 namespace Off.Net.Pdf.Core.Primitives;
 
-public sealed class PdfArray<TValue> : IPdfObject<IReadOnlyCollection<TValue>>, IEquatable<PdfArray<TValue>?> where TValue: IPdfObject
+public class PdfArray<TValue> : IPdfObject<IReadOnlyCollection<TValue>> where TValue: IPdfObject
 {
     #region Fields
     private readonly int _hashCode;
@@ -38,13 +38,7 @@ public sealed class PdfArray<TValue> : IPdfObject<IReadOnlyCollection<TValue>>, 
 
     public override bool Equals(object? obj)
     {
-        return Equals(obj as PdfArray<TValue>);
-    }
-
-    public bool Equals(PdfArray<TValue>? other)
-    {
-        return other is not null &&
-               EqualityComparer<IReadOnlyCollection<TValue>>.Default.Equals(Value, other.Value);
+        return obj is PdfArray<TValue> other && EqualityComparer<IReadOnlyCollection<TValue>>.Default.Equals(Value, other.Value);
     }
 
     public static PdfArray<TValue> CreateRange(IEnumerable<TValue> items)

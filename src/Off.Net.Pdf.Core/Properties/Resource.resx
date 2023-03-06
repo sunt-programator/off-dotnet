@@ -191,4 +191,7 @@
   <data name="DocumentCatalog_Pages_MustNotBeEmpty" xml:space="preserve">
     <value>The document catalog dictionary must contain a non-empty Pages dictionary</value>
   </data>
+  <data name="Rectangle_PointMustBePositive" xml:space="preserve">
+    <value>The point provided must be a positive number</value>
+  </data>
 </root>
