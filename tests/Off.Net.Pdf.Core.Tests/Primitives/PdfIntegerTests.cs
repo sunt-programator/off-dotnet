@@ -1,4 +1,3 @@
-using System;
 using Off.Net.Pdf.Core.Primitives;
 using Xunit;
 
