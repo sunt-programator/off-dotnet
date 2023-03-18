@@ -3,7 +3,7 @@ using Off.Net.Pdf.Core.Primitives;
 
 namespace Off.Net.Pdf.Core.CommonDataStructures;
 
-public class Rectangle : PdfArray<PdfInteger>
+public sealed class Rectangle : PdfArray<PdfInteger>
 {
     #region Constructors
 

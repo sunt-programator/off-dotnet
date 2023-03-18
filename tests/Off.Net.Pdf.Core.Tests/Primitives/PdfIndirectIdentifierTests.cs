@@ -1,5 +1,4 @@
-﻿using System;
-using Off.Net.Pdf.Core.Primitives;
+﻿using Off.Net.Pdf.Core.Primitives;
 using Xunit;
 
 namespace Off.Net.Pdf.Core.Tests.Primitives;

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Off.Net.Pdf.Core.DocumentStructure;
+﻿using Off.Net.Pdf.Core.DocumentStructure;
 using Off.Net.Pdf.Core.Interfaces;
 using Off.Net.Pdf.Core.Primitives;
 using Xunit;

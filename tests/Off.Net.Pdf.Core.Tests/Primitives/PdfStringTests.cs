@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Off.Net.Pdf.Core.Primitives;
 using Xunit;
