@@ -132,6 +132,15 @@ namespace Off.Net.Pdf.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The font size must be greater or equal to 0.
+        /// </summary>
+        internal static string FontOperation_FontSizeMustBePositive {
+            get {
+                return ResourceManager.GetString("FontOperation_FontSizeMustBePositive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The generation number must be positive.
         /// </summary>
         internal static string PdfIndirect_GenerationNumberMustBePositive {

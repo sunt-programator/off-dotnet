@@ -9,9 +9,9 @@ public sealed class DocumentCatalog : PdfDictionary<IPdfObject>
 {
     #region Fields
 
-    private static readonly PdfName Type = new("Type");
-    private static readonly PdfName Catalog = new("Catalog");
-    private static readonly PdfName Pages = new("Pages");
+    private static readonly PdfName Type = "Type";
+    private static readonly PdfName Catalog = "Catalog";
+    private static readonly PdfName Pages = "Pages";
 
     #endregion
 

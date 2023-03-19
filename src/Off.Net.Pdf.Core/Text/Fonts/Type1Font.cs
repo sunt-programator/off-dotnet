@@ -9,12 +9,12 @@ public sealed class Type1Font : PdfDictionary<IPdfObject>
 {
     #region Fields
 
-    private static readonly PdfName Type = new("Type");
-    private static readonly PdfName TypeValue = new("Font");
-    private static readonly PdfName Subtype = new("Subtype");
-    private static readonly PdfName SubtypeValue = new("Type1");
-    private static readonly PdfName FontName = new("Name");
-    private static readonly PdfName BaseFont = new("BaseFont");
+    private static readonly PdfName Type = "Type";
+    private static readonly PdfName TypeValue = "Font";
+    private static readonly PdfName Subtype = "Subtype";
+    private static readonly PdfName SubtypeValue = "Type1";
+    private static readonly PdfName FontName = "Name";
+    private static readonly PdfName BaseFont = "BaseFont";
 
     #endregion
 

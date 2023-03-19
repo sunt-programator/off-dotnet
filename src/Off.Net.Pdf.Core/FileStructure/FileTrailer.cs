@@ -10,12 +10,12 @@ public sealed class FileTrailer : IPdfObject, IEquatable<FileTrailer?>
 {
     #region Fields
 
-    private static readonly PdfName Size = new("Size");
-    private static readonly PdfName Prev = new("Prev");
-    private static readonly PdfName Root = new("Root");
-    private static readonly PdfName Encrypt = new("Encrypt");
-    private static readonly PdfName Info = new("Info");
-    private static readonly PdfName Id = new("ID");
+    private static readonly PdfName Size = "Size";
+    private static readonly PdfName Prev = "Prev";
+    private static readonly PdfName Root = "Root";
+    private static readonly PdfName Encrypt = "Encrypt";
+    private static readonly PdfName Info = "Info";
+    private static readonly PdfName Id = "ID";
 
     private readonly FileTrailerOptions _fileTrailerOptions;
     private readonly Lazy<int> _hashCode;

@@ -11,11 +11,12 @@ public sealed class PageObject : PdfDictionary<IPdfObject>
 {
     #region Fields
 
-    private static readonly PdfName TypeName = new("Type");
-    private static readonly PdfName TypeValue = new("Page");
-    private static readonly PdfName Parent = new("Parent");
-    private static readonly PdfName Resources = new("Resources");
-    private static readonly PdfName MediaBox = new("MediaBox");
+    private static readonly PdfName TypeName = "Type";
+    private static readonly PdfName TypeValue = "Page";
+    private static readonly PdfName Parent = "Parent";
+    private static readonly PdfName Resources = "Resources";
+    private static readonly PdfName MediaBox = "MediaBox";
+    private static readonly PdfName Contents = "Contents";
 
     #endregion
 
@@ -45,11 +46,12 @@ public sealed class PageObject : PdfDictionary<IPdfObject>
 
     private static IReadOnlyDictionary<PdfName, IPdfObject> GenerateDictionary(PageObjectOptions options)
     {
-        IDictionary<PdfName, IPdfObject> documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(4)
+        IDictionary<PdfName, IPdfObject> documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(5)
             .WithKeyValue(TypeName, TypeValue)
             .WithKeyValue(Parent, options.Parent)
             .WithKeyValue(Resources, options.Resources)
-            .WithKeyValue(MediaBox, options.MediaBox);
+            .WithKeyValue(MediaBox, options.MediaBox)
+            .WithKeyValue(Contents, options.Contents?.PdfObject);
 
         return new ReadOnlyDictionary<PdfName, IPdfObject>(documentCatalogDictionary);
     }
@@ -64,4 +66,6 @@ public sealed class PageObjectOptions
     public ResourceDictionary Resources { get; set; } = default!;
 
     public Rectangle MediaBox { get; set; } = default!;
+
+    public AnyOf<PdfIndirectIdentifier<PdfStream>, PdfArray<PdfIndirectIdentifier<PdfStream>>>? Contents { get; set; }
 }
