@@ -93,3 +93,11 @@ public sealed class PdfIndirect<T> : IPdfObject<T>, IEquatable<PdfIndirect<T>> w
 
     #endregion
 }
+
+public static class PdfIndirectExtensions
+{
+    public static PdfIndirect<T> ToPdfIndirect<T>(this T pdfObject, int objectNumber, int generationNumber = 0) where T : IPdfObject
+    {
+        return new PdfIndirect<T>(pdfObject, objectNumber, generationNumber);
+    }
+}

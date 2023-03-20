@@ -60,6 +60,7 @@ public class PageObjectTests
             options.Parent = pageObjectOptions.Parent;
             options.Resources = pageObjectOptions.Resources;
             options.MediaBox = pageObjectOptions.MediaBox;
+            options.Contents = pageObjectOptions.Contents;
         }); // Options as a delegate
 
         // Act
@@ -89,7 +90,23 @@ internal static class PageObjectTestsDataGenerator
                 }.ToPdfDictionary()),
                 MediaBox = new Rectangle(0, 0, 612, 792),
             },
-            "<</Type /Page /Parent 4 0 R /Resources <</Font <</F3 7 0 R /F5 9 0 R /F7 11 0 R>>>> /MediaBox [0 0 612 792]>>"
+            "<</Type /Page /Parent 4 0 R /Resources <</Font <</F3 7 0 R /F5 9 0 R /F7 11 0 R>> /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]>> /MediaBox [0 0 612 792]>>"
+        };
+        yield return new object[]
+        {
+            new PageObjectOptions
+            {
+                Parent = new PdfNull().ToPdfIndirect(4).ToPdfIndirectIdentifier(),
+                Resources = new ResourceDictionary(options => options.Font = new Dictionary<PdfName, PdfIndirectIdentifier<Type1Font>>
+                {
+                    { "F3", StandardFonts.TimesRoman.ToPdfIndirect(7).ToPdfIndirectIdentifier() },
+                    { "F5", StandardFonts.TimesRoman.ToPdfIndirect(9).ToPdfIndirectIdentifier() },
+                    { "F7", StandardFonts.TimesRoman.ToPdfIndirect(11).ToPdfIndirectIdentifier() },
+                }.ToPdfDictionary()),
+                MediaBox = new Rectangle(0, 0, 612, 792),
+                Contents = new PdfStream("".AsMemory()).ToPdfIndirect(4,2).ToPdfIndirectIdentifier()
+            },
+            "<</Type /Page /Parent 4 0 R /Resources <</Font <</F3 7 0 R /F5 9 0 R /F7 11 0 R>> /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]>> /MediaBox [0 0 612 792] /Contents 4 2 R>>"
         };
     }
 }

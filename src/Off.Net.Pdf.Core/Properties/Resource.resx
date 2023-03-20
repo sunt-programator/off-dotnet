@@ -194,4 +194,7 @@
   <data name="Rectangle_PointMustBePositive" xml:space="preserve">
     <value>The point provided must be a positive number</value>
   </data>
+  <data name="FontOperation_FontSizeMustBePositive" xml:space="preserve">
+    <value>The font size must be greater or equal to 0</value>
+  </data>
 </root>

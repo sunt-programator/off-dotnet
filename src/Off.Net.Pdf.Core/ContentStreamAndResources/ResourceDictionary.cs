@@ -9,7 +9,8 @@ public sealed class ResourceDictionary : PdfDictionary<IPdfObject>
 {
     #region Fields
 
-    private static readonly PdfName Font = new("Font");
+    private static readonly PdfName Font = "Font";
+    private static readonly PdfName ProcSet = "ProcSet";
 
     #endregion
 
@@ -29,15 +30,16 @@ public sealed class ResourceDictionary : PdfDictionary<IPdfObject>
 
     private static ResourceDictionaryOptions GetResourceDictionaryOptions(Action<ResourceDictionaryOptions> optionsFunc)
     {
-        ResourceDictionaryOptions fileTrailerOptions = new();
-        optionsFunc.Invoke(fileTrailerOptions);
-        return fileTrailerOptions;
+        ResourceDictionaryOptions options = new();
+        optionsFunc.Invoke(options);
+        return options;
     }
 
     private static IReadOnlyDictionary<PdfName, IPdfObject> GenerateDictionary(ResourceDictionaryOptions options)
     {
-        IDictionary<PdfName, IPdfObject> documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(1)
-            .WithKeyValue(Font, options.Font);
+        IDictionary<PdfName, IPdfObject> documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(2)
+            .WithKeyValue(Font, options.Font)
+            .WithKeyValue(ProcSet, options.ProcSet);
 
         return new ReadOnlyDictionary<PdfName, IPdfObject>(documentCatalogDictionary);
     }
@@ -47,5 +49,14 @@ public sealed class ResourceDictionary : PdfDictionary<IPdfObject>
 
 public sealed class ResourceDictionaryOptions
 {
+    public static readonly PdfName ProcSetPdf = "PDF";
+    public static readonly PdfName ProcSetText = "Text";
+    public static readonly PdfName ProcSetImageB = "ImageB";
+    public static readonly PdfName ProcSetImageC = "ImageC";
+    public static readonly PdfName ProcSetImageI = "ImageI";
+    private static readonly PdfArray<PdfName> DefaultProcedureSets = new[] { ProcSetPdf, ProcSetText, ProcSetImageB, ProcSetImageC, ProcSetImageI }.ToPdfArray();
+
     public PdfDictionary<PdfIndirectIdentifier<Type1Font>>? Font { get; set; }
+
+    public PdfArray<PdfName>? ProcSet { get; set; } = DefaultProcedureSets;
 }

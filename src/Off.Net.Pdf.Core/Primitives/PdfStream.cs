@@ -1,4 +1,5 @@
 using System.Text;
+using Off.Net.Pdf.Core.Extensions;
 using Off.Net.Pdf.Core.Interfaces;
 
 namespace Off.Net.Pdf.Core.Primitives;
@@ -7,12 +8,12 @@ public sealed class PdfStream : IPdfObject<ReadOnlyMemory<char>>, IEquatable<Pdf
 {
     #region Fields
 
-    private static readonly PdfName LengthKey = new("Length");
-    private static readonly PdfName FilterKey = new("Filter");
-    private static readonly PdfName DecodeParametersKey = new("DecodeParms");
-    private static readonly PdfName FileFilterKey = new("FFilter");
-    private static readonly PdfName FileDecodeParametersKey = new("FDecodeParms");
-    private static readonly PdfName FileSpecificationKey = new("F");
+    private static readonly PdfName LengthKey = "Length";
+    private static readonly PdfName FilterKey = "Filter";
+    private static readonly PdfName DecodeParametersKey = "DecodeParms";
+    private static readonly PdfName FileFilterKey = "FFilter";
+    private static readonly PdfName FileDecodeParametersKey = "FDecodeParms";
+    private static readonly PdfName FileSpecificationKey = "F";
 
     private readonly PdfStreamExtentOptions _pdfStreamExtentOptions = new();
     private readonly int _hashCode;
@@ -114,4 +115,21 @@ public sealed class PdfStream : IPdfObject<ReadOnlyMemory<char>>, IEquatable<Pdf
     }
 
     #endregion
+}
+
+public sealed class PdfStreamExtentOptions
+{
+    public AnyOf<PdfName, PdfArray<PdfName>>? Filter { get; set; } // Name or Array
+    public AnyOf<PdfDictionary<PdfName>, PdfArray<PdfName>>? DecodeParameters { get; set; } // Dictionary or Array
+    public PdfString? FileSpecification { get; set; }
+    public AnyOf<PdfName, PdfArray<PdfName>>? FileFilter { get; set; } // Name or Array
+    public AnyOf<PdfDictionary<PdfName>, PdfArray<PdfName>>? FileDecodeParameters { get; set; } // Dictionary or Array
+}
+
+public static class PdfStreamExtensions
+{
+    public static PdfStream ToPdfStream(this IPdfObject pdfObject, Action<PdfStreamExtentOptions>? options = null)
+    {
+        return new PdfStream(pdfObject.Content.AsMemory(), options);
+    }
 }

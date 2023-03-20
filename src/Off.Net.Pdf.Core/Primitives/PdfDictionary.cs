@@ -4,7 +4,7 @@ using Off.Net.Pdf.Core.Interfaces;
 
 namespace Off.Net.Pdf.Core.Primitives;
 
-public class PdfDictionary<TValue> : IPdfObject<IReadOnlyDictionary<PdfName, TValue>> where TValue: IPdfObject
+public class PdfDictionary<TValue> : IPdfObject<IReadOnlyDictionary<PdfName, TValue>> where TValue : IPdfObject
 {
     #region Fields
 
@@ -96,4 +96,30 @@ public class PdfDictionary<TValue> : IPdfObject<IReadOnlyDictionary<PdfName, TVa
     }
 
     #endregion
+}
+
+public static class PdfDictionaryExtensions
+{
+    public static PdfDictionary<TValue> ToPdfDictionary<TValue>(this IDictionary<PdfName, TValue> items) where TValue : IPdfObject
+    {
+        return PdfDictionary<TValue>.CreateRange(items);
+    }
+
+    public static PdfDictionary<TValue> ToPdfDictionary<TValue>(this KeyValuePair<PdfName, TValue> item) where TValue : IPdfObject
+    {
+        return PdfDictionary<TValue>.Create(item);
+    }
+}
+
+internal static class PdfDictionaryInternalExtensions
+{
+    public static IDictionary<PdfName, IPdfObject> WithKeyValue(this IDictionary<PdfName, IPdfObject> dictionary, PdfName key, IPdfObject? pdfObject)
+    {
+        if (pdfObject != null)
+        {
+            dictionary.Add(key, pdfObject);
+        }
+
+        return dictionary;
+    }
 }

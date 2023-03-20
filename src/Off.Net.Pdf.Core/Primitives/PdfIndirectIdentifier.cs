@@ -74,3 +74,11 @@ public sealed class PdfIndirectIdentifier<T> : IPdfObject, IEquatable<PdfIndirec
 
     #endregion
 }
+
+public static class PdfIndirectIdentifierExtensions
+{
+    public static PdfIndirectIdentifier<T> ToPdfIndirectIdentifier<T>(this PdfIndirect<T> pdfIndirect) where T : IPdfObject
+    {
+        return new PdfIndirectIdentifier<T>(pdfIndirect);
+    }
+}
