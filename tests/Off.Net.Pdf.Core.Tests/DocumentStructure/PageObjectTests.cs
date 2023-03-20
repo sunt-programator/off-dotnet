@@ -26,7 +26,11 @@ public class PageObjectTests
     public void PageObject_ConstructorWithNullResourceDictionary_ShouldThrowException()
     {
         // Arrange
-        PageObjectOptions documentCatalogOptions = new() { Parent = new PdfNull().ToPdfIndirect(1).ToPdfIndirectIdentifier(), Resources = null! };
+        PdfIndirectIdentifier<PageTreeNode> parent = new PageTreeNode(options => options.Kids = Array.Empty<PdfIndirectIdentifier<PageObject>>().ToPdfArray())
+            .ToPdfIndirect(1)
+            .ToPdfIndirectIdentifier();
+
+        PageObjectOptions documentCatalogOptions = new() { Parent = parent, Resources = null! };
 
         // Act
         PageObject PageObjectFunction() => new(documentCatalogOptions);
@@ -39,8 +43,12 @@ public class PageObjectTests
     public void PageObject_ConstructorWithNullMediaBox_ShouldThrowException()
     {
         // Arrange
+        PdfIndirectIdentifier<PageTreeNode> parent = new PageTreeNode(options => options.Kids = Array.Empty<PdfIndirectIdentifier<PageObject>>().ToPdfArray())
+            .ToPdfIndirect(1)
+            .ToPdfIndirectIdentifier();
+
         ResourceDictionary resourceDictionary = new(new ResourceDictionaryOptions());
-        PageObjectOptions documentCatalogOptions = new() { Parent = new PdfNull().ToPdfIndirect(1).ToPdfIndirectIdentifier(), Resources = resourceDictionary, MediaBox = null! };
+        PageObjectOptions documentCatalogOptions = new() { Parent = parent, Resources = resourceDictionary, MediaBox = null! };
 
         // Act
         PageObject PageObjectFunction() => new(documentCatalogOptions);
@@ -77,11 +85,13 @@ internal static class PageObjectTestsDataGenerator
 {
     public static IEnumerable<object[]> PageObject_Content_TestCases()
     {
+        PageTreeNode parent = new(options => options.Kids = Array.Empty<PdfIndirectIdentifier<PageObject>>().ToPdfArray());
+
         yield return new object[]
         {
             new PageObjectOptions
             {
-                Parent = new PdfNull().ToPdfIndirect(4).ToPdfIndirectIdentifier(),
+                Parent = parent.ToPdfIndirect(4).ToPdfIndirectIdentifier(),
                 Resources = new ResourceDictionary(options => options.Font = new Dictionary<PdfName, PdfIndirectIdentifier<Type1Font>>
                 {
                     { "F3", StandardFonts.TimesRoman.ToPdfIndirect(7).ToPdfIndirectIdentifier() },
@@ -96,7 +106,7 @@ internal static class PageObjectTestsDataGenerator
         {
             new PageObjectOptions
             {
-                Parent = new PdfNull().ToPdfIndirect(4).ToPdfIndirectIdentifier(),
+                Parent = parent.ToPdfIndirect(3).ToPdfIndirectIdentifier(),
                 Resources = new ResourceDictionary(options => options.Font = new Dictionary<PdfName, PdfIndirectIdentifier<Type1Font>>
                 {
                     { "F3", StandardFonts.TimesRoman.ToPdfIndirect(7).ToPdfIndirectIdentifier() },
@@ -104,9 +114,9 @@ internal static class PageObjectTestsDataGenerator
                     { "F7", StandardFonts.TimesRoman.ToPdfIndirect(11).ToPdfIndirectIdentifier() },
                 }.ToPdfDictionary()),
                 MediaBox = new Rectangle(0, 0, 612, 792),
-                Contents = new PdfStream("".AsMemory()).ToPdfIndirect(4,2).ToPdfIndirectIdentifier()
+                Contents = new PdfStream("".AsMemory()).ToPdfIndirect(4, 2).ToPdfIndirectIdentifier()
             },
-            "<</Type /Page /Parent 4 0 R /Resources <</Font <</F3 7 0 R /F5 9 0 R /F7 11 0 R>> /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]>> /MediaBox [0 0 612 792] /Contents 4 2 R>>"
+            "<</Type /Page /Parent 3 0 R /Resources <</Font <</F3 7 0 R /F5 9 0 R /F7 11 0 R>> /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]>> /MediaBox [0 0 612 792] /Contents 4 2 R>>"
         };
     }
 }

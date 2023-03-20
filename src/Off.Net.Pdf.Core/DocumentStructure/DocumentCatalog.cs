@@ -34,9 +34,9 @@ public sealed class DocumentCatalog : PdfDictionary<IPdfObject>
 
     private static DocumentCatalogOptions GetDocumentCatalogOptions(Action<DocumentCatalogOptions> optionsFunc)
     {
-        DocumentCatalogOptions fileTrailerOptions = new();
-        optionsFunc.Invoke(fileTrailerOptions);
-        return fileTrailerOptions;
+        DocumentCatalogOptions options = new();
+        optionsFunc.Invoke(options);
+        return options;
     }
 
     private static IReadOnlyDictionary<PdfName, IPdfObject> GenerateDictionary(DocumentCatalogOptions options)

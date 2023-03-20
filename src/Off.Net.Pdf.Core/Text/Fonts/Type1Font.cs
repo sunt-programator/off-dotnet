@@ -35,9 +35,9 @@ public sealed class Type1Font : PdfDictionary<IPdfObject>
 
     private static Type1FontOptions GetType1FontOptions(Action<Type1FontOptions> optionsFunc)
     {
-        Type1FontOptions fileTrailerOptions = new();
-        optionsFunc.Invoke(fileTrailerOptions);
-        return fileTrailerOptions;
+        Type1FontOptions options = new();
+        optionsFunc.Invoke(options);
+        return options;
     }
 
     private static IReadOnlyDictionary<PdfName, IPdfObject> GenerateDictionary(Type1FontOptions options)
