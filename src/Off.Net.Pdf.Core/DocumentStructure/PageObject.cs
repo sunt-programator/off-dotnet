@@ -28,9 +28,6 @@ public sealed class PageObject : PdfDictionary<IPdfObject>
 
     public PageObject(PageObjectOptions options) : base(GenerateDictionary(options))
     {
-        options.NotNull(x => x.Parent);
-        options.NotNull(x => x.Resources);
-        options.NotNull(x => x.MediaBox);
     }
 
     #endregion
@@ -39,13 +36,17 @@ public sealed class PageObject : PdfDictionary<IPdfObject>
 
     private static PageObjectOptions GetPageObjectOptions(Action<PageObjectOptions> optionsFunc)
     {
-        PageObjectOptions fileTrailerOptions = new();
-        optionsFunc.Invoke(fileTrailerOptions);
-        return fileTrailerOptions;
+        PageObjectOptions options = new();
+        optionsFunc.Invoke(options);
+        return options;
     }
 
     private static IReadOnlyDictionary<PdfName, IPdfObject> GenerateDictionary(PageObjectOptions options)
     {
+        options.NotNull(x => x.Parent);
+        options.NotNull(x => x.Resources);
+        options.NotNull(x => x.MediaBox);
+
         IDictionary<PdfName, IPdfObject> documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(5)
             .WithKeyValue(TypeName, TypeValue)
             .WithKeyValue(Parent, options.Parent)
@@ -61,7 +62,7 @@ public sealed class PageObject : PdfDictionary<IPdfObject>
 
 public sealed class PageObjectOptions
 {
-    public PdfIndirectIdentifier<PdfNull> Parent { get; set; } = default!; // TODO: convert to page tree node once it's implemented
+    public PdfIndirectIdentifier<PageTreeNode> Parent { get; set; } = default!;
 
     public ResourceDictionary Resources { get; set; } = default!;
 
