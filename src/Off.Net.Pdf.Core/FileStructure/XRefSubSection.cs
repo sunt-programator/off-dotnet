@@ -29,7 +29,7 @@ public sealed class XRefSubSection : IPdfObject<ICollection<XRefEntry>>, IEquata
 
     #region Properties
 
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public int ObjectNumber { get; }
 

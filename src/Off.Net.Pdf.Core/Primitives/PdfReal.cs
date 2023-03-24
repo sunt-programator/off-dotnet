@@ -33,7 +33,7 @@ public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, ICo
     #endregion
 
     #region Properties
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public float Value { get; }
 

@@ -53,7 +53,7 @@ public sealed class FileTrailer : IPdfObject, IEquatable<FileTrailer?>
 
     #region Properties
 
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public long ByteOffset { get; }
 

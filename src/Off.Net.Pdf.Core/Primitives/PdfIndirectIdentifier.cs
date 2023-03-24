@@ -34,7 +34,7 @@ public sealed class PdfIndirectIdentifier<T> : IPdfObject, IEquatable<PdfIndirec
 
     public int ObjectNumber { get; }
 
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public PdfIndirect<T> PdfIndirect { get; }
 

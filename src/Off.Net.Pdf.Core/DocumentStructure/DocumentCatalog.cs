@@ -23,9 +23,7 @@ public sealed class DocumentCatalog : PdfDictionary<IPdfObject>
 
     public DocumentCatalog(DocumentCatalogOptions options) : base(GenerateDictionary(options))
     {
-        options
-            .NotNull(x => x.Pages)
-            .CheckConstraints(x => x.Pages.Value.Count > 0, Resource.DocumentCatalog_Pages_MustNotBeEmpty);
+        options.NotNull(x => x.Pages);
     }
 
     #endregion
@@ -53,5 +51,5 @@ public sealed class DocumentCatalog : PdfDictionary<IPdfObject>
 
 public sealed class DocumentCatalogOptions
 {
-    public PdfDictionary<IPdfObject> Pages { get; set; } = default!;
+    public PdfIndirectIdentifier<PageTreeNode> Pages { get; set; } = default!;
 }

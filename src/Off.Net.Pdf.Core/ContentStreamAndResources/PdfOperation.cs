@@ -25,7 +25,7 @@ public abstract class PdfOperation : IPdfObject
 
     #region Properties
 
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public string PdfOperator { get; }
 

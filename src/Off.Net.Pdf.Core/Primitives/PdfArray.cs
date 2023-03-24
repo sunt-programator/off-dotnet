@@ -21,7 +21,7 @@ public class PdfArray<TValue> : IPdfObject<IReadOnlyCollection<TValue>> where TV
     #endregion
 
     #region Properties
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public IReadOnlyCollection<TValue> Value { get; }
 

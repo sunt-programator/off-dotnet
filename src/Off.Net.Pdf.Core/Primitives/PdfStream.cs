@@ -37,7 +37,7 @@ public sealed class PdfStream : IPdfObject<ReadOnlyMemory<char>>, IEquatable<Pdf
 
     #region Properties
 
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public ReadOnlyMemory<char> Value { get; }
 
@@ -78,15 +78,18 @@ public sealed class PdfStream : IPdfObject<ReadOnlyMemory<char>>, IEquatable<Pdf
         }
 
         StringBuilder stringBuilder = new StringBuilder()
-            .Insert(0, "stream")
-            .Append('\n')
-            .Append(Value)
-            .Append('\n')
-            .Append("endstream");
+            .Insert(0, "\nstream\n")
+            .Append(this.Value);
+
+        if (stringBuilder[^1] != '\n')
+        {
+            stringBuilder.Append('\n');
+        }
+
+        stringBuilder.Append("endstream");
 
         _literalValue = stringBuilder
             .Insert(0, StreamExtent.Content)
-            .Insert(StreamExtent.Content.Length, '\n')
             .ToString();
 
         return _literalValue;
@@ -99,8 +102,7 @@ public sealed class PdfStream : IPdfObject<ReadOnlyMemory<char>>, IEquatable<Pdf
             return _streamExtentDictionary;
         }
 
-        const int streamContentWrapperLength = 17; // 'stream' + '\n' + '<content_byte_array>' + '\n' + 'endstream'
-        int length = Value.Length + streamContentWrapperLength;
+        int length = this.Value.Length;
 
         _streamExtentDictionary = new Dictionary<PdfName, IPdfObject>(6)
             .WithKeyValue(FilterKey, _pdfStreamExtentOptions.Filter?.PdfObject)

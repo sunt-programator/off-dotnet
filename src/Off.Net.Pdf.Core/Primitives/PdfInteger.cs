@@ -26,7 +26,7 @@ public struct PdfInteger : IPdfObject<int>, IEquatable<PdfInteger>, IComparable,
     #endregion
 
     #region Properties
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public int Value { get; }
 

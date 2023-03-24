@@ -19,7 +19,7 @@ public struct PdfBoolean : IPdfObject<bool>, IEquatable<PdfBoolean>
     #endregion
 
     #region Properties
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public bool Value { get; }
 

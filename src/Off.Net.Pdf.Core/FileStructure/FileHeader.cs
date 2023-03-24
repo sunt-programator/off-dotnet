@@ -28,7 +28,7 @@ public readonly struct FileHeader : IPdfObject, IEquatable<FileHeader>
 
     #region Properties
 
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public ReadOnlyMemory<byte> Bytes => Encoding.ASCII.GetBytes(Content);
 

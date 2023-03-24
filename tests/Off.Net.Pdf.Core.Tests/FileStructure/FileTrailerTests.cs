@@ -9,8 +9,12 @@ namespace Off.Net.Pdf.Core.Tests.FileStructure;
 
 public class FileTrailerTests
 {
-    private static readonly IDictionary<PdfName, IPdfObject> RootDictionaryPages = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } };
-    private static readonly PdfIndirectIdentifier<DocumentCatalog> RootDictionary = new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = RootDictionaryPages.ToPdfDictionary()).ToPdfIndirect(2).ToPdfIndirectIdentifier();
+    private static readonly PdfIndirectIdentifier<PageTreeNode> Pages = new PageTreeNode(options => options.Kids = Array.Empty<PdfIndirectIdentifier<PageObject>>().ToPdfArray())
+        .ToPdfIndirect(3)
+        .ToPdfIndirectIdentifier();
+
+    private static readonly PdfIndirectIdentifier<DocumentCatalog> RootDictionary =
+        new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = Pages).ToPdfIndirect(2).ToPdfIndirectIdentifier();
 
     [Theory(DisplayName = $"Constructor with negative {nameof(FileTrailer.ByteOffset)} should throw an {nameof(ArgumentOutOfRangeException)}")]
     [InlineData(-1)]
@@ -252,8 +256,12 @@ public class FileTrailerTests
 
 internal static class FileTrailerTestsDataGenerator
 {
-    private static readonly IDictionary<PdfName, IPdfObject> RootDictionaryPages = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } };
-    private static readonly PdfIndirectIdentifier<DocumentCatalog> RootDictionary = new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = RootDictionaryPages.ToPdfDictionary()).ToPdfIndirect(2).ToPdfIndirectIdentifier();
+    private static readonly PdfIndirectIdentifier<PageTreeNode> Pages = new PageTreeNode(options => options.Kids = Array.Empty<PdfIndirectIdentifier<PageObject>>().ToPdfArray())
+        .ToPdfIndirect(3)
+        .ToPdfIndirectIdentifier();
+
+    private static readonly PdfIndirectIdentifier<DocumentCatalog> RootDictionary =
+        new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = Pages).ToPdfIndirect(2).ToPdfIndirectIdentifier();
 
     public static IEnumerable<object[]> FileTrailer_Content_TestCases()
     {
@@ -295,7 +303,11 @@ internal static class FileTrailerTestsDataGenerator
                 options.Size = 22;
                 options.Prev = 196;
                 options.Root = RootDictionary;
-                options.Encrypt = new Dictionary<PdfName, IPdfObject>(2) { { "Test1", new PdfInteger(1) }, { "Test2", new PdfInteger(2) } }
+                options.Encrypt = new Dictionary<PdfName, IPdfObject>(2)
+                    {
+                        { "Test1", new PdfInteger(1) },
+                        { "Test2", new PdfInteger(2) }
+                    }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()
@@ -347,7 +359,11 @@ internal static class FileTrailerTestsDataGenerator
                 options.Size = 22;
                 options.Prev = 196;
                 options.Root = RootDictionary;
-                options.Encrypt = new Dictionary<PdfName, IPdfObject>(2) { { "Test1", new PdfInteger(1) }, { "Test2", new PdfInteger(2) } }
+                options.Encrypt = new Dictionary<PdfName, IPdfObject>(2)
+                    {
+                        { "Test1", new PdfInteger(1) },
+                        { "Test2", new PdfInteger(2) }
+                    }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()
@@ -414,7 +430,11 @@ internal static class FileTrailerTestsDataGenerator
                 options.Size = 22;
                 options.Prev = 196;
                 options.Root = RootDictionary;
-                options.Encrypt = new Dictionary<PdfName, IPdfObject>(2) { { "Test1", new PdfInteger(1) }, { "Test2", new PdfInteger(2) } }
+                options.Encrypt = new Dictionary<PdfName, IPdfObject>(2)
+                    {
+                        { "Test1", new PdfInteger(1) },
+                        { "Test2", new PdfInteger(2) }
+                    }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()
@@ -473,7 +493,11 @@ internal static class FileTrailerTestsDataGenerator
                 options.Size = 22;
                 options.Prev = 196;
                 options.Root = RootDictionary;
-                options.Encrypt = new Dictionary<PdfName, IPdfObject>(2) { { "Test1", new PdfInteger(1) }, { "Test2", new PdfInteger(2) } }
+                options.Encrypt = new Dictionary<PdfName, IPdfObject>(2)
+                    {
+                        { "Test1", new PdfInteger(1) },
+                        { "Test2", new PdfInteger(2) }
+                    }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()
@@ -545,7 +569,11 @@ internal static class FileTrailerTestsDataGenerator
                 options.Size = 22;
                 options.Prev = null;
                 options.Root = RootDictionary;
-                options.Encrypt = new Dictionary<PdfName, IPdfObject>(2) { { "Test1", new PdfInteger(1) }, { "Test2", new PdfInteger(2) } }
+                options.Encrypt = new Dictionary<PdfName, IPdfObject>(2)
+                    {
+                        { "Test1", new PdfInteger(1) },
+                        { "Test2", new PdfInteger(2) }
+                    }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()
@@ -558,7 +586,11 @@ internal static class FileTrailerTestsDataGenerator
                 options.Size = 22;
                 options.Prev = 0;
                 options.Root = RootDictionary;
-                options.Encrypt = new Dictionary<PdfName, IPdfObject>(2) { { "Test1", new PdfInteger(1) }, { "Test2", new PdfInteger(2) } }
+                options.Encrypt = new Dictionary<PdfName, IPdfObject>(2)
+                    {
+                        { "Test1", new PdfInteger(1) },
+                        { "Test2", new PdfInteger(2) }
+                    }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
                     .ToPdfDictionary()

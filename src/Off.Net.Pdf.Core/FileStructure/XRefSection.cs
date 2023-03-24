@@ -28,7 +28,7 @@ public sealed class XRefSection : IPdfObject<ICollection<XRefSubSection>>, IEqua
 
     #region Properties
 
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public int NumberOfSubSections => Value.Count;
 

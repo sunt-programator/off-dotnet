@@ -22,3 +22,11 @@ public interface IPdfObject<out T> : IPdfObject
     /// </summary>
     T Value { get; }
 }
+
+public interface IMutablePdfObject<out T> : IPdfObject
+{
+    /// <summary>
+    ///     Gets or sets the value of the object.
+    /// </summary>
+    T? Value { get; }
+}

@@ -28,7 +28,7 @@ public sealed class XRefTable : IPdfObject<ICollection<XRefSection>>, IEquatable
 
     #region Properties
 
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public int NumberOfSections => Value.Count;
 

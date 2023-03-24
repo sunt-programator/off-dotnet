@@ -28,7 +28,7 @@ public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
     #endregion
 
     #region Properties
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public string Value { get; }
 

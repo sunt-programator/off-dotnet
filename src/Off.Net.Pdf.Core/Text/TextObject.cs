@@ -29,7 +29,7 @@ public sealed class TextObject : IPdfObject<IReadOnlyCollection<PdfOperation>>
 
     #region Properties
 
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public ReadOnlyMemory<byte> Bytes => _bytes.Value;
 

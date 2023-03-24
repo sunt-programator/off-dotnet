@@ -300,7 +300,7 @@ public class PdfStreamTests
         // Arrange
         PdfString pdfString = new(pdfStringValue);
         PdfStream pdfStream = pdfString.ToPdfStream();
-        int expectedStreamExtentLengthValue = pdfString.Length + 17; // Stream content itself + wrapper content (stream + \n <content_byte_array> + \n + endstream)
+        int expectedStreamExtentLengthValue = pdfString.Length;
         string expectedStringContent = $"<</Length {expectedStreamExtentLengthValue}>>\nstream\n{pdfString.Content}\nendstream";
 
         // Act
@@ -325,17 +325,14 @@ public class PdfStreamTests
     }
 
     [Theory(DisplayName = $"{nameof(PdfStream.Length)} property should return a valid value")]
-    [InlineData("This is a PDF String wrapped in a Stream object")]
-    [InlineData($"It should return a valid {nameof(PdfStream.Length)} property")]
-    [InlineData($"It should include {nameof(PdfStream.StreamExtent)} dictionary's length and the byte array value's length")]
-    public void PdfStream_Length_ShouldReturnValidValue(string pdfStringValue)
+    [InlineData("This is a PDF String wrapped in a Stream object", 81)]
+    [InlineData($"It should return a valid {nameof(PdfStream.Length)} property", 74)]
+    [InlineData($"It should include {nameof(PdfStream.StreamExtent)} dictionary's length and the byte array value's length", 118)]
+    public void PdfStream_Length_ShouldReturnValidValue(string pdfStringValue, int expectedLength)
     {
         // Arrange
         PdfString pdfString = new(pdfStringValue);
         PdfStream pdfStream = pdfString.ToPdfStream();
-        int expectedStreamExtentLengthValue = pdfString.Length + 17; // Stream content itself + wrapper content (stream + \n <content_byte_array> + \n + endstream)
-        int expectedStreamExtentStringLengthValue = expectedStreamExtentLengthValue.ToString(CultureInfo.InvariantCulture).Length;
-        int expectedLength = 13 + expectedStreamExtentLengthValue + expectedStreamExtentStringLengthValue;
 
         // Act
         int actualLength = pdfStream.Length;
@@ -352,7 +349,7 @@ public class PdfStreamTests
         PdfStream pdfStream = new PdfString(pdfStringValue).ToPdfStream();
 
         // Act
-         ReadOnlyMemory<byte> actualBytes = pdfStream.Bytes;
+        ReadOnlyMemory<byte> actualBytes = pdfStream.Bytes;
 
         // Assert
         Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
@@ -436,9 +433,9 @@ internal static class PdfStreamTestDataGenerator
             "This is a PDF String wrapped in a Stream object",
             new byte[]
             {
-                60, 60, 47, 76, 101, 110, 103, 116, 104, 32, 54, 54, 62, 62, 10, 115, 116, 114, 101, 97, 109, 10, 40, 84, 104, 105, 115, 32, 105, 115, 32, 97, 32, 80, 68, 70, 32, 83, 116,
-                114, 105, 110, 103, 32, 119, 114, 97, 112, 112, 101, 100, 32, 105, 110, 32, 97, 32, 83, 116, 114, 101, 97, 109, 32, 111, 98, 106, 101, 99, 116, 41, 10, 101, 110, 100, 115,
-                116, 114, 101, 97, 109
+                0x3C, 0x3C, 0x2F, 0x4C, 0x65, 0x6E, 0x67, 0x74, 0x68, 0x20, 0x34, 0x39, 0x3E, 0x3E, 0x0A, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 0x0A, 0x28, 0x54, 0x68, 0x69, 0x73, 0x20, 0x69, 0x73,
+                0x20, 0x61, 0x20, 0x50, 0x44, 0x46, 0x20, 0x53, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x20, 0x77, 0x72, 0x61, 0x70, 0x70, 0x65, 0x64, 0x20, 0x69, 0x6E, 0x20, 0x61, 0x20, 0x53, 0x74, 0x72,
+                0x65, 0x61, 0x6D, 0x20, 0x6F, 0x62, 0x6A, 0x65, 0x63, 0x74, 0x29, 0x0A, 0x65, 0x6E, 0x64, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D
             }
         };
 
@@ -447,8 +444,9 @@ internal static class PdfStreamTestDataGenerator
             $"It should return a valid {nameof(PdfStream.Bytes)} property",
             new byte[]
             {
-                60, 60, 47, 76, 101, 110, 103, 116, 104, 32, 53, 56, 62, 62, 10, 115, 116, 114, 101, 97, 109, 10, 40, 73, 116, 32, 115, 104, 111, 117, 108, 100, 32, 114, 101, 116, 117, 114,
-                110, 32, 97, 32, 118, 97, 108, 105, 100, 32, 66, 121, 116, 101, 115, 32, 112, 114, 111, 112, 101, 114, 116, 121, 41, 10, 101, 110, 100, 115, 116, 114, 101, 97, 109
+                0x3C, 0x3C, 0x2F, 0x4C, 0x65, 0x6E, 0x67, 0x74, 0x68, 0x20, 0x34, 0x31, 0x3E, 0x3E, 0x0A, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 0x0A, 0x28, 0x49, 0x74, 0x20, 0x73, 0x68, 0x6F, 0x75,
+                0x6C, 0x64, 0x20, 0x72, 0x65, 0x74, 0x75, 0x72, 0x6E, 0x20, 0x61, 0x20, 0x76, 0x61, 0x6C, 0x69, 0x64, 0x20, 0x42, 0x79, 0x74, 0x65, 0x73, 0x20, 0x70, 0x72, 0x6F, 0x70, 0x65, 0x72,
+                0x74, 0x79, 0x29, 0x0A, 0x65, 0x6E, 0x64, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D
             }
         };
     }

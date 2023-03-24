@@ -6,9 +6,9 @@ namespace Off.Net.Pdf.Core.Tests.Primitives;
 public class PdfIndirectTests
 {
     [Theory(DisplayName = "Check Length property")]
-    [InlineData(0, 0, "Test", 21)]
-    [InlineData(12, 0, "Brillig", 25)]
-    [InlineData(21, 6, "String1", 25)]
+    [InlineData(0, 0, "Test", 22)]
+    [InlineData(12, 0, "Brillig", 26)]
+    [InlineData(21, 6, "String1", 26)]
     public void PdfIndirect_Length_CheckValue(int objectNumber, int generationNumber, string actualStringValue, int expectedLength)
     {
         // Arrange
@@ -22,9 +22,9 @@ public class PdfIndirectTests
     }
 
     [Theory(DisplayName = "Check Content property")]
-    [InlineData(0, 0, "Test", "0 0 obj\n(Test)\nendobj")]
-    [InlineData(12, 0, "Brillig", "12 0 obj\n(Brillig)\nendobj")]
-    [InlineData(21, 6, "String1", "21 6 obj\n(String1)\nendobj")]
+    [InlineData(0, 0, "Test", "0 0 obj\n(Test)\nendobj\n")]
+    [InlineData(12, 0, "Brillig", "12 0 obj\n(Brillig)\nendobj\n")]
+    [InlineData(21, 6, "String1", "21 6 obj\n(String1)\nendobj\n")]
     public void PdfIndirect_Content_CheckValue(int objectNumber, int generationNumber, string actualStringValue, string expectedContent)
     {
         // Arrange
@@ -106,35 +106,19 @@ public class PdfIndirectTests
         Assert.Equal(expectedResult, actualResult);
     }
 
-    [Theory(DisplayName = "Check multiple Value access")]
-    [InlineData(0, 0, "Test")]
-    [InlineData(12, 0, "Brillig")]
-    [InlineData(21, 6, "String1")]
-    public void PdfIndirect_Value_CheckValidity(int objectNumber, int generationNumber, string actualStringValue)
-    {
-        // Arrange
-        PdfIndirect<PdfString> pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber);
-
-        // Act
-        string actualContent1 = pdfIndirect.Content;
-        string actualContent2 = pdfIndirect.Content;
-
-        // Assert
-        Assert.Equal(actualContent1, actualContent2);
-        Assert.True(ReferenceEquals(actualContent1, actualContent2));
-    }
-
     [Theory(DisplayName = "Check Bytes property")]
-    [InlineData(0, 0, "Test", new byte[] { 0x30, 0x20, 0x30, 0x20, 0x6f, 0x62, 0x6a, 0x0a, 0x28, 0x54, 0x65, 0x73, 0x74, 0x29, 0x0a, 0x65, 0x6e, 0x64, 0x6f, 0x62, 0x6a })]
-    [InlineData(12, 0, "Brillig", new byte[] { 0x31, 0x32, 0x20, 0x30, 0x20, 0x6f, 0x62, 0x6a, 0x0a, 0x28, 0x42, 0x72, 0x69, 0x6c, 0x6c, 0x69, 0x67, 0x29, 0x0a, 0x65, 0x6e, 0x64, 0x6f, 0x62, 0x6a })]
-    [InlineData(21, 6, "String1", new byte[] { 0x32, 0x31, 0x20, 0x36, 0x20, 0x6f, 0x62, 0x6a, 0x0a, 0x28, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x31, 0x29, 0x0a, 0x65, 0x6e, 0x64, 0x6f, 0x62, 0x6a })]
+    [InlineData(0, 0, "Test", new byte[] { 0x30, 0x20, 0x30, 0x20, 0x6F, 0x62, 0x6A, 0x0A, 0x28, 0x54, 0x65, 0x73, 0x74, 0x29, 0x0A, 0x65, 0x6E, 0x64, 0x6F, 0x62, 0x6A, 0x0A })]
+    [InlineData(12, 0, "Brillig",
+        new byte[] { 0x31, 0x32, 0x20, 0x30, 0x20, 0x6F, 0x62, 0x6A, 0x0A, 0x28, 0x42, 0x72, 0x69, 0x6C, 0x6C, 0x69, 0x67, 0x29, 0x0A, 0x65, 0x6E, 0x64, 0x6F, 0x62, 0x6A, 0x0A })]
+    [InlineData(21, 6, "String1",
+        new byte[] { 0x32, 0x31, 0x20, 0x36, 0x20, 0x6F, 0x62, 0x6A, 0x0A, 0x28, 0x53, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x31, 0x29, 0x0A, 0x65, 0x6E, 0x64, 0x6F, 0x62, 0x6A, 0x0A })]
     public void PdfIndirect_Bytes_CheckValue(int objectNumber, int generationNumber, string actualStringValue, byte[] expectedBytes)
     {
         // Arrange
         PdfIndirect<PdfString> pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber);
 
         // Act
-         ReadOnlyMemory<byte> actualBytes = pdfIndirect.Bytes;
+        ReadOnlyMemory<byte> actualBytes = pdfIndirect.Bytes;
 
         // Assert
         Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
