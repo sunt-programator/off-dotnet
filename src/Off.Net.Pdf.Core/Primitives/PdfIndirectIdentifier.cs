@@ -1,34 +1,30 @@
-﻿using System.Text;
+// <copyright file="PdfIndirectIdentifier.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using System.Text;
 using Off.Net.Pdf.Core.Interfaces;
 
 namespace Off.Net.Pdf.Core.Primitives;
 
-public sealed class PdfIndirectIdentifier<T> : IPdfObject, IEquatable<PdfIndirectIdentifier<T>> where T: IPdfObject
+public sealed class PdfIndirectIdentifier<T> : IPdfObject, IEquatable<PdfIndirectIdentifier<T>>
+    where T : IPdfObject
 {
-    #region Fields
-
-    private readonly Lazy<int> _hashCode;
-    private readonly Lazy<string> _literalValue;
-    private readonly Lazy<byte[]> _bytes;
-
-    #endregion
-
-    #region Constructors
+    private readonly Lazy<int> hashCode;
+    private readonly Lazy<string> literalValue;
+    private readonly Lazy<byte[]> bytes;
 
     public PdfIndirectIdentifier(PdfIndirect<T> pdfObject)
     {
-        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(PdfIndirectIdentifier<T>), pdfObject.ObjectNumber, pdfObject.GenerationNumber));
-        _literalValue = new Lazy<string>(GenerateContent);
-        _bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(Content));
+        this.hashCode = new Lazy<int>(() => HashCode.Combine(nameof(PdfIndirectIdentifier<T>), pdfObject.ObjectNumber, pdfObject.GenerationNumber));
+        this.literalValue = new Lazy<string>(this.GenerateContent);
+        this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
 
-        ObjectNumber = pdfObject.ObjectNumber;
-        GenerationNumber = pdfObject.GenerationNumber;
-        PdfIndirect = pdfObject;
+        this.ObjectNumber = pdfObject.ObjectNumber;
+        this.GenerationNumber = pdfObject.GenerationNumber;
+        this.PdfIndirect = pdfObject;
     }
-
-    #endregion
-
-    #region Properties
 
     public int GenerationNumber { get; }
 
@@ -38,47 +34,29 @@ public sealed class PdfIndirectIdentifier<T> : IPdfObject, IEquatable<PdfIndirec
 
     public PdfIndirect<T> PdfIndirect { get; }
 
-    public ReadOnlyMemory<byte> Bytes => _bytes.Value;
+    public ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
-    public string Content => _literalValue.Value;
-
-    #endregion
-
-    #region Public Methods
+    public string Content => this.literalValue.Value;
 
     public override int GetHashCode()
     {
-        return _hashCode.Value;
+        return this.hashCode.Value;
     }
 
     public bool Equals(PdfIndirectIdentifier<T>? other)
     {
         return other != null
-               && ObjectNumber == other.ObjectNumber
-               && GenerationNumber == other.GenerationNumber;
+               && this.ObjectNumber == other.ObjectNumber
+               && this.GenerationNumber == other.GenerationNumber;
     }
 
     public override bool Equals(object? obj)
     {
-        return obj is PdfIndirectIdentifier<T> pdfIndirect && Equals(pdfIndirect);
+        return obj is PdfIndirectIdentifier<T> pdfIndirect && this.Equals(pdfIndirect);
     }
-
-    #endregion
-
-    #region Private Methods
 
     private string GenerateContent()
     {
-        return $"{ObjectNumber} {GenerationNumber} R";
-    }
-
-    #endregion
-}
-
-public static class PdfIndirectIdentifierExtensions
-{
-    public static PdfIndirectIdentifier<T> ToPdfIndirectIdentifier<T>(this PdfIndirect<T> pdfIndirect) where T : IPdfObject
-    {
-        return new PdfIndirectIdentifier<T>(pdfIndirect);
+        return $"{this.ObjectNumber} {this.GenerationNumber} R";
     }
 }

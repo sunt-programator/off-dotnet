@@ -1,4 +1,9 @@
-﻿using System.Text;
+// <copyright file="PdfIndirect.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using System.Text;
 using Off.Net.Pdf.Core.Extensions;
 using Off.Net.Pdf.Core.Interfaces;
 
@@ -68,14 +73,5 @@ public sealed class PdfIndirect<T> : IMutablePdfObject<T>, IEquatable<PdfIndirec
         return stringBuilder
             .Append("\nendobj\n")
             .ToString();
-    }
-}
-
-public static class PdfIndirectExtensions
-{
-    public static PdfIndirect<T> ToPdfIndirect<T>(this T pdfObject, int objectNumber, int generationNumber = 0)
-        where T : IPdfObject
-    {
-        return new PdfIndirect<T>(pdfObject, objectNumber, generationNumber);
     }
 }

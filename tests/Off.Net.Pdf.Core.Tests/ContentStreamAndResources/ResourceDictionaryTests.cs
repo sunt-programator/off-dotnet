@@ -1,4 +1,9 @@
-﻿using Off.Net.Pdf.Core.ContentStreamAndResources;
+// <copyright file="ResourceDictionaryTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using Off.Net.Pdf.Core.ContentStreamAndResources;
 using Off.Net.Pdf.Core.Primitives;
 using Off.Net.Pdf.Core.Text.Fonts;
 using Xunit;
@@ -29,6 +34,7 @@ public class ResourceDictionaryTests
     }
 }
 
+[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
 internal static class ResourceDictionaryTestsDataGenerator
 {
     public static IEnumerable<object[]> ResourceDictionary_Content_TestCases()
@@ -43,22 +49,22 @@ internal static class ResourceDictionaryTestsDataGenerator
                     { "F6", StandardFonts.TimesRoman.ToPdfIndirect(8).ToPdfIndirectIdentifier() },
                     { "F7", StandardFonts.TimesRoman.ToPdfIndirect(10).ToPdfIndirectIdentifier() },
                     { "F8", StandardFonts.TimesRoman.ToPdfIndirect(12).ToPdfIndirectIdentifier() },
-                }.ToPdfDictionary()
+                }.ToPdfDictionary(),
             },
-            "<</Font <</F5 6 0 R /F6 8 0 R /F7 10 0 R /F8 12 0 R>> /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]>>"
+            "<</Font <</F5 6 0 R /F6 8 0 R /F7 10 0 R /F8 12 0 R>> /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]>>",
         };
         yield return new object[] { new ResourceDictionaryOptions { ProcSet = new[] { ResourceDictionaryOptions.ProcSetPdf }.ToPdfArray() }, "<</ProcSet [/PDF]>>" };
         yield return new object[]
         {
-            new ResourceDictionaryOptions { ProcSet = new[] { ResourceDictionaryOptions.ProcSetPdf, ResourceDictionaryOptions.ProcSetText }.ToPdfArray() }, "<</ProcSet [/PDF /Text]>>"
+            new ResourceDictionaryOptions { ProcSet = new[] { ResourceDictionaryOptions.ProcSetPdf, ResourceDictionaryOptions.ProcSetText }.ToPdfArray() }, "<</ProcSet [/PDF /Text]>>",
         };
         yield return new object[]
         {
             new ResourceDictionaryOptions
             {
-                ProcSet = new[] { ResourceDictionaryOptions.ProcSetImageB, ResourceDictionaryOptions.ProcSetImageC, ResourceDictionaryOptions.ProcSetImageI }.ToPdfArray()
+                ProcSet = new[] { ResourceDictionaryOptions.ProcSetImageB, ResourceDictionaryOptions.ProcSetImageC, ResourceDictionaryOptions.ProcSetImageI }.ToPdfArray(),
             },
-            "<</ProcSet [/ImageB /ImageC /ImageI]>>"
+            "<</ProcSet [/ImageB /ImageC /ImageI]>>",
         };
     }
 }

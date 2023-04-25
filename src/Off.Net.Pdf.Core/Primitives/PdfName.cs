@@ -1,3 +1,8 @@
+// <copyright file="PdfName.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 using System.Globalization;
 using System.Text;
 using Off.Net.Pdf.Core.Interfaces;
@@ -6,7 +11,6 @@ namespace Off.Net.Pdf.Core.Primitives;
 
 public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
 {
-    #region Fields
     private const string NumberChar = "#23"; // '#'
     private const string SolidusChar = "#2F"; // '/'
     private const string PercentChar = "#25"; // '/'
@@ -18,12 +22,10 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
     private const string RightSquareBracketChar = "#5D"; // ']'
     private const string LeftCurlyBracketChar = "#7B"; // '{'
     private const string RightCurlyBracketChar = "#7D"; // '}'
-    private readonly int _hashCode;
-    private string _literalValue = string.Empty;
-    private byte[]? _bytes;
-    #endregion
+    private readonly int hashCode;
+    private string literalValue = string.Empty;
+    private byte[]? bytes;
 
-    #region Constructors
     public PdfName(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -31,55 +33,18 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
             throw new ArgumentNullException(nameof(value), Resource.PdfName_CannotBeNullOrWhitespace);
         }
 
-        Value = value;
-        _hashCode = HashCode.Combine(nameof(PdfName), value);
-        _bytes = null;
+        this.Value = value;
+        this.hashCode = HashCode.Combine(nameof(PdfName), value);
+        this.bytes = null;
     }
-    #endregion
 
-    #region Properties
     public int Length => this.Bytes.Length;
 
     public string Value { get; }
 
-    public ReadOnlyMemory<byte> Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
+    public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
-    public string Content => GenerateContent();
-    #endregion
-
-    #region Public Methods
-    public override int GetHashCode()
-    {
-        return _hashCode;
-    }
-
-    public bool Equals(PdfName? other)
-    {
-        if (other is not PdfName pdfName)
-        {
-            return false;
-        }
-
-        return Value == pdfName.Value;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return (obj is PdfName pdfName) && Equals(pdfName);
-    }
-
-    #endregion
-
-    #region Operators
-    public static bool operator ==(PdfName leftOperator, PdfName rightOperator)
-    {
-        return leftOperator.Equals(rightOperator);
-    }
-
-    public static bool operator !=(PdfName leftOperator, PdfName rightOperator)
-    {
-        return !leftOperator.Equals(rightOperator);
-    }
+    public string Content => this.GenerateContent();
 
     public static implicit operator string(PdfName pdfName)
     {
@@ -90,28 +55,35 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
     {
         return new(value);
     }
-    #endregion
 
-    #region Private Methods
-    private string GenerateContent()
+    public static bool operator ==(PdfName leftOperator, PdfName rightOperator)
     {
-        if (_literalValue.Length != 0)
+        return leftOperator.Equals(rightOperator);
+    }
+
+    public static bool operator !=(PdfName leftOperator, PdfName rightOperator)
+    {
+        return !leftOperator.Equals(rightOperator);
+    }
+
+    public override int GetHashCode()
+    {
+        return this.hashCode;
+    }
+
+    public bool Equals(PdfName? other)
+    {
+        if (other is not PdfName pdfName)
         {
-            return _literalValue;
+            return false;
         }
 
-        StringBuilder stringBuilder = new();
+        return this.Value == pdfName.Value;
+    }
 
-        foreach (char ch in Value)
-        {
-            stringBuilder.Append(ConvertCharToString(ch));
-        }
-
-        _literalValue = stringBuilder
-            .Insert(0, '/')
-            .ToString();
-
-        return _literalValue;
+    public override bool Equals(object? obj)
+    {
+        return (obj is PdfName pdfName) && this.Equals(pdfName);
     }
 
     private static string ConvertCharToString(char ch)
@@ -133,5 +105,25 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
             _ => ch.ToString(),
         };
     }
-    #endregion
+
+    private string GenerateContent()
+    {
+        if (this.literalValue.Length != 0)
+        {
+            return this.literalValue;
+        }
+
+        StringBuilder stringBuilder = new();
+
+        foreach (char ch in this.Value)
+        {
+            stringBuilder.Append(ConvertCharToString(ch));
+        }
+
+        this.literalValue = stringBuilder
+            .Insert(0, '/')
+            .ToString();
+
+        return this.literalValue;
+    }
 }

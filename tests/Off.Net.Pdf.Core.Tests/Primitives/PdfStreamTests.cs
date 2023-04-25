@@ -1,4 +1,8 @@
-﻿using System.Globalization;
+// <copyright file="PdfStreamTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 using Off.Net.Pdf.Core.Interfaces;
 using Off.Net.Pdf.Core.Primitives;
 using Xunit;
@@ -46,7 +50,7 @@ public class PdfStreamTests
 
         // Act
         PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
-        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject _);
+        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
         // Assert
@@ -78,7 +82,7 @@ public class PdfStreamTests
 
         // Act
         PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
-        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject _);
+        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
         // Assert
@@ -106,7 +110,7 @@ public class PdfStreamTests
 
         // Act
         PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
-        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject _);
+        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
         // Assert
@@ -135,7 +139,7 @@ public class PdfStreamTests
 
         // Act
         PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
-        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject _);
+        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
         // Assert
@@ -162,7 +166,7 @@ public class PdfStreamTests
 
         // Act
         PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
-        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject _);
+        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
         // Assert
@@ -189,7 +193,7 @@ public class PdfStreamTests
 
         // Act
         PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
-        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject _);
+        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
         // Assert
@@ -214,7 +218,7 @@ public class PdfStreamTests
 
         // Act
         PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
-        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject _);
+        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
         // Assert
@@ -239,7 +243,7 @@ public class PdfStreamTests
 
         // Act
         PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
-        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject _);
+        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
         // Assert
@@ -265,7 +269,7 @@ public class PdfStreamTests
 
         // Act
         PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
-        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject _);
+        bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
         // Assert
@@ -424,6 +428,7 @@ public class PdfStreamTests
     }
 }
 
+[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
 internal static class PdfStreamTestDataGenerator
 {
     public static IEnumerable<object[]> PdfStream_Bytes_TestCases()
@@ -435,8 +440,8 @@ internal static class PdfStreamTestDataGenerator
             {
                 0x3C, 0x3C, 0x2F, 0x4C, 0x65, 0x6E, 0x67, 0x74, 0x68, 0x20, 0x34, 0x39, 0x3E, 0x3E, 0x0A, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 0x0A, 0x28, 0x54, 0x68, 0x69, 0x73, 0x20, 0x69, 0x73,
                 0x20, 0x61, 0x20, 0x50, 0x44, 0x46, 0x20, 0x53, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x20, 0x77, 0x72, 0x61, 0x70, 0x70, 0x65, 0x64, 0x20, 0x69, 0x6E, 0x20, 0x61, 0x20, 0x53, 0x74, 0x72,
-                0x65, 0x61, 0x6D, 0x20, 0x6F, 0x62, 0x6A, 0x65, 0x63, 0x74, 0x29, 0x0A, 0x65, 0x6E, 0x64, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D
-            }
+                0x65, 0x61, 0x6D, 0x20, 0x6F, 0x62, 0x6A, 0x65, 0x63, 0x74, 0x29, 0x0A, 0x65, 0x6E, 0x64, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D,
+            },
         };
 
         yield return new object[]
@@ -446,8 +451,8 @@ internal static class PdfStreamTestDataGenerator
             {
                 0x3C, 0x3C, 0x2F, 0x4C, 0x65, 0x6E, 0x67, 0x74, 0x68, 0x20, 0x34, 0x31, 0x3E, 0x3E, 0x0A, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 0x0A, 0x28, 0x49, 0x74, 0x20, 0x73, 0x68, 0x6F, 0x75,
                 0x6C, 0x64, 0x20, 0x72, 0x65, 0x74, 0x75, 0x72, 0x6E, 0x20, 0x61, 0x20, 0x76, 0x61, 0x6C, 0x69, 0x64, 0x20, 0x42, 0x79, 0x74, 0x65, 0x73, 0x20, 0x70, 0x72, 0x6F, 0x70, 0x65, 0x72,
-                0x74, 0x79, 0x29, 0x0A, 0x65, 0x6E, 0x64, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D
-            }
+                0x74, 0x79, 0x29, 0x0A, 0x65, 0x6E, 0x64, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D,
+            },
         };
     }
 }

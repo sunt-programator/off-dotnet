@@ -1,4 +1,9 @@
-﻿using Off.Net.Pdf.Core.CommonDataStructures;
+﻿// <copyright file="RectangleTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using Off.Net.Pdf.Core.CommonDataStructures;
 using Xunit;
 
 namespace Off.Net.Pdf.Core.Tests.CommonDataStructures;
@@ -15,7 +20,10 @@ public sealed class RectangleTests
         // Arrange
 
         // Act
-        Rectangle RectangleFunction() => new(lowerLeftX, lowerLeftY, upperRightX, upperRightY);
+        Rectangle RectangleFunction()
+        {
+            return new(lowerLeftX, lowerLeftY, upperRightX, upperRightY);
+        }
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(RectangleFunction);

@@ -1,4 +1,9 @@
-﻿using Off.Net.Pdf.Core.Primitives;
+// <copyright file="PdfIndirectTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using Off.Net.Pdf.Core.Primitives;
 using Xunit;
 
 namespace Off.Net.Pdf.Core.Tests.Primitives;
@@ -47,7 +52,7 @@ public class PdfIndirectTests
         PdfIndirect<PdfString> pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber);
 
         // Act
-        string actualValueContent = pdfIndirect.Value.Content;
+        string actualValueContent = pdfIndirect.Value!.Content;
 
         // Assert
         Assert.Equal(expectedValueContent, actualValueContent);
@@ -92,8 +97,8 @@ public class PdfIndirectTests
     [InlineData(1, 1, 0, 0, "Test1", "Test1", true)]
     [InlineData(1, 1, 1, 0, "Test1", "Test1", false)]
     [InlineData(1, 1, 1, 1, "Test1", "Test1", true)]
-    public void PdfIndirect_Equals_ShouldReturnFalse(int objectNumber1, int objectNumber2, int generationNumber1, int generationNumber2, string actualStringValue1, string actualStringValue2,
-        bool expectedResult)
+    public void PdfIndirect_Equals_ShouldReturnFalse(
+        int objectNumber1, int objectNumber2, int generationNumber1, int generationNumber2, string actualStringValue1, string actualStringValue2, bool expectedResult)
     {
         // Arrange
         PdfIndirect<PdfString> pdfIndirect1 = new PdfString(actualStringValue1).ToPdfIndirect(objectNumber1, generationNumber1);
@@ -108,9 +113,15 @@ public class PdfIndirectTests
 
     [Theory(DisplayName = "Check Bytes property")]
     [InlineData(0, 0, "Test", new byte[] { 0x30, 0x20, 0x30, 0x20, 0x6F, 0x62, 0x6A, 0x0A, 0x28, 0x54, 0x65, 0x73, 0x74, 0x29, 0x0A, 0x65, 0x6E, 0x64, 0x6F, 0x62, 0x6A, 0x0A })]
-    [InlineData(12, 0, "Brillig",
+    [InlineData(
+        12,
+        0,
+        "Brillig",
         new byte[] { 0x31, 0x32, 0x20, 0x30, 0x20, 0x6F, 0x62, 0x6A, 0x0A, 0x28, 0x42, 0x72, 0x69, 0x6C, 0x6C, 0x69, 0x67, 0x29, 0x0A, 0x65, 0x6E, 0x64, 0x6F, 0x62, 0x6A, 0x0A })]
-    [InlineData(21, 6, "String1",
+    [InlineData(
+        21,
+        6,
+        "String1",
         new byte[] { 0x32, 0x31, 0x20, 0x36, 0x20, 0x6F, 0x62, 0x6A, 0x0A, 0x28, 0x53, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x31, 0x29, 0x0A, 0x65, 0x6E, 0x64, 0x6F, 0x62, 0x6A, 0x0A })]
     public void PdfIndirect_Bytes_CheckValue(int objectNumber, int generationNumber, string actualStringValue, byte[] expectedBytes)
     {

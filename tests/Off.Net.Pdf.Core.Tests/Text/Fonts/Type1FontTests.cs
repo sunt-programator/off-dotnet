@@ -1,4 +1,9 @@
-﻿using Off.Net.Pdf.Core.Text.Fonts;
+// <copyright file="Type1FontTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using Off.Net.Pdf.Core.Text.Fonts;
 using Xunit;
 
 namespace Off.Net.Pdf.Core.Tests.Text.Fonts;
@@ -12,7 +17,10 @@ public class Type1FontTests
         Type1FontOptions documentCatalogOptions = new() { BaseFont = null! };
 
         // Act
-        Type1Font Type1FontFunction() => new(documentCatalogOptions);
+        Type1Font Type1FontFunction()
+        {
+            return new(documentCatalogOptions);
+        }
 
         // Assert
         Assert.Throws<ArgumentNullException>(Type1FontFunction);
@@ -32,6 +40,7 @@ public class Type1FontTests
     }
 }
 
+[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
 internal static class Type1FontTestsDataGenerator
 {
     private static readonly Type1FontOptions Options = new() { BaseFont = "Helvetica", FontName = "Custom-Font" };

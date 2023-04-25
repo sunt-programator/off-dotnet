@@ -1,58 +1,35 @@
+// <copyright file="PdfDictionary.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 using System.Collections.ObjectModel;
 using System.Text;
 using Off.Net.Pdf.Core.Interfaces;
 
 namespace Off.Net.Pdf.Core.Primitives;
 
-public class PdfDictionary<TValue> : IPdfObject<IReadOnlyDictionary<PdfName, TValue>> where TValue : IPdfObject
+public class PdfDictionary<TValue> : IPdfObject<IReadOnlyDictionary<PdfName, TValue>>
+    where TValue : IPdfObject
 {
-    #region Fields
-
-    private readonly int _hashCode;
-    private string _literalValue = string.Empty;
-    private byte[]? _bytes;
-
-    #endregion
-
-    #region Constructors
+    private readonly int hashCode;
+    private string literalValue = string.Empty;
+    private byte[]? bytes;
 
     public PdfDictionary(IReadOnlyDictionary<PdfName, TValue> value)
     {
-        Value = value;
-        _hashCode = HashCode.Combine(nameof(PdfDictionary<TValue>), value);
-        _bytes = null;
+        this.Value = value;
+        this.hashCode = HashCode.Combine(nameof(PdfDictionary<TValue>), value);
+        this.bytes = null;
     }
-
-    #endregion
-
-    #region Properties
 
     public int Length => this.Bytes.Length;
 
     public IReadOnlyDictionary<PdfName, TValue> Value { get; }
 
-    public ReadOnlyMemory<byte> Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
+    public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
-    public string Content => GenerateContent();
-
-    #endregion
-
-    #region Public Methods
-
-    public override int GetHashCode()
-    {
-        return _hashCode;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is PdfDictionary<TValue> other && EqualityComparer<IReadOnlyDictionary<PdfName, TValue>>.Default.Equals(Value, other.Value);
-    }
-
-    public static PdfDictionary<TValue> CreateRange(IDictionary<PdfName, TValue> items)
-    {
-        return new PdfDictionary<TValue>(new ReadOnlyDictionary<PdfName, TValue>(items));
-    }
+    public string Content => this.GenerateContent();
 
     public static PdfDictionary<TValue> Create(KeyValuePair<PdfName, TValue> item)
     {
@@ -60,20 +37,31 @@ public class PdfDictionary<TValue> : IPdfObject<IReadOnlyDictionary<PdfName, TVa
         return new PdfDictionary<TValue>(new ReadOnlyDictionary<PdfName, TValue>(dictionary));
     }
 
-    #endregion
+    public static PdfDictionary<TValue> CreateRange(IDictionary<PdfName, TValue> items)
+    {
+        return new PdfDictionary<TValue>(new ReadOnlyDictionary<PdfName, TValue>(items));
+    }
 
-    #region Private Methods
+    public override int GetHashCode()
+    {
+        return this.hashCode;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is PdfDictionary<TValue> other && EqualityComparer<IReadOnlyDictionary<PdfName, TValue>>.Default.Equals(this.Value, other.Value);
+    }
 
     private string GenerateContent()
     {
-        if (_literalValue.Length != 0)
+        if (this.literalValue.Length != 0)
         {
-            return _literalValue;
+            return this.literalValue;
         }
 
         StringBuilder stringBuilder = new();
 
-        foreach (var item in Value)
+        foreach (var item in this.Value)
         {
             stringBuilder
                 .Append(item.Key.Content)
@@ -87,39 +75,11 @@ public class PdfDictionary<TValue> : IPdfObject<IReadOnlyDictionary<PdfName, TVa
             stringBuilder.Remove(stringBuilder.Length - 1, 1);
         }
 
-        _literalValue = stringBuilder
+        this.literalValue = stringBuilder
             .Insert(0, "<<")
             .Append(">>")
             .ToString();
 
-        return _literalValue;
-    }
-
-    #endregion
-}
-
-public static class PdfDictionaryExtensions
-{
-    public static PdfDictionary<TValue> ToPdfDictionary<TValue>(this IDictionary<PdfName, TValue> items) where TValue : IPdfObject
-    {
-        return PdfDictionary<TValue>.CreateRange(items);
-    }
-
-    public static PdfDictionary<TValue> ToPdfDictionary<TValue>(this KeyValuePair<PdfName, TValue> item) where TValue : IPdfObject
-    {
-        return PdfDictionary<TValue>.Create(item);
-    }
-}
-
-internal static class PdfDictionaryInternalExtensions
-{
-    public static IDictionary<PdfName, IPdfObject> WithKeyValue(this IDictionary<PdfName, IPdfObject> dictionary, PdfName key, IPdfObject? pdfObject)
-    {
-        if (pdfObject != null)
-        {
-            dictionary.Add(key, pdfObject);
-        }
-
-        return dictionary;
+        return this.literalValue;
     }
 }

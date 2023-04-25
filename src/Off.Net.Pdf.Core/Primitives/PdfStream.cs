@@ -1,13 +1,15 @@
+// <copyright file="PdfStream.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 using System.Text;
-using Off.Net.Pdf.Core.Extensions;
 using Off.Net.Pdf.Core.Interfaces;
 
 namespace Off.Net.Pdf.Core.Primitives;
 
 public sealed class PdfStream : IPdfObject<ReadOnlyMemory<char>>, IEquatable<PdfStream?>
 {
-    #region Fields
-
     private static readonly PdfName LengthKey = "Length";
     private static readonly PdfName FilterKey = "Filter";
     private static readonly PdfName DecodeParametersKey = "DecodeParms";
@@ -15,66 +17,50 @@ public sealed class PdfStream : IPdfObject<ReadOnlyMemory<char>>, IEquatable<Pdf
     private static readonly PdfName FileDecodeParametersKey = "FDecodeParms";
     private static readonly PdfName FileSpecificationKey = "F";
 
-    private readonly PdfStreamExtentOptions _pdfStreamExtentOptions = new();
-    private readonly int _hashCode;
-    private string _literalValue = string.Empty;
-    private byte[]? _bytes;
-    private PdfDictionary<IPdfObject>? _streamExtentDictionary;
-
-    #endregion
-
-    #region Constructors
+    private readonly PdfStreamExtentOptions pdfStreamExtentOptions = new();
+    private readonly int hashCode;
+    private string literalValue = string.Empty;
+    private byte[]? bytes;
+    private PdfDictionary<IPdfObject>? streamExtentDictionary;
 
     public PdfStream(ReadOnlyMemory<char> value, Action<PdfStreamExtentOptions>? options = null)
     {
-        _hashCode = HashCode.Combine(nameof(PdfStream), value);
-        _bytes = null;
-        Value = value;
-        options?.Invoke(_pdfStreamExtentOptions);
+        this.hashCode = HashCode.Combine(nameof(PdfStream), value);
+        this.bytes = null;
+        this.Value = value;
+        options?.Invoke(this.pdfStreamExtentOptions);
     }
-
-    #endregion
-
-    #region Properties
 
     public int Length => this.Bytes.Length;
 
     public ReadOnlyMemory<char> Value { get; }
 
-    public ReadOnlyMemory<byte> Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
+    public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
-    public string Content => GenerateContent();
+    public string Content => this.GenerateContent();
 
-    public PdfDictionary<IPdfObject> StreamExtent => GenerateStreamExtendDictionary();
-
-    #endregion
-
-    #region Public Methods
+    public PdfDictionary<IPdfObject> StreamExtent => this.GenerateStreamExtendDictionary();
 
     public override int GetHashCode()
     {
-        return _hashCode;
+        return this.hashCode;
     }
 
     public override bool Equals(object? obj)
     {
-        return Equals(obj as PdfStream);
+        return this.Equals(obj as PdfStream);
     }
 
     public bool Equals(PdfStream? other)
     {
-        return other is not null && Value.Equals(other.Value);
+        return other is not null && this.Value.Equals(other.Value);
     }
-
-    #endregion
-
-    #region Private Methods
 
     private string GenerateContent()
     {
-        if (_literalValue.Length != 0)
+        if (this.literalValue.Length != 0)
         {
-            return _literalValue;
+            return this.literalValue;
         }
 
         StringBuilder stringBuilder = new StringBuilder()
@@ -88,50 +74,31 @@ public sealed class PdfStream : IPdfObject<ReadOnlyMemory<char>>, IEquatable<Pdf
 
         stringBuilder.Append("endstream");
 
-        _literalValue = stringBuilder
-            .Insert(0, StreamExtent.Content)
+        this.literalValue = stringBuilder
+            .Insert(0, this.StreamExtent.Content)
             .ToString();
 
-        return _literalValue;
+        return this.literalValue;
     }
 
     private PdfDictionary<IPdfObject> GenerateStreamExtendDictionary()
     {
-        if (_streamExtentDictionary != null)
+        if (this.streamExtentDictionary != null)
         {
-            return _streamExtentDictionary;
+            return this.streamExtentDictionary;
         }
 
         int length = this.Value.Length;
 
-        _streamExtentDictionary = new Dictionary<PdfName, IPdfObject>(6)
-            .WithKeyValue(FilterKey, _pdfStreamExtentOptions.Filter?.PdfObject)
-            .WithKeyValue(DecodeParametersKey, _pdfStreamExtentOptions.DecodeParameters?.PdfObject)
-            .WithKeyValue(FileSpecificationKey, _pdfStreamExtentOptions.FileSpecification)
-            .WithKeyValue(FileFilterKey, _pdfStreamExtentOptions.FileFilter?.PdfObject)
-            .WithKeyValue(FileDecodeParametersKey, _pdfStreamExtentOptions.FileDecodeParameters?.PdfObject)
+        this.streamExtentDictionary = new Dictionary<PdfName, IPdfObject>(6)
+            .WithKeyValue(FilterKey, this.pdfStreamExtentOptions.Filter?.PdfObject)
+            .WithKeyValue(DecodeParametersKey, this.pdfStreamExtentOptions.DecodeParameters?.PdfObject)
+            .WithKeyValue(FileSpecificationKey, this.pdfStreamExtentOptions.FileSpecification)
+            .WithKeyValue(FileFilterKey, this.pdfStreamExtentOptions.FileFilter?.PdfObject)
+            .WithKeyValue(FileDecodeParametersKey, this.pdfStreamExtentOptions.FileDecodeParameters?.PdfObject)
             .WithKeyValue(LengthKey, (PdfInteger)length)
             .ToPdfDictionary();
 
-        return _streamExtentDictionary;
-    }
-
-    #endregion
-}
-
-public sealed class PdfStreamExtentOptions
-{
-    public AnyOf<PdfName, PdfArray<PdfName>>? Filter { get; set; } // Name or Array
-    public AnyOf<PdfDictionary<PdfName>, PdfArray<PdfName>>? DecodeParameters { get; set; } // Dictionary or Array
-    public PdfString? FileSpecification { get; set; }
-    public AnyOf<PdfName, PdfArray<PdfName>>? FileFilter { get; set; } // Name or Array
-    public AnyOf<PdfDictionary<PdfName>, PdfArray<PdfName>>? FileDecodeParameters { get; set; } // Dictionary or Array
-}
-
-public static class PdfStreamExtensions
-{
-    public static PdfStream ToPdfStream(this IPdfObject pdfObject, Action<PdfStreamExtentOptions>? options = null)
-    {
-        return new PdfStream(pdfObject.Content.AsMemory(), options);
+        return this.streamExtentDictionary;
     }
 }

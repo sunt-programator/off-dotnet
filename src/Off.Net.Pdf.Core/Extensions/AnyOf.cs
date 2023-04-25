@@ -1,38 +1,45 @@
-﻿using Off.Net.Pdf.Core.Interfaces;
+// <copyright file="AnyOf.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using Off.Net.Pdf.Core.Interfaces;
 using Off.Net.Pdf.Core.Primitives;
 
 namespace Off.Net.Pdf.Core.Extensions;
 
-public class AnyOf<T1, T2> where T1 : IPdfObject where T2 : IPdfObject
+public class AnyOf<T1, T2>
+    where T1 : IPdfObject
+    where T2 : IPdfObject
 {
-    private readonly T1? _firstType;
-    private readonly T2? _secondType;
+    private readonly T1? firstType;
+    private readonly T2? secondType;
 
     public AnyOf(T1 type)
     {
-        _firstType = type;
+        this.firstType = type;
     }
 
     public AnyOf(T2 type)
     {
-        _secondType = type;
+        this.secondType = type;
     }
 
     public IPdfObject PdfObject
     {
         get
         {
-            if (_firstType != null)
+            if (this.firstType != null)
             {
-                return _firstType;
+                return this.firstType;
             }
 
-            if (_secondType != null)
+            if (this.secondType != null)
             {
-                return _secondType;
+                return this.secondType;
             }
 
-            return new PdfNull();
+            return default(PdfNull);
         }
     }
 

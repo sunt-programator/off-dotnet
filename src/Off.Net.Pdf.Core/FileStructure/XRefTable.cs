@@ -1,4 +1,9 @@
-﻿using System.Text;
+// <copyright file="XRefTable.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using System.Text;
 using Off.Net.Pdf.Core.Extensions;
 using Off.Net.Pdf.Core.Interfaces;
 
@@ -6,73 +11,53 @@ namespace Off.Net.Pdf.Core.FileStructure;
 
 public sealed class XRefTable : IPdfObject<ICollection<XRefSection>>, IEquatable<XRefTable>
 {
-    #region Fields
-
-    private readonly Lazy<int> _hashCode;
-    private readonly Lazy<string> _literalValue;
-    private readonly Lazy<byte[]> _bytes;
-
-    #endregion
-
-    #region Constructors
+    private readonly Lazy<int> hashCode;
+    private readonly Lazy<string> literalValue;
+    private readonly Lazy<byte[]> bytes;
 
     public XRefTable(ICollection<XRefSection> xRefSections)
     {
-        Value = xRefSections.CheckConstraints(sections => sections.Count > 0, Resource.XRefTable_MustHaveNonEmptyEntriesCollection);
-        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(XRefTable), xRefSections));
-        _literalValue = new Lazy<string>(GenerateContent);
-        _bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(Content));
+        this.Value = xRefSections.CheckConstraints(sections => sections.Count > 0, Resource.XRefTable_MustHaveNonEmptyEntriesCollection);
+        this.hashCode = new Lazy<int>(() => HashCode.Combine(nameof(XRefTable), xRefSections));
+        this.literalValue = new Lazy<string>(this.GenerateContent);
+        this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
-
-    #endregion
-
-    #region Properties
 
     public int Length => this.Bytes.Length;
 
-    public int NumberOfSections => Value.Count;
+    public int NumberOfSections => this.Value.Count;
 
-    public ReadOnlyMemory<byte> Bytes => _bytes.Value;
+    public ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
     public ICollection<XRefSection> Value { get; }
 
-    public string Content => _literalValue.Value;
-
-    #endregion
-
-    #region Public Methods
+    public string Content => this.literalValue.Value;
 
     public override int GetHashCode()
     {
-        return _hashCode.Value;
+        return this.hashCode.Value;
     }
 
     public override bool Equals(object? obj)
     {
-        return Equals(obj as XRefTable);
+        return this.Equals(obj as XRefTable);
     }
 
     public bool Equals(XRefTable? other)
     {
         return other is not null &&
-               Value.SequenceEqual(other.Value);
+               this.Value.SequenceEqual(other.Value);
     }
-
-    #endregion
-
-    #region Private Methods
 
     private string GenerateContent()
     {
         StringBuilder stringBuilder = new();
 
-        foreach (XRefSection section in Value)
+        foreach (XRefSection section in this.Value)
         {
             stringBuilder.Append(section.Content);
         }
 
         return stringBuilder.ToString();
     }
-
-    #endregion
 }

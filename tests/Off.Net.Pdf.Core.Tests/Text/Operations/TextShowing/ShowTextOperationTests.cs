@@ -1,4 +1,9 @@
-﻿using Off.Net.Pdf.Core.Primitives;
+﻿// <copyright file="ShowTextOperationTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using Off.Net.Pdf.Core.Primitives;
 using Off.Net.Pdf.Core.Text.Operations.TextShowing;
 using Xunit;
 
@@ -110,6 +115,7 @@ public class ShowTextOperationTests
     }
 }
 
+[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
 internal static class ShowTextOperationTestsDataGenerator
 {
     public static IEnumerable<object[]> ShowTextOperation_Equals_TestCases()
@@ -130,8 +136,8 @@ internal static class ShowTextOperationTestsDataGenerator
             new byte[]
             {
                 0x28, 0x53, 0x65, 0x63, 0x6F, 0x6E, 0x64, 0x54, 0x65, 0x78, 0x74, 0x20, 0x77, 0x69, 0x74, 0x68, 0x20, 0x73, 0x70, 0x65, 0x63, 0x69, 0x61, 0x6C, 0x20, 0x63, 0x68, 0x61, 0x72,
-                0x73, 0x20, 0x21, 0x40, 0x23, 0x24, 0x25, 0x5E, 0x26, 0x2A, 0x28, 0x29, 0x29, 0x20, 0x54, 0x6A, 0x0A
-            }
+                0x73, 0x20, 0x21, 0x40, 0x23, 0x24, 0x25, 0x5E, 0x26, 0x2A, 0x28, 0x29, 0x29, 0x20, 0x54, 0x6A, 0x0A,
+            },
         };
     }
 }

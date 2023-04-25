@@ -1,6 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using Off.Net.Pdf.Core.CommonDataStructures;
-using Off.Net.Pdf.Core.ContentStreamAndResources;
+// <copyright file="PageTreeNode.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using System.Collections.ObjectModel;
 using Off.Net.Pdf.Core.Extensions;
 using Off.Net.Pdf.Core.Interfaces;
 using Off.Net.Pdf.Core.Primitives;
@@ -9,29 +12,21 @@ namespace Off.Net.Pdf.Core.DocumentStructure;
 
 public sealed class PageTreeNode : PdfDictionary<IPdfObject>
 {
-    #region Fields
-
     private static readonly PdfName TypeName = "Type";
     private static readonly PdfName TypeValue = "Pages";
     private static readonly PdfName Parent = "Parent";
     private static readonly PdfName Kids = "Kids";
     private static readonly PdfName Count = "Count";
 
-    #endregion
-
-    #region Constructors
-
-    public PageTreeNode(Action<PageTreeNodeOptions> optionsFunc) : this(GetPageTreeNodeOptions(optionsFunc))
+    public PageTreeNode(Action<PageTreeNodeOptions> optionsFunc)
+        : this(GetPageTreeNodeOptions(optionsFunc))
     {
     }
 
-    public PageTreeNode(PageTreeNodeOptions options) : base(GenerateDictionary(options))
+    public PageTreeNode(PageTreeNodeOptions options)
+        : base(GenerateDictionary(options))
     {
     }
-
-    #endregion
-
-    #region Private Methods
 
     private static PageTreeNodeOptions GetPageTreeNodeOptions(Action<PageTreeNodeOptions> optionsFunc)
     {
@@ -52,13 +47,4 @@ public sealed class PageTreeNode : PdfDictionary<IPdfObject>
 
         return new ReadOnlyDictionary<PdfName, IPdfObject>(documentCatalogDictionary);
     }
-
-    #endregion
-}
-
-public sealed class PageTreeNodeOptions
-{
-    public PdfIndirectIdentifier<PageTreeNode>? Parent { get; set; }
-
-    public PdfArray<PdfIndirectIdentifier<PageObject>> Kids { get; set; } = default!;
 }

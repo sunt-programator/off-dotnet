@@ -1,5 +1,9 @@
-﻿using Off.Net.Pdf.Core.DocumentStructure;
-using Off.Net.Pdf.Core.Interfaces;
+﻿// <copyright file="DocumentCatalogTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using Off.Net.Pdf.Core.DocumentStructure;
 using Off.Net.Pdf.Core.Primitives;
 using Xunit;
 
@@ -14,7 +18,10 @@ public class DocumentCatalogTests
         DocumentCatalogOptions documentCatalogOptions = new() { Pages = null! };
 
         // Act
-        DocumentCatalog DocumentCatalogFunction() => new(documentCatalogOptions);
+        DocumentCatalog DocumentCatalogFunction()
+        {
+            return new(documentCatalogOptions);
+        }
 
         // Assert
         Assert.Throws<ArgumentNullException>(DocumentCatalogFunction);

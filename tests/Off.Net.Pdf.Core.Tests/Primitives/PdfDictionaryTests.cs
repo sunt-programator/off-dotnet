@@ -1,3 +1,8 @@
+// <copyright file="PdfDictionaryTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 using Off.Net.Pdf.Core.Interfaces;
 using Off.Net.Pdf.Core.Primitives;
 using Xunit;
@@ -63,7 +68,7 @@ public class PdfDictionaryTests
     public void PdfDictionary_Equals_SameReference_ShouldReturnTrue()
     {
         // Arrange
-        Dictionary<PdfName, IPdfObject> objects1 = new() { { new PdfName("Name1"), new PdfNull() } };
+        Dictionary<PdfName, IPdfObject> objects1 = new() { { new PdfName("Name1"), default(PdfNull) } };
         PdfDictionary<IPdfObject> pdfDictionary1 = objects1.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
         PdfDictionary<IPdfObject> pdfDictionary2 = pdfDictionary1; // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
 
@@ -78,7 +83,7 @@ public class PdfDictionaryTests
     public void PdfDictionary_Equals_DifferentReferences_ShouldReturnFalse()
     {
         // Arrange
-        Dictionary<PdfName, IPdfObject> objects1 = new() { { new PdfName("Name1"), new PdfNull() } };
+        Dictionary<PdfName, IPdfObject> objects1 = new() { { new PdfName("Name1"), default(PdfNull) } };
         PdfDictionary<IPdfObject> pdfDictionary1 = objects1.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
         PdfDictionary<IPdfObject> pdfDictionary2 = objects1.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
 
@@ -97,7 +102,7 @@ public class PdfDictionaryTests
         PdfDictionary<IPdfObject> pdfDictionary1 = value1.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
 
         // Act
-         ReadOnlyMemory<byte> actualBytes = pdfDictionary1.Bytes;
+        ReadOnlyMemory<byte> actualBytes = pdfDictionary1.Bytes;
 
         // Assert
         Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
@@ -186,6 +191,7 @@ public class PdfDictionaryTests
     }
 }
 
+[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
 internal static class PdfDictionaryTestDataGenerator
 {
     public static IEnumerable<object[]> PdfDictionary_ParameterizedConstructor_TestCases()
@@ -211,11 +217,11 @@ internal static class PdfDictionaryTestDataGenerator
                         { new PdfName("Item1"), new PdfReal(0.4f) },
                         { new PdfName("Item2"), new PdfBoolean(true) },
                         { new PdfName("LastItem"), new PdfString("not!") },
-                        { new PdfName("VeryLastItem"), new PdfString("OK") }
+                        { new PdfName("VeryLastItem"), new PdfString("OK") },
                     })
-                }
+                },
             },
-            177
+            177,
         };
         yield return new object[] { new Dictionary<PdfName, IPdfObject> { { new PdfName("Type"), new PdfName("Example") }, { new PdfName("SubType"), new PdfName("DictionaryExample") } }, 46 };
     }
@@ -238,9 +244,9 @@ internal static class PdfDictionaryTestDataGenerator
                         { new PdfName("Item1"), new PdfReal(0.4f) },
                         { new PdfName("Item2"), new PdfBoolean(true) },
                         { new PdfName("LastItem"), new PdfString("not!") },
-                        { new PdfName("VeryLastItem"), new PdfString("OK") }
+                        { new PdfName("VeryLastItem"), new PdfString("OK") },
                     })
-                }
+                },
             },
             new byte[]
             {
@@ -248,8 +254,8 @@ internal static class PdfDictionaryTestDataGenerator
                 97, 109, 112, 108, 101, 32, 47, 86, 101, 114, 115, 105, 111, 110, 32, 48, 46, 48, 49, 32, 47, 73, 110, 116, 101, 103, 101, 114, 73, 116, 101, 109, 32, 49, 50, 32, 47, 83, 116,
                 114, 105, 110, 103, 73, 116, 101, 109, 32, 40, 97, 32, 115, 116, 114, 105, 110, 103, 41, 32, 47, 83, 117, 98, 100, 105, 99, 116, 105, 111, 110, 97, 114, 121, 32, 60, 60, 47,
                 73, 116, 101, 109, 49, 32, 48, 46, 52, 32, 47, 73, 116, 101, 109, 50, 32, 116, 114, 117, 101, 32, 47, 76, 97, 115, 116, 73, 116, 101, 109, 32, 40, 110, 111, 116, 33, 41, 32,
-                47, 86, 101, 114, 121, 76, 97, 115, 116, 73, 116, 101, 109, 32, 40, 79, 75, 41, 62, 62, 62, 62
-            }
+                47, 86, 101, 114, 121, 76, 97, 115, 116, 73, 116, 101, 109, 32, 40, 79, 75, 41, 62, 62, 62, 62,
+            },
         };
         yield return new object[]
         {
@@ -257,8 +263,8 @@ internal static class PdfDictionaryTestDataGenerator
             new byte[]
             {
                 60, 60, 47, 84, 121, 112, 101, 32, 47, 69, 120, 97, 109, 112, 108, 101, 32, 47, 83, 117, 98, 84, 121, 112, 101, 32, 47, 68, 105, 99, 116, 105, 111, 110, 97, 114, 121, 69, 120,
-                97, 109, 112, 108, 101, 62, 62
-            }
+                97, 109, 112, 108, 101, 62, 62,
+            },
         };
     }
 
@@ -280,10 +286,10 @@ internal static class PdfDictionaryTestDataGenerator
                         { new PdfName("Item1"), new PdfReal(0.4f) },
                         { new PdfName("Item2"), new PdfBoolean(true) },
                         { new PdfName("LastItem"), new PdfString("not!") },
-                        { new PdfName("VeryLastItem"), new PdfString("OK") }
+                        { new PdfName("VeryLastItem"), new PdfString("OK") },
                     })
-                }
-            }
+                },
+            },
         };
     }
 
@@ -293,7 +299,7 @@ internal static class PdfDictionaryTestDataGenerator
         yield return new object[]
         {
             new Dictionary<PdfName, IPdfObject> { { new PdfName("Type"), new PdfName("Example") }, { new PdfName("SubType"), new PdfName("DictionaryExample") } },
-            "<</Type /Example /SubType /DictionaryExample>>"
+            "<</Type /Example /SubType /DictionaryExample>>",
         };
         yield return new object[]
         {
@@ -311,11 +317,11 @@ internal static class PdfDictionaryTestDataGenerator
                         { new PdfName("Item1"), new PdfReal(0.4f) },
                         { new PdfName("Item2"), new PdfBoolean(true) },
                         { new PdfName("LastItem"), new PdfString("not!") },
-                        { new PdfName("VeryLastItem"), new PdfString("OK") }
+                        { new PdfName("VeryLastItem"), new PdfString("OK") },
                     })
-                }
+                },
             },
-            "<</Type /Example /SubType /DictionaryExample /Version 0.01 /IntegerItem 12 /StringItem (a string) /Subdictionary <</Item1 0.4 /Item2 true /LastItem (not!) /VeryLastItem (OK)>>>>"
+            "<</Type /Example /SubType /DictionaryExample /Version 0.01 /IntegerItem 12 /StringItem (a string) /Subdictionary <</Item1 0.4 /Item2 true /LastItem (not!) /VeryLastItem (OK)>>>>",
         };
     }
 }

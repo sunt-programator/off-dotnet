@@ -1,57 +1,43 @@
-﻿using Off.Net.Pdf.Core.ContentStreamAndResources;
+// <copyright file="MoveTextOperation.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using Off.Net.Pdf.Core.ContentStreamAndResources;
 using Off.Net.Pdf.Core.Primitives;
 
 namespace Off.Net.Pdf.Core.Text.Operations.TextPosition;
 
 public sealed class MoveTextOperation : PdfOperation
 {
-    #region Fields, Constants
-
     public const string OperatorName = "Td";
-    private readonly Lazy<int> _hashCode;
+    private readonly Lazy<int> hashCode;
 
-    #endregion
-
-    #region Constructors
-
-    public MoveTextOperation(float x, float y) : base(OperatorName)
+    public MoveTextOperation(float x, float y)
+        : base(OperatorName)
     {
-        X = x;
-        Y = y;
+        this.X = x;
+        this.Y = y;
 
-        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(MoveTextOperation), x, y, OperatorName));
+        this.hashCode = new Lazy<int>(() => HashCode.Combine(nameof(MoveTextOperation), x, y, OperatorName));
     }
-
-    #endregion
-
-    #region Properties
 
     public PdfReal X { get; }
 
     public PdfReal Y { get; }
 
-    #endregion
-
-    #region Public Methods
-
     public override int GetHashCode()
     {
-        return _hashCode.Value;
+        return this.hashCode.Value;
     }
 
     public override bool Equals(object? obj)
     {
-        return obj is MoveTextOperation other && X == other.X && Y == other.Y;
+        return obj is MoveTextOperation other && this.X == other.X && this.Y == other.Y;
     }
-
-    #endregion
-
-    #region Protected Methods
 
     protected override string GenerateContent()
     {
-        return $"{X.Content} {Y.Content} {PdfOperator}\n";
+        return $"{this.X.Content} {this.Y.Content} {this.PdfOperator}\n";
     }
-
-    #endregion
 }

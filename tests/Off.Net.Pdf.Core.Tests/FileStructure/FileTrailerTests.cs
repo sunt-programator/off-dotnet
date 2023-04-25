@@ -1,4 +1,9 @@
-﻿using System.Diagnostics;
+// <copyright file="FileTrailerTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using System.Diagnostics;
 using Off.Net.Pdf.Core.DocumentStructure;
 using Off.Net.Pdf.Core.FileStructure;
 using Off.Net.Pdf.Core.Interfaces;
@@ -26,7 +31,10 @@ public class FileTrailerTests
         FileTrailerOptions fileTrailerOptions = new() { Root = RootDictionary };
 
         // Act
-        FileTrailer FileTrailerFunction() => fileTrailerOptions.ToFileTrailer(byteOffset);
+        FileTrailer FileTrailerFunction()
+        {
+            return fileTrailerOptions.ToFileTrailer(byteOffset);
+        }
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(FileTrailerFunction);
@@ -43,7 +51,10 @@ public class FileTrailerTests
         // Arrange
 
         // Act
-        FileTrailer FileTrailerFunction() => new(123, options => options.Size = size);
+        FileTrailer FileTrailerFunction()
+        {
+            return new(123, options => options.Size = size);
+        }
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(FileTrailerFunction);
@@ -59,11 +70,14 @@ public class FileTrailerTests
         // Arrange
 
         // Act
-        FileTrailer FileTrailerFunction() => new(123, options =>
+        FileTrailer FileTrailerFunction()
+        {
+            return new(123, options =>
         {
             options.Size = 456;
             options.Prev = prev;
         });
+        }
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(FileTrailerFunction);
@@ -77,13 +91,16 @@ public class FileTrailerTests
         var encryptDictionary = new Dictionary<PdfName, IPdfObject>(1);
 
         // Act
-        FileTrailer FileTrailerFunction() => new(123, options =>
+        FileTrailer FileTrailerFunction()
+        {
+            return new(123, options =>
         {
             options.Size = 456;
             options.Prev = 789;
             options.Root = RootDictionary;
             options.Encrypt = encryptDictionary.ToPdfDictionary();
         });
+        }
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(FileTrailerFunction);
@@ -97,13 +114,16 @@ public class FileTrailerTests
         var encryptDictionary = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } };
 
         // Act
-        FileTrailer FileTrailerFunction() => new(123, options =>
+        FileTrailer FileTrailerFunction()
+        {
+            return new(123, options =>
         {
             options.Size = 456;
             options.Prev = 789;
             options.Root = RootDictionary;
             options.Encrypt = encryptDictionary.ToPdfDictionary();
         });
+        }
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(FileTrailerFunction);
@@ -121,7 +141,7 @@ public class FileTrailerTests
         {
             Size = 456,
             Prev = 789,
-            Root = RootDictionary
+            Root = RootDictionary,
         };
         FileTrailer fileTrailer = new(byteOffset, fileTrailerOptions);
 
@@ -140,7 +160,7 @@ public class FileTrailerTests
         {
             Size = 456,
             Prev = 789,
-            Root = RootDictionary
+            Root = RootDictionary,
         };
         FileTrailer fileTrailer = new(123, fileTrailerOptions);
 
@@ -254,6 +274,7 @@ public class FileTrailerTests
     }
 }
 
+[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
 internal static class FileTrailerTestsDataGenerator
 {
     private static readonly PdfIndirectIdentifier<PageTreeNode> Pages = new PageTreeNode(options => options.Kids = Array.Empty<PdfIndirectIdentifier<PageObject>>().ToPdfArray())
@@ -277,7 +298,7 @@ internal static class FileTrailerTestsDataGenerator
                     .ToPdfIndirectIdentifier();
                 options.Id = new[] { new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true), new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true) }.ToPdfArray();
             }),
-            "trailer\n<</Size 22 /Root 2 0 R /Info 1 0 R /ID [<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]>>\nstartxref\n18799\n%%EOF"
+            "trailer\n<</Size 22 /Root 2 0 R /Info 1 0 R /ID [<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]>>\nstartxref\n18799\n%%EOF",
         };
 
         yield return new object[]
@@ -293,7 +314,7 @@ internal static class FileTrailerTestsDataGenerator
                     .ToPdfIndirectIdentifier();
                 options.Id = new[] { new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true), new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true) }.ToPdfArray();
             }),
-            "trailer\n<</Size 22 /Prev 196 /Root 2 0 R /Info 1 0 R /ID [<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]>>\nstartxref\n12345\n%%EOF"
+            "trailer\n<</Size 22 /Prev 196 /Root 2 0 R /Info 1 0 R /ID [<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]>>\nstartxref\n12345\n%%EOF",
         };
 
         yield return new object[]
@@ -306,7 +327,7 @@ internal static class FileTrailerTestsDataGenerator
                 options.Encrypt = new Dictionary<PdfName, IPdfObject>(2)
                     {
                         { "Test1", new PdfInteger(1) },
-                        { "Test2", new PdfInteger(2) }
+                        { "Test2", new PdfInteger(2) },
                     }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
@@ -315,7 +336,7 @@ internal static class FileTrailerTestsDataGenerator
                     .ToPdfIndirectIdentifier();
                 options.Id = new[] { new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true), new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true) }.ToPdfArray();
             }),
-            "trailer\n<</Size 22 /Prev 196 /Root 2 0 R /Encrypt <</Test1 1 /Test2 2>> /Info 1 0 R /ID [<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]>>\nstartxref\n12345\n%%EOF"
+            "trailer\n<</Size 22 /Prev 196 /Root 2 0 R /Encrypt <</Test1 1 /Test2 2>> /Info 1 0 R /ID [<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]>>\nstartxref\n12345\n%%EOF",
         };
     }
 
@@ -333,7 +354,7 @@ internal static class FileTrailerTestsDataGenerator
                     .ToPdfIndirectIdentifier();
                 options.Id = new[] { new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true), new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true) }.ToPdfArray();
             }),
-            142
+            142,
         };
 
         yield return new object[]
@@ -349,7 +370,7 @@ internal static class FileTrailerTestsDataGenerator
                     .ToPdfIndirectIdentifier();
                 options.Id = new[] { new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true), new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true) }.ToPdfArray();
             }),
-            152
+            152,
         };
 
         yield return new object[]
@@ -362,7 +383,7 @@ internal static class FileTrailerTestsDataGenerator
                 options.Encrypt = new Dictionary<PdfName, IPdfObject>(2)
                     {
                         { "Test1", new PdfInteger(1) },
-                        { "Test2", new PdfInteger(2) }
+                        { "Test2", new PdfInteger(2) },
                     }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
@@ -371,7 +392,7 @@ internal static class FileTrailerTestsDataGenerator
                     .ToPdfIndirectIdentifier();
                 options.Id = new[] { new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true), new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true) }.ToPdfArray();
             }),
-            183
+            183,
         };
     }
 
@@ -395,8 +416,8 @@ internal static class FileTrailerTestsDataGenerator
                 0x20, 0x2F, 0x49, 0x6E, 0x66, 0x6F, 0x20, 0x31, 0x20, 0x30, 0x20, 0x52, 0x20, 0x2F, 0x49, 0x44, 0x20, 0x5B, 0x3C, 0x38, 0x31, 0x62, 0x31, 0x34, 0x61, 0x61, 0x66, 0x61, 0x33, 0x31,
                 0x33, 0x64, 0x62, 0x36, 0x33, 0x64, 0x62, 0x64, 0x36, 0x66, 0x39, 0x38, 0x31, 0x65, 0x34, 0x39, 0x66, 0x39, 0x34, 0x66, 0x34, 0x3E, 0x20, 0x3C, 0x38, 0x31, 0x62, 0x31, 0x34, 0x61,
                 0x61, 0x66, 0x61, 0x33, 0x31, 0x33, 0x64, 0x62, 0x36, 0x33, 0x64, 0x62, 0x64, 0x36, 0x66, 0x39, 0x38, 0x31, 0x65, 0x34, 0x39, 0x66, 0x39, 0x34, 0x66, 0x34, 0x3E, 0x5D, 0x3E, 0x3E,
-                0x0A, 0x73, 0x74, 0x61, 0x72, 0x74, 0x78, 0x72, 0x65, 0x66, 0x0A, 0x31, 0x38, 0x37, 0x39, 0x39, 0x0A, 0x25, 0x25, 0x45, 0x4F, 0x46
-            }
+                0x0A, 0x73, 0x74, 0x61, 0x72, 0x74, 0x78, 0x72, 0x65, 0x66, 0x0A, 0x31, 0x38, 0x37, 0x39, 0x39, 0x0A, 0x25, 0x25, 0x45, 0x4F, 0x46,
+            },
         };
 
         yield return new object[]
@@ -419,8 +440,8 @@ internal static class FileTrailerTestsDataGenerator
                 0x31, 0x62, 0x31, 0x34, 0x61, 0x61, 0x66, 0x61, 0x33, 0x31, 0x33, 0x64, 0x62, 0x36, 0x33, 0x64, 0x62, 0x64, 0x36, 0x66, 0x39, 0x38, 0x31, 0x65, 0x34, 0x39, 0x66, 0x39, 0x34, 0x66,
                 0x34, 0x3E, 0x20, 0x3C, 0x38, 0x31, 0x62, 0x31, 0x34, 0x61, 0x61, 0x66, 0x61, 0x33, 0x31, 0x33, 0x64, 0x62, 0x36, 0x33, 0x64, 0x62, 0x64, 0x36, 0x66, 0x39, 0x38, 0x31, 0x65, 0x34,
                 0x39, 0x66, 0x39, 0x34, 0x66, 0x34, 0x3E, 0x5D, 0x3E, 0x3E, 0x0A, 0x73, 0x74, 0x61, 0x72, 0x74, 0x78, 0x72, 0x65, 0x66, 0x0A, 0x31, 0x32, 0x33, 0x34, 0x35, 0x0A, 0x25, 0x25, 0x45,
-                0x4F, 0x46
-            }
+                0x4F, 0x46,
+            },
         };
 
         yield return new object[]
@@ -433,7 +454,7 @@ internal static class FileTrailerTestsDataGenerator
                 options.Encrypt = new Dictionary<PdfName, IPdfObject>(2)
                     {
                         { "Test1", new PdfInteger(1) },
-                        { "Test2", new PdfInteger(2) }
+                        { "Test2", new PdfInteger(2) },
                     }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
@@ -450,8 +471,8 @@ internal static class FileTrailerTestsDataGenerator
                 0x38, 0x31, 0x62, 0x31, 0x34, 0x61, 0x61, 0x66, 0x61, 0x33, 0x31, 0x33, 0x64, 0x62, 0x36, 0x33, 0x64, 0x62, 0x64, 0x36, 0x66, 0x39, 0x38, 0x31, 0x65, 0x34, 0x39, 0x66, 0x39, 0x34,
                 0x66, 0x34, 0x3E, 0x20, 0x3C, 0x38, 0x31, 0x62, 0x31, 0x34, 0x61, 0x61, 0x66, 0x61, 0x33, 0x31, 0x33, 0x64, 0x62, 0x36, 0x33, 0x64, 0x62, 0x64, 0x36, 0x66, 0x39, 0x38, 0x31, 0x65,
                 0x34, 0x39, 0x66, 0x39, 0x34, 0x66, 0x34, 0x3E, 0x5D, 0x3E, 0x3E, 0x0A, 0x73, 0x74, 0x61, 0x72, 0x74, 0x78, 0x72, 0x65, 0x66, 0x0A, 0x31, 0x32, 0x33, 0x34, 0x35, 0x0A, 0x25, 0x25,
-                0x45, 0x4F, 0x46
-            }
+                0x45, 0x4F, 0x46,
+            },
         };
     }
 
@@ -468,7 +489,7 @@ internal static class FileTrailerTestsDataGenerator
                     .ToPdfIndirect(1)
                     .ToPdfIndirectIdentifier();
                 options.Id = new[] { new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true), new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true) }.ToPdfArray();
-            })
+            }),
         };
 
         yield return new object[]
@@ -483,7 +504,7 @@ internal static class FileTrailerTestsDataGenerator
                     .ToPdfIndirect(1)
                     .ToPdfIndirectIdentifier();
                 options.Id = new[] { new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true), new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true) }.ToPdfArray();
-            })
+            }),
         };
 
         yield return new object[]
@@ -496,7 +517,7 @@ internal static class FileTrailerTestsDataGenerator
                 options.Encrypt = new Dictionary<PdfName, IPdfObject>(2)
                     {
                         { "Test1", new PdfInteger(1) },
-                        { "Test2", new PdfInteger(2) }
+                        { "Test2", new PdfInteger(2) },
                     }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
@@ -504,7 +525,7 @@ internal static class FileTrailerTestsDataGenerator
                     .ToPdfIndirect(1)
                     .ToPdfIndirectIdentifier();
                 options.Id = new[] { new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true), new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true) }.ToPdfArray();
-            })
+            }),
         };
     }
 
@@ -532,7 +553,7 @@ internal static class FileTrailerTestsDataGenerator
                     .ToPdfIndirectIdentifier();
                 options.Id = new[] { new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true), new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true) }.ToPdfArray();
             }),
-            true
+            true,
         };
 
         yield return new object[]
@@ -559,7 +580,7 @@ internal static class FileTrailerTestsDataGenerator
                     .ToPdfIndirectIdentifier();
                 options.Id = new[] { new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true), new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true) }.ToPdfArray();
             }),
-            false
+            false,
         };
 
         yield return new object[]
@@ -572,7 +593,7 @@ internal static class FileTrailerTestsDataGenerator
                 options.Encrypt = new Dictionary<PdfName, IPdfObject>(2)
                     {
                         { "Test1", new PdfInteger(1) },
-                        { "Test2", new PdfInteger(2) }
+                        { "Test2", new PdfInteger(2) },
                     }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
@@ -589,7 +610,7 @@ internal static class FileTrailerTestsDataGenerator
                 options.Encrypt = new Dictionary<PdfName, IPdfObject>(2)
                     {
                         { "Test1", new PdfInteger(1) },
-                        { "Test2", new PdfInteger(2) }
+                        { "Test2", new PdfInteger(2) },
                     }
                     .ToPdfDictionary();
                 options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
@@ -598,7 +619,7 @@ internal static class FileTrailerTestsDataGenerator
                     .ToPdfIndirectIdentifier();
                 options.Id = new[] { new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true), new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true) }.ToPdfArray();
             }),
-            false
+            false,
         };
     }
 }

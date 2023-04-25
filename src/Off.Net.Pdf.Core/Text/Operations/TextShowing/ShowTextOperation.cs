@@ -1,4 +1,9 @@
-﻿using Off.Net.Pdf.Core.ContentStreamAndResources;
+// <copyright file="ShowTextOperation.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using Off.Net.Pdf.Core.ContentStreamAndResources;
 using Off.Net.Pdf.Core.Extensions;
 using Off.Net.Pdf.Core.Primitives;
 
@@ -6,50 +11,31 @@ namespace Off.Net.Pdf.Core.Text.Operations.TextShowing;
 
 public sealed class ShowTextOperation : PdfOperation
 {
-    #region Fields, Constants
-
     public const string OperatorName = "Tj";
-    private readonly Lazy<int> _hashCode;
+    private readonly Lazy<int> hashCode;
 
-    #endregion
-
-    #region Constructors
-
-    public ShowTextOperation(PdfString text) : base(OperatorName)
+    public ShowTextOperation(PdfString text)
+        : base(OperatorName)
     {
-        Text = text.NotNull(x => x);
+        this.Text = text.NotNull(x => x);
 
-        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(ShowTextOperation), text, OperatorName));
+        this.hashCode = new Lazy<int>(() => HashCode.Combine(nameof(ShowTextOperation), text, OperatorName));
     }
-
-    #endregion
-
-    #region Properties
 
     public PdfString Text { get; }
 
-    #endregion
-
-    #region Public Methods
-
     public override bool Equals(object? obj)
     {
-        return obj is ShowTextOperation other && Text == other.Text;
+        return obj is ShowTextOperation other && this.Text == other.Text;
     }
-
-    #endregion
-
-    #region Protected Methods
 
     public override int GetHashCode()
     {
-        return _hashCode.Value;
+        return this.hashCode.Value;
     }
 
     protected override string GenerateContent()
     {
-        return $"{Text.Content} {PdfOperator}\n";
+        return $"{this.Text.Content} {this.PdfOperator}\n";
     }
-
-    #endregion
 }

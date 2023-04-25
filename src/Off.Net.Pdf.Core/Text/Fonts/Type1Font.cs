@@ -1,4 +1,9 @@
-﻿using System.Collections.ObjectModel;
+// <copyright file="Type1Font.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using System.Collections.ObjectModel;
 using Off.Net.Pdf.Core.Extensions;
 using Off.Net.Pdf.Core.Interfaces;
 using Off.Net.Pdf.Core.Primitives;
@@ -7,8 +12,6 @@ namespace Off.Net.Pdf.Core.Text.Fonts;
 
 public sealed class Type1Font : PdfDictionary<IPdfObject>
 {
-    #region Fields
-
     private static readonly PdfName Type = "Type";
     private static readonly PdfName TypeValue = "Font";
     private static readonly PdfName Subtype = "Subtype";
@@ -16,22 +19,16 @@ public sealed class Type1Font : PdfDictionary<IPdfObject>
     private static readonly PdfName FontName = "Name";
     private static readonly PdfName BaseFont = "BaseFont";
 
-    #endregion
-
-    #region Constructors
-
-    public Type1Font(Action<Type1FontOptions> optionsFunc) : this(GetType1FontOptions(optionsFunc))
+    public Type1Font(Action<Type1FontOptions> optionsFunc)
+        : this(GetType1FontOptions(optionsFunc))
     {
     }
 
-    public Type1Font(Type1FontOptions options) : base(GenerateDictionary(options))
+    public Type1Font(Type1FontOptions options)
+        : base(GenerateDictionary(options))
     {
         options.NotNull(x => x.BaseFont);
     }
-
-    #endregion
-
-    #region Private Methods
 
     private static Type1FontOptions GetType1FontOptions(Action<Type1FontOptions> optionsFunc)
     {
@@ -50,12 +47,4 @@ public sealed class Type1Font : PdfDictionary<IPdfObject>
 
         return new ReadOnlyDictionary<PdfName, IPdfObject>(documentCatalogDictionary);
     }
-
-    #endregion
-}
-
-public sealed class Type1FontOptions
-{
-    public PdfName? FontName { get; set; }
-    public PdfName BaseFont { get; set; } = default!;
 }
