@@ -1,3 +1,8 @@
+// <copyright file="PdfNullTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 using Off.Net.Pdf.Core.Primitives;
 using Xunit;
 
@@ -9,7 +14,7 @@ public class PdfNullTests
     public void PdfNull_Length_CheckValue()
     {
         // Arrange
-        PdfNull pdfNull = new();
+        PdfNull pdfNull = default(PdfNull);
 
         // Act
         float actualLength = pdfNull.Length;
@@ -22,7 +27,7 @@ public class PdfNullTests
     public void PdfNull_Equals_NullArgument_ShouldReturnFalse()
     {
         // Arrange
-        PdfNull pdfNull1 = new();
+        PdfNull pdfNull1 = default(PdfNull);
 
         // Act
         bool actualResult = pdfNull1.Equals(null);
@@ -35,8 +40,8 @@ public class PdfNullTests
     public void PdfNull_Equality_CheckEquals()
     {
         // Arrange
-        PdfNull pdfNull1 = new();
-        PdfNull pdfNull2 = new();
+        PdfNull pdfNull1 = default(PdfNull);
+        PdfNull pdfNull2 = default(PdfNull);
 
         // Act
         // ReSharper disable once RedundantCast
@@ -51,10 +56,10 @@ public class PdfNullTests
     {
         // Arrange
         byte[] expectedBytes = { 110, 117, 108, 108 };
-        PdfNull pdfNull1 = new();
+        PdfNull pdfNull1 = default(PdfNull);
 
         // Act
-         ReadOnlyMemory<byte> actualBytes = pdfNull1.Bytes;
+        ReadOnlyMemory<byte> actualBytes = pdfNull1.Bytes;
 
         // Assert
         Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
@@ -64,7 +69,7 @@ public class PdfNullTests
     public void PdfNull_GetHashCode_CheckValidity()
     {
         // Arrange
-        PdfNull pdfNull1 = new();
+        PdfNull pdfNull1 = default(PdfNull);
         float expectedHashCode = HashCode.Combine(nameof(PdfNull), "null");
 
         // Act
@@ -78,8 +83,8 @@ public class PdfNullTests
     public void PdfNull_GetHashCode_CompareHashes()
     {
         // Arrange
-        PdfNull pdfNull1 = new();
-        PdfNull pdfNull2 = new();
+        PdfNull pdfNull1 = default(PdfNull);
+        PdfNull pdfNull2 = default(PdfNull);
 
         // Act
         int actualHashCode1 = pdfNull1.GetHashCode();
@@ -94,7 +99,7 @@ public class PdfNullTests
     public void PdfNull_Content_CheckEquality()
     {
         // Arrange
-        PdfNull pdfNull1 = new();
+        PdfNull pdfNull1 = default(PdfNull);
         const string expectedStringValue = "null";
 
         // Act

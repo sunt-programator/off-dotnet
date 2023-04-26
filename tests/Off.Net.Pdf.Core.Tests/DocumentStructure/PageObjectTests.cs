@@ -1,4 +1,9 @@
-﻿using Off.Net.Pdf.Core.CommonDataStructures;
+// <copyright file="PageObjectTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using Off.Net.Pdf.Core.CommonDataStructures;
 using Off.Net.Pdf.Core.ContentStreamAndResources;
 using Off.Net.Pdf.Core.DocumentStructure;
 using Off.Net.Pdf.Core.Primitives;
@@ -16,7 +21,10 @@ public class PageObjectTests
         PageObjectOptions documentCatalogOptions = new() { Parent = null! };
 
         // Act
-        PageObject PageObjectFunction() => new(documentCatalogOptions);
+        PageObject PageObjectFunction()
+        {
+            return new(documentCatalogOptions);
+        }
 
         // Assert
         Assert.Throws<ArgumentNullException>(PageObjectFunction);
@@ -33,7 +41,10 @@ public class PageObjectTests
         PageObjectOptions documentCatalogOptions = new() { Parent = parent, Resources = null! };
 
         // Act
-        PageObject PageObjectFunction() => new(documentCatalogOptions);
+        PageObject PageObjectFunction()
+        {
+            return new(documentCatalogOptions);
+        }
 
         // Assert
         Assert.Throws<ArgumentNullException>(PageObjectFunction);
@@ -51,7 +62,10 @@ public class PageObjectTests
         PageObjectOptions documentCatalogOptions = new() { Parent = parent, Resources = resourceDictionary, MediaBox = null! };
 
         // Act
-        PageObject PageObjectFunction() => new(documentCatalogOptions);
+        PageObject PageObjectFunction()
+        {
+            return new(documentCatalogOptions);
+        }
 
         // Assert
         Assert.Throws<ArgumentNullException>(PageObjectFunction);
@@ -81,6 +95,7 @@ public class PageObjectTests
     }
 }
 
+[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
 internal static class PageObjectTestsDataGenerator
 {
     public static IEnumerable<object[]> PageObject_Content_TestCases()
@@ -100,7 +115,7 @@ internal static class PageObjectTestsDataGenerator
                 }.ToPdfDictionary()),
                 MediaBox = new Rectangle(0, 0, 612, 792),
             },
-            "<</Type /Page /Parent 4 0 R /Resources <</Font <</F3 7 0 R /F5 9 0 R /F7 11 0 R>> /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]>> /MediaBox [0 0 612 792]>>"
+            "<</Type /Page /Parent 4 0 R /Resources <</Font <</F3 7 0 R /F5 9 0 R /F7 11 0 R>> /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]>> /MediaBox [0 0 612 792]>>",
         };
         yield return new object[]
         {
@@ -114,9 +129,9 @@ internal static class PageObjectTestsDataGenerator
                     { "F7", StandardFonts.TimesRoman.ToPdfIndirect(11).ToPdfIndirectIdentifier() },
                 }.ToPdfDictionary()),
                 MediaBox = new Rectangle(0, 0, 612, 792),
-                Contents = new PdfStream("".AsMemory()).ToPdfIndirect(4, 2).ToPdfIndirectIdentifier()
+                Contents = new PdfStream(string.Empty.AsMemory()).ToPdfIndirect(4, 2).ToPdfIndirectIdentifier(),
             },
-            "<</Type /Page /Parent 3 0 R /Resources <</Font <</F3 7 0 R /F5 9 0 R /F7 11 0 R>> /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]>> /MediaBox [0 0 612 792] /Contents 4 2 R>>"
+            "<</Type /Page /Parent 3 0 R /Resources <</Font <</F3 7 0 R /F5 9 0 R /F7 11 0 R>> /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]>> /MediaBox [0 0 612 792] /Contents 4 2 R>>",
         };
     }
 }

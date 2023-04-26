@@ -1,4 +1,9 @@
-﻿using System.Text;
+// <copyright file="XRefSubSection.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using System.Text;
 using Off.Net.Pdf.Core.Extensions;
 using Off.Net.Pdf.Core.Interfaces;
 
@@ -6,65 +11,47 @@ namespace Off.Net.Pdf.Core.FileStructure;
 
 public sealed class XRefSubSection : IPdfObject<ICollection<XRefEntry>>, IEquatable<XRefSubSection>
 {
-    #region Fields
-
-    private readonly Lazy<int> _hashCode;
-    private readonly Lazy<string> _literalValue;
-    private readonly Lazy<byte[]> _bytes;
-
-    #endregion
-
-    #region Constructors
+    private readonly Lazy<int> hashCode;
+    private readonly Lazy<string> literalValue;
+    private readonly Lazy<byte[]> bytes;
 
     public XRefSubSection(int objectNumber, ICollection<XRefEntry> xRefEntries)
     {
-        ObjectNumber = objectNumber.CheckConstraints(num => num >= 0, Resource.PdfIndirect_ObjectNumberMustBePositive);
-        Value = xRefEntries.CheckConstraints(entry => entry.Count > 0, Resource.XRefSubSection_MustHaveNonEmptyEntriesCollection);
-        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(XRefSubSection), objectNumber, xRefEntries));
-        _literalValue = new Lazy<string>(GenerateContent);
-        _bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(Content));
+        this.ObjectNumber = objectNumber.CheckConstraints(num => num >= 0, Resource.PdfIndirect_ObjectNumberMustBePositive);
+        this.Value = xRefEntries.CheckConstraints(entry => entry.Count > 0, Resource.XRefSubSection_MustHaveNonEmptyEntriesCollection);
+        this.hashCode = new Lazy<int>(() => HashCode.Combine(nameof(XRefSubSection), objectNumber, xRefEntries));
+        this.literalValue = new Lazy<string>(this.GenerateContent);
+        this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
 
-    #endregion
-
-    #region Properties
-
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public int ObjectNumber { get; }
 
-    public int NumberOfEntries => Value.Count;
+    public int NumberOfEntries => this.Value.Count;
 
-    public ReadOnlyMemory<byte> Bytes => _bytes.Value;
+    public ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
     public ICollection<XRefEntry> Value { get; }
 
-    public string Content => _literalValue.Value;
-
-    #endregion
-
-    #region Public Methods
+    public string Content => this.literalValue.Value;
 
     public override int GetHashCode()
     {
-        return _hashCode.Value;
+        return this.hashCode.Value;
     }
 
     public override bool Equals(object? obj)
     {
-        return Equals(obj as XRefSubSection);
+        return this.Equals(obj as XRefSubSection);
     }
 
     public bool Equals(XRefSubSection? other)
     {
         return other is not null &&
-               ObjectNumber == other.ObjectNumber &&
-               Value.SequenceEqual(other.Value);
+               this.ObjectNumber == other.ObjectNumber &&
+               this.Value.SequenceEqual(other.Value);
     }
-
-    #endregion
-
-    #region Private Methods
 
     private string GenerateContent()
     {
@@ -74,13 +61,11 @@ public sealed class XRefSubSection : IPdfObject<ICollection<XRefEntry>>, IEquata
             .Append(this.NumberOfEntries)
             .Append('\n');
 
-        foreach (XRefEntry entry in Value)
+        foreach (XRefEntry entry in this.Value)
         {
             stringBuilder.Append(entry.Content);
         }
 
         return stringBuilder.ToString();
     }
-
-    #endregion
 }

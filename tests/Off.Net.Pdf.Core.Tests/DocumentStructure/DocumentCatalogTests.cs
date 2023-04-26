@@ -1,5 +1,9 @@
-﻿using Off.Net.Pdf.Core.DocumentStructure;
-using Off.Net.Pdf.Core.Interfaces;
+﻿// <copyright file="DocumentCatalogTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using Off.Net.Pdf.Core.DocumentStructure;
 using Off.Net.Pdf.Core.Primitives;
 using Xunit;
 
@@ -7,26 +11,31 @@ namespace Off.Net.Pdf.Core.Tests.DocumentStructure;
 
 public class DocumentCatalogTests
 {
-    [Fact(DisplayName = $"Constructor with an empty {nameof(DocumentCatalogOptions.Pages)} dictionary should throw an {nameof(ArgumentOutOfRangeException)}")]
+    [Fact(DisplayName = $"Constructor with an empty {nameof(DocumentCatalogOptions.Pages)} dictionary should throw an {nameof(ArgumentNullException)}")]
     public void DocumentCatalog_ConstructorWithEmptyPagesDictionary_ShouldThrowException()
     {
         // Arrange
-        DocumentCatalogOptions documentCatalogOptions = new() { Pages = new Dictionary<PdfName, IPdfObject>(0).ToPdfDictionary() };
+        DocumentCatalogOptions documentCatalogOptions = new() { Pages = null! };
 
         // Act
-        DocumentCatalog DocumentCatalogFunction() => new(documentCatalogOptions);
+        DocumentCatalog DocumentCatalogFunction()
+        {
+            return new(documentCatalogOptions);
+        }
 
         // Assert
-        var exception = Assert.Throws<ArgumentOutOfRangeException>(DocumentCatalogFunction);
-        Assert.StartsWith(Resource.DocumentCatalog_Pages_MustNotBeEmpty, exception.Message);
+        Assert.Throws<ArgumentNullException>(DocumentCatalogFunction);
     }
 
     [Fact(DisplayName = $"The {nameof(DocumentCatalog.Content)} should return a valid value")]
     public void DocumentCatalog_Content_ShouldReturnValidValue()
     {
         // Arrange
-        const string expectedContent = "<</Type /Catalog /Pages <</TestName 0>>>>";
-        PdfDictionary<IPdfObject> pages = new Dictionary<PdfName, IPdfObject> { { "TestName", new PdfInteger(0) } }.ToPdfDictionary();
+        const string expectedContent = "<</Type /Catalog /Pages 3 0 R>>";
+        PdfIndirectIdentifier<PageTreeNode> pages = new PageTreeNode(options => options.Kids = Array.Empty<PdfIndirectIdentifier<PageObject>>().ToPdfArray())
+            .ToPdfIndirect(3)
+            .ToPdfIndirectIdentifier();
+
         DocumentCatalog documentCatalog = new(options => options.Pages = pages);
 
         // Act

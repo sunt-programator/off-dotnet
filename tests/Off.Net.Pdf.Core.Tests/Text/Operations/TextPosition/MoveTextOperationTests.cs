@@ -1,4 +1,9 @@
-﻿using Off.Net.Pdf.Core.Text.Operations.TextPosition;
+// <copyright file="MoveTextOperationTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using Off.Net.Pdf.Core.Text.Operations.TextPosition;
 using Xunit;
 
 namespace Off.Net.Pdf.Core.Tests.Text.Operations.TextPosition;
@@ -126,6 +131,7 @@ public class MoveTextOperationTests
     }
 }
 
+[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
 internal static class MoveTextOperationTestsDataGenerator
 {
     public static IEnumerable<object[]> MoveTextOperation_Equals_TestCases()

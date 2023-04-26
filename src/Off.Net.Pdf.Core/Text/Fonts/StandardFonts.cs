@@ -1,4 +1,9 @@
-﻿namespace Off.Net.Pdf.Core.Text.Fonts;
+// <copyright file="StandardFonts.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Off.Net.Pdf.Core.Text.Fonts;
 
 public static class StandardFonts
 {

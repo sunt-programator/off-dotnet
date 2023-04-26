@@ -1,3 +1,8 @@
+// <copyright file="PdfReal.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 using System.Globalization;
 using System.Text;
 using Off.Net.Pdf.Core.Interfaces;
@@ -7,15 +12,12 @@ namespace Off.Net.Pdf.Core.Primitives;
 public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, IComparable<PdfReal>
 {
     private const float ApproximationValue = 1.175e-38f;
+    private readonly int hashCode;
+    private string literalValue = string.Empty;
+    private byte[]? bytes;
 
-    #region Fields
-    private readonly int _hashCode;
-    private string _literalValue = string.Empty;
-    private byte[]? _bytes;
-    #endregion
-
-    #region Constructors
-    public PdfReal() : this(0f)
+    public PdfReal()
+        : this(0f)
     {
     }
 
@@ -26,60 +28,29 @@ public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, ICo
             value = 0;
         }
 
-        Value = value;
-        _hashCode = HashCode.Combine(nameof(PdfReal), value);
-        _bytes = null;
+        this.Value = value;
+        this.hashCode = HashCode.Combine(nameof(PdfReal), value);
+        this.bytes = null;
     }
-    #endregion
 
-    #region Properties
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public float Value { get; }
 
-    public ReadOnlyMemory<byte> Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
+    public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
-    public string Content => GenerateContent();
-    #endregion
+    public string Content => this.GenerateContent();
 
-    #region Public Methods
-    public override int GetHashCode()
+    public static implicit operator float(PdfReal pdfReal)
     {
-        return _hashCode;
+        return pdfReal.Value;
     }
 
-    public bool Equals(PdfReal other)
+    public static implicit operator PdfReal(float value)
     {
-        return Value == other.Value;
+        return new(value);
     }
 
-    public override bool Equals(object? obj)
-    {
-        return (obj is PdfReal pdfReal) && Equals(pdfReal);
-    }
-
-    public int CompareTo(object? obj)
-    {
-        if (obj is not PdfReal pdfReal)
-        {
-            throw new ArgumentException(Resource.PdfReal_MustBePdfReal);
-        }
-
-        return CompareTo(pdfReal);
-    }
-
-    public int CompareTo(PdfReal other)
-    {
-        if (Value == other.Value)
-        {
-            return 0;
-        }
-
-        return Value > other.Value ? 1 : -1;
-    }
-    #endregion
-
-    #region Operators
     public static bool operator ==(PdfReal leftOperator, PdfReal rightOperator)
     {
         return leftOperator.CompareTo(rightOperator) == 0;
@@ -110,26 +81,48 @@ public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, ICo
         return leftOperator.CompareTo(rightOperator) >= 0;
     }
 
-    public static implicit operator float(PdfReal pdfReal)
+    public override int GetHashCode()
     {
-        return pdfReal.Value;
+        return this.hashCode;
     }
 
-    public static implicit operator PdfReal(float value)
+    public bool Equals(PdfReal other)
     {
-        return new(value);
+        return this.Value == other.Value;
     }
-    #endregion
 
-    #region Private Methods
-    private string GenerateContent()
+    public override bool Equals(object? obj)
     {
-        if (_literalValue.Length == 0)
+        return (obj is PdfReal pdfReal) && this.Equals(pdfReal);
+    }
+
+    public int CompareTo(object? obj)
+    {
+        if (obj is not PdfReal pdfReal)
         {
-            _literalValue = Value.ToString(CultureInfo.InvariantCulture);
+            throw new ArgumentException(Resource.PdfReal_MustBePdfReal);
         }
 
-        return _literalValue;
+        return this.CompareTo(pdfReal);
     }
-    #endregion
+
+    public int CompareTo(PdfReal other)
+    {
+        if (this.Value == other.Value)
+        {
+            return 0;
+        }
+
+        return this.Value > other.Value ? 1 : -1;
+    }
+
+    private string GenerateContent()
+    {
+        if (this.literalValue.Length == 0)
+        {
+            this.literalValue = this.Value.ToString(CultureInfo.InvariantCulture);
+        }
+
+        return this.literalValue;
+    }
 }

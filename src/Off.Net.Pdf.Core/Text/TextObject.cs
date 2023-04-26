@@ -1,4 +1,9 @@
-﻿using System.Text;
+// <copyright file="TextObject.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using System.Text;
 using Off.Net.Pdf.Core.ContentStreamAndResources;
 using Off.Net.Pdf.Core.Interfaces;
 
@@ -6,60 +11,42 @@ namespace Off.Net.Pdf.Core.Text;
 
 public sealed class TextObject : IPdfObject<IReadOnlyCollection<PdfOperation>>
 {
-    #region Fields
-
-    private readonly Lazy<int> _hashCode;
-    private readonly Lazy<string> _literalValue;
-    private readonly Lazy<byte[]> _bytes;
-
-    #endregion
-
-    #region Constructors
+    private readonly Lazy<int> hashCode;
+    private readonly Lazy<string> literalValue;
+    private readonly Lazy<byte[]> bytes;
 
     public TextObject(IReadOnlyCollection<PdfOperation> operations)
     {
-        Value = operations;
+        this.Value = operations;
 
-        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(TextObject), operations));
-        _literalValue = new Lazy<string>(GenerateContent);
-        _bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(Content));
+        this.hashCode = new Lazy<int>(() => HashCode.Combine(nameof(TextObject), operations));
+        this.literalValue = new Lazy<string>(this.GenerateContent);
+        this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
 
-    #endregion
+    public int Length => this.Bytes.Length;
 
-    #region Properties
-
-    public int Length => Content.Length;
-
-    public ReadOnlyMemory<byte> Bytes => _bytes.Value;
+    public ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
     public IReadOnlyCollection<PdfOperation> Value { get; }
 
-    public string Content => _literalValue.Value;
-
-    #endregion
-
-    #region Public Methods
+    public string Content => this.literalValue.Value;
 
     public override int GetHashCode()
     {
-        return _hashCode.Value;
+        return this.hashCode.Value;
     }
 
     public override bool Equals(object? obj)
     {
-        return obj is TextObject other && EqualityComparer<IReadOnlyCollection<PdfOperation>>.Default.Equals(Value, other.Value);
+        return obj is TextObject other && EqualityComparer<IReadOnlyCollection<PdfOperation>>.Default.Equals(this.Value, other.Value);
     }
-
-    #endregion
-
-    #region Private Methods
 
     private string GenerateContent()
     {
         StringBuilder stringBuilder = new();
 
-        foreach (PdfOperation pdfOperation in Value)
+        foreach (PdfOperation pdfOperation in this.Value)
         {
             stringBuilder.Append(pdfOperation.Content);
         }
@@ -69,6 +56,4 @@ public sealed class TextObject : IPdfObject<IReadOnlyCollection<PdfOperation>>
             .Append("ET\n")
             .ToString();
     }
-
-    #endregion
 }

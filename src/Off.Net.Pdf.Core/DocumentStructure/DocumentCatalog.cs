@@ -1,3 +1,8 @@
+// <copyright file="DocumentCatalog.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 using System.Collections.ObjectModel;
 using Off.Net.Pdf.Core.Extensions;
 using Off.Net.Pdf.Core.Interfaces;
@@ -7,30 +12,20 @@ namespace Off.Net.Pdf.Core.DocumentStructure;
 
 public sealed class DocumentCatalog : PdfDictionary<IPdfObject>
 {
-    #region Fields
-
     private static readonly PdfName Type = "Type";
     private static readonly PdfName Catalog = "Catalog";
     private static readonly PdfName Pages = "Pages";
 
-    #endregion
-
-    #region Constructors
-
-    public DocumentCatalog(Action<DocumentCatalogOptions> optionsFunc) : this(GetDocumentCatalogOptions(optionsFunc))
+    public DocumentCatalog(Action<DocumentCatalogOptions> optionsFunc)
+        : this(GetDocumentCatalogOptions(optionsFunc))
     {
     }
 
-    public DocumentCatalog(DocumentCatalogOptions options) : base(GenerateDictionary(options))
+    public DocumentCatalog(DocumentCatalogOptions options)
+        : base(GenerateDictionary(options))
     {
-        options
-            .NotNull(x => x.Pages)
-            .CheckConstraints(x => x.Pages.Value.Count > 0, Resource.DocumentCatalog_Pages_MustNotBeEmpty);
+        options.NotNull(x => x.Pages);
     }
-
-    #endregion
-
-    #region Private Methods
 
     private static DocumentCatalogOptions GetDocumentCatalogOptions(Action<DocumentCatalogOptions> optionsFunc)
     {
@@ -47,11 +42,4 @@ public sealed class DocumentCatalog : PdfDictionary<IPdfObject>
 
         return new ReadOnlyDictionary<PdfName, IPdfObject>(documentCatalogDictionary);
     }
-
-    #endregion
-}
-
-public sealed class DocumentCatalogOptions
-{
-    public PdfDictionary<IPdfObject> Pages { get; set; } = default!;
 }

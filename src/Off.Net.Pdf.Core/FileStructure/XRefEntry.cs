@@ -1,4 +1,9 @@
-﻿using System.Text;
+// <copyright file="XRefEntry.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using System.Text;
 using Off.Net.Pdf.Core.Extensions;
 using Off.Net.Pdf.Core.Interfaces;
 
@@ -12,40 +17,30 @@ public enum XRefEntryType
 
 public sealed class XRefEntry : IPdfObject, IEquatable<XRefEntry>
 {
-    #region Fields
-
-    private readonly Lazy<int> _hashCode;
-    private readonly Lazy<string> _literalValue;
-    private readonly Lazy<byte[]> _bytes;
-
-    #endregion
-
-    #region Constructors
+    private readonly Lazy<int> hashCode;
+    private readonly Lazy<string> literalValue;
+    private readonly Lazy<byte[]> bytes;
 
     public XRefEntry(long byteOffset, int generationNumber, XRefEntryType entryType)
     {
-        ByteOffset = byteOffset
+        this.ByteOffset = byteOffset
             .CheckConstraints(num => num >= 0, Resource.XRefEntry_ByteOffsetMustBePositive)
             .CheckConstraints(num => num <= 9999999999, Resource.XRefEntry_ByteOffsetMustNotExceedMaxAllowedValue);
 
-        GenerationNumber = generationNumber
+        this.GenerationNumber = generationNumber
             .CheckConstraints(num => num >= 0, Resource.PdfIndirect_GenerationNumberMustBePositive)
             .CheckConstraints(num => num <= 65535, Resource.PdfIndirect_GenerationNumberMustNotExceedMaxAllowedValue);
 
-        EntryType = entryType;
+        this.EntryType = entryType;
 
-        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(XRefEntry), byteOffset, generationNumber));
-        _literalValue = new Lazy<string>(GenerateContent);
-        _bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(Content));
+        this.hashCode = new Lazy<int>(() => HashCode.Combine(nameof(XRefEntry), byteOffset, generationNumber));
+        this.literalValue = new Lazy<string>(this.GenerateContent);
+        this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
 
-    #endregion
+    public int Length => this.Bytes.Length;
 
-    #region Properties
-
-    public int Length => Content.Length;
-
-    public ReadOnlyMemory<byte> Bytes => _bytes.Value;
+    public ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
     public long ByteOffset { get; }
 
@@ -53,39 +48,29 @@ public sealed class XRefEntry : IPdfObject, IEquatable<XRefEntry>
 
     public XRefEntryType EntryType { get; }
 
-    public string Content => _literalValue.Value;
-
-    #endregion
-
-    #region Public Methods
+    public string Content => this.literalValue.Value;
 
     public override int GetHashCode()
     {
-        return _hashCode.Value;
+        return this.hashCode.Value;
     }
 
     public override bool Equals(object? obj)
     {
-        return Equals(obj as XRefEntry);
+        return this.Equals(obj as XRefEntry);
     }
 
     public bool Equals(XRefEntry? other)
     {
         return other is not null &&
-               ByteOffset == other.ByteOffset &&
-               GenerationNumber == other.GenerationNumber &&
-               EntryType == other.EntryType;
+               this.ByteOffset == other.ByteOffset &&
+               this.GenerationNumber == other.GenerationNumber &&
+               this.EntryType == other.EntryType;
     }
-
-    #endregion
-
-    #region Private Methods
 
     private string GenerateContent()
     {
-        char literalEntryType = EntryType == XRefEntryType.Free ? 'f' : 'n';
-        return $"{ByteOffset:D10} {GenerationNumber:D5} {literalEntryType} \n";
+        char literalEntryType = this.EntryType == XRefEntryType.Free ? 'f' : 'n';
+        return $"{this.ByteOffset:D10} {this.GenerationNumber:D5} {literalEntryType} \n";
     }
-
-    #endregion
 }

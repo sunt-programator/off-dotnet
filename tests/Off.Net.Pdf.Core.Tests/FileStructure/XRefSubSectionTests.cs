@@ -1,4 +1,9 @@
-﻿using System.Diagnostics;
+// <copyright file="XRefSubSectionTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using System.Diagnostics;
 using Off.Net.Pdf.Core.FileStructure;
 using Xunit;
 
@@ -16,7 +21,10 @@ public class XRefSubSectionTests
         ICollection<XRefEntry> entries = new List<XRefEntry>(1) { new(0, 0, XRefEntryType.Free) };
 
         // Act
-        XRefSubSection XRefSubSectionFunction() => new(objectNumber, entries);
+        XRefSubSection XRefSubSectionFunction()
+        {
+            return new(objectNumber, entries);
+        }
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(XRefSubSectionFunction);
@@ -30,7 +38,10 @@ public class XRefSubSectionTests
         ICollection<XRefEntry> entries = new List<XRefEntry>(0);
 
         // Act
-        XRefSubSection XRefSubSectionFunction() => new(0, entries);
+        XRefSubSection XRefSubSectionFunction()
+        {
+            return new(0, entries);
+        }
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(XRefSubSectionFunction);
@@ -171,6 +182,7 @@ public class XRefSubSectionTests
     }
 }
 
+[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
 internal static class XRefSubSectionTestsDataGenerator
 {
     public static IEnumerable<object[]> XRefSubSection_Content_TestCases()
@@ -219,7 +231,7 @@ internal static class XRefSubSectionTestsDataGenerator
         yield return new object[] { 3, 1, new List<XRefEntry> { new(25325, 0, XRefEntryType.InUse) }, new List<XRefEntry> { new(25325, 0, XRefEntryType.InUse) }, false };
         yield return new object[]
         {
-            23, 23, new List<XRefEntry> { new(25518, 2, XRefEntryType.InUse), new(25635, 0, XRefEntryType.InUse) }, new List<XRefEntry> { new(25518, 2, XRefEntryType.InUse) }, false
+            23, 23, new List<XRefEntry> { new(25518, 2, XRefEntryType.InUse), new(25635, 0, XRefEntryType.InUse) }, new List<XRefEntry> { new(25518, 2, XRefEntryType.InUse) }, false,
         };
         yield return new object[] { 30, 30, new List<XRefEntry> { new(25777, 0, XRefEntryType.InUse) }, new List<XRefEntry> { new(25777, 65535, XRefEntryType.InUse) }, false };
     }
@@ -229,12 +241,12 @@ internal static class XRefSubSectionTestsDataGenerator
         yield return new object[]
         {
             0, new List<XRefEntry> { new(0, 65535, XRefEntryType.Free) },
-            new byte[] { 0x30, 0x20, 0x31, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x36, 0x35, 0x35, 0x33, 0x35, 0x20, 0x66, 0x20, 0x0A }
+            new byte[] { 0x30, 0x20, 0x31, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x36, 0x35, 0x35, 0x33, 0x35, 0x20, 0x66, 0x20, 0x0A },
         };
         yield return new object[]
         {
             3, new List<XRefEntry> { new(25325, 0, XRefEntryType.InUse) },
-            new byte[] { 0x33, 0x20, 0x31, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x33, 0x32, 0x35, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A }
+            new byte[] { 0x33, 0x20, 0x31, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x33, 0x32, 0x35, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A },
         };
         yield return new object[]
         {
@@ -242,13 +254,13 @@ internal static class XRefSubSectionTestsDataGenerator
             new byte[]
             {
                 0x32, 0x33, 0x20, 0x32, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x35, 0x31, 0x38, 0x20, 0x30, 0x30, 0x30, 0x30, 0x32, 0x20, 0x6E, 0x20, 0x0A, 0x30, 0x30, 0x30, 0x30,
-                0x30, 0x32, 0x35, 0x36, 0x33, 0x35, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A
-            }
+                0x30, 0x32, 0x35, 0x36, 0x33, 0x35, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A,
+            },
         };
         yield return new object[]
         {
             30, new List<XRefEntry> { new(25777, 0, XRefEntryType.InUse) },
-            new byte[] { 0x33, 0x30, 0x20, 0x31, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x37, 0x37, 0x37, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A }
+            new byte[] { 0x33, 0x30, 0x20, 0x31, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x37, 0x37, 0x37, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A },
         };
     }
 }

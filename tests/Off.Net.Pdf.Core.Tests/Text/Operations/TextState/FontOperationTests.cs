@@ -1,4 +1,9 @@
-﻿using Off.Net.Pdf.Core.Primitives;
+// <copyright file="FontOperationTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using Off.Net.Pdf.Core.Primitives;
 using Off.Net.Pdf.Core.Text.Operations.TextState;
 using Xunit;
 
@@ -15,7 +20,10 @@ public class FontOperationTests
         // Arrange
 
         // Act
-        FontOperation FontOperationFunction() => new("F13", fontSize);
+        FontOperation FontOperationFunction()
+        {
+            return new("F13", fontSize);
+        }
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(FontOperationFunction);
@@ -138,6 +146,7 @@ public class FontOperationTests
 
         // Act
         int actualHashCode = fontOperation.GetHashCode();
+
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
     }
@@ -156,6 +165,7 @@ public class FontOperationTests
     }
 }
 
+[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
 internal static class FontOperationTestsDataGenerator
 {
     public static IEnumerable<object[]> FontOperation_Equals_TestCases()

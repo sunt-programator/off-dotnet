@@ -1,3 +1,8 @@
+// <copyright file="PdfRealTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 using Off.Net.Pdf.Core.Primitives;
 using Xunit;
 
@@ -98,7 +103,7 @@ public class PdfRealTests
         PdfReal pdfReal1 = value1; // Use an implicit conversion from float to PdfReal
 
         // Act
-         ReadOnlyMemory<byte> actualBytes = pdfReal1.Bytes;
+        ReadOnlyMemory<byte> actualBytes = pdfReal1.Bytes;
 
         // Assert
         Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));

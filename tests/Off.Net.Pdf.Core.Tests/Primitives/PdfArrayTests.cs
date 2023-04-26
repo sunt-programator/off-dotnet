@@ -1,3 +1,8 @@
+// <copyright file="PdfArrayTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 using Off.Net.Pdf.Core.Interfaces;
 using Off.Net.Pdf.Core.Primitives;
 using Xunit;
@@ -128,7 +133,7 @@ public class PdfArrayTests
             new PdfReal(3.14f),
             new PdfBoolean(),
             new PdfString("Ralph"),
-            new PdfName("SomeName")
+            new PdfName("SomeName"),
         };
         PdfArray<IPdfObject> pdfArray1 = new(value1);
         PdfArray<IPdfObject> pdfArray2 = new(value1);
@@ -155,7 +160,7 @@ public class PdfArrayTests
             new PdfReal(3.14f),
             new PdfBoolean(),
             new PdfString("Ralph"),
-            new PdfName("SomeName")
+            new PdfName("SomeName"),
         };
         List<IPdfObject> value2 = new()
         {
@@ -163,7 +168,7 @@ public class PdfArrayTests
             new PdfReal(3.14f),
             new PdfBoolean(),
             new PdfString("Ralph"),
-            new PdfName("SomeName")
+            new PdfName("SomeName"),
         };
         PdfArray<IPdfObject> pdfArray1 = new(value1);
         PdfArray<IPdfObject> pdfArray2 = new(value2);
@@ -207,6 +212,7 @@ public class PdfArrayTests
     }
 }
 
+[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
 internal static class PdfArrayTestDataGenerator
 {
     public static IEnumerable<object[]> PdfArray_ParameterizedConstructor_TestCases()
@@ -224,11 +230,11 @@ internal static class PdfArrayTestDataGenerator
                 new PdfReal(3.14f),
                 new PdfBoolean(),
                 new PdfString("Ralph"),
-                new PdfName("SomeName")
+                new PdfName("SomeName"),
             },
-            34
+            34,
         };
-        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray<IPdfObject>(new List<IPdfObject> { new PdfNull() }) }, 13 };
+        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray<IPdfObject>(new List<IPdfObject> { default(PdfNull) }) }, 13 };
     }
 
     public static IEnumerable<object[]> PdfArray_Bytes_TestCases()
@@ -241,13 +247,13 @@ internal static class PdfArrayTestDataGenerator
                 new PdfReal(3.14f),
                 new PdfBoolean(),
                 new PdfString("Ralph"),
-                new PdfName("SomeName")
+                new PdfName("SomeName"),
             },
-            new byte[] { 91, 53, 52, 57, 32, 51, 46, 49, 52, 32, 102, 97, 108, 115, 101, 32, 40, 82, 97, 108, 112, 104, 41, 32, 47, 83, 111, 109, 101, 78, 97, 109, 101, 93 }
+            new byte[] { 91, 53, 52, 57, 32, 51, 46, 49, 52, 32, 102, 97, 108, 115, 101, 32, 40, 82, 97, 108, 112, 104, 41, 32, 47, 83, 111, 109, 101, 78, 97, 109, 101, 93 },
         };
         yield return new object[]
         {
-            new List<IPdfObject> { new PdfBoolean(true), new PdfArray<IPdfObject>(new List<IPdfObject> { new PdfNull() }) }, new byte[] { 91, 116, 114, 117, 101, 32, 91, 110, 117, 108, 108, 93, 93 }
+            new List<IPdfObject> { new PdfBoolean(true), new PdfArray<IPdfObject>(new List<IPdfObject> { default(PdfNull) }) }, new byte[] { 91, 116, 114, 117, 101, 32, 91, 110, 117, 108, 108, 93, 93 },
         };
     }
 
@@ -261,10 +267,10 @@ internal static class PdfArrayTestDataGenerator
                 new PdfReal(3.14f),
                 new PdfBoolean(),
                 new PdfString("Ralph"),
-                new PdfName("SomeName")
-            }
+                new PdfName("SomeName"),
+            },
         };
-        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray<IPdfObject>(new List<IPdfObject> { new PdfNull() }) } };
+        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray<IPdfObject>(new List<IPdfObject> { default(PdfNull) }) } };
     }
 
     public static IEnumerable<object[]> PdfArray_Content_TestCases()
@@ -277,11 +283,11 @@ internal static class PdfArrayTestDataGenerator
                 new PdfReal(3.14f),
                 new PdfBoolean(),
                 new PdfString("Ralph"),
-                new PdfName("SomeName")
+                new PdfName("SomeName"),
             },
-            "[549 3.14 false (Ralph) /SomeName]"
+            "[549 3.14 false (Ralph) /SomeName]",
         };
-        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray<IPdfObject>(new List<IPdfObject> { new PdfNull() }) }, "[true [null]]" };
+        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray<IPdfObject>(new List<IPdfObject> { default(PdfNull) }) }, "[true [null]]" };
         yield return new object[] { new List<IPdfObject>(0), "[]" };
     }
 }

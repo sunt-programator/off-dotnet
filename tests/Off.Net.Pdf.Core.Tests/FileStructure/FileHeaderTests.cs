@@ -1,4 +1,9 @@
-﻿using Off.Net.Pdf.Core.FileStructure;
+// <copyright file="FileHeaderTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using Off.Net.Pdf.Core.FileStructure;
 using Xunit;
 
 namespace Off.Net.Pdf.Core.Tests.FileStructure;
@@ -18,7 +23,10 @@ public class FileHeaderTests
         // Arrange
 
         // Act
-        object FileHeaderFunction() => new FileHeader(majorVersion, 0);
+        object FileHeaderFunction()
+        {
+            return new FileHeader(majorVersion, 0);
+        }
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(FileHeaderFunction);
@@ -36,7 +44,10 @@ public class FileHeaderTests
         // Arrange
 
         // Act
-        object FileHeaderFunction() => new FileHeader(1, minorVersion);
+        object FileHeaderFunction()
+        {
+            return new FileHeader(1, minorVersion);
+        }
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(FileHeaderFunction);
@@ -175,6 +186,7 @@ public class FileHeaderTests
     }
 }
 
+[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
 internal static class FileHeaderTestsDataGenerator
 {
     public static IEnumerable<object[]> FileHeader_NoExpectedData_TestCases()

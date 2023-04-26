@@ -1,4 +1,9 @@
-﻿using Off.Net.Pdf.Core.Primitives;
+// <copyright file="PdfIndirectIdentifierTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using Off.Net.Pdf.Core.Primitives;
 using Xunit;
 
 namespace Off.Net.Pdf.Core.Tests.Primitives;
@@ -7,7 +12,7 @@ public class PdfIndirectIdentifierTests
 {
     [Theory(DisplayName = "Check Length property")]
     [InlineData(0, 0, 5)]
-    [InlineData(12, 0,  6)]
+    [InlineData(12, 0, 6)]
     [InlineData(21, 6, 6)]
     public void PdfIndirectIdentifier_Length_CheckValue(int objectNumber, int generationNumber, int expectedLength)
     {
@@ -76,8 +81,8 @@ public class PdfIndirectIdentifierTests
     [InlineData(1, 1, 0, 0, "Test1", "Test1", true)]
     [InlineData(1, 1, 1, 0, "Test1", "Test1", false)]
     [InlineData(1, 1, 1, 1, "Test1", "Test1", true)]
-    public void PdfIndirectIdentifier_Equals_ShouldReturnFalse(int objectNumber1, int objectNumber2, int generationNumber1, int generationNumber2, string actualStringValue1, string actualStringValue2,
-        bool expectedResult)
+    public void PdfIndirectIdentifier_Equals_ShouldReturnFalse(
+        int objectNumber1, int objectNumber2, int generationNumber1, int generationNumber2, string actualStringValue1, string actualStringValue2, bool expectedResult)
     {
         // Arrange
         PdfIndirectIdentifier<PdfString> pdfIndirect1 = new PdfString(actualStringValue1).ToPdfIndirect(objectNumber1, generationNumber1).ToPdfIndirectIdentifier();
@@ -97,8 +102,8 @@ public class PdfIndirectIdentifierTests
     [InlineData(1, 1, 0, 0, "Test1", "Test1", true)]
     [InlineData(1, 1, 1, 0, "Test1", "Test1", false)]
     [InlineData(1, 1, 1, 1, "Test1", "Test1", true)]
-    public void PdfIndirectIdentifier_Equals2_ShouldReturnFalse(int objectNumber1, int objectNumber2, int generationNumber1, int generationNumber2, string actualStringValue1, string actualStringValue2,
-        bool expectedResult)
+    public void PdfIndirectIdentifier_Equals2_ShouldReturnFalse(
+        int objectNumber1, int objectNumber2, int generationNumber1, int generationNumber2, string actualStringValue1, string actualStringValue2, bool expectedResult)
     {
         // Arrange
         PdfIndirectIdentifier<PdfString> pdfIndirect1 = new PdfString(actualStringValue1).ToPdfIndirect(objectNumber1, generationNumber1).ToPdfIndirectIdentifier();
@@ -130,16 +135,16 @@ public class PdfIndirectIdentifierTests
     }
 
     [Theory(DisplayName = "Check Bytes property")]
-    [InlineData(0, 0,  new byte[] { 0x30,0x20,0x30,0x20,0x52 })]
-    [InlineData(12, 0,  new byte[] { 0x31, 0x32, 0x20, 0x30, 0x20, 0x52 })]
-    [InlineData(21, 6,  new byte[] { 0x32, 0x31, 0x20, 0x36, 0x20, 0x52 })]
+    [InlineData(0, 0, new byte[] { 0x30, 0x20, 0x30, 0x20, 0x52 })]
+    [InlineData(12, 0, new byte[] { 0x31, 0x32, 0x20, 0x30, 0x20, 0x52 })]
+    [InlineData(21, 6, new byte[] { 0x32, 0x31, 0x20, 0x36, 0x20, 0x52 })]
     public void PdfIndirectIdentifier_Bytes_CheckValue(int objectNumber, int generationNumber, byte[] expectedBytes)
     {
         // Arrange
         PdfIndirectIdentifier<PdfString> pdfIndirect = new PdfString("Test").ToPdfIndirect(objectNumber, generationNumber).ToPdfIndirectIdentifier();
 
         // Act
-         ReadOnlyMemory<byte> actualBytes = pdfIndirect.Bytes;
+        ReadOnlyMemory<byte> actualBytes = pdfIndirect.Bytes;
 
         // Assert
         Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));

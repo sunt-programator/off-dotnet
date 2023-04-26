@@ -1,3 +1,8 @@
+// <copyright file="PdfNameTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 using Off.Net.Pdf.Core.Primitives;
 using Xunit;
 
@@ -37,7 +42,10 @@ public class PdfNameTests
         // Arrange
 
         // Act
-        PdfName PdfNameDelegate() => new(inputValue);
+        PdfName PdfNameDelegate()
+        {
+            return new(inputValue);
+        }
 
         // Assert
         Assert.Throws<ArgumentNullException>(PdfNameDelegate);
@@ -113,7 +121,8 @@ public class PdfNameTests
     [Theory(DisplayName = "Check if Bytes property returns valid data")]
     [InlineData("Name1", new byte[] { 47, 78, 97, 109, 101, 49 })]
     [InlineData("ASomewhatLongerName", new byte[] { 47, 65, 83, 111, 109, 101, 119, 104, 97, 116, 76, 111, 110, 103, 101, 114, 78, 97, 109, 101 })]
-    [InlineData("A;Name_With-Various***Characters?",
+    [InlineData(
+        "A;Name_With-Various***Characters?",
         new byte[] { 47, 65, 59, 78, 97, 109, 101, 95, 87, 105, 116, 104, 45, 86, 97, 114, 105, 111, 117, 115, 42, 42, 42, 67, 104, 97, 114, 97, 99, 116, 101, 114, 115, 63 })]
     [InlineData("1.2", new byte[] { 47, 49, 46, 50 })]
     [InlineData("$$", new byte[] { 47, 36, 36 })]
@@ -129,7 +138,7 @@ public class PdfNameTests
         PdfName pdfName1 = value1; // Use an implicit conversion from string to PdfName
 
         // Act
-         ReadOnlyMemory<byte> actualBytes = pdfName1.Bytes;
+        ReadOnlyMemory<byte> actualBytes = pdfName1.Bytes;
 
         // Assert
         Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));

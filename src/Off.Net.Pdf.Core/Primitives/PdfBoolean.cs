@@ -1,3 +1,8 @@
+// <copyright file="PdfBoolean.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 using System.Text;
 using Off.Net.Pdf.Core.Interfaces;
 
@@ -5,56 +10,25 @@ namespace Off.Net.Pdf.Core.Primitives;
 
 public struct PdfBoolean : IPdfObject<bool>, IEquatable<PdfBoolean>
 {
-    #region Constructors
-    public PdfBoolean() : this(false)
+    public PdfBoolean()
+        : this(false)
     {
     }
 
     public PdfBoolean(bool value)
     {
-        Value = value;
-        Content = value ? "true" : "false";
-        Bytes = Encoding.ASCII.GetBytes(Content);
+        this.Value = value;
+        this.Content = value ? "true" : "false";
+        this.Bytes = Encoding.ASCII.GetBytes(this.Content);
     }
-    #endregion
 
-    #region Properties
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public bool Value { get; }
 
     public ReadOnlyMemory<byte> Bytes { get; }
 
     public string Content { get; }
-    #endregion
-
-    #region Public Methods
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(nameof(PdfBoolean), Value);
-    }
-
-    public bool Equals(PdfBoolean other)
-    {
-        return Value == other.Value;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return (obj is PdfBoolean booleanObject) && Equals(booleanObject);
-    }
-    #endregion
-
-    #region Operators
-    public static bool operator ==(PdfBoolean leftOperator, PdfBoolean rightOperator)
-    {
-        return leftOperator.Equals(rightOperator);
-    }
-
-    public static bool operator !=(PdfBoolean leftOperator, PdfBoolean rightOperator)
-    {
-        return !leftOperator.Equals(rightOperator);
-    }
 
     public static implicit operator bool(PdfBoolean pdfBoolean)
     {
@@ -65,5 +39,29 @@ public struct PdfBoolean : IPdfObject<bool>, IEquatable<PdfBoolean>
     {
         return new PdfBoolean(value);
     }
-    #endregion
+
+    public static bool operator ==(PdfBoolean leftOperator, PdfBoolean rightOperator)
+    {
+        return leftOperator.Equals(rightOperator);
+    }
+
+    public static bool operator !=(PdfBoolean leftOperator, PdfBoolean rightOperator)
+    {
+        return !leftOperator.Equals(rightOperator);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(nameof(PdfBoolean), this.Value);
+    }
+
+    public bool Equals(PdfBoolean other)
+    {
+        return this.Value == other.Value;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return (obj is PdfBoolean booleanObject) && this.Equals(booleanObject);
+    }
 }

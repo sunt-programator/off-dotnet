@@ -1,4 +1,9 @@
-﻿using System.Diagnostics;
+﻿// <copyright file="XRefEntryTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using System.Diagnostics;
 using Off.Net.Pdf.Core.FileStructure;
 using Xunit;
 
@@ -15,7 +20,10 @@ public class XRefEntryTests
         // Arrange
 
         // Act
-        XRefEntry XRefEntryFunction() => new(byteOffset, 0, XRefEntryType.InUse);
+        XRefEntry XRefEntryFunction()
+        {
+            return new(byteOffset, 0, XRefEntryType.InUse);
+        }
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(XRefEntryFunction);
@@ -32,7 +40,10 @@ public class XRefEntryTests
         // Arrange
 
         // Act
-        XRefEntry XRefEntryFunction() => new(byteOffset, 0, XRefEntryType.InUse);
+        XRefEntry XRefEntryFunction()
+        {
+            return new(byteOffset, 0, XRefEntryType.InUse);
+        }
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(XRefEntryFunction);
@@ -48,7 +59,10 @@ public class XRefEntryTests
         // Arrange
 
         // Act
-        XRefEntry XRefEntryFunction() => new(0, generationNumber, XRefEntryType.InUse);
+        XRefEntry XRefEntryFunction()
+        {
+            return new(0, generationNumber, XRefEntryType.InUse);
+        }
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(XRefEntryFunction);
@@ -64,7 +78,10 @@ public class XRefEntryTests
         // Arrange
 
         // Act
-        XRefEntry XRefEntryFunction() => new(0, generationNumber, XRefEntryType.InUse);
+        XRefEntry XRefEntryFunction()
+        {
+            return new(0, generationNumber, XRefEntryType.InUse);
+        }
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(XRefEntryFunction);

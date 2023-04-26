@@ -1,3 +1,8 @@
+// <copyright file="PdfBooleanTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 using Off.Net.Pdf.Core.Primitives;
 using Xunit;
 
@@ -123,7 +128,7 @@ public class PdfBooleanTests
         PdfBoolean pdfBoolean1 = value1; // Use an implicit conversion from bool to PdfBoolean
 
         // Act
-         ReadOnlyMemory<byte> actualBytes = pdfBoolean1.Bytes;
+        ReadOnlyMemory<byte> actualBytes = pdfBoolean1.Bytes;
 
         // Assert
         Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
@@ -165,7 +170,7 @@ public class PdfBooleanTests
         {
             "==" => pdfBoolean1 == pdfBoolean2,
             "!=" => pdfBoolean1 != pdfBoolean2,
-            _ => throw new ArgumentException(null, nameof(op))
+            _ => throw new ArgumentException(null, nameof(op)),
         };
 
         // Assert

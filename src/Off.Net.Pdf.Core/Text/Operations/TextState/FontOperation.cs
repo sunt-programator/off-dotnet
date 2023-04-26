@@ -1,4 +1,9 @@
-﻿using Off.Net.Pdf.Core.ContentStreamAndResources;
+// <copyright file="FontOperation.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using Off.Net.Pdf.Core.ContentStreamAndResources;
 using Off.Net.Pdf.Core.Extensions;
 using Off.Net.Pdf.Core.Primitives;
 
@@ -6,53 +11,34 @@ namespace Off.Net.Pdf.Core.Text.Operations.TextState;
 
 public sealed class FontOperation : PdfOperation
 {
-    #region Fields, Constants
-
     public const string OperatorName = "Tf";
-    private readonly Lazy<int> _hashCode;
+    private readonly Lazy<int> hashCode;
 
-    #endregion
-
-    #region Constructors
-
-    public FontOperation(PdfName fontName, PdfInteger fontSize) : base(OperatorName)
+    public FontOperation(PdfName fontName, PdfInteger fontSize)
+        : base(OperatorName)
     {
-        FontName = fontName;
-        FontSize = fontSize.CheckConstraints(x => x >= 0, Resource.FontOperation_FontSizeMustBePositive);
+        this.FontName = fontName;
+        this.FontSize = fontSize.CheckConstraints(x => x >= 0, Resource.FontOperation_FontSizeMustBePositive);
 
-        _hashCode = new Lazy<int>(() => HashCode.Combine(nameof(FontOperation), fontName, fontSize, OperatorName));
+        this.hashCode = new Lazy<int>(() => HashCode.Combine(nameof(FontOperation), fontName, fontSize, OperatorName));
     }
-
-    #endregion
-
-    #region Properties
 
     public PdfName FontName { get; }
 
     public PdfInteger FontSize { get; }
 
-    #endregion
-
-    #region Public Methods
-
     public override int GetHashCode()
     {
-        return _hashCode.Value;
+        return this.hashCode.Value;
     }
 
     public override bool Equals(object? obj)
     {
-        return obj is FontOperation other && FontName == other.FontName && FontSize == other.FontSize;
+        return obj is FontOperation other && this.FontName == other.FontName && this.FontSize == other.FontSize;
     }
-
-    #endregion
-
-    #region Protected Methods
 
     protected override string GenerateContent()
     {
-        return $"{FontName.Content} {FontSize.Content} {PdfOperator}\n";
+        return $"{this.FontName.Content} {this.FontSize.Content} {this.PdfOperator}\n";
     }
-
-    #endregion
 }

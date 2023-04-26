@@ -1,3 +1,8 @@
+// <copyright file="PdfStringTests.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 using System.Diagnostics.CodeAnalysis;
 using Off.Net.Pdf.Core.Primitives;
 using Xunit;
@@ -101,7 +106,8 @@ public class PdfStringTests
     [Theory(DisplayName = "Check if Bytes property returns valid data")]
     [InlineData("Name1", new byte[] { 40, 78, 97, 109, 101, 49, 41 })]
     [InlineData("ASomewhatLongerName", new byte[] { 40, 65, 83, 111, 109, 101, 119, 104, 97, 116, 76, 111, 110, 103, 101, 114, 78, 97, 109, 101, 41 })]
-    [InlineData("A;Name_With-Various***Characters?",
+    [InlineData(
+        "A;Name_With-Various***Characters?",
         new byte[] { 40, 65, 59, 78, 97, 109, 101, 95, 87, 105, 116, 104, 45, 86, 97, 114, 105, 111, 117, 115, 42, 42, 42, 67, 104, 97, 114, 97, 99, 116, 101, 114, 115, 63, 41 })]
     [InlineData("1.2", new byte[] { 40, 49, 46, 50, 41 })]
     [InlineData("$$", new byte[] { 40, 36, 36, 41 })]
@@ -117,7 +123,7 @@ public class PdfStringTests
         PdfString pdfString1 = value1; // Use an implicit conversion from string to PdfString
 
         // Act
-         ReadOnlyMemory<byte> actualBytes = pdfString1.Bytes;
+        ReadOnlyMemory<byte> actualBytes = pdfString1.Bytes;
 
         // Assert
         Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
@@ -229,8 +235,6 @@ public class PdfStringTests
     [Theory(DisplayName = "Check Content property for equality")]
     [InlineData("This is a string", "(This is a string)", false)]
     [InlineData("Strings may contain newlines\r\nand such.", "(Strings may contain newlines\r\nand such.)", false)]
-    [InlineData("Strings may contain balanced parentheses ( ) and\r\nspecial characters (*!&}^% and so on).",
-        "(Strings may contain balanced parentheses ( ) and\r\nspecial characters (*!&}^% and so on).)", false)]
     [InlineData("", "()", false)]
     [InlineData("These \\\r\ntwo strings \\\r\nare the same.", "(These \\\r\ntwo strings \\\r\nare the same.)", false)]
     [InlineData("These \\\ntwo strings \\\rare the same.", "(These \\\ntwo strings \\\rare the same.)", false)]
@@ -243,6 +247,10 @@ public class PdfStringTests
     [InlineData("\t90\n1F\rA3\r\n\f", "<\t90\n1F\rA3\r\n\f>", true)] // White-spaces should be ignored in hex string
     [InlineData("901FA", "<901FA>", true)] // If the last digit is missing, the last digit is considered 0, i.e. 901FA0
     [InlineData("901fa", "<901fa>", true)] // If the last digit is missing, the last digit is considered 0, i.e. 901fa0
+    [InlineData(
+        "Strings may contain balanced parentheses ( ) and\r\nspecial characters (*!&}^% and so on).",
+        "(Strings may contain balanced parentheses ( ) and\r\nspecial characters (*!&}^% and so on).)",
+        false)]
     public void PdfString_Content_CheckEquality(string value1, string expectedPdfStringStringValue, bool isHexValue)
     {
         // Arrange
@@ -278,7 +286,10 @@ public class PdfStringTests
         // Arrange
 
         // Act
-        PdfString PdfStringDelegate() => new(value1);
+        PdfString PdfStringDelegate()
+        {
+            return new(value1);
+        }
 
         // Assert
         Assert.Throws<ArgumentException>(PdfStringDelegate);
@@ -287,13 +298,16 @@ public class PdfStringTests
     [Theory(DisplayName = "Check if string with unbalanced parentheses will throw an exception")]
     [InlineData("Strings with unbalanced parentheses (( ( ), should throw an exception.")]
     [InlineData("Strings with unbalanced parentheses ))((, should throw an exception.")]
-    [SuppressMessage("Major Code Smell", "S4144:Methods should not have identical implementations")]
+    [SuppressMessage("Major Code Smell", "S4144:Methods should not have identical implementations", Justification = "This is a different test")]
     public void PdfString_Constructor_UnbalancedParentheses_ShouldThrowException(string value1)
     {
         // Arrange
 
         // Act
-        PdfString PdfStringDelegate() => new(value1);
+        PdfString PdfStringDelegate()
+        {
+            return new(value1);
+        }
 
         // Assert
         Assert.Throws<ArgumentException>(PdfStringDelegate);
@@ -307,7 +321,10 @@ public class PdfStringTests
         // Arrange
 
         // Act
-        PdfString PdfStringDelegate() => new(value1, isHexString: true);
+        PdfString PdfStringDelegate()
+        {
+            return new(value1, isHexString: true);
+        }
 
         // Assert
         Assert.Throws<ArgumentException>(PdfStringDelegate);
@@ -319,7 +336,10 @@ public class PdfStringTests
         // Arrange
 
         // Act
-        PdfString PdfStringDelegate() => new(string.Empty, true);
+        static PdfString PdfStringDelegate()
+        {
+            return new(string.Empty, true);
+        }
 
         // Assert
         Assert.Throws<ArgumentNullException>(PdfStringDelegate);

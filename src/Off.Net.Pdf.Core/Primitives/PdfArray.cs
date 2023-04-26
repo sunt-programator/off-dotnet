@@ -1,44 +1,38 @@
+// <copyright file="PdfArray.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 using System.Text;
 using Off.Net.Pdf.Core.Interfaces;
 
 namespace Off.Net.Pdf.Core.Primitives;
 
-public class PdfArray<TValue> : IPdfObject<IReadOnlyCollection<TValue>> where TValue: IPdfObject
+public class PdfArray<TValue> : IPdfObject<IReadOnlyCollection<TValue>>
+    where TValue : IPdfObject
 {
-    #region Fields
-    private readonly int _hashCode;
-    private string _literalValue = string.Empty;
-    private byte[]? _bytes;
-    #endregion
+    private readonly int hashCode;
+    private string literalValue = string.Empty;
+    private byte[]? bytes;
 
-    #region Constructors
     public PdfArray(IReadOnlyCollection<TValue> value)
     {
-        Value = value;
-        _hashCode = HashCode.Combine(nameof(PdfArray<TValue>), value);
-        _bytes = null;
+        this.Value = value;
+        this.hashCode = HashCode.Combine(nameof(PdfArray<TValue>), value);
+        this.bytes = null;
     }
-    #endregion
 
-    #region Properties
-    public int Length => Content.Length;
+    public int Length => this.Bytes.Length;
 
     public IReadOnlyCollection<TValue> Value { get; }
 
-    public ReadOnlyMemory<byte> Bytes => _bytes ??= Encoding.ASCII.GetBytes(Content);
+    public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
-    public string Content => GenerateContent();
-    #endregion
+    public string Content => this.GenerateContent();
 
-    #region Public Methods
-    public override int GetHashCode()
+    public static PdfArray<TValue> Create(TValue item)
     {
-        return _hashCode;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is PdfArray<TValue> other && EqualityComparer<IReadOnlyCollection<TValue>>.Default.Equals(Value, other.Value);
+        return new PdfArray<TValue>(new List<TValue>(1) { item });
     }
 
     public static PdfArray<TValue> CreateRange(IEnumerable<TValue> items)
@@ -46,23 +40,26 @@ public class PdfArray<TValue> : IPdfObject<IReadOnlyCollection<TValue>> where TV
         return new PdfArray<TValue>(items.ToList());
     }
 
-    public static PdfArray<TValue> Create(TValue item)
+    public override int GetHashCode()
     {
-        return new PdfArray<TValue>(new List<TValue>(1) { item });
+        return this.hashCode;
     }
-    #endregion
 
-    #region Private Methods
+    public override bool Equals(object? obj)
+    {
+        return obj is PdfArray<TValue> other && EqualityComparer<IReadOnlyCollection<TValue>>.Default.Equals(this.Value, other.Value);
+    }
+
     private string GenerateContent()
     {
-        if (_literalValue.Length != 0)
+        if (this.literalValue.Length != 0)
         {
-            return _literalValue;
+            return this.literalValue;
         }
 
         StringBuilder stringBuilder = new();
 
-        foreach (var item in Value)
+        foreach (var item in this.Value)
         {
             stringBuilder
                 .Append(item.Content)
@@ -74,25 +71,11 @@ public class PdfArray<TValue> : IPdfObject<IReadOnlyCollection<TValue>> where TV
             stringBuilder.Remove(stringBuilder.Length - 1, 1);
         }
 
-        _literalValue = stringBuilder
+        this.literalValue = stringBuilder
             .Insert(0, '[')
             .Append(']')
             .ToString();
 
-        return _literalValue;
-    }
-    #endregion
-}
-
-public static class PdfArrayExtensions
-{
-    public static PdfArray<TValue> ToPdfArray<TValue>(this IEnumerable<TValue> items) where TValue: IPdfObject
-    {
-        return PdfArray<TValue>.CreateRange(items.ToList());
-    }
-
-    public static PdfArray<TValue> ToPdfArray<TValue>(this TValue item) where TValue: IPdfObject
-    {
-        return PdfArray<TValue>.Create(item);
+        return this.literalValue;
     }
 }
