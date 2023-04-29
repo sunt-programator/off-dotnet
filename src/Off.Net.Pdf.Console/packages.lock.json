@@ -27,6 +27,15 @@
         "type": "Transitive",
         "resolved": "1.2.0.435",
         "contentHash": "ouwPWZxbOV3SmCZxIRqHvljkSzkCyi1tDoMzQtDb/bRP8ctASV/iRJr+A2Gdj0QLaLmWnqTWDrH82/iP+X80Lg=="
+      },
+      "off.net.pdf.core": {
+        "type": "Project"
+      },
+      "off.net.pdf.document": {
+        "type": "Project",
+        "dependencies": {
+          "Off.Net.Pdf.Core": "[1.0.0, )"
+        }
       }
     }
   }

@@ -1,5 +1,5 @@
-[reportgenerator]
+[ReportGenerator]
 	reporttypes = Html
-    reports = src/Off.Net.Pdf.Core.Tests/TestResults/*/coverage.cobertura.xml
+    reports = "tests\\**\\TestResults\\**\\coverage.cobertura.xml"
 	targetdir = coveragereport
     historydir = coveragereport_history

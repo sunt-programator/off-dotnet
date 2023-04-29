@@ -1044,6 +1044,12 @@
       },
       "off.net.pdf.core": {
         "type": "Project"
+      },
+      "off.net.pdf.document": {
+        "type": "Project",
+        "dependencies": {
+          "Off.Net.Pdf.Core": "[1.0.0, )"
+        }
       }
     }
   }
