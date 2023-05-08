@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Off.Net.Pdf.Document\Off.Net.Pdf.Document.csproj" />
+  </ItemGroup>
+</Project>
