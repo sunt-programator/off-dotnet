@@ -9,8 +9,26 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+    groups:
+      analyzers-packages:
+        patterns:
+          - "SonarAnalyzer.CSharp"
+          - "*.Analyzers"
+      test-packages:
+        patterns:
+          - "Microsoft.NET.Test.Sdk"
+          - "xunit*"
+          - "coverlet.collector"
+      benchmark-packages:
+        patterns:
+          - "BenchmarkDotNet*"
+      tools:
+        patterns:
+          - "dotnet-stryker"
+          - "dotnet-config"
+          - "reportgenerator"
 
   - package-ecosystem: github-actions
-    directory: /
+    directory: "/"
     schedule:
-      interval: daily
+      interval: "weekly"
