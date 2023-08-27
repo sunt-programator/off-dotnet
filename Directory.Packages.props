@@ -1,24 +1,24 @@
 <Project>
     <!-- Analyzers -->
     <ItemGroup>
-        <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.2.0.71021">
+        <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.11.0.78383">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageVersion>
-        <PackageVersion Include="Roslynator.Analyzers" Version="4.3.0">
+        <PackageVersion Include="Roslynator.Analyzers" Version="4.5.0">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageVersion>
-        <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
+        <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.507">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageVersion>
     </ItemGroup>
     <!-- Test packages -->
     <ItemGroup>
-        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.6.1"/>
-        <PackageVersion Include="xunit" Version="2.4.2"/>
-        <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5">
+        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.2"/>
+        <PackageVersion Include="xunit" Version="2.5.1"/>
+        <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.1">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageVersion>
@@ -29,7 +29,7 @@
     </ItemGroup>
     <!-- Benchmarking packages -->
     <ItemGroup>
-        <PackageVersion Include="BenchmarkDotNet" Version="0.13.5" />
-        <PackageVersion Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.5" />
+        <PackageVersion Include="BenchmarkDotNet" Version="0.13.8"/>
+        <PackageVersion Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.8"/>
     </ItemGroup>
 </Project>
