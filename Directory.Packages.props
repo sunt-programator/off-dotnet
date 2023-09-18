@@ -1,7 +1,7 @@
 <Project>
     <!-- Analyzers -->
     <ItemGroup>
-        <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.8.0.76515">
+        <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.10.0.77988">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageVersion>
