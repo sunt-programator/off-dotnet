@@ -203,19 +203,6 @@ public class FileTrailerTests
         Assert.True(ReferenceEquals(actualContent1, actualContent2));
     }
 
-    [Theory(DisplayName = $"{nameof(FileTrailer.Length)} property should return a valid value")]
-    [MemberData(nameof(FileTrailerTestsDataGenerator.FileTrailer_Length_TestCases), MemberType = typeof(FileTrailerTestsDataGenerator))]
-    public void FileTrailer_Length_ShouldReturnValidValue(FileTrailer fileTrailer, int expectedLength)
-    {
-        // Arrange
-
-        // Act
-        int actualLength = fileTrailer.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
-    }
-
     [Theory(DisplayName = $"{nameof(FileTrailer.Bytes)} property should return a valid value")]
     [MemberData(nameof(FileTrailerTestsDataGenerator.FileTrailer_Bytes_TestCases), MemberType = typeof(FileTrailerTestsDataGenerator))]
     public void FileTrailer_Bytes_ShouldReturnValidValue(FileTrailer fileTrailer, byte[] expectedBytes)

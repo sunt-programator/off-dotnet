@@ -105,24 +105,6 @@ public class XRefEntryTests
         Assert.Equal(expectedContent, actualContent);
     }
 
-    [Theory(DisplayName = $"{nameof(XRefEntry.Length)} property should return always 20")]
-    [InlineData(0, 0, true)]
-    [InlineData(52, 123, false)]
-    [InlineData(4567, 1234, false)]
-    [InlineData(9999999999, 65535, true)]
-    public void XRefEntry_Length_ShouldReturn20(long byteOffset, int generationNumber, bool isInUse)
-    {
-        // Arrange
-        const int expectedLength = 20;
-        XRefEntry xRefEntry = new(byteOffset, generationNumber, isInUse ? XRefEntryType.InUse : XRefEntryType.Free);
-
-        // Act
-        int actualLength = xRefEntry.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
-    }
-
     [Theory(DisplayName = $"{nameof(XRefEntry.ByteOffset)} property should return a valid value")]
     [InlineData(0, 0, true)]
     [InlineData(52, 123, false)]

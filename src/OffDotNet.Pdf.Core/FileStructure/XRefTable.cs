@@ -23,8 +23,6 @@ public sealed class XRefTable : IPdfObject<ICollection<XRefSection>>, IEquatable
         this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
 
-    public int Length => this.Bytes.Length;
-
     public int NumberOfSections => this.Value.Count;
 
     public ReadOnlyMemory<byte> Bytes => this.bytes.Value;

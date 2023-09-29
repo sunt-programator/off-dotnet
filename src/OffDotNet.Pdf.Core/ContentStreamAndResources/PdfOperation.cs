@@ -20,8 +20,6 @@ public abstract class PdfOperation : IPdfObject
         this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
 
-    public int Length => this.Bytes.Length;
-
     public string PdfOperator { get; }
 
     public ReadOnlyMemory<byte> Bytes => this.bytes.Value;

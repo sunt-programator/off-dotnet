@@ -55,21 +55,6 @@ public class ShowTextOperationTests
         Assert.Equal(expectedContent, actualContent);
     }
 
-    [Theory(DisplayName = $"The {nameof(ShowTextOperation.Length)} property should return a valid value")]
-    [InlineData("FirstText", 15)]
-    [InlineData("SecondText with special chars !@#$%^&*()", 46)]
-    public void ShowTextOperation_Length_ShouldReturnValidValue(string text, int expectedLength)
-    {
-        // Arrange
-        ShowTextOperation showTextOperation = new(text);
-
-        // Act
-        int actualLength = showTextOperation.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
-    }
-
     [Theory(DisplayName = $"The {nameof(ShowTextOperation.Bytes)} property should return a valid value")]
     [MemberData(nameof(ShowTextOperationTestsDataGenerator.ShowTextOperation_Bytes_TestCases), MemberType = typeof(ShowTextOperationTestsDataGenerator))]
     public void ShowTextOperation_Bytes_ShouldReturnValidValue(string text, byte[] expectedBytes)

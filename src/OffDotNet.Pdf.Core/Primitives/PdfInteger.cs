@@ -27,8 +27,6 @@ public struct PdfInteger : IPdfObject<int>, IEquatable<PdfInteger>, IComparable,
         this.bytes = null;
     }
 
-    public int Length => this.Bytes.Length;
-
     public int Value { get; }
 
     public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);

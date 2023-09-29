@@ -40,19 +40,6 @@ public class TextObjectTests
         Assert.Equal(expectedContent, actualContent);
     }
 
-    [Theory(DisplayName = $"The {nameof(TextObject.Length)} property should return a valid value")]
-    [MemberData(nameof(TextObjectTestsDataGenerator.TextObject_Length_TestCases), MemberType = typeof(TextObjectTestsDataGenerator))]
-    public void TextObject_Length_ShouldReturnValidValue(TextObject textObject, int expectedLength)
-    {
-        // Arrange
-
-        // Act
-        int actualLength = textObject.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
-    }
-
     [Theory(DisplayName = $"The {nameof(TextObject.Bytes)} property should return a valid value")]
     [MemberData(nameof(TextObjectTestsDataGenerator.TextObject_Bytes_TestCases), MemberType = typeof(TextObjectTestsDataGenerator))]
     public void TextObject_Bytes_ShouldReturnValidValue(TextObject textObject, byte[] expectedBytes)

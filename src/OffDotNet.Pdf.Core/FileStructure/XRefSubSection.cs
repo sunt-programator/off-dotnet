@@ -24,8 +24,6 @@ public sealed class XRefSubSection : IPdfObject<ICollection<XRefEntry>>, IEquata
         this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
 
-    public int Length => this.Bytes.Length;
-
     public int ObjectNumber { get; }
 
     public int NumberOfEntries => this.Value.Count;

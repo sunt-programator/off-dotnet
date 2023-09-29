@@ -22,8 +22,6 @@ public struct PdfBoolean : IPdfObject<bool>, IEquatable<PdfBoolean>
         this.Bytes = Encoding.ASCII.GetBytes(this.Content);
     }
 
-    public int Length => this.Bytes.Length;
-
     public bool Value { get; }
 
     public ReadOnlyMemory<byte> Bytes { get; }

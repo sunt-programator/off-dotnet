@@ -37,21 +37,6 @@ public class PdfBooleanTests
         Assert.Equal(expectedValue, pdfBoolean.Value);
     }
 
-    [Theory(DisplayName = "Check the length of the PDF boolean primitive")]
-    [InlineData(true, 4)]
-    [InlineData(false, 5)]
-    public void PdfBoolean_Length_CheckValue(bool value, int expectedLength)
-    {
-        // Arrange
-        PdfBoolean pdfBoolean = value; // Use an implicit conversion from bool to PdfBoolean
-
-        // Act
-        int actualLength = pdfBoolean.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
-    }
-
     [Theory(DisplayName = "Check equality comparison operator")]
     [InlineData(false, false, true)]
     [InlineData(false, true, false)]

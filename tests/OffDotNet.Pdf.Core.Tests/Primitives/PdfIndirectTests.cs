@@ -10,22 +10,6 @@ namespace OffDotNet.Pdf.Core.Tests.Primitives;
 
 public class PdfIndirectTests
 {
-    [Theory(DisplayName = "Check Length property")]
-    [InlineData(0, 0, "Test", 22)]
-    [InlineData(12, 0, "Brillig", 26)]
-    [InlineData(21, 6, "String1", 26)]
-    public void PdfIndirect_Length_CheckValue(int objectNumber, int generationNumber, string actualStringValue, int expectedLength)
-    {
-        // Arrange
-        PdfIndirect<PdfString> pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber);
-
-        // Act
-        int actualLength = pdfIndirect.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
-    }
-
     [Theory(DisplayName = "Check Content property")]
     [InlineData(0, 0, "Test", "0 0 obj\n(Test)\nendobj\n")]
     [InlineData(12, 0, "Brillig", "12 0 obj\n(Brillig)\nendobj\n")]

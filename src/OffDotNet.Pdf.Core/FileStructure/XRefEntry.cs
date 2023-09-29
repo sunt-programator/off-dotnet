@@ -38,8 +38,6 @@ public sealed class XRefEntry : IPdfObject, IEquatable<XRefEntry>
         this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
 
-    public int Length => this.Bytes.Length;
-
     public ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
     public long ByteOffset { get; }

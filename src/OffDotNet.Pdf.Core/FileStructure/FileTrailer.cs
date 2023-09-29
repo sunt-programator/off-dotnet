@@ -48,8 +48,6 @@ public sealed class FileTrailer : IPdfObject, IEquatable<FileTrailer?>
         this.fileTrailerDictionary = new Lazy<PdfDictionary<IPdfObject>>(this.GenerateFileTrailerDictionary);
     }
 
-    public int Length => this.Bytes.Length;
-
     public long ByteOffset { get; }
 
     public PdfDictionary<IPdfObject> FileTrailerDictionary => this.fileTrailerDictionary.Value;

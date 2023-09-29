@@ -51,30 +51,6 @@ public class PdfNameTests
         Assert.Throws<ArgumentNullException>(PdfNameDelegate);
     }
 
-    [Theory(DisplayName = "Check the length of the PDF name primitive")]
-    [InlineData("Name1", 6)] // Solidus character + Name1
-    [InlineData("ASomewhatLongerName", 20)]
-    [InlineData("A;Name_With-Various***Characters?", 34)]
-    [InlineData("1.2", 4)]
-    [InlineData("$$", 3)]
-    [InlineData("@pattern", 9)]
-    [InlineData(".notdef", 8)]
-    [InlineData("Lime Green", 13)]
-    [InlineData("paired()parentheses", 24)]
-    [InlineData("The_Key_of_F#_Minor", 22)]
-    [InlineData("/NameWithSolidus", 19)]
-    public void PdfName_Length_CheckValue(string value, int expectedLength)
-    {
-        // Arrange
-        PdfName pdfName = value; // Use an implicit conversion from string to PdfName
-
-        // Act
-        int actualLength = pdfName.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
-    }
-
     [Fact(DisplayName = "Check Equals method if the argument is null")]
     public void PdfName_Equals_NullArgument_ShouldReturnFalse()
     {

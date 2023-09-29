@@ -41,19 +41,6 @@ public class XRefTableTests
         Assert.Equal(expectedContent, actualContent);
     }
 
-    [Theory(DisplayName = $"{nameof(XRefTable.Length)} property should return a valid value")]
-    [MemberData(nameof(XRefTableTestsDataGenerator.XRefTable_Length_TestCases), MemberType = typeof(XRefTableTestsDataGenerator))]
-    public void XRefTable_Length_ShouldReturnValidValue(XRefTable xRefTable, int expectedLength)
-    {
-        // Arrange
-
-        // Act
-        int actualLength = xRefTable.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
-    }
-
     [Theory(DisplayName = $"{nameof(XRefTable.NumberOfSections)} property should return a valid value")]
     [MemberData(nameof(XRefTableTestsDataGenerator.XRefTable_NumberOfSections_TestCases), MemberType = typeof(XRefTableTestsDataGenerator))]
     public void XRefTable_NumberOfEntries_ShouldReturnValidValue(XRefTable xRefTable, int expectedNumberOfEntries)

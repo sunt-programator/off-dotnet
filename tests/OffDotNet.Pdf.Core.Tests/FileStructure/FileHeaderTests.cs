@@ -93,19 +93,6 @@ public class FileHeaderTests
         Assert.Equal(expectedMinorVersion, actualMinorVersion);
     }
 
-    [Theory(DisplayName = $"{nameof(FileHeader.Length)} property should return a valid value")]
-    [MemberData(nameof(FileHeaderTestsDataGenerator.FileHeader_Length_TestCases), MemberType = typeof(FileHeaderTestsDataGenerator))]
-    public void FileHeader_Length_ShouldReturnValidValue(FileHeader fileHeader, int expectedLength)
-    {
-        // Arrange
-
-        // Act
-        int actualLength = fileHeader.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
-    }
-
     [Theory(DisplayName = $"{nameof(FileHeader.Bytes)} property should return a valid value")]
     [MemberData(nameof(FileHeaderTestsDataGenerator.FileHeader_Bytes_TestCases), MemberType = typeof(FileHeaderTestsDataGenerator))]
     public void FileHeader_Bytes_ShouldReturnValidValue(FileHeader fileHeader, byte[] expectedBytes)

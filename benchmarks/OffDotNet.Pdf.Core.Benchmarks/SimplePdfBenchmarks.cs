@@ -101,25 +101,25 @@ public class SimplePdfBenchmarks
         int byteOffset = 0;
         List<XRefEntry> xRefEntries = new(5 + pagesCount) { new XRefEntry(byteOffset, 65535, XRefEntryType.Free) };
 
-        byteOffset += fileHeader.Length;
+        byteOffset += fileHeader.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
-        byteOffset += documentCatalogIndirect.PdfIndirect.Length;
+        byteOffset += documentCatalogIndirect.PdfIndirect.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
-        byteOffset += rootPageTreeNodeIndirect.PdfIndirect.Length;
+        byteOffset += rootPageTreeNodeIndirect.PdfIndirect.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
         foreach (PdfIndirectIdentifier<PageObject> pageObjectIndirect in pageObjectsIndirectList)
         {
-            byteOffset += pageObjectIndirect.PdfIndirect.Length;
+            byteOffset += pageObjectIndirect.PdfIndirect.Bytes.Length;
             xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
         }
 
-        byteOffset += contentStreamIndirect.PdfIndirect.Length;
+        byteOffset += contentStreamIndirect.PdfIndirect.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
-        byteOffset += fontIndirect.PdfIndirect.Length;
+        byteOffset += fontIndirect.PdfIndirect.Bytes.Length;
         XRefTable xRefTable = xRefEntries.ToXRefTable(0);
 
         FileTrailer fileTrailer = new(byteOffset, options =>
@@ -216,28 +216,28 @@ public class SimplePdfBenchmarks
         int byteOffset = 0;
         List<XRefEntry> xRefEntries = new(5 + (pagesCount * 2)) { new XRefEntry(byteOffset, 65535, XRefEntryType.Free) };
 
-        byteOffset += fileHeader.Length;
+        byteOffset += fileHeader.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
-        byteOffset += documentCatalogIndirect.PdfIndirect.Length;
+        byteOffset += documentCatalogIndirect.PdfIndirect.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
-        byteOffset += rootPageTreeNodeIndirect.PdfIndirect.Length;
+        byteOffset += rootPageTreeNodeIndirect.PdfIndirect.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
         foreach (PdfIndirectIdentifier<PageObject> pageObjectIndirect in pageObjectsIndirectList)
         {
-            byteOffset += pageObjectIndirect.PdfIndirect.Length;
+            byteOffset += pageObjectIndirect.PdfIndirect.Bytes.Length;
             xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
         }
 
         foreach (PdfIndirectIdentifier<PdfStream> contentStreamIndirect in contentStreamsIndirectList)
         {
-            byteOffset += contentStreamIndirect.PdfIndirect.Length;
+            byteOffset += contentStreamIndirect.PdfIndirect.Bytes.Length;
             xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
         }
 
-        byteOffset += fontIndirect.PdfIndirect.Length;
+        byteOffset += fontIndirect.PdfIndirect.Bytes.Length;
         XRefTable xRefTable = xRefEntries.ToXRefTable(0);
 
         FileTrailer fileTrailer = new(byteOffset, options =>

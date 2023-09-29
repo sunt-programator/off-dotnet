@@ -33,8 +33,6 @@ public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, ICo
         this.bytes = null;
     }
 
-    public int Length => this.Bytes.Length;
-
     public float Value { get; }
 
     public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);

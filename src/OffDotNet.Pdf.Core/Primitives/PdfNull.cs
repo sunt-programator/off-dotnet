@@ -8,13 +8,11 @@ using OffDotNet.Pdf.Core.Interfaces;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public struct PdfNull : IPdfObject
+public readonly struct PdfNull : IPdfObject
 {
     private const string LiteralValue = "null";
     private static readonly int HashCode = System.HashCode.Combine(nameof(PdfNull), LiteralValue);
     private static readonly ReadOnlyMemory<byte> BytesArray = Encoding.ASCII.GetBytes(LiteralValue);
-
-    public int Length => 4;
 
     public ReadOnlyMemory<byte> Bytes => BytesArray;
 

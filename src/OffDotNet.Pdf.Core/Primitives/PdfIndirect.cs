@@ -33,8 +33,6 @@ public sealed class PdfIndirect<T> : IMutablePdfObject<T>, IEquatable<PdfIndirec
 
     public int ObjectNumber { get; }
 
-    public int Length => this.Bytes.Length;
-
     public ReadOnlyMemory<byte> Bytes => Encoding.ASCII.GetBytes(this.Content);
 
     public string Content => this.GenerateContent();

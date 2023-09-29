@@ -31,8 +31,6 @@ public sealed class PdfStream : IPdfObject<ReadOnlyMemory<char>>, IEquatable<Pdf
         options?.Invoke(this.pdfStreamExtentOptions);
     }
 
-    public int Length => this.Bytes.Length;
-
     public ReadOnlyMemory<char> Value { get; }
 
     public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);

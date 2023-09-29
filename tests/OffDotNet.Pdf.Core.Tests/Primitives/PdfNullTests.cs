@@ -10,19 +10,6 @@ namespace OffDotNet.Pdf.Core.Tests.Primitives;
 
 public class PdfNullTests
 {
-    [Fact(DisplayName = "Check the length of the PDF null primitive")]
-    public void PdfNull_Length_CheckValue()
-    {
-        // Arrange
-        PdfNull pdfNull = default(PdfNull);
-
-        // Act
-        float actualLength = pdfNull.Length;
-
-        // Assert
-        Assert.Equal(4, actualLength);
-    }
-
     [Fact(DisplayName = "Check Equals method if the argument is null")]
     public void PdfNull_Equals_NullArgument_ShouldReturnFalse()
     {

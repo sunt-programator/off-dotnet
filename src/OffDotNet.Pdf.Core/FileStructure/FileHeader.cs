@@ -27,8 +27,6 @@ public readonly struct FileHeader : IPdfObject, IEquatable<FileHeader>
         this.MinorVersion = minorVersion.CheckConstraints(num => num is >= 0 and <= 9, Resource.FileHeader_MinorVersionIsNotValid);
     }
 
-    public int Length => this.Bytes.Length;
-
     public ReadOnlyMemory<byte> Bytes => Encoding.ASCII.GetBytes(this.Content);
 
     public int MajorVersion { get; }

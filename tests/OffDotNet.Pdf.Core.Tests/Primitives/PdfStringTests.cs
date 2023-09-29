@@ -34,32 +34,6 @@ public class PdfStringTests
         Assert.Equal(expectedValue, pdfString.Value);
     }
 
-    [Theory(DisplayName = "Check the length of the PDF string primitive")]
-    [InlineData("Name1", false, 7)] // 5 characters + 2 parentheses
-    [InlineData("ASomewhatLongerName", false, 21)] // 19 characters + 2 parentheses
-    [InlineData("A;Name_With-Various***Characters?", false, 35)] // 33 characters + 2 parentheses
-    [InlineData("1.2", false, 5)] // 3 characters + 2 parentheses
-    [InlineData("$$", false, 4)] // 2 characters + 2 parentheses
-    [InlineData("@pattern", false, 10)] // 8 characters + 2 parentheses
-    [InlineData(".notdef", false, 9)] // 7 characters + 2 parentheses
-    [InlineData("Lime Green", false, 12)] // 10 characters + 2 parentheses
-    [InlineData("paired()parentheses", false, 21)] // 19 characters + 2 parentheses
-    [InlineData("The_Key_of_F#_Minor", false, 21)] // 19 characters + 2 parentheses
-    [InlineData("/NameWithSolidus", false, 18)] // 16 characters + 2 parentheses
-    [InlineData("\t90\n1F\rA3\r\n\f", true, 14)] // 12 characters + 2 angled brackets
-    [InlineData("901FA", true, 7)] // 5 characters + 2 angled brackets
-    public void PdfString_Length_CheckValue(string value, bool isHexString, int expectedLength)
-    {
-        // Arrange
-        PdfString pdfString = new(value, isHexString);
-
-        // Act
-        int actualLength = pdfString.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
-    }
-
     [Fact(DisplayName = "Check Equals method if the argument is null")]
     public void PdfString_Equals_NullArgument_ShouldReturnFalse()
     {

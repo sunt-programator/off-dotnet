@@ -40,24 +40,6 @@ public class PdfRealTests
         Assert.Equal(expectedValue, pdfReal.Value);
     }
 
-    [Theory(DisplayName = "Check the length of the PDF real primitive")]
-    [InlineData(34.5, 4)]
-    [InlineData(-3.62, 5)] // Minus sign + 3 digits + dot symbol.
-    [InlineData(+123.6, 5)] // Plus sign is automatically removed by C#.
-    [InlineData(4.0, 1)] // Looks like an integer number, so the decimals will be ignored.
-    [InlineData(-.002, 6)]
-    public void PdfReal_Length_CheckValue(float value, float expectedLength)
-    {
-        // Arrange
-        PdfReal pdfReal = value; // Use an implicit conversion from float to PdfReal
-
-        // Act
-        float actualLength = pdfReal.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
-    }
-
     [Fact(DisplayName = "Check Equals method if the argument is null")]
     public void PdfReal_Equals_NullArgument_ShouldReturnFalse()
     {

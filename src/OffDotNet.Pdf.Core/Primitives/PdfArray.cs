@@ -22,8 +22,6 @@ public class PdfArray<TValue> : IPdfObject<IReadOnlyCollection<TValue>>
         this.bytes = null;
     }
 
-    public int Length => this.Bytes.Length;
-
     public IReadOnlyCollection<TValue> Value { get; }
 
     public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);

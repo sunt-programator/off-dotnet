@@ -38,8 +38,6 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
         this.bytes = null;
     }
 
-    public int Length => this.Bytes.Length;
-
     public string Value { get; }
 
     public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);

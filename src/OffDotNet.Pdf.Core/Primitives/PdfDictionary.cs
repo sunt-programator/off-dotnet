@@ -23,8 +23,6 @@ public class PdfDictionary<TValue> : IPdfObject<IReadOnlyDictionary<PdfName, TVa
         this.bytes = null;
     }
 
-    public int Length => this.Bytes.Length;
-
     public IReadOnlyDictionary<PdfName, TValue> Value { get; }
 
     public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);

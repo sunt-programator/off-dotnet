@@ -24,8 +24,6 @@ public sealed class TextObject : IPdfObject<IReadOnlyCollection<PdfOperation>>
         this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
 
-    public int Length => this.Bytes.Length;
-
     public ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
     public IReadOnlyCollection<PdfOperation> Value { get; }

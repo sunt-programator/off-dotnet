@@ -64,28 +64,28 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
         int byteOffset = 0;
         List<XRefEntry> xRefEntries = new(objectNumber) { new XRefEntry(byteOffset, 65535, XRefEntryType.Free) };
 
-        byteOffset += this.FileHeader.Length;
+        byteOffset += this.FileHeader.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
-        byteOffset += this.DocumentCatalog.PdfIndirect.Length;
+        byteOffset += this.DocumentCatalog.PdfIndirect.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
-        byteOffset += this.RootPageTree.PdfIndirect.Length;
+        byteOffset += this.RootPageTree.PdfIndirect.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
         foreach (PdfIndirectIdentifier<PageObject> pageObjectIndirect in this.Pages)
         {
-            byteOffset += pageObjectIndirect.PdfIndirect.Length;
+            byteOffset += pageObjectIndirect.PdfIndirect.Bytes.Length;
             xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
         }
 
-        byteOffset += this.contentStreamIndirect.PdfIndirect.Length;
+        byteOffset += this.contentStreamIndirect.PdfIndirect.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
         for (int index = 0; index < this.Fonts.Count; index++)
         {
             PdfIndirectIdentifier<Type1Font> fontIndirect = this.Fonts[index];
-            byteOffset += fontIndirect.PdfIndirect.Length;
+            byteOffset += fontIndirect.PdfIndirect.Bytes.Length;
 
             if (index == this.Fonts.Count - 1)
             {

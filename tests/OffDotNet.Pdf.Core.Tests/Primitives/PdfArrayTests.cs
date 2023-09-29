@@ -24,20 +24,6 @@ public class PdfArrayTests
         Assert.Equal(inputValue, pdfArray.Value); // Checks if reference is equal
     }
 
-    [Theory(DisplayName = "Check the length of the PDF array primitive")]
-    [MemberData(nameof(PdfArrayTestDataGenerator.PdfArray_Length_TestCases), MemberType = typeof(PdfArrayTestDataGenerator))]
-    public void PdfArray_Length_CheckValue(IEnumerable<IPdfObject> inputValue, int expectedLength)
-    {
-        // Arrange
-        PdfArray<IPdfObject> pdfArray = inputValue.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
-
-        // Act
-        int actualLength = pdfArray.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
-    }
-
     [Fact(DisplayName = "Check Equals method if the argument is null")]
     public void PdfArray_Equals_NullArgument_ShouldReturnFalse()
     {

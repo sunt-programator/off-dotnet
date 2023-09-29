@@ -97,23 +97,6 @@ public class FontOperationTests
         Assert.Equal(expectedContent, actualContent);
     }
 
-    [Theory(DisplayName = $"The {nameof(FontOperation.Length)} property should return a valid value")]
-    [InlineData("F1", 6, 9)]
-    [InlineData("F2", 24, 10)]
-    [InlineData("F3", 4, 9)]
-    [InlineData("F4", 3, 9)]
-    public void FontOperation_Length_ShouldReturnValidValue(string fontName, int fontSize, int expectedLength)
-    {
-        // Arrange
-        FontOperation fontOperation = new(fontName, fontSize);
-
-        // Act
-        int actualLength = fontOperation.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
-    }
-
     [Theory(DisplayName = $"The {nameof(FontOperation.Bytes)} property should return a valid value")]
     [InlineData("F1", 6, new byte[] { 0x2F, 0x46, 0x31, 0x20, 0x36, 0x20, 0x54, 0x66, 0x0A })]
     [InlineData("F2", 24, new byte[] { 0x2F, 0x46, 0x32, 0x20, 0x32, 0x34, 0x20, 0x54, 0x66, 0x0A })]

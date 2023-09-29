@@ -29,8 +29,6 @@ public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
         this.isHexString = isHexString;
     }
 
-    public int Length => this.Bytes.Length;
-
     public string Value { get; }
 
     public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);

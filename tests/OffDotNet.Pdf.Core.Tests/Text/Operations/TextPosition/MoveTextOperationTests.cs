@@ -62,24 +62,6 @@ public class MoveTextOperationTests
         Assert.Equal(expectedContent, actualContent);
     }
 
-    [Theory(DisplayName = $"The {nameof(MoveTextOperation.Length)} property should return a valid value")]
-    [InlineData(3, 6, 7)]
-    [InlineData(3.2, 6, 9)]
-    [InlineData(3.2, 6.6, 11)]
-    [InlineData(3.2, -6.6, 12)]
-    [InlineData(-3.2, -6.6, 13)]
-    public void MoveTextOperation_Length_ShouldReturnValidValue(float x, float y, int expectedLength)
-    {
-        // Arrange
-        MoveTextOperation moveTextOperation = new(x, y);
-
-        // Act
-        int actualLength = moveTextOperation.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
-    }
-
     [Theory(DisplayName = $"The {nameof(MoveTextOperation.Bytes)} property should return a valid value")]
     [InlineData(3, 6, new byte[] { 0x33, 0x20, 0x36, 0x20, 0x54, 0x64, 0x0A })]
     [InlineData(3.2, 6, new byte[] { 0x33, 0x2E, 0x32, 0x20, 0x36, 0x20, 0x54, 0x64, 0x0A })]

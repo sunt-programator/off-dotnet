@@ -24,20 +24,6 @@ public class PdfDictionaryTests
         Assert.Equal(inputValue, pdfDictionary.Value); // Checks if reference is equal
     }
 
-    [Theory(DisplayName = "Check the length of the PDF dictionary primitive")]
-    [MemberData(nameof(PdfDictionaryTestDataGenerator.PdfDictionary_Length_TestCases), MemberType = typeof(PdfDictionaryTestDataGenerator))]
-    public void PdfDictionary_Length_CheckValue(Dictionary<PdfName, IPdfObject> inputValue, int expectedLength)
-    {
-        // Arrange
-        PdfDictionary<IPdfObject> pdfDictionary = inputValue.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
-
-        // Act
-        int actualLength = pdfDictionary.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
-    }
-
     [Fact(DisplayName = "Check Equals method if the argument is null")]
     public void PdfDictionary_Equals_NullArgument_ShouldReturnFalse()
     {

@@ -62,20 +62,6 @@ public class XRefSubSectionTests
         Assert.Equal(expectedContent, actualContent);
     }
 
-    [Theory(DisplayName = $"{nameof(XRefSubSection.Length)} property should return a valid value")]
-    [MemberData(nameof(XRefSubSectionTestsDataGenerator.XRefSubSection_Length_TestCases), MemberType = typeof(XRefSubSectionTestsDataGenerator))]
-    public void XRefSubSection_Length_ShouldReturnValidValue(int objectNumber, List<XRefEntry> entries, int expectedLength)
-    {
-        // Arrange
-        XRefSubSection xRefEntry = new(objectNumber, entries);
-
-        // Act
-        int actualLength = xRefEntry.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
-    }
-
     [Theory(DisplayName = $"{nameof(XRefSubSection.ObjectNumber)} property should return a valid value")]
     [MemberData(nameof(XRefSubSectionTestsDataGenerator.XRefSubSection_ObjectNumber_TestCases), MemberType = typeof(XRefSubSectionTestsDataGenerator))]
     public void XRefSubSection_ObjectNumber_ShouldReturnValidValue(int objectNumber, List<XRefEntry> entries, int expectedObjectNumber)

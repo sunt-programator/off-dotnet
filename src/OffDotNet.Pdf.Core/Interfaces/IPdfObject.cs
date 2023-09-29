@@ -8,11 +8,6 @@ namespace OffDotNet.Pdf.Core.Interfaces;
 public interface IPdfObject
 {
     /// <summary>
-    ///     Gets the length of the object.
-    /// </summary>
-    int Length { get; }
-
-    /// <summary>
     ///     Gets the bytes array representation of the Pdf object.
     /// </summary>
     ReadOnlyMemory<byte> Bytes { get; }

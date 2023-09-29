@@ -304,7 +304,7 @@ public class PdfStreamTests
         // Arrange
         PdfString pdfString = new(pdfStringValue);
         PdfStream pdfStream = pdfString.ToPdfStream();
-        int expectedStreamExtentLengthValue = pdfString.Length;
+        int expectedStreamExtentLengthValue = pdfString.Bytes.Length;
         string expectedStringContent = $"<</Length {expectedStreamExtentLengthValue}>>\nstream\n{pdfString.Content}\nendstream";
 
         // Act
@@ -326,23 +326,6 @@ public class PdfStreamTests
 
         // Assert
         Assert.True(ReferenceEquals(actualStreamContent1, actualStreamContent2));
-    }
-
-    [Theory(DisplayName = $"{nameof(PdfStream.Length)} property should return a valid value")]
-    [InlineData("This is a PDF String wrapped in a Stream object", 81)]
-    [InlineData($"It should return a valid {nameof(PdfStream.Length)} property", 74)]
-    [InlineData($"It should include {nameof(PdfStream.StreamExtent)} dictionary's length and the byte array value's length", 118)]
-    public void PdfStream_Length_ShouldReturnValidValue(string pdfStringValue, int expectedLength)
-    {
-        // Arrange
-        PdfString pdfString = new(pdfStringValue);
-        PdfStream pdfStream = pdfString.ToPdfStream();
-
-        // Act
-        int actualLength = pdfStream.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
     }
 
     [Theory(DisplayName = $"{nameof(PdfStream.Bytes)} property should return a valid value")]

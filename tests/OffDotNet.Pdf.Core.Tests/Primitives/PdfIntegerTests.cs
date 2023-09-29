@@ -40,24 +40,6 @@ public class PdfIntegerTests
         Assert.Equal(expectedValue, pdfInteger.Value);
     }
 
-    [Theory(DisplayName = "Check the length of the PDF integer primitive")]
-    [InlineData(123, 3)]
-    [InlineData(43445, 5)]
-    [InlineData(+17, 2)] // Plus sign is automatically removed by C#.
-    [InlineData(-98, 3)] // Minus sign + two digits.
-    [InlineData(0, 1)]
-    public void PdfInteger_Length_CheckValue(int value, int expectedLength)
-    {
-        // Arrange
-        PdfInteger pdfInteger = value; // Use an implicit conversion from int to PdfInteger
-
-        // Act
-        int actualLength = pdfInteger.Length;
-
-        // Assert
-        Assert.Equal(expectedLength, actualLength);
-    }
-
     [Fact(DisplayName = "Check Equals method if the argument is null")]
     public void PdfInteger_Equals_NullArgument_ShouldReturnFalse()
     {
