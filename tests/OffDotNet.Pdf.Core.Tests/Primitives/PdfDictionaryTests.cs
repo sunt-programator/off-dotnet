@@ -3,7 +3,7 @@
 // Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using OffDotNet.Pdf.Core.Interfaces;
+using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Primitives;
 using Xunit;
 
@@ -183,33 +183,6 @@ internal static class PdfDictionaryTestDataGenerator
     public static IEnumerable<object[]> PdfDictionary_ParameterizedConstructor_TestCases()
     {
         yield return new object[] { new Dictionary<PdfName, IPdfObject> { { new PdfName("Type"), new PdfName("Example") }, { new PdfName("SubType"), new PdfName("DictionaryExample") } } };
-    }
-
-    public static IEnumerable<object[]> PdfDictionary_Length_TestCases()
-    {
-        yield return new object[]
-        {
-            new Dictionary<PdfName, IPdfObject>
-            {
-                { new PdfName("Type"), new PdfName("Example") },
-                { new PdfName("SubType"), new PdfName("DictionaryExample") },
-                { new PdfName("Version"), new PdfReal(0.01f) },
-                { new PdfName("IntegerItem"), new PdfInteger(12) },
-                { new PdfName("StringItem"), new PdfString("a string") },
-                {
-                    new PdfName("Subdictionary"),
-                    PdfDictionary<IPdfObject>.CreateRange(new Dictionary<PdfName, IPdfObject>
-                    {
-                        { new PdfName("Item1"), new PdfReal(0.4f) },
-                        { new PdfName("Item2"), new PdfBoolean(true) },
-                        { new PdfName("LastItem"), new PdfString("not!") },
-                        { new PdfName("VeryLastItem"), new PdfString("OK") },
-                    })
-                },
-            },
-            177,
-        };
-        yield return new object[] { new Dictionary<PdfName, IPdfObject> { { new PdfName("Type"), new PdfName("Example") }, { new PdfName("SubType"), new PdfName("DictionaryExample") } }, 46 };
     }
 
     public static IEnumerable<object[]> PdfDictionary_Bytes_TestCases()

@@ -4,10 +4,11 @@
 // </copyright>
 
 using System.Diagnostics;
+using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.DocumentStructure;
 using OffDotNet.Pdf.Core.FileStructure;
-using OffDotNet.Pdf.Core.Interfaces;
 using OffDotNet.Pdf.Core.Primitives;
+using OffDotNet.Pdf.Core.Properties;
 using Xunit;
 
 namespace OffDotNet.Pdf.Core.Tests.FileStructure;
@@ -53,7 +54,7 @@ public class FileTrailerTests
         // Act
         FileTrailer FileTrailerFunction()
         {
-            return new(123, options => options.Size = size);
+            return new FileTrailer(123, options => options.Size = size);
         }
 
         // Assert
@@ -72,7 +73,7 @@ public class FileTrailerTests
         // Act
         FileTrailer FileTrailerFunction()
         {
-            return new(123, options =>
+            return new FileTrailer(123, options =>
         {
             options.Size = 456;
             options.Prev = prev;
@@ -93,7 +94,7 @@ public class FileTrailerTests
         // Act
         FileTrailer FileTrailerFunction()
         {
-            return new(123, options =>
+            return new FileTrailer(123, options =>
         {
             options.Size = 456;
             options.Prev = 789;
@@ -116,7 +117,7 @@ public class FileTrailerTests
         // Act
         FileTrailer FileTrailerFunction()
         {
-            return new(123, options =>
+            return new FileTrailer(123, options =>
         {
             options.Size = 456;
             options.Prev = 789;
@@ -324,62 +325,6 @@ internal static class FileTrailerTestsDataGenerator
                 options.Id = new[] { new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true), new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true) }.ToPdfArray();
             }),
             "trailer\n<</Size 22 /Prev 196 /Root 2 0 R /Encrypt <</Test1 1 /Test2 2>> /Info 1 0 R /ID [<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]>>\nstartxref\n12345\n%%EOF",
-        };
-    }
-
-    public static IEnumerable<object[]> FileTrailer_Length_TestCases()
-    {
-        yield return new object[]
-        {
-            new FileTrailer(18799, options =>
-            {
-                options.Size = 22;
-                options.Root = RootDictionary;
-                options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(1)
-                    .ToPdfIndirectIdentifier();
-                options.Id = new[] { new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true), new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true) }.ToPdfArray();
-            }),
-            142,
-        };
-
-        yield return new object[]
-        {
-            new FileTrailer(12345, options =>
-            {
-                options.Size = 22;
-                options.Prev = 196;
-                options.Root = RootDictionary;
-                options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(1)
-                    .ToPdfIndirectIdentifier();
-                options.Id = new[] { new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true), new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true) }.ToPdfArray();
-            }),
-            152,
-        };
-
-        yield return new object[]
-        {
-            new FileTrailer(12345, options =>
-            {
-                options.Size = 22;
-                options.Prev = 196;
-                options.Root = RootDictionary;
-                options.Encrypt = new Dictionary<PdfName, IPdfObject>(2)
-                    {
-                        { "Test1", new PdfInteger(1) },
-                        { "Test2", new PdfInteger(2) },
-                    }
-                    .ToPdfDictionary();
-                options.Info = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } }
-                    .ToPdfDictionary()
-                    .ToPdfIndirect(1)
-                    .ToPdfIndirectIdentifier();
-                options.Id = new[] { new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true), new PdfString("81b14aafa313db63dbd6f981e49f94f4", isHexString: true) }.ToPdfArray();
-            }),
-            183,
         };
     }
 

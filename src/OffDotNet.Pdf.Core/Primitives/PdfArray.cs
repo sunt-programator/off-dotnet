@@ -4,29 +4,27 @@
 // </copyright>
 
 using System.Text;
-using OffDotNet.Pdf.Core.Interfaces;
+using OffDotNet.Pdf.Core.Common;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public class PdfArray<TValue> : IPdfObject<IReadOnlyCollection<TValue>>
+public class PdfArray<TValue> : BasePdfObject
     where TValue : IPdfObject
 {
-    private readonly int hashCode;
     private string literalValue = string.Empty;
     private byte[]? bytes;
 
     public PdfArray(IReadOnlyCollection<TValue> value)
     {
         this.Value = value;
-        this.hashCode = HashCode.Combine(nameof(PdfArray<TValue>), value);
         this.bytes = null;
     }
 
     public IReadOnlyCollection<TValue> Value { get; }
 
-    public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
+    public override ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
-    public string Content => this.GenerateContent();
+    public override string Content => this.GenerateContent();
 
     public static PdfArray<TValue> Create(TValue item)
     {
@@ -38,14 +36,9 @@ public class PdfArray<TValue> : IPdfObject<IReadOnlyCollection<TValue>>
         return new PdfArray<TValue>(items.ToList());
     }
 
-    public override int GetHashCode()
+    protected override IEnumerable<object> GetEqualityComponents()
     {
-        return this.hashCode;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is PdfArray<TValue> other && EqualityComparer<IReadOnlyCollection<TValue>>.Default.Equals(this.Value, other.Value);
+        yield return this.Value;
     }
 
     private string GenerateContent()

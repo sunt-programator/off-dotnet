@@ -5,29 +5,27 @@
 
 using System.Collections.ObjectModel;
 using System.Text;
-using OffDotNet.Pdf.Core.Interfaces;
+using OffDotNet.Pdf.Core.Common;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public class PdfDictionary<TValue> : IPdfObject<IReadOnlyDictionary<PdfName, TValue>>
+public class PdfDictionary<TValue> : BasePdfObject
     where TValue : IPdfObject
 {
-    private readonly int hashCode;
     private string literalValue = string.Empty;
     private byte[]? bytes;
 
     public PdfDictionary(IReadOnlyDictionary<PdfName, TValue> value)
     {
         this.Value = value;
-        this.hashCode = HashCode.Combine(nameof(PdfDictionary<TValue>), value);
         this.bytes = null;
     }
 
     public IReadOnlyDictionary<PdfName, TValue> Value { get; }
 
-    public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
+    public override ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
-    public string Content => this.GenerateContent();
+    public override string Content => this.GenerateContent();
 
     public static PdfDictionary<TValue> Create(KeyValuePair<PdfName, TValue> item)
     {
@@ -40,14 +38,9 @@ public class PdfDictionary<TValue> : IPdfObject<IReadOnlyDictionary<PdfName, TVa
         return new PdfDictionary<TValue>(new ReadOnlyDictionary<PdfName, TValue>(items));
     }
 
-    public override int GetHashCode()
+    protected override IEnumerable<object> GetEqualityComponents()
     {
-        return this.hashCode;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is PdfDictionary<TValue> other && EqualityComparer<IReadOnlyDictionary<PdfName, TValue>>.Default.Equals(this.Value, other.Value);
+        yield return this.Value;
     }
 
     private string GenerateContent()

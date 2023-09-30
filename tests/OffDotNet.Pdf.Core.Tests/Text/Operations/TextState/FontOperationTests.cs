@@ -4,6 +4,7 @@
 // </copyright>
 
 using OffDotNet.Pdf.Core.Primitives;
+using OffDotNet.Pdf.Core.Properties;
 using OffDotNet.Pdf.Core.Text.Operations.TextState;
 using Xunit;
 
@@ -22,7 +23,7 @@ public class FontOperationTests
         // Act
         FontOperation FontOperationFunction()
         {
-            return new("F13", fontSize);
+            return new FontOperation("F13", fontSize);
         }
 
         // Assert

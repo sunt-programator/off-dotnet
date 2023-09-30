@@ -4,13 +4,14 @@
 // </copyright>
 
 using System.Text;
+using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Extensions;
-using OffDotNet.Pdf.Core.Interfaces;
 using OffDotNet.Pdf.Core.Primitives;
+using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.FileStructure;
 
-public sealed class FileTrailer : IPdfObject, IEquatable<FileTrailer?>
+public sealed class FileTrailer : BasePdfObject
 {
     private static readonly PdfName Size = "Size";
     private static readonly PdfName Prev = "Prev";
@@ -20,7 +21,6 @@ public sealed class FileTrailer : IPdfObject, IEquatable<FileTrailer?>
     private static readonly PdfName Id = "ID";
 
     private readonly FileTrailerOptions fileTrailerOptions;
-    private readonly Lazy<int> hashCode;
     private readonly Lazy<string> literalValue;
     private readonly Lazy<byte[]> bytes;
     private readonly Lazy<PdfDictionary<IPdfObject>> fileTrailerDictionary;
@@ -42,7 +42,6 @@ public sealed class FileTrailer : IPdfObject, IEquatable<FileTrailer?>
             .CheckConstraints(option => option.Encrypt == null || option.Id?.Value.Count == 2, Resource.FileTrailer_IdMustBeAnArrayOfTwoByteStrings)
             .NotNull(x => x.Root);
 
-        this.hashCode = new Lazy<int>(() => HashCode.Combine(nameof(FileTrailer), this.Content));
         this.literalValue = new Lazy<string>(this.GenerateContent);
         this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
         this.fileTrailerDictionary = new Lazy<PdfDictionary<IPdfObject>>(this.GenerateFileTrailerDictionary);
@@ -52,23 +51,13 @@ public sealed class FileTrailer : IPdfObject, IEquatable<FileTrailer?>
 
     public PdfDictionary<IPdfObject> FileTrailerDictionary => this.fileTrailerDictionary.Value;
 
-    public ReadOnlyMemory<byte> Bytes => this.bytes.Value;
+    public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
-    public string Content => this.literalValue.Value;
+    public override string Content => this.literalValue.Value;
 
-    public override int GetHashCode()
+    protected override IEnumerable<object> GetEqualityComponents()
     {
-        return this.hashCode.Value;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return this.Equals(obj as FileTrailer);
-    }
-
-    public bool Equals(FileTrailer? other)
-    {
-        return other is not null && this.GetHashCode() == other.GetHashCode();
+        yield return this.Content;
     }
 
     private static FileTrailerOptions GetFileTrailerOptions(Action<FileTrailerOptions> optionsFunc)

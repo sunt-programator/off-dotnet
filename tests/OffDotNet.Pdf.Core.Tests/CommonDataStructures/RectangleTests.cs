@@ -4,6 +4,7 @@
 // </copyright>
 
 using OffDotNet.Pdf.Core.CommonDataStructures;
+using OffDotNet.Pdf.Core.Properties;
 using Xunit;
 
 namespace OffDotNet.Pdf.Core.Tests.CommonDataStructures;
@@ -22,7 +23,7 @@ public sealed class RectangleTests
         // Act
         Rectangle RectangleFunction()
         {
-            return new(lowerLeftX, lowerLeftY, upperRightX, upperRightY);
+            return new Rectangle(lowerLeftX, lowerLeftY, upperRightX, upperRightY);
         }
 
         // Assert

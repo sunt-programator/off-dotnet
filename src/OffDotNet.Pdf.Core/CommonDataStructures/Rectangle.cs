@@ -5,6 +5,7 @@
 
 using OffDotNet.Pdf.Core.Extensions;
 using OffDotNet.Pdf.Core.Primitives;
+using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.CommonDataStructures;
 

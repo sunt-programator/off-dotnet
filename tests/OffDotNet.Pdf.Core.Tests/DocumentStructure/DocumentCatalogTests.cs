@@ -20,7 +20,7 @@ public class DocumentCatalogTests
         // Act
         DocumentCatalog DocumentCatalogFunction()
         {
-            return new(documentCatalogOptions);
+            return new DocumentCatalog(documentCatalogOptions);
         }
 
         // Assert

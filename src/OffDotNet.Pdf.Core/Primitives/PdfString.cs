@@ -4,36 +4,30 @@
 // </copyright>
 
 using System.Text;
-using OffDotNet.Pdf.Core.Interfaces;
+using OffDotNet.Pdf.Core.Common;
+using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
+public sealed class PdfString : BasePdfObject
 {
-    private readonly int hashCode;
     private readonly bool isHexString;
     private string literalValue = string.Empty;
     private byte[]? bytes;
 
-    public PdfString(string value)
-        : this(value, false)
-    {
-    }
-
-    public PdfString(string value, bool isHexString)
+    public PdfString(string value, bool isHexString = false)
     {
         ThrowExceptionIfValueIsNotValid(value, isHexString);
         this.Value = value;
-        this.hashCode = HashCode.Combine(nameof(PdfString), value);
         this.bytes = null;
         this.isHexString = isHexString;
     }
 
     public string Value { get; }
 
-    public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
+    public override ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
-    public string Content => this.GenerateContent();
+    public override string Content => this.GenerateContent();
 
     public static implicit operator string(PdfString pdfName)
     {
@@ -42,37 +36,12 @@ public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
 
     public static implicit operator PdfString(string value)
     {
-        return new(value);
+        return new PdfString(value);
     }
 
-    public static bool operator ==(PdfString leftOperator, PdfString rightOperator)
+    protected override IEnumerable<object> GetEqualityComponents()
     {
-        return leftOperator.Equals(rightOperator);
-    }
-
-    public static bool operator !=(PdfString leftOperator, PdfString rightOperator)
-    {
-        return !leftOperator.Equals(rightOperator);
-    }
-
-    public override int GetHashCode()
-    {
-        return this.hashCode;
-    }
-
-    public bool Equals(PdfString? other)
-    {
-        if (other is not PdfString pdfName)
-        {
-            return false;
-        }
-
-        return this.Value == pdfName.Value;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is PdfString pdfName && this.Equals(pdfName);
+        yield return this.Value;
     }
 
     private static void ThrowExceptionIfValueIsNotValid(string value, bool isHexString)
@@ -167,7 +136,7 @@ public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
         return ch switch
         {
             '\\' or '(' or ')' or '\n' or '\r' or '\t' or '\b' or '\f' => true,
-            char numberChar when numberChar >= '0' && numberChar <= '9' => true,
+            >= '0' and <= '9' => true,
             _ => false,
         };
     }
@@ -189,9 +158,9 @@ public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
     {
         return ch switch
         {
-            char letterChar when letterChar >= 'a' && letterChar <= 'f' => true,
-            char capitalLetterChar when capitalLetterChar >= 'A' && capitalLetterChar <= 'F' => true,
-            char numberChar when numberChar >= '0' && numberChar <= '9' => true,
+            >= 'a' and <= 'f' => true,
+            >= 'A' and <= 'F' => true,
+            >= '0' and <= '9' => true,
             ' ' or '\t' or '\r' or '\n' or '\f' => true,
             _ => false,
         };
@@ -206,9 +175,9 @@ public sealed class PdfString : IPdfObject<string>, IEquatable<PdfString>
 
         StringBuilder stringBuilder = new();
 
-        for (int i = 0; i < this.Value.Length; i++)
+        foreach (char ch in this.Value)
         {
-            stringBuilder.Append(this.Value[i]);
+            stringBuilder.Append(ch);
         }
 
         this.literalValue = stringBuilder

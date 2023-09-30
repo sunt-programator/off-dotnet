@@ -4,6 +4,7 @@
 // </copyright>
 
 using OffDotNet.Pdf.Core.FileStructure;
+using OffDotNet.Pdf.Core.Properties;
 using Xunit;
 
 namespace OffDotNet.Pdf.Core.Tests.FileStructure;
@@ -226,19 +227,6 @@ internal static class FileHeaderTestsDataGenerator
         yield return new object[] { FileHeader.PdfVersion16, 6 };
         yield return new object[] { FileHeader.PdfVersion17, 7 };
         yield return new object[] { FileHeader.PdfVersion20, 0 };
-    }
-
-    public static IEnumerable<object[]> FileHeader_Length_TestCases()
-    {
-        yield return new object[] { FileHeader.PdfVersion10, 9 };
-        yield return new object[] { FileHeader.PdfVersion11, 9 };
-        yield return new object[] { FileHeader.PdfVersion12, 9 };
-        yield return new object[] { FileHeader.PdfVersion13, 9 };
-        yield return new object[] { FileHeader.PdfVersion14, 9 };
-        yield return new object[] { FileHeader.PdfVersion15, 9 };
-        yield return new object[] { FileHeader.PdfVersion16, 9 };
-        yield return new object[] { FileHeader.PdfVersion17, 9 };
-        yield return new object[] { FileHeader.PdfVersion20, 9 };
     }
 
     public static IEnumerable<object[]> FileHeader_Bytes_TestCases()

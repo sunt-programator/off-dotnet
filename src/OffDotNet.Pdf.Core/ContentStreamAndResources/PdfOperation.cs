@@ -4,11 +4,11 @@
 // </copyright>
 
 using System.Text;
-using OffDotNet.Pdf.Core.Interfaces;
+using OffDotNet.Pdf.Core.Common;
 
 namespace OffDotNet.Pdf.Core.ContentStreamAndResources;
 
-public abstract class PdfOperation : IPdfObject
+public abstract class PdfOperation : BasePdfObject
 {
     private readonly Lazy<string> literalValue;
     private readonly Lazy<byte[]> bytes;
@@ -22,13 +22,9 @@ public abstract class PdfOperation : IPdfObject
 
     public string PdfOperator { get; }
 
-    public ReadOnlyMemory<byte> Bytes => this.bytes.Value;
+    public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
-    public string Content => this.literalValue.Value;
-
-    public abstract override int GetHashCode();
-
-    public abstract override bool Equals(object? obj);
+    public override string Content => this.literalValue.Value;
 
     protected abstract string GenerateContent();
 }

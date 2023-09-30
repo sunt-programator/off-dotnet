@@ -5,11 +5,12 @@
 
 using System.Globalization;
 using System.Text;
-using OffDotNet.Pdf.Core.Interfaces;
+using OffDotNet.Pdf.Core.Common;
+using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public struct PdfInteger : IPdfObject<int>, IEquatable<PdfInteger>, IComparable, IComparable<PdfInteger>
+public struct PdfInteger : IPdfObject, IEquatable<PdfInteger>, IComparable, IComparable<PdfInteger>
 {
     private readonly int hashCode;
     private string literalValue = string.Empty;
@@ -40,7 +41,7 @@ public struct PdfInteger : IPdfObject<int>, IEquatable<PdfInteger>, IComparable,
 
     public static implicit operator PdfInteger(int value)
     {
-        return new(value);
+        return new PdfInteger(value);
     }
 
     public static bool operator ==(PdfInteger leftOperator, PdfInteger rightOperator)

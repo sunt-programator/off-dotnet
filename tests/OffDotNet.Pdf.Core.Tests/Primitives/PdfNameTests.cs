@@ -44,7 +44,7 @@ public class PdfNameTests
         // Act
         PdfName PdfNameDelegate()
         {
-            return new(inputValue);
+            return new PdfName(inputValue);
         }
 
         // Assert

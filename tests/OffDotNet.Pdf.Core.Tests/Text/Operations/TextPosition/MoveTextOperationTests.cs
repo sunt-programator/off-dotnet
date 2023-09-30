@@ -3,6 +3,7 @@
 // Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.Core.Primitives;
 using OffDotNet.Pdf.Core.Text.Operations.TextPosition;
 using Xunit;
 
@@ -89,7 +90,7 @@ public class MoveTextOperationTests
     public void MoveTextOperation_GetHashCode_ShouldReturnValidValue(float x, float y)
     {
         // Arrange
-        int expectedHashCode = HashCode.Combine(nameof(MoveTextOperation), x, y, MoveTextOperation.OperatorName);
+        int expectedHashCode = HashCode.Combine(nameof(MoveTextOperation), (PdfReal)x, (PdfReal)y, "Td");
         MoveTextOperation moveTextOperation = new(x, y);
 
         // Act

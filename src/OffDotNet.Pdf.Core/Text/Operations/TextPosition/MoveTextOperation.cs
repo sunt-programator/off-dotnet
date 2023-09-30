@@ -10,30 +10,24 @@ namespace OffDotNet.Pdf.Core.Text.Operations.TextPosition;
 
 public sealed class MoveTextOperation : PdfOperation
 {
-    public const string OperatorName = "Td";
-    private readonly Lazy<int> hashCode;
+    private const string OperatorName = "Td";
 
     public MoveTextOperation(float x, float y)
         : base(OperatorName)
     {
         this.X = x;
         this.Y = y;
-
-        this.hashCode = new Lazy<int>(() => HashCode.Combine(nameof(MoveTextOperation), x, y, OperatorName));
     }
 
     public PdfReal X { get; }
 
     public PdfReal Y { get; }
 
-    public override int GetHashCode()
+    protected override IEnumerable<object> GetEqualityComponents()
     {
-        return this.hashCode.Value;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is MoveTextOperation other && this.X == other.X && this.Y == other.Y;
+        yield return this.X;
+        yield return this.Y;
+        yield return this.PdfOperator;
     }
 
     protected override string GenerateContent()

@@ -3,7 +3,7 @@
 // Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace OffDotNet.Pdf.Core.Interfaces;
+namespace OffDotNet.Pdf.Core.Common;
 
 public interface IPdfObject
 {
@@ -12,21 +12,8 @@ public interface IPdfObject
     /// </summary>
     ReadOnlyMemory<byte> Bytes { get; }
 
+    /// <summary>
+    ///     Gets the string representation of the Pdf object.
+    /// </summary>
     string Content { get; }
-}
-
-public interface IPdfObject<out T> : IPdfObject
-{
-    /// <summary>
-    ///     Gets the value of the object.
-    /// </summary>
-    T Value { get; }
-}
-
-public interface IMutablePdfObject<out T> : IPdfObject
-{
-    /// <summary>
-    ///     Gets the value of the object.
-    /// </summary>
-    T? Value { get; }
 }

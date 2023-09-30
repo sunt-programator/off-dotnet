@@ -5,6 +5,7 @@
 
 using System.Diagnostics;
 using OffDotNet.Pdf.Core.FileStructure;
+using OffDotNet.Pdf.Core.Properties;
 using Xunit;
 
 namespace OffDotNet.Pdf.Core.Tests.FileStructure;
@@ -22,7 +23,7 @@ public class XRefEntryTests
         // Act
         XRefEntry XRefEntryFunction()
         {
-            return new(byteOffset, 0, XRefEntryType.InUse);
+            return new XRefEntry(byteOffset, 0, XRefEntryType.InUse);
         }
 
         // Assert
@@ -42,7 +43,7 @@ public class XRefEntryTests
         // Act
         XRefEntry XRefEntryFunction()
         {
-            return new(byteOffset, 0, XRefEntryType.InUse);
+            return new XRefEntry(byteOffset, 0, XRefEntryType.InUse);
         }
 
         // Assert
@@ -61,7 +62,7 @@ public class XRefEntryTests
         // Act
         XRefEntry XRefEntryFunction()
         {
-            return new(0, generationNumber, XRefEntryType.InUse);
+            return new XRefEntry(0, generationNumber, XRefEntryType.InUse);
         }
 
         // Assert
@@ -80,7 +81,7 @@ public class XRefEntryTests
         // Act
         XRefEntry XRefEntryFunction()
         {
-            return new(0, generationNumber, XRefEntryType.InUse);
+            return new XRefEntry(0, generationNumber, XRefEntryType.InUse);
         }
 
         // Assert
@@ -184,7 +185,7 @@ public class XRefEntryTests
         // Arrange
         XRefEntryType xRefEntryType = isInUse ? XRefEntryType.InUse : XRefEntryType.Free;
         XRefEntry xRefEntry = new(byteOffset, generationNumber, xRefEntryType);
-        int expectedHashCode = HashCode.Combine(nameof(XRefEntry), byteOffset, generationNumber);
+        int expectedHashCode = HashCode.Combine(nameof(XRefEntry), byteOffset, generationNumber, xRefEntryType);
 
         // Act
         int actualHashCode = xRefEntry.GetHashCode();

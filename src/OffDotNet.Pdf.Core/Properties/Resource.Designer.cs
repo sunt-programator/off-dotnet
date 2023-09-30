@@ -7,10 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OffDotNet.Pdf.Core {
-    using System;
-    
-    
+namespace OffDotNet.Pdf.Core.Properties {
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>

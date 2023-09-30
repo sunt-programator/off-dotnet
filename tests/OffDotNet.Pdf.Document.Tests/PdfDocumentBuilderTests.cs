@@ -34,7 +34,9 @@ public class PdfDocumentBuilderTests
         await using (stream.ConfigureAwait(false))
         await using (pdfDocument.ConfigureAwait(false))
         {
-            await pdfDocument.GenerateOutputStream().ConfigureAwait(false);
+#pragma warning disable CA2007
+            await pdfDocument.GenerateOutputStream();
+#pragma warning restore CA2007
 
             // Assert
             Assert.Equal(expectedBytes, stream.ToArray());

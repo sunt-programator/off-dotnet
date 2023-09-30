@@ -3,7 +3,7 @@
 // Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using OffDotNet.Pdf.Core.Interfaces;
+using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Primitives;
 using Xunit;
 
@@ -16,7 +16,6 @@ public class PdfStreamTests
     {
         // Arrange
         PdfStream pdfStream = new PdfString("Test").ToPdfStream();
-        const int expectedDictionaryCount = 1;
         const string expectedKeyName = "Length";
 
         // Act
@@ -24,7 +23,7 @@ public class PdfStreamTests
         string? actualKeyName = actualStreamExtent.Value.Select(x => x.Key.Value).FirstOrDefault();
 
         // Assert
-        Assert.Equal(expectedDictionaryCount, actualStreamExtent.Value.Count);
+        Assert.Single(actualStreamExtent.Value);
         Assert.Equal(expectedKeyName, actualKeyName);
     }
 

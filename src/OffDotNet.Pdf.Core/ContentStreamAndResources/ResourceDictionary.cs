@@ -4,7 +4,7 @@
 // </copyright>
 
 using System.Collections.ObjectModel;
-using OffDotNet.Pdf.Core.Interfaces;
+using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Primitives;
 
 namespace OffDotNet.Pdf.Core.ContentStreamAndResources;

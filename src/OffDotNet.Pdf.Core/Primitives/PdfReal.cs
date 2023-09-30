@@ -5,12 +5,14 @@
 
 using System.Globalization;
 using System.Text;
-using OffDotNet.Pdf.Core.Interfaces;
+using OffDotNet.Pdf.Core.Common;
+using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, IComparable<PdfReal>
+public struct PdfReal : IPdfObject, IEquatable<PdfReal>, IComparable, IComparable<PdfReal>
 {
+    private const float Tolerance = 0.00001f;
     private const float ApproximationValue = 1.175e-38f;
     private readonly int hashCode;
     private string literalValue = string.Empty;
@@ -23,7 +25,7 @@ public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, ICo
 
     public PdfReal(float value)
     {
-        if (value >= -ApproximationValue && value <= ApproximationValue)
+        if (value is >= -ApproximationValue and <= ApproximationValue)
         {
             value = 0;
         }
@@ -46,7 +48,12 @@ public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, ICo
 
     public static implicit operator PdfReal(float value)
     {
-        return new(value);
+        return new PdfReal(value);
+    }
+
+    public static implicit operator PdfReal(int value)
+    {
+        return new PdfReal(value);
     }
 
     public static bool operator ==(PdfReal leftOperator, PdfReal rightOperator)
@@ -86,7 +93,7 @@ public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, ICo
 
     public bool Equals(PdfReal other)
     {
-        return this.Value == other.Value;
+        return Math.Abs(this.Value - other.Value) < Tolerance;
     }
 
     public override bool Equals(object? obj)
@@ -106,7 +113,7 @@ public struct PdfReal : IPdfObject<float>, IEquatable<PdfReal>, IComparable, ICo
 
     public int CompareTo(PdfReal other)
     {
-        if (this.Value == other.Value)
+        if (Math.Abs(this.Value - other.Value) < Tolerance)
         {
             return 0;
         }

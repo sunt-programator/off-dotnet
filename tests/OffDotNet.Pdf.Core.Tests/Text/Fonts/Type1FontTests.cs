@@ -19,7 +19,7 @@ public class Type1FontTests
         // Act
         Type1Font Type1FontFunction()
         {
-            return new(documentCatalogOptions);
+            return new Type1Font(documentCatalogOptions);
         }
 
         // Assert

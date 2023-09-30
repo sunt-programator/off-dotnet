@@ -5,6 +5,7 @@
 
 using System.Diagnostics;
 using OffDotNet.Pdf.Core.FileStructure;
+using OffDotNet.Pdf.Core.Properties;
 using Xunit;
 
 namespace OffDotNet.Pdf.Core.Tests.FileStructure;
@@ -23,7 +24,7 @@ public class XRefSubSectionTests
         // Act
         XRefSubSection XRefSubSectionFunction()
         {
-            return new(objectNumber, entries);
+            return new XRefSubSection(objectNumber, entries);
         }
 
         // Assert
@@ -40,7 +41,7 @@ public class XRefSubSectionTests
         // Act
         XRefSubSection XRefSubSectionFunction()
         {
-            return new(0, entries);
+            return new XRefSubSection(0, entries);
         }
 
         // Assert
@@ -104,21 +105,6 @@ public class XRefSubSectionTests
         Assert.Equal(expectedBytes, actualBytes);
     }
 
-    [Theory(DisplayName = "Check if GetHashCode method returns valid value")]
-    [MemberData(nameof(XRefSubSectionTestsDataGenerator.XRefSubSection_NoExpectedData_TestCases), MemberType = typeof(XRefSubSectionTestsDataGenerator))]
-    public void XRefSubSection_GetHashCode_CheckValidity(int objectNumber, List<XRefEntry> entries)
-    {
-        // Arrange
-        XRefSubSection xRefEntry = new(objectNumber, entries);
-        int expectedHashCode = HashCode.Combine(nameof(XRefSubSection), objectNumber, entries);
-
-        // Act
-        int actualHashCode = xRefEntry.GetHashCode();
-
-        // Assert
-        Assert.Equal(expectedHashCode, actualHashCode);
-    }
-
     [Theory(DisplayName = $"{nameof(XRefSubSection.Content)} property, accessed multiple times, should return the same reference")]
     [MemberData(nameof(XRefSubSectionTestsDataGenerator.XRefSubSection_NoExpectedData_TestCases), MemberType = typeof(XRefSubSectionTestsDataGenerator))]
     public void XRefSubSection_Content_MultipleAccesses_ShouldReturnSameReference(int objectNumber, List<XRefEntry> entries)
@@ -177,14 +163,6 @@ internal static class XRefSubSectionTestsDataGenerator
         yield return new object[] { 3, new List<XRefEntry> { new(25325, 0, XRefEntryType.InUse) }, "3 1\n0000025325 00000 n \n" };
         yield return new object[] { 23, new List<XRefEntry> { new(25518, 2, XRefEntryType.InUse), new(25635, 0, XRefEntryType.InUse) }, "23 2\n0000025518 00002 n \n0000025635 00000 n \n" };
         yield return new object[] { 30, new List<XRefEntry> { new(25777, 0, XRefEntryType.InUse) }, "30 1\n0000025777 00000 n \n" };
-    }
-
-    public static IEnumerable<object[]> XRefSubSection_Length_TestCases()
-    {
-        yield return new object[] { 0, new List<XRefEntry> { new(0, 65535, XRefEntryType.Free) }, 24 };
-        yield return new object[] { 3, new List<XRefEntry> { new(25325, 0, XRefEntryType.InUse) }, 24 };
-        yield return new object[] { 23, new List<XRefEntry> { new(25518, 2, XRefEntryType.InUse), new(25635, 0, XRefEntryType.InUse) }, 45 };
-        yield return new object[] { 30, new List<XRefEntry> { new(25777, 0, XRefEntryType.InUse) }, 25 };
     }
 
     public static IEnumerable<object[]> XRefSubSection_ObjectNumber_TestCases()

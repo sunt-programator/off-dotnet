@@ -4,8 +4,9 @@
 // </copyright>
 
 using System.Text;
+using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Extensions;
-using OffDotNet.Pdf.Core.Interfaces;
+using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.FileStructure;
 
@@ -15,9 +16,8 @@ public enum XRefEntryType
     Free,
 }
 
-public sealed class XRefEntry : IPdfObject, IEquatable<XRefEntry>
+public sealed class XRefEntry : BasePdfObject
 {
-    private readonly Lazy<int> hashCode;
     private readonly Lazy<string> literalValue;
     private readonly Lazy<byte[]> bytes;
 
@@ -33,12 +33,11 @@ public sealed class XRefEntry : IPdfObject, IEquatable<XRefEntry>
 
         this.EntryType = entryType;
 
-        this.hashCode = new Lazy<int>(() => HashCode.Combine(nameof(XRefEntry), byteOffset, generationNumber));
         this.literalValue = new Lazy<string>(this.GenerateContent);
         this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
 
-    public ReadOnlyMemory<byte> Bytes => this.bytes.Value;
+    public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
     public long ByteOffset { get; }
 
@@ -46,24 +45,13 @@ public sealed class XRefEntry : IPdfObject, IEquatable<XRefEntry>
 
     public XRefEntryType EntryType { get; }
 
-    public string Content => this.literalValue.Value;
+    public override string Content => this.literalValue.Value;
 
-    public override int GetHashCode()
+    protected override IEnumerable<object> GetEqualityComponents()
     {
-        return this.hashCode.Value;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return this.Equals(obj as XRefEntry);
-    }
-
-    public bool Equals(XRefEntry? other)
-    {
-        return other is not null &&
-               this.ByteOffset == other.ByteOffset &&
-               this.GenerationNumber == other.GenerationNumber &&
-               this.EntryType == other.EntryType;
+        yield return this.ByteOffset;
+        yield return this.GenerationNumber;
+        yield return this.EntryType;
     }
 
     private string GenerateContent()

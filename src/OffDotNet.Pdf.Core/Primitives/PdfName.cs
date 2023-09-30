@@ -5,11 +5,12 @@
 
 using System.Globalization;
 using System.Text;
-using OffDotNet.Pdf.Core.Interfaces;
+using OffDotNet.Pdf.Core.Common;
+using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
+public sealed class PdfName : BasePdfObject
 {
     private const string NumberChar = "#23"; // '#'
     private const string SolidusChar = "#2F"; // '/'
@@ -22,7 +23,6 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
     private const string RightSquareBracketChar = "#5D"; // ']'
     private const string LeftCurlyBracketChar = "#7B"; // '{'
     private const string RightCurlyBracketChar = "#7D"; // '}'
-    private readonly int hashCode;
     private string literalValue = string.Empty;
     private byte[]? bytes;
 
@@ -34,15 +34,14 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
         }
 
         this.Value = value;
-        this.hashCode = HashCode.Combine(nameof(PdfName), value);
         this.bytes = null;
     }
 
     public string Value { get; }
 
-    public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
+    public override ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
-    public string Content => this.GenerateContent();
+    public override string Content => this.GenerateContent();
 
     public static implicit operator string(PdfName pdfName)
     {
@@ -51,37 +50,12 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
 
     public static implicit operator PdfName(string value)
     {
-        return new(value);
+        return new PdfName(value);
     }
 
-    public static bool operator ==(PdfName leftOperator, PdfName rightOperator)
+    protected override IEnumerable<object> GetEqualityComponents()
     {
-        return leftOperator.Equals(rightOperator);
-    }
-
-    public static bool operator !=(PdfName leftOperator, PdfName rightOperator)
-    {
-        return !leftOperator.Equals(rightOperator);
-    }
-
-    public override int GetHashCode()
-    {
-        return this.hashCode;
-    }
-
-    public bool Equals(PdfName? other)
-    {
-        if (other is not PdfName pdfName)
-        {
-            return false;
-        }
-
-        return this.Value == pdfName.Value;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return (obj is PdfName pdfName) && this.Equals(pdfName);
+        yield return this.Value;
     }
 
     private static string ConvertCharToString(char ch)
@@ -99,7 +73,7 @@ public sealed class PdfName : IPdfObject<string>, IEquatable<PdfName>
             ']' => RightSquareBracketChar,
             '{' => LeftCurlyBracketChar,
             '}' => RightCurlyBracketChar,
-            char regularChar when regularChar <= 0x20 || regularChar >= 0x7F => $"#{Convert.ToByte(ch).ToString("X2", CultureInfo.InvariantCulture)}",
+            _ when ch <= 0x20 || ch >= 0x7F => $"#{Convert.ToByte(ch).ToString("X2", CultureInfo.InvariantCulture)}",
             _ => ch.ToString(),
         };
     }

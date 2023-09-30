@@ -4,11 +4,11 @@
 // </copyright>
 
 using System.Text;
-using OffDotNet.Pdf.Core.Interfaces;
+using OffDotNet.Pdf.Core.Common;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public struct PdfBoolean : IPdfObject<bool>, IEquatable<PdfBoolean>
+public readonly struct PdfBoolean : IPdfObject, IEquatable<PdfBoolean>
 {
     public PdfBoolean()
         : this(false)

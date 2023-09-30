@@ -4,11 +4,11 @@
 // </copyright>
 
 using System.Text;
-using OffDotNet.Pdf.Core.Interfaces;
+using OffDotNet.Pdf.Core.Common;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public sealed class PdfStream : IPdfObject<ReadOnlyMemory<char>>, IEquatable<PdfStream?>
+public sealed class PdfStream : BasePdfObject
 {
     private static readonly PdfName LengthKey = "Length";
     private static readonly PdfName FilterKey = "Filter";
@@ -18,14 +18,12 @@ public sealed class PdfStream : IPdfObject<ReadOnlyMemory<char>>, IEquatable<Pdf
     private static readonly PdfName FileSpecificationKey = "F";
 
     private readonly PdfStreamExtentOptions pdfStreamExtentOptions = new();
-    private readonly int hashCode;
     private string literalValue = string.Empty;
     private byte[]? bytes;
     private PdfDictionary<IPdfObject>? streamExtentDictionary;
 
     public PdfStream(ReadOnlyMemory<char> value, Action<PdfStreamExtentOptions>? options = null)
     {
-        this.hashCode = HashCode.Combine(nameof(PdfStream), value);
         this.bytes = null;
         this.Value = value;
         options?.Invoke(this.pdfStreamExtentOptions);
@@ -33,25 +31,15 @@ public sealed class PdfStream : IPdfObject<ReadOnlyMemory<char>>, IEquatable<Pdf
 
     public ReadOnlyMemory<char> Value { get; }
 
-    public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
+    public override ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
-    public string Content => this.GenerateContent();
+    public override string Content => this.GenerateContent();
 
     public PdfDictionary<IPdfObject> StreamExtent => this.GenerateStreamExtendDictionary();
 
-    public override int GetHashCode()
+    protected override IEnumerable<object> GetEqualityComponents()
     {
-        return this.hashCode;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return this.Equals(obj as PdfStream);
-    }
-
-    public bool Equals(PdfStream? other)
-    {
-        return other is not null && this.Value.Equals(other.Value);
+        yield return this.Value;
     }
 
     private string GenerateContent()

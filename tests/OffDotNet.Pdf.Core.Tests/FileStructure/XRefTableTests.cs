@@ -5,6 +5,7 @@
 
 using System.Diagnostics;
 using OffDotNet.Pdf.Core.FileStructure;
+using OffDotNet.Pdf.Core.Properties;
 using Xunit;
 
 namespace OffDotNet.Pdf.Core.Tests.FileStructure;
@@ -20,7 +21,7 @@ public class XRefTableTests
         // Act
         XRefTable XRefTableFunction()
         {
-            return new(sections);
+            return new XRefTable(sections);
         }
 
         // Assert
@@ -65,20 +66,6 @@ public class XRefTableTests
 
         // Assert
         Assert.Equal(expectedBytes, actualBytes);
-    }
-
-    [Theory(DisplayName = "Check if GetHashCode method returns valid value")]
-    [MemberData(nameof(XRefTableTestsDataGenerator.XRefTable_NoExpectedData_TestCases), MemberType = typeof(XRefTableTestsDataGenerator))]
-    public void XRefTable_GetHashCode_CheckValidity(XRefTable xRefTable)
-    {
-        // Arrange
-        int expectedHashCode = HashCode.Combine(nameof(XRefTable), xRefTable.Value);
-
-        // Act
-        int actualHashCode = xRefTable.GetHashCode();
-
-        // Assert
-        Assert.Equal(expectedHashCode, actualHashCode);
     }
 
     [Theory(DisplayName = $"{nameof(XRefTable.Content)} property, accessed multiple times, should return the same reference")]
@@ -132,7 +119,7 @@ internal static class XRefTableTestsDataGenerator
     private static readonly XRefEntry EntryObj0Gen65535F = new(0, 65535, XRefEntryType.Free);
     private static readonly XRefEntry EntryObj25325Gen0N = new(25325, 0, XRefEntryType.InUse);
     private static readonly XRefEntry EntryObj257775Gen0N = new(25777, 0, XRefEntryType.InUse);
-    private static readonly List<XRefEntry> MultipleEntries = new() { new(25518, 2, XRefEntryType.InUse), new(25635, 0, XRefEntryType.InUse) };
+    private static readonly List<XRefEntry> MultipleEntries = new() { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) };
     private static readonly List<XRefSubSection> MultipleSubSections = new()
     {
         EntryObj0Gen65535F.ToXRefSubSection(0), EntryObj25325Gen0N.ToXRefSubSection(3), EntryObj257775Gen0N.ToXRefSubSection(30), MultipleEntries.ToXRefSubSection(23),
@@ -148,16 +135,6 @@ internal static class XRefTableTestsDataGenerator
         yield return new object[] { MultipleEntries.ToXRefTable(23), "xref\n23 2\n0000025518 00002 n \n0000025635 00000 n \n" };
         yield return new object[] { MultipleSubSections.ToXRefTable(), "xref\n0 1\n0000000000 65535 f \n3 1\n0000025325 00000 n \n30 1\n0000025777 00000 n \n23 2\n0000025518 00002 n \n0000025635 00000 n \n" };
         yield return new object[] { MultipleSections.ToXRefTable(), "xref\n23 2\n0000025518 00002 n \n0000025635 00000 n \nxref\n41 2\n0000025518 00002 n \n0000025635 00000 n \n" };
-    }
-
-    public static IEnumerable<object[]> XRefTable_Length_TestCases()
-    {
-        yield return new object[] { EntryObj0Gen65535F.ToXRefSubSection(0).ToXRefSection().ToXRefTable(), 29 };
-        yield return new object[] { EntryObj25325Gen0N.ToXRefSubSection(3).ToXRefTable(), 29 };
-        yield return new object[] { EntryObj257775Gen0N.ToXRefTable(30), 30 };
-        yield return new object[] { MultipleEntries.ToXRefTable(23), 50 };
-        yield return new object[] { MultipleSubSections.ToXRefTable(), 123 };
-        yield return new object[] { MultipleSections.ToXRefTable(), 100 };
     }
 
     public static IEnumerable<object[]> XRefTable_NumberOfSections_TestCases()

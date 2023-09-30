@@ -262,7 +262,7 @@ public class PdfStringTests
         // Act
         PdfString PdfStringDelegate()
         {
-            return new(value1);
+            return new PdfString(value1);
         }
 
         // Assert
@@ -280,7 +280,7 @@ public class PdfStringTests
         // Act
         PdfString PdfStringDelegate()
         {
-            return new(value1);
+            return new PdfString(value1);
         }
 
         // Assert
@@ -297,7 +297,7 @@ public class PdfStringTests
         // Act
         PdfString PdfStringDelegate()
         {
-            return new(value1, isHexString: true);
+            return new PdfString(value1, isHexString: true);
         }
 
         // Assert
@@ -312,7 +312,7 @@ public class PdfStringTests
         // Act
         static PdfString PdfStringDelegate()
         {
-            return new(string.Empty, true);
+            return new PdfString(string.Empty, true);
         }
 
         // Assert

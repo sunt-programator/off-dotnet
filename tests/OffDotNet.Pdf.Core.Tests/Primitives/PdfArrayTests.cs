@@ -3,7 +3,7 @@
 // Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using OffDotNet.Pdf.Core.Interfaces;
+using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Primitives;
 using Xunit;
 
@@ -204,23 +204,6 @@ internal static class PdfArrayTestDataGenerator
     public static IEnumerable<object[]> PdfArray_ParameterizedConstructor_TestCases()
     {
         yield return new object[] { new List<IPdfObject> { new PdfInteger(549), new PdfReal(3.14f), new PdfBoolean(), new PdfName("SomeName") } };
-    }
-
-    public static IEnumerable<object[]> PdfArray_Length_TestCases()
-    {
-        yield return new object[]
-        {
-            new List<IPdfObject>
-            {
-                new PdfInteger(549),
-                new PdfReal(3.14f),
-                new PdfBoolean(),
-                new PdfString("Ralph"),
-                new PdfName("SomeName"),
-            },
-            34,
-        };
-        yield return new object[] { new List<IPdfObject> { new PdfBoolean(true), new PdfArray<IPdfObject>(new List<IPdfObject> { default(PdfNull) }) }, 13 };
     }
 
     public static IEnumerable<object[]> PdfArray_Bytes_TestCases()

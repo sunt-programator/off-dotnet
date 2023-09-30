@@ -4,14 +4,13 @@
 // </copyright>
 
 using System.Text;
+using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.ContentStreamAndResources;
-using OffDotNet.Pdf.Core.Interfaces;
 
 namespace OffDotNet.Pdf.Core.Text;
 
-public sealed class TextObject : IPdfObject<IReadOnlyCollection<PdfOperation>>
+public sealed class TextObject : BasePdfObject
 {
-    private readonly Lazy<int> hashCode;
     private readonly Lazy<string> literalValue;
     private readonly Lazy<byte[]> bytes;
 
@@ -19,25 +18,19 @@ public sealed class TextObject : IPdfObject<IReadOnlyCollection<PdfOperation>>
     {
         this.Value = operations;
 
-        this.hashCode = new Lazy<int>(() => HashCode.Combine(nameof(TextObject), operations));
         this.literalValue = new Lazy<string>(this.GenerateContent);
         this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
 
-    public ReadOnlyMemory<byte> Bytes => this.bytes.Value;
+    public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
     public IReadOnlyCollection<PdfOperation> Value { get; }
 
-    public string Content => this.literalValue.Value;
+    public override string Content => this.literalValue.Value;
 
-    public override int GetHashCode()
+    protected override IEnumerable<object> GetEqualityComponents()
     {
-        return this.hashCode.Value;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is TextObject other && EqualityComparer<IReadOnlyCollection<PdfOperation>>.Default.Equals(this.Value, other.Value);
+        yield return this.Value;
     }
 
     private string GenerateContent()

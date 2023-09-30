@@ -40,7 +40,9 @@ public class PdfDocumentTests
         await using (stream.ConfigureAwait(false))
         await using (pdfDocument.ConfigureAwait(false))
         {
-            await pdfDocument.GenerateOutputStream().ConfigureAwait(false);
+#pragma warning disable CA2007
+            await pdfDocument.GenerateOutputStream();
+#pragma warning restore CA2007
 
             // Assert
             Assert.Equal(expectedBytes, stream.ToArray());
@@ -136,7 +138,7 @@ public class PdfDocumentTests
         await using (pdfDocument.ConfigureAwait(false))
         {
             // Assert
-            Assert.Equal(1, pdfDocument.Pages.Count);
+            Assert.Single(pdfDocument.Pages);
             Assert.Equal(expectedPages[0], pdfDocument.Pages[0]);
             Assert.Equal(expectedPages[0].Content, pdfDocument.Pages[0].Content);
             Assert.Equal(expectedPages[0].PdfIndirect.Content, pdfDocument.Pages[0].PdfIndirect.Content);

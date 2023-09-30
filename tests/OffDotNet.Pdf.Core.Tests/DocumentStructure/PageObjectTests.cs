@@ -23,7 +23,7 @@ public class PageObjectTests
         // Act
         PageObject PageObjectFunction()
         {
-            return new(documentCatalogOptions);
+            return new PageObject(documentCatalogOptions);
         }
 
         // Assert
@@ -43,7 +43,7 @@ public class PageObjectTests
         // Act
         PageObject PageObjectFunction()
         {
-            return new(documentCatalogOptions);
+            return new PageObject(documentCatalogOptions);
         }
 
         // Assert
@@ -64,7 +64,7 @@ public class PageObjectTests
         // Act
         PageObject PageObjectFunction()
         {
-            return new(documentCatalogOptions);
+            return new PageObject(documentCatalogOptions);
         }
 
         // Assert

@@ -23,7 +23,7 @@ public class PageTreeNodeTests
         // Act
         PageTreeNode PageTreeNodeFunction()
         {
-            return new(pageTreeNodeOptions);
+            return new PageTreeNode(pageTreeNodeOptions);
         }
 
         // Assert

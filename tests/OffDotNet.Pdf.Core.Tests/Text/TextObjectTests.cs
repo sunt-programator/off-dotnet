@@ -100,12 +100,6 @@ internal static class TextObjectTestsDataGenerator
         yield return new object[] { new TextObject(PdfOperations2), "BT\n/F4 13 Tf\n2 72 Td\n(A text with special chars !@#$%^&*()) Tj\nET\n" };
     }
 
-    public static IEnumerable<object[]> TextObject_Length_TestCases()
-    {
-        yield return new object[] { new TextObject(PdfOperations1), 26 };
-        yield return new object[] { new TextObject(PdfOperations2), 66 };
-    }
-
     public static IEnumerable<object[]> TextObject_Bytes_TestCases()
     {
         yield return new object[]
