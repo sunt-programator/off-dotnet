@@ -9,7 +9,7 @@ namespace OffDotNet.Pdf.Core.Primitives;
 
 public static class PdfIndirectIdentifierExtensions
 {
-    public static IPdfIndirectIdentifier<T> ToPdfIndirectIdentifier<T>(this PdfIndirect<T> pdfIndirect)
+    public static IPdfIndirectIdentifier<T> ToPdfIndirectIdentifier<T>(this IPdfIndirect<T> pdfIndirect)
         where T : IPdfObject
     {
         return new PdfIndirectIdentifier<T>(pdfIndirect);

@@ -14,5 +14,5 @@ public interface IPdfIndirectIdentifier<T> : IPdfObject
 
     int ObjectNumber { get; }
 
-    PdfIndirect<T> PdfIndirect { get; }
+    IPdfIndirect<T> PdfIndirect { get; }
 }

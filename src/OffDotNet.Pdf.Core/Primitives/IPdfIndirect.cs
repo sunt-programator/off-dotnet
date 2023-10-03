@@ -7,9 +7,12 @@ using OffDotNet.Pdf.Core.Common;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public interface IPdfIndirect : IPdfObject
+public interface IPdfIndirect<T> : IPdfObject
+    where T : IPdfObject
 {
     int GenerationNumber { get; }
 
     int ObjectNumber { get; }
+
+    public T? Value { get; set; }
 }

@@ -14,7 +14,7 @@ public sealed class PdfIndirectIdentifier<T> : BasePdfObject, IPdfIndirectIdenti
     private readonly Lazy<string> literalValue;
     private readonly Lazy<byte[]> bytes;
 
-    public PdfIndirectIdentifier(PdfIndirect<T> pdfObject)
+    public PdfIndirectIdentifier(IPdfIndirect<T> pdfObject)
     {
         this.literalValue = new Lazy<string>(this.GenerateContent);
         this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
@@ -28,7 +28,7 @@ public sealed class PdfIndirectIdentifier<T> : BasePdfObject, IPdfIndirectIdenti
 
     public int ObjectNumber { get; }
 
-    public PdfIndirect<T> PdfIndirect { get; }
+    public IPdfIndirect<T> PdfIndirect { get; }
 
     public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
