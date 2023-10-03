@@ -7,22 +7,22 @@ namespace OffDotNet.Pdf.Core.FileStructure;
 
 public static class XRefExtensions
 {
-    public static XRefSubSection ToXRefSubSection(this IXRefEntry entry, int objectNumber)
+    public static IXRefSubSection ToXRefSubSection(this IXRefEntry entry, int objectNumber)
     {
         return new XRefSubSection(objectNumber, new List<IXRefEntry>(1) { entry });
     }
 
-    public static XRefSubSection ToXRefSubSection(this ICollection<IXRefEntry> entries, int objectNumber)
+    public static IXRefSubSection ToXRefSubSection(this ICollection<IXRefEntry> entries, int objectNumber)
     {
         return new XRefSubSection(objectNumber, entries);
     }
 
-    public static XRefSection ToXRefSection(this XRefSubSection subSection)
+    public static XRefSection ToXRefSection(this IXRefSubSection subSection)
     {
-        return new XRefSection(new List<XRefSubSection>(1) { subSection });
+        return new XRefSection(new List<IXRefSubSection>(1) { subSection });
     }
 
-    public static XRefSection ToXRefSection(this ICollection<XRefSubSection> subSections)
+    public static XRefSection ToXRefSection(this ICollection<IXRefSubSection> subSections)
     {
         return new XRefSection(subSections);
     }
@@ -47,12 +47,12 @@ public static class XRefExtensions
         return new XRefTable(sections);
     }
 
-    public static XRefTable ToXRefTable(this XRefSubSection subSection)
+    public static XRefTable ToXRefTable(this IXRefSubSection subSection)
     {
         return subSection.ToXRefSection().ToXRefTable();
     }
 
-    public static XRefTable ToXRefTable(this ICollection<XRefSubSection> subSections)
+    public static XRefTable ToXRefTable(this ICollection<IXRefSubSection> subSections)
     {
         return subSections.ToXRefSection().ToXRefTable();
     }

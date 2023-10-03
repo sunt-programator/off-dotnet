@@ -120,7 +120,7 @@ internal static class XRefTableTestsDataGenerator
     private static readonly IXRefEntry EntryObj25325Gen0N = new XRefEntry(25325, 0, XRefEntryType.InUse);
     private static readonly IXRefEntry EntryObj257775Gen0N = new XRefEntry(25777, 0, XRefEntryType.InUse);
     private static readonly List<IXRefEntry> MultipleEntries = new() { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) };
-    private static readonly List<XRefSubSection> MultipleSubSections = new()
+    private static readonly List<IXRefSubSection> MultipleSubSections = new()
     {
         EntryObj0Gen65535F.ToXRefSubSection(0), EntryObj25325Gen0N.ToXRefSubSection(3), EntryObj257775Gen0N.ToXRefSubSection(30), MultipleEntries.ToXRefSubSection(23),
     };

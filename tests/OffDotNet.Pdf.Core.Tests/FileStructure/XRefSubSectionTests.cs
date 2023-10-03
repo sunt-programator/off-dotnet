@@ -22,7 +22,7 @@ public class XRefSubSectionTests
         ICollection<IXRefEntry> entries = new List<IXRefEntry>(1) { new XRefEntry(0, 0, XRefEntryType.Free) };
 
         // Act
-        XRefSubSection XRefSubSectionFunction()
+        IXRefSubSection XRefSubSectionFunction()
         {
             return new XRefSubSection(objectNumber, entries);
         }
@@ -39,7 +39,7 @@ public class XRefSubSectionTests
         ICollection<IXRefEntry> entries = new List<IXRefEntry>(0);
 
         // Act
-        XRefSubSection XRefSubSectionFunction()
+        IXRefSubSection XRefSubSectionFunction()
         {
             return new XRefSubSection(0, entries);
         }
@@ -54,10 +54,10 @@ public class XRefSubSectionTests
     public void XRefSubSection_Content_ShouldReturnValidValue(int objectNumber, List<IXRefEntry> entries, string expectedContent)
     {
         // Arrange
-        XRefSubSection xRefEntry = new(objectNumber, entries);
+        IXRefSubSection xRefSubSection = new XRefSubSection(objectNumber, entries);
 
         // Act
-        string actualContent = xRefEntry.Content;
+        string actualContent = xRefSubSection.Content;
 
         // Assert
         Assert.Equal(expectedContent, actualContent);
@@ -68,10 +68,10 @@ public class XRefSubSectionTests
     public void XRefSubSection_ObjectNumber_ShouldReturnValidValue(int objectNumber, List<IXRefEntry> entries, int expectedObjectNumber)
     {
         // Arrange
-        XRefSubSection xRefEntry = new(objectNumber, entries);
+        IXRefSubSection xRefSubSection = new XRefSubSection(objectNumber, entries);
 
         // Act
-        long actualObjectNumber = xRefEntry.ObjectNumber;
+        long actualObjectNumber = xRefSubSection.ObjectNumber;
 
         // Assert
         Assert.Equal(expectedObjectNumber, actualObjectNumber);
@@ -82,10 +82,10 @@ public class XRefSubSectionTests
     public void XRefSubSection_NumberOfEntries_ShouldReturnValidValue(int objectNumber, List<IXRefEntry> entries, int expectedNumberOfEntries)
     {
         // Arrange
-        XRefSubSection xRefEntry = new(objectNumber, entries);
+        IXRefSubSection xRefSubSection = new XRefSubSection(objectNumber, entries);
 
         // Act
-        long actualNumberOfEntries = xRefEntry.NumberOfEntries;
+        long actualNumberOfEntries = xRefSubSection.NumberOfEntries;
 
         // Assert
         Assert.Equal(expectedNumberOfEntries, actualNumberOfEntries);
@@ -96,10 +96,10 @@ public class XRefSubSectionTests
     public void XRefSubSection_Bytes_ShouldReturnValidValue(int objectNumber, List<IXRefEntry> entries, byte[] expectedBytes)
     {
         // Arrange
-        XRefSubSection xRefEntry = new(objectNumber, entries);
+        IXRefSubSection xRefSubSection = new XRefSubSection(objectNumber, entries);
 
         // Act
-        byte[] actualBytes = xRefEntry.Bytes.ToArray();
+        byte[] actualBytes = xRefSubSection.Bytes.ToArray();
 
         // Assert
         Assert.Equal(expectedBytes, actualBytes);
@@ -110,11 +110,11 @@ public class XRefSubSectionTests
     public void XRefSubSection_Content_MultipleAccesses_ShouldReturnSameReference(int objectNumber, List<IXRefEntry> entries)
     {
         // Arrange
-        XRefSubSection xRefEntry = new(objectNumber, entries);
+        IXRefSubSection xRefSubSection = new XRefSubSection(objectNumber, entries);
 
         // Act
-        string actualContent1 = xRefEntry.Content;
-        string actualContent2 = xRefEntry.Content;
+        string actualContent1 = xRefSubSection.Content;
+        string actualContent2 = xRefSubSection.Content;
 
         // Assert
         Assert.True(ReferenceEquals(actualContent1, actualContent2));
@@ -125,11 +125,11 @@ public class XRefSubSectionTests
     public void XRefSubSection_Equals_CheckValidity(int objectNumber1, int objectNumber2, List<IXRefEntry> entries1, List<IXRefEntry> entries2, bool expectedValue)
     {
         // Arrange
-        XRefSubSection xRefEntry1 = new(objectNumber1, entries1);
-        XRefSubSection xRefEntry2 = new(objectNumber2, entries2);
+        IXRefSubSection xRefSubSection1 = new XRefSubSection(objectNumber1, entries1);
+        IXRefSubSection xRefSubSection2 = new XRefSubSection(objectNumber2, entries2);
 
         // Act
-        bool actualResult = xRefEntry1.Equals(xRefEntry2);
+        bool actualResult = xRefSubSection1.Equals(xRefSubSection2);
 
         // Assert
         Assert.Equal(expectedValue, actualResult);
@@ -140,13 +140,13 @@ public class XRefSubSectionTests
     public void XRefSubSection_EqualsNullObject_CheckValidity(int objectNumber, List<IXRefEntry> entries)
     {
         // Arrange
-        XRefSubSection xRefEntry = new(objectNumber, entries);
+        IXRefSubSection xRefSubSection = new XRefSubSection(objectNumber, entries);
 
         // Act
-        bool actualResult1 = xRefEntry.Equals(null);
+        bool actualResult1 = xRefSubSection.Equals(null);
 
-        Debug.Assert(xRefEntry != null, nameof(xRefEntry) + " != null");
-        bool actualResult2 = xRefEntry.Equals((object?)null);
+        Debug.Assert(xRefSubSection != null, nameof(xRefSubSection) + " != null");
+        bool actualResult2 = xRefSubSection.Equals((object?)null);
 
         // Assert
         Assert.False(actualResult1);
