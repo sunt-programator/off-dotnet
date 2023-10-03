@@ -166,7 +166,7 @@ public class FileTrailerTests
         FileTrailer fileTrailer = new(123, fileTrailerOptions);
 
         // Act
-        PdfDictionary<IPdfObject> fileTrailerDictionary = fileTrailer.FileTrailerDictionary;
+        IPdfDictionary<IPdfObject> fileTrailerDictionary = fileTrailer.FileTrailerDictionary;
 
         // Assert
         Assert.Contains("Size", fileTrailerDictionary.Value);

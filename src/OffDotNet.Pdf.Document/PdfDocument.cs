@@ -41,7 +41,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
         };
 
         TextObject textObject = new(pdfOperations);
-        PdfDictionary<IPdfIndirectIdentifier<Type1Font>> fontDictionary = new Dictionary<PdfName, IPdfIndirectIdentifier<Type1Font>> { { "F1", this.Fonts[0] } }.ToPdfDictionary();
+        IPdfDictionary<IPdfIndirectIdentifier<Type1Font>> fontDictionary = new Dictionary<PdfName, IPdfIndirectIdentifier<Type1Font>> { { "F1", this.Fonts[0] } }.ToPdfDictionary();
 
         this.DocumentCatalog.PdfIndirect.Value = new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = this.RootPageTree);
         this.RootPageTree.PdfIndirect.Value = new PageTreeNode(pageTreeNodeOptions => pageTreeNodeOptions.Kids = this.Pages.ToPdfArray());

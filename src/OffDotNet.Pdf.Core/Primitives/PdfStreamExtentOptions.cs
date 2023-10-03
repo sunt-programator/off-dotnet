@@ -11,11 +11,11 @@ public sealed class PdfStreamExtentOptions
 {
     public AnyOf<PdfName, IPdfArray<PdfName>>? Filter { get; set; } // Name or Array
 
-    public AnyOf<PdfDictionary<PdfName>, IPdfArray<PdfName>>? DecodeParameters { get; set; } // Dictionary or Array
+    public AnyOf<IPdfDictionary<PdfName>, IPdfArray<PdfName>>? DecodeParameters { get; set; } // Dictionary or Array
 
     public PdfString? FileSpecification { get; set; }
 
     public AnyOf<PdfName, IPdfArray<PdfName>>? FileFilter { get; set; } // Name or Array
 
-    public AnyOf<PdfDictionary<PdfName>, IPdfArray<PdfName>>? FileDecodeParameters { get; set; } // Dictionary or Array
+    public AnyOf<IPdfDictionary<PdfName>, IPdfArray<PdfName>>? FileDecodeParameters { get; set; } // Dictionary or Array
 }

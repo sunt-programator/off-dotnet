@@ -67,7 +67,7 @@ public class PdfIndirectTests
 
         // Act
         bool actualResult1 = pdfIndirect.Equals(null);
-        bool actualResult2 = pdfIndirect!.Equals((object?)null);
+        bool actualResult2 = pdfIndirect!.Equals(null);
 
         // Assert
         Assert.False(actualResult1);

@@ -11,5 +11,5 @@ public interface IPdfStream : IPdfObject
 {
     ReadOnlyMemory<char> Value { get; }
 
-    PdfDictionary<IPdfObject> StreamExtent { get; }
+    IPdfDictionary<IPdfObject> StreamExtent { get; }
 }

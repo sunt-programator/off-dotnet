@@ -16,7 +16,7 @@ public class PdfArrayTests
     public void PdfArray_ParameterizedConstructor_CheckValue(List<IPdfObject> inputValue)
     {
         // Arrange
-        IPdfArray<IPdfObject> pdfArray = PdfArray<IPdfObject>.CreateRange(inputValue); // Use the CreateRange static method to initialize an PdfArray instance
+        IPdfArray<IPdfObject> pdfArray = inputValue.ToPdfArray();
 
         // Act
 
@@ -41,7 +41,7 @@ public class PdfArrayTests
     public void PdfArray_Equals2_NullArgument_ShouldReturnFalse()
     {
         // Arrange
-        IPdfArray<IPdfObject> pdfArray1 = PdfArray<IPdfObject>.Create(new PdfString("901FA", true)); // Use the Create static method to initialize an PdfArray instance
+        IPdfArray<IPdfObject> pdfArray1 = new PdfString("901FA", true).ToPdfArray();
 
         // Act
         bool actualResult = pdfArray1.Equals(null);
@@ -172,7 +172,7 @@ public class PdfArrayTests
     public void PdfArray_Value_Count_ShouldReturn1()
     {
         // Arrange
-        IPdfArray<IPdfObject> pdfArray1 = PdfArray<IPdfObject>.Create(new PdfInteger(549));
+        IPdfArray<PdfInteger> pdfArray1 = new PdfInteger(549).ToPdfArray();
 
         // Act
         int actualValueCount = pdfArray1.Value.Count;

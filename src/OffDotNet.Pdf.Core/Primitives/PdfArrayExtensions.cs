@@ -12,12 +12,12 @@ public static class PdfArrayExtensions
     public static IPdfArray<TValue> ToPdfArray<TValue>(this IEnumerable<TValue> items)
         where TValue : IPdfObject
     {
-        return PdfArray<TValue>.CreateRange(items.ToList());
+        return new PdfArray<TValue>(items.ToList());
     }
 
     public static IPdfArray<TValue> ToPdfArray<TValue>(this TValue item)
         where TValue : IPdfObject
     {
-        return PdfArray<TValue>.Create(item);
+        return new PdfArray<TValue>(new List<TValue>(1) { item });
     }
 }

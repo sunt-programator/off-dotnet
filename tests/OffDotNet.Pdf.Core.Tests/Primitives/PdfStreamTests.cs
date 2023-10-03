@@ -19,7 +19,7 @@ public class PdfStreamTests
         const string expectedKeyName = "Length";
 
         // Act
-        PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
+        IPdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
         string? actualKeyName = actualStreamExtent.Value.Select(x => x.Key.Value).FirstOrDefault();
 
         // Assert
@@ -48,7 +48,7 @@ public class PdfStreamTests
         const string expectedOptionKeyName = "Filter";
 
         // Act
-        PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
+        IPdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
         bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
@@ -80,7 +80,7 @@ public class PdfStreamTests
         const string expectedOptionKeyName = "FFilter";
 
         // Act
-        PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
+        IPdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
         bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
@@ -108,7 +108,7 @@ public class PdfStreamTests
         const string expectedOptionKeyName = "Filter";
 
         // Act
-        PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
+        IPdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
         bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
@@ -137,7 +137,7 @@ public class PdfStreamTests
         const string expectedOptionKeyName = "FFilter";
 
         // Act
-        PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
+        IPdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
         bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
@@ -164,7 +164,7 @@ public class PdfStreamTests
         const string expectedOptionKeyName = "DecodeParms";
 
         // Act
-        PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
+        IPdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
         bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
@@ -191,7 +191,7 @@ public class PdfStreamTests
         const string expectedOptionKeyName = "FDecodeParms";
 
         // Act
-        PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
+        IPdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
         bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
@@ -209,14 +209,14 @@ public class PdfStreamTests
     {
         // Arrange
         IDictionary<PdfName, PdfName> decodeParameters = new Dictionary<PdfName, PdfName> { { "Colors", new PdfName("None") } };
-        PdfDictionary<PdfName> pdfOptionNames = decodeParameters.ToPdfDictionary();
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.DecodeParameters = pdfOptionNames);
+        IPdfDictionary<PdfName> pdfOptionNames = decodeParameters.ToPdfDictionary();
+        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.DecodeParameters = new(pdfOptionNames));
         const int expectedDictionaryCount = 2; // Count + Current extent option
         const string expectedLengthKeyName = "Length";
         const string expectedOptionKeyName = "DecodeParms";
 
         // Act
-        PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
+        IPdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
         bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
@@ -224,7 +224,7 @@ public class PdfStreamTests
         Assert.Equal(expectedDictionaryCount, actualStreamExtent.Value.Count);
         Assert.True(isLengthInDictionary);
         Assert.True(isOptionInDictionary);
-        PdfDictionary<PdfName> actualPdfDictionary = Assert.IsType<PdfDictionary<PdfName>>(optionValue);
+        IPdfDictionary<PdfName> actualPdfDictionary = Assert.IsAssignableFrom<IPdfDictionary<PdfName>>(optionValue);
         Assert.Equal(decodeParameters.Count, actualPdfDictionary.Value.Count);
         Assert.Equal(pdfOptionNames.Value, actualPdfDictionary.Value);
     }
@@ -234,14 +234,14 @@ public class PdfStreamTests
     {
         // Arrange
         IDictionary<PdfName, PdfName> decodeParameters = new Dictionary<PdfName, PdfName> { { "Colors", new PdfName("None") } };
-        PdfDictionary<PdfName> pdfOptionNames = decodeParameters.ToPdfDictionary();
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.FileDecodeParameters = pdfOptionNames);
+        IPdfDictionary<PdfName> pdfOptionNames = decodeParameters.ToPdfDictionary();
+        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.FileDecodeParameters = new(pdfOptionNames));
         const int expectedDictionaryCount = 2; // Count + Current extent option
         const string expectedLengthKeyName = "Length";
         const string expectedOptionKeyName = "FDecodeParms";
 
         // Act
-        PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
+        IPdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
         bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
@@ -249,7 +249,7 @@ public class PdfStreamTests
         Assert.Equal(expectedDictionaryCount, actualStreamExtent.Value.Count);
         Assert.True(isLengthInDictionary);
         Assert.True(isOptionInDictionary);
-        PdfDictionary<PdfName> actualPdfDictionary = Assert.IsType<PdfDictionary<PdfName>>(optionValue);
+        IPdfDictionary<PdfName> actualPdfDictionary = Assert.IsAssignableFrom<IPdfDictionary<PdfName>>(optionValue);
         Assert.Equal(decodeParameters.Count, actualPdfDictionary.Value.Count);
         Assert.Equal(pdfOptionNames.Value, actualPdfDictionary.Value);
     }
@@ -267,7 +267,7 @@ public class PdfStreamTests
         const string expectedOptionKeyName = "F";
 
         // Act
-        PdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
+        IPdfDictionary<IPdfObject> actualStreamExtent = pdfStream.StreamExtent;
         bool isLengthInDictionary = actualStreamExtent.Value.TryGetValue(expectedLengthKeyName, out IPdfObject? _);
         bool isOptionInDictionary = actualStreamExtent.Value.TryGetValue(expectedOptionKeyName, out IPdfObject? optionValue);
 
@@ -286,8 +286,8 @@ public class PdfStreamTests
         PdfStream pdfStream = new PdfString("Test").ToPdfStream();
 
         // Act
-        PdfDictionary<IPdfObject> actualStreamExtent1 = pdfStream.StreamExtent;
-        PdfDictionary<IPdfObject> actualStreamExtent2 = pdfStream.StreamExtent;
+        IPdfDictionary<IPdfObject> actualStreamExtent1 = pdfStream.StreamExtent;
+        IPdfDictionary<IPdfObject> actualStreamExtent2 = pdfStream.StreamExtent;
 
         // Assert
         Assert.True(ReferenceEquals(actualStreamExtent1, actualStreamExtent2));

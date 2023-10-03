@@ -26,16 +26,6 @@ public class PdfArray<TValue> : BasePdfObject, IPdfArray<TValue>
 
     public override string Content => this.GenerateContent();
 
-    public static IPdfArray<TValue> Create(TValue item)
-    {
-        return new PdfArray<TValue>(new List<TValue>(1) { item });
-    }
-
-    public static IPdfArray<TValue> CreateRange(IEnumerable<TValue> items)
-    {
-        return new PdfArray<TValue>(items.ToList());
-    }
-
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return this.Value;
