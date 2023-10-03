@@ -9,7 +9,7 @@ using OffDotNet.Pdf.Core.Common;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public class PdfDictionary<TValue> : BasePdfObject
+public class PdfDictionary<TValue> : BasePdfObject, IPdfDictionary<TValue>
     where TValue : IPdfObject
 {
     private string literalValue = string.Empty;

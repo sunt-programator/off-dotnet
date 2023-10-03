@@ -15,11 +15,11 @@ public sealed class FileTrailerOptions
 
     public PdfInteger? Prev { get; set; }
 
-    public PdfIndirectIdentifier<DocumentCatalog> Root { get; set; } = default!;
+    public IPdfIndirectIdentifier<DocumentCatalog> Root { get; set; } = default!;
 
     public PdfDictionary<IPdfObject>? Encrypt { get; set; }
 
-    public PdfIndirectIdentifier<PdfDictionary<IPdfObject>>? Info { get; set; }
+    public IPdfIndirectIdentifier<PdfDictionary<IPdfObject>>? Info { get; set; }
 
     public PdfArray<PdfString>? Id { get; set; }
 }

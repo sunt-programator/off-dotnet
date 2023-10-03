@@ -8,7 +8,7 @@ using OffDotNet.Pdf.Core.Common;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public sealed class PdfStream : BasePdfObject
+public sealed class PdfStream : BasePdfObject, IPdfStream
 {
     private static readonly PdfName LengthKey = "Length";
     private static readonly PdfName FilterKey = "Filter";

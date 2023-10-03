@@ -11,5 +11,5 @@ namespace OffDotNet.Pdf.Document;
 
 public sealed class PdfDocumentOptions : IPdfDocumentOptions
 {
-    public IImmutableList<PdfIndirectIdentifier<PageObject>> Pages { get; set; } = ImmutableList<PdfIndirectIdentifier<PageObject>>.Empty;
+    public IImmutableList<IPdfIndirectIdentifier<PageObject>> Pages { get; set; } = ImmutableList<IPdfIndirectIdentifier<PageObject>>.Empty;
 }

@@ -59,8 +59,8 @@ internal static class PageTreeNodeTestsDataGenerator
     {
         PageObjectOptions pageObjectOptions = new()
         {
-            Parent = new PageTreeNode(options => options.Kids = Array.Empty<PdfIndirectIdentifier<PageObject>>().ToPdfArray()).ToPdfIndirect(3, 6).ToPdfIndirectIdentifier(),
-            Resources = new ResourceDictionary(options => options.Font = new Dictionary<PdfName, PdfIndirectIdentifier<Type1Font>>
+            Parent = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<PageObject>>().ToPdfArray()).ToPdfIndirect(3, 6).ToPdfIndirectIdentifier(),
+            Resources = new ResourceDictionary(options => options.Font = new Dictionary<PdfName, IPdfIndirectIdentifier<Type1Font>>
             {
                 { "F3", StandardFonts.TimesRoman.ToPdfIndirect(7).ToPdfIndirectIdentifier() },
                 { "F5", StandardFonts.TimesRoman.ToPdfIndirect(9).ToPdfIndirectIdentifier() },

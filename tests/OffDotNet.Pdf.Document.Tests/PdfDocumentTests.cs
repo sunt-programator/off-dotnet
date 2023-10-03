@@ -70,7 +70,7 @@ public class PdfDocumentTests
     {
         // Arrange
         var rootPageTree = new PdfIndirect<PageTreeNode>(2).ToPdfIndirectIdentifier();
-        PdfIndirectIdentifier<DocumentCatalog> expectedDocumentCatalog = new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = rootPageTree)
+        IPdfIndirectIdentifier<DocumentCatalog> expectedDocumentCatalog = new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = rootPageTree)
             .ToPdfIndirect(1)
             .ToPdfIndirectIdentifier();
 
@@ -92,7 +92,7 @@ public class PdfDocumentTests
     public async Task PdfDocument_ConstructorWithoutArguments_RootPageTree_ShouldBePredefined()
     {
         // Arrange
-        var pages = new List<PdfIndirectIdentifier<PageObject>>(1) { new PdfIndirect<PageObject>(3).ToPdfIndirectIdentifier() }.ToImmutableList();
+        var pages = new List<IPdfIndirectIdentifier<PageObject>>(1) { new PdfIndirect<PageObject>(3).ToPdfIndirectIdentifier() }.ToImmutableList();
         var expectedPageTree = new PageTreeNode(pageTreeNodeOptions => pageTreeNodeOptions.Kids = pages.ToPdfArray()).ToPdfIndirect(2).ToPdfIndirectIdentifier();
 
         MemoryStream stream = new();
@@ -117,15 +117,15 @@ public class PdfDocumentTests
         {
             pageObjectOptions.Parent = new PdfIndirect<PageTreeNode>(2).ToPdfIndirectIdentifier();
             pageObjectOptions.MediaBox = new Rectangle(0, 0, 612, 792);
-            pageObjectOptions.Contents = new PdfIndirect<PdfStream>(4).ToPdfIndirectIdentifier();
+            pageObjectOptions.Contents = new(new PdfIndirect<PdfStream>(4).ToPdfIndirectIdentifier());
             pageObjectOptions.Resources = new ResourceDictionary(resourceDictionaryOptions =>
-                resourceDictionaryOptions.Font = new Dictionary<PdfName, PdfIndirectIdentifier<Type1Font>>
+                resourceDictionaryOptions.Font = new Dictionary<PdfName, IPdfIndirectIdentifier<Type1Font>>
                 {
                     { "F1", new PdfIndirect<Type1Font>(5).ToPdfIndirectIdentifier() },
                 }.ToPdfDictionary());
         });
 
-        var expectedPages = new List<PdfIndirectIdentifier<PageObject>>(1)
+        var expectedPages = new List<IPdfIndirectIdentifier<PageObject>>(1)
         {
             pageObject.ToPdfIndirect(3).ToPdfIndirectIdentifier(),
         }.ToImmutableList();
@@ -149,7 +149,7 @@ public class PdfDocumentTests
     public async Task PdfDocument_ConstructorWithoutArguments_Fonts_ShouldBePredefined()
     {
         // Arrange
-        var expectedFonts = new List<PdfIndirectIdentifier<Type1Font>>(1) { StandardFonts.Helvetica.ToPdfIndirect(5).ToPdfIndirectIdentifier() }.ToImmutableList();
+        var expectedFonts = new List<IPdfIndirectIdentifier<Type1Font>>(1) { StandardFonts.Helvetica.ToPdfIndirect(5).ToPdfIndirectIdentifier() }.ToImmutableList();
 
         MemoryStream stream = new();
         PdfDocument pdfDocument = new(stream, new PdfDocumentOptions());

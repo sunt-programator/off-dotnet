@@ -15,11 +15,11 @@ namespace OffDotNet.Pdf.Core.Tests.FileStructure;
 
 public class FileTrailerTests
 {
-    private static readonly PdfIndirectIdentifier<PageTreeNode> Pages = new PageTreeNode(options => options.Kids = Array.Empty<PdfIndirectIdentifier<PageObject>>().ToPdfArray())
+    private static readonly IPdfIndirectIdentifier<PageTreeNode> Pages = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<PageObject>>().ToPdfArray())
         .ToPdfIndirect(3)
         .ToPdfIndirectIdentifier();
 
-    private static readonly PdfIndirectIdentifier<DocumentCatalog> RootDictionary =
+    private static readonly IPdfIndirectIdentifier<DocumentCatalog> RootDictionary =
         new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = Pages).ToPdfIndirect(2).ToPdfIndirectIdentifier();
 
     [Theory(DisplayName = $"Constructor with negative {nameof(FileTrailer.ByteOffset)} should throw an {nameof(ArgumentOutOfRangeException)}")]
@@ -265,11 +265,11 @@ public class FileTrailerTests
 [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
 internal static class FileTrailerTestsDataGenerator
 {
-    private static readonly PdfIndirectIdentifier<PageTreeNode> Pages = new PageTreeNode(options => options.Kids = Array.Empty<PdfIndirectIdentifier<PageObject>>().ToPdfArray())
+    private static readonly IPdfIndirectIdentifier<PageTreeNode> Pages = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<PageObject>>().ToPdfArray())
         .ToPdfIndirect(3)
         .ToPdfIndirectIdentifier();
 
-    private static readonly PdfIndirectIdentifier<DocumentCatalog> RootDictionary =
+    private static readonly IPdfIndirectIdentifier<DocumentCatalog> RootDictionary =
         new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = Pages).ToPdfIndirect(2).ToPdfIndirectIdentifier();
 
     public static IEnumerable<object[]> FileTrailer_Content_TestCases()

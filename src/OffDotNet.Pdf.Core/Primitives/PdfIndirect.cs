@@ -10,7 +10,7 @@ using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public sealed class PdfIndirect<T> : BasePdfObject
+public sealed class PdfIndirect<T> : BasePdfObject, IPdfIndirect
     where T : IPdfObject
 {
     public PdfIndirect(int objectNumber, int generationNumber = 0)

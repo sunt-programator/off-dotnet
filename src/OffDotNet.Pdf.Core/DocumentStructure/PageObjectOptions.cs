@@ -12,11 +12,11 @@ namespace OffDotNet.Pdf.Core.DocumentStructure;
 
 public sealed class PageObjectOptions
 {
-    public PdfIndirectIdentifier<PageTreeNode> Parent { get; set; } = default!;
+    public IPdfIndirectIdentifier<PageTreeNode> Parent { get; set; } = default!;
 
     public ResourceDictionary Resources { get; set; } = default!;
 
     public Rectangle MediaBox { get; set; } = default!;
 
-    public AnyOf<PdfIndirectIdentifier<PdfStream>, PdfArray<PdfIndirectIdentifier<PdfStream>>>? Contents { get; set; }
+    public AnyOf<IPdfIndirectIdentifier<PdfStream>, PdfArray<IPdfIndirectIdentifier<PdfStream>>>? Contents { get; set; }
 }

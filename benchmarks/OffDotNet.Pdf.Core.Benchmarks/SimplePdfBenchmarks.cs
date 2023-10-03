@@ -57,17 +57,17 @@ public class SimplePdfBenchmarks
         FileHeader fileHeader = FileHeader.PdfVersion17;
 
         int objectNumber = 0;
-        PdfIndirectIdentifier<DocumentCatalog> documentCatalogIndirect = new PdfIndirect<DocumentCatalog>(++objectNumber).ToPdfIndirectIdentifier();
-        PdfIndirectIdentifier<PageTreeNode> rootPageTreeNodeIndirect = new PdfIndirect<PageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
+        IPdfIndirectIdentifier<DocumentCatalog> documentCatalogIndirect = new PdfIndirect<DocumentCatalog>(++objectNumber).ToPdfIndirectIdentifier();
+        IPdfIndirectIdentifier<PageTreeNode> rootPageTreeNodeIndirect = new PdfIndirect<PageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
 
-        List<PdfIndirectIdentifier<PageObject>> pageObjectsIndirectList = new(pagesCount);
+        List<IPdfIndirectIdentifier<PageObject>> pageObjectsIndirectList = new(pagesCount);
         for (int i = 0; i < pagesCount; i++)
         {
             pageObjectsIndirectList.Add(new PdfIndirect<PageObject>(++objectNumber).ToPdfIndirectIdentifier());
         }
 
-        PdfIndirectIdentifier<PdfStream> contentStreamIndirect = new PdfIndirect<PdfStream>(++objectNumber).ToPdfIndirectIdentifier();
-        PdfIndirectIdentifier<Type1Font> fontIndirect = new PdfIndirect<Type1Font>(objectNumber).ToPdfIndirectIdentifier();
+        IPdfIndirectIdentifier<PdfStream> contentStreamIndirect = new PdfIndirect<PdfStream>(++objectNumber).ToPdfIndirectIdentifier();
+        IPdfIndirectIdentifier<Type1Font> fontIndirect = new PdfIndirect<Type1Font>(objectNumber).ToPdfIndirectIdentifier();
 
         PdfOperation[] pdfOperations =
         {
@@ -78,18 +78,18 @@ public class SimplePdfBenchmarks
 
         TextObject textObject = new(pdfOperations);
 
-        PdfDictionary<PdfIndirectIdentifier<Type1Font>> fontDictionary = new Dictionary<PdfName, PdfIndirectIdentifier<Type1Font>> { { "F1", fontIndirect } }.ToPdfDictionary();
+        PdfDictionary<IPdfIndirectIdentifier<Type1Font>> fontDictionary = new Dictionary<PdfName, IPdfIndirectIdentifier<Type1Font>> { { "F1", fontIndirect } }.ToPdfDictionary();
 
         documentCatalogIndirect.PdfIndirect.Value = new DocumentCatalog(options => options.Pages = rootPageTreeNodeIndirect);
         rootPageTreeNodeIndirect.PdfIndirect.Value = new PageTreeNode(options => options.Kids = pageObjectsIndirectList.ToPdfArray());
 
-        foreach (PdfIndirectIdentifier<PageObject> pageObjectIndirect in pageObjectsIndirectList)
+        foreach (IPdfIndirectIdentifier<PageObject> pageObjectIndirect in pageObjectsIndirectList)
         {
             pageObjectIndirect.PdfIndirect.Value = new PageObject(options =>
             {
                 options.Parent = rootPageTreeNodeIndirect;
                 options.MediaBox = new Rectangle(0, 0, 612, 792);
-                options.Contents = contentStreamIndirect;
+                options.Contents = new(contentStreamIndirect);
                 options.Resources = new ResourceDictionary(resourceDictionaryOptions => resourceDictionaryOptions.Font = fontDictionary);
             });
         }
@@ -110,7 +110,7 @@ public class SimplePdfBenchmarks
         byteOffset += rootPageTreeNodeIndirect.PdfIndirect.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
-        foreach (PdfIndirectIdentifier<PageObject> pageObjectIndirect in pageObjectsIndirectList)
+        foreach (IPdfIndirectIdentifier<PageObject> pageObjectIndirect in pageObjectsIndirectList)
         {
             byteOffset += pageObjectIndirect.PdfIndirect.Bytes.Length;
             xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
@@ -132,7 +132,7 @@ public class SimplePdfBenchmarks
         this.streamWriter.Write(documentCatalogIndirect.PdfIndirect.Bytes.Span);
         this.streamWriter.Write(rootPageTreeNodeIndirect.PdfIndirect.Bytes.Span);
 
-        foreach (PdfIndirectIdentifier<PageObject> pageObjectIndirect in pageObjectsIndirectList)
+        foreach (IPdfIndirectIdentifier<PageObject> pageObjectIndirect in pageObjectsIndirectList)
         {
             this.streamWriter.Write(pageObjectIndirect.PdfIndirect.Bytes.Span);
         }
@@ -162,11 +162,11 @@ public class SimplePdfBenchmarks
         FileHeader fileHeader = FileHeader.PdfVersion17;
 
         int objectNumber = 0;
-        PdfIndirectIdentifier<DocumentCatalog> documentCatalogIndirect = new PdfIndirect<DocumentCatalog>(++objectNumber).ToPdfIndirectIdentifier();
-        PdfIndirectIdentifier<PageTreeNode> rootPageTreeNodeIndirect = new PdfIndirect<PageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
+        IPdfIndirectIdentifier<DocumentCatalog> documentCatalogIndirect = new PdfIndirect<DocumentCatalog>(++objectNumber).ToPdfIndirectIdentifier();
+        IPdfIndirectIdentifier<PageTreeNode> rootPageTreeNodeIndirect = new PdfIndirect<PageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
 
-        List<PdfIndirectIdentifier<PageObject>> pageObjectsIndirectList = new(pagesCount);
-        List<PdfIndirectIdentifier<PdfStream>> contentStreamsIndirectList = new(pagesCount);
+        List<IPdfIndirectIdentifier<PageObject>> pageObjectsIndirectList = new(pagesCount);
+        List<IPdfIndirectIdentifier<PdfStream>> contentStreamsIndirectList = new(pagesCount);
         for (int i = 0; i < pagesCount; i++)
         {
             pageObjectsIndirectList.Add(new PdfIndirect<PageObject>(++objectNumber).ToPdfIndirectIdentifier());
@@ -177,7 +177,7 @@ public class SimplePdfBenchmarks
             contentStreamsIndirectList.Add(new PdfIndirect<PdfStream>(++objectNumber).ToPdfIndirectIdentifier());
         }
 
-        PdfIndirectIdentifier<Type1Font> fontIndirect = new PdfIndirect<Type1Font>(objectNumber).ToPdfIndirectIdentifier();
+        IPdfIndirectIdentifier<Type1Font> fontIndirect = new PdfIndirect<Type1Font>(objectNumber).ToPdfIndirectIdentifier();
 
         PdfOperation[] pdfOperations =
         {
@@ -188,7 +188,7 @@ public class SimplePdfBenchmarks
 
         TextObject textObject = new(pdfOperations);
 
-        PdfDictionary<PdfIndirectIdentifier<Type1Font>> fontDictionary = new Dictionary<PdfName, PdfIndirectIdentifier<Type1Font>> { { "F1", fontIndirect } }.ToPdfDictionary();
+        PdfDictionary<IPdfIndirectIdentifier<Type1Font>> fontDictionary = new Dictionary<PdfName, IPdfIndirectIdentifier<Type1Font>> { { "F1", fontIndirect } }.ToPdfDictionary();
 
         documentCatalogIndirect.PdfIndirect.Value = new DocumentCatalog(options => options.Pages = rootPageTreeNodeIndirect);
         rootPageTreeNodeIndirect.PdfIndirect.Value = new PageTreeNode(options => options.Kids = pageObjectsIndirectList.ToPdfArray());
@@ -200,12 +200,12 @@ public class SimplePdfBenchmarks
             {
                 options.Parent = rootPageTreeNodeIndirect;
                 options.MediaBox = new Rectangle(0, 0, 612, 792);
-                options.Contents = contentStreamsIndirectList[index];
+                options.Contents = new(contentStreamsIndirectList[index]);
                 options.Resources = new ResourceDictionary(resourceDictionaryOptions => resourceDictionaryOptions.Font = fontDictionary);
             });
         }
 
-        foreach (PdfIndirectIdentifier<PdfStream> contentStreamIndirect in contentStreamsIndirectList)
+        foreach (IPdfIndirectIdentifier<PdfStream> contentStreamIndirect in contentStreamsIndirectList)
         {
             contentStreamIndirect.PdfIndirect.Value = new PdfStream(textObject.Content.AsMemory());
         }
@@ -225,13 +225,13 @@ public class SimplePdfBenchmarks
         byteOffset += rootPageTreeNodeIndirect.PdfIndirect.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
-        foreach (PdfIndirectIdentifier<PageObject> pageObjectIndirect in pageObjectsIndirectList)
+        foreach (IPdfIndirectIdentifier<PageObject> pageObjectIndirect in pageObjectsIndirectList)
         {
             byteOffset += pageObjectIndirect.PdfIndirect.Bytes.Length;
             xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
         }
 
-        foreach (PdfIndirectIdentifier<PdfStream> contentStreamIndirect in contentStreamsIndirectList)
+        foreach (IPdfIndirectIdentifier<PdfStream> contentStreamIndirect in contentStreamsIndirectList)
         {
             byteOffset += contentStreamIndirect.PdfIndirect.Bytes.Length;
             xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
@@ -250,12 +250,12 @@ public class SimplePdfBenchmarks
         this.streamWriter.Write(documentCatalogIndirect.PdfIndirect.Bytes.Span);
         this.streamWriter.Write(rootPageTreeNodeIndirect.PdfIndirect.Bytes.Span);
 
-        foreach (PdfIndirectIdentifier<PageObject> pageObjectIndirect in pageObjectsIndirectList)
+        foreach (IPdfIndirectIdentifier<PageObject> pageObjectIndirect in pageObjectsIndirectList)
         {
             this.streamWriter.Write(pageObjectIndirect.PdfIndirect.Bytes.Span);
         }
 
-        foreach (PdfIndirectIdentifier<PdfStream> contentStreamIndirect in contentStreamsIndirectList)
+        foreach (IPdfIndirectIdentifier<PdfStream> contentStreamIndirect in contentStreamsIndirectList)
         {
             this.streamWriter.Write(contentStreamIndirect.PdfIndirect.Bytes.Span);
         }
