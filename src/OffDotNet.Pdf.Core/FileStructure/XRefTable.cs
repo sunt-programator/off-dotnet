@@ -15,7 +15,7 @@ public sealed class XRefTable : BasePdfObject
     private readonly Lazy<string> literalValue;
     private readonly Lazy<byte[]> bytes;
 
-    public XRefTable(ICollection<XRefSection> xRefSections)
+    public XRefTable(ICollection<IXRefSection> xRefSections)
     {
         this.Value = xRefSections.CheckConstraints(sections => sections.Count > 0, Resource.XRefTable_MustHaveNonEmptyEntriesCollection);
         this.literalValue = new Lazy<string>(this.GenerateContent);
@@ -26,7 +26,7 @@ public sealed class XRefTable : BasePdfObject
 
     public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
-    public ICollection<XRefSection> Value { get; }
+    public ICollection<IXRefSection> Value { get; }
 
     public override string Content => this.literalValue.Value;
 
@@ -39,7 +39,7 @@ public sealed class XRefTable : BasePdfObject
     {
         StringBuilder stringBuilder = new();
 
-        foreach (XRefSection section in this.Value)
+        foreach (IXRefSection section in this.Value)
         {
             stringBuilder.Append(section.Content);
         }

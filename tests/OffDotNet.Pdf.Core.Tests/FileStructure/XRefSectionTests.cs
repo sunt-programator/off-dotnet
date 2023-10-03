@@ -19,7 +19,7 @@ public class XRefSectionTests
         ICollection<IXRefSubSection> subSections = new List<IXRefSubSection>(0);
 
         // Act
-        XRefSection XRefSectionFunction()
+        IXRefSection XRefSectionFunction()
         {
             return new XRefSection(subSections);
         }
@@ -31,7 +31,7 @@ public class XRefSectionTests
 
     [Theory(DisplayName = $"{nameof(XRefSection.Content)} property should return a valid value")]
     [MemberData(nameof(XRefSectionTestsDataGenerator.XRefSection_Content_TestCases), MemberType = typeof(XRefSectionTestsDataGenerator))]
-    public void XRefSection_Content_ShouldReturnValidValue(XRefSection xRefSection, string expectedContent)
+    public void XRefSection_Content_ShouldReturnValidValue(IXRefSection xRefSection, string expectedContent)
     {
         // Arrange
 
@@ -44,7 +44,7 @@ public class XRefSectionTests
 
     [Theory(DisplayName = $"{nameof(XRefSection.NumberOfSubSections)} property should return a valid value")]
     [MemberData(nameof(XRefSectionTestsDataGenerator.XRefSection_NumberOfSubSections_TestCases), MemberType = typeof(XRefSectionTestsDataGenerator))]
-    public void XRefSection_NumberOfEntries_ShouldReturnValidValue(XRefSection xRefSection, int expectedNumberOfEntries)
+    public void XRefSection_NumberOfEntries_ShouldReturnValidValue(IXRefSection xRefSection, int expectedNumberOfEntries)
     {
         // Arrange
 
@@ -57,7 +57,7 @@ public class XRefSectionTests
 
     [Theory(DisplayName = $"{nameof(XRefSection.Bytes)} property should return a valid value")]
     [MemberData(nameof(XRefSectionTestsDataGenerator.XRefSection_Bytes_TestCases), MemberType = typeof(XRefSectionTestsDataGenerator))]
-    public void XRefSection_Bytes_ShouldReturnValidValue(XRefSection xRefSection, byte[] expectedBytes)
+    public void XRefSection_Bytes_ShouldReturnValidValue(IXRefSection xRefSection, byte[] expectedBytes)
     {
         // Arrange
 
@@ -70,7 +70,7 @@ public class XRefSectionTests
 
     [Theory(DisplayName = $"{nameof(XRefSection.Content)} property, accessed multiple times, should return the same reference")]
     [MemberData(nameof(XRefSectionTestsDataGenerator.XRefSection_NoExpectedData_TestCases), MemberType = typeof(XRefSectionTestsDataGenerator))]
-    public void XRefSection_Content_MultipleAccesses_ShouldReturnSameReference(XRefSection xRefSection)
+    public void XRefSection_Content_MultipleAccesses_ShouldReturnSameReference(IXRefSection xRefSection)
     {
         // Arrange
 
@@ -84,7 +84,7 @@ public class XRefSectionTests
 
     [Theory(DisplayName = "Check if Equals returns a valid result")]
     [MemberData(nameof(XRefSectionTestsDataGenerator.XRefSection_Equals_TestCases), MemberType = typeof(XRefSectionTestsDataGenerator))]
-    public void XRefSection_Equals_CheckValidity(XRefSection xRefSection1, XRefSection xRefSection2, bool expectedValue)
+    public void XRefSection_Equals_CheckValidity(IXRefSection xRefSection1, IXRefSection xRefSection2, bool expectedValue)
     {
         // Arrange
 
@@ -97,7 +97,7 @@ public class XRefSectionTests
 
     [Theory(DisplayName = "Check if Equals method with null object returns always false")]
     [MemberData(nameof(XRefSectionTestsDataGenerator.XRefSection_NoExpectedData_TestCases), MemberType = typeof(XRefSectionTestsDataGenerator))]
-    public void XRefSection_EqualsNullObject_CheckValidity(XRefSection xRefSection)
+    public void XRefSection_EqualsNullObject_CheckValidity(IXRefSection xRefSection)
     {
         // Arrange
 

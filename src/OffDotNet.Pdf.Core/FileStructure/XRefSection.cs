@@ -10,7 +10,7 @@ using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.FileStructure;
 
-public sealed class XRefSection : BasePdfObject
+public sealed class XRefSection : BasePdfObject, IXRefSection
 {
     private readonly Lazy<string> literalValue;
     private readonly Lazy<byte[]> bytes;

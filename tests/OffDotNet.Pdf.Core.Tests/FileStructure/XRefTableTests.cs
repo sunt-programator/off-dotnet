@@ -16,7 +16,7 @@ public class XRefTableTests
     public void XRefTable_NegativeGenerationNumber_ShouldThrowException()
     {
         // Arrange
-        ICollection<XRefSection> sections = new List<XRefSection>(0);
+        ICollection<IXRefSection> sections = new List<IXRefSection>(0);
 
         // Act
         XRefTable XRefTableFunction()
@@ -125,7 +125,7 @@ internal static class XRefTableTestsDataGenerator
         EntryObj0Gen65535F.ToXRefSubSection(0), EntryObj25325Gen0N.ToXRefSubSection(3), EntryObj257775Gen0N.ToXRefSubSection(30), MultipleEntries.ToXRefSubSection(23),
     };
 
-    private static readonly List<XRefSection> MultipleSections = new() { MultipleEntries.ToXRefSection(23), MultipleEntries.ToXRefSection(41) };
+    private static readonly List<IXRefSection> MultipleSections = new() { MultipleEntries.ToXRefSection(23), MultipleEntries.ToXRefSection(41) };
 
     public static IEnumerable<object[]> XRefTable_Content_TestCases()
     {

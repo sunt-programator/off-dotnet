@@ -17,32 +17,32 @@ public static class XRefExtensions
         return new XRefSubSection(objectNumber, entries);
     }
 
-    public static XRefSection ToXRefSection(this IXRefSubSection subSection)
+    public static IXRefSection ToXRefSection(this IXRefSubSection subSection)
     {
         return new XRefSection(new List<IXRefSubSection>(1) { subSection });
     }
 
-    public static XRefSection ToXRefSection(this ICollection<IXRefSubSection> subSections)
+    public static IXRefSection ToXRefSection(this ICollection<IXRefSubSection> subSections)
     {
         return new XRefSection(subSections);
     }
 
-    public static XRefSection ToXRefSection(this IXRefEntry entry, int objectNumber)
+    public static IXRefSection ToXRefSection(this IXRefEntry entry, int objectNumber)
     {
         return entry.ToXRefSubSection(objectNumber).ToXRefSection();
     }
 
-    public static XRefSection ToXRefSection(this ICollection<IXRefEntry> entries, int objectNumber)
+    public static IXRefSection ToXRefSection(this ICollection<IXRefEntry> entries, int objectNumber)
     {
         return entries.ToXRefSubSection(objectNumber).ToXRefSection();
     }
 
-    public static XRefTable ToXRefTable(this XRefSection section)
+    public static XRefTable ToXRefTable(this IXRefSection section)
     {
-        return new XRefTable(new List<XRefSection>(1) { section });
+        return new XRefTable(new List<IXRefSection>(1) { section });
     }
 
-    public static XRefTable ToXRefTable(this ICollection<XRefSection> sections)
+    public static XRefTable ToXRefTable(this ICollection<IXRefSection> sections)
     {
         return new XRefTable(sections);
     }
