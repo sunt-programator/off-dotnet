@@ -21,5 +21,5 @@ public sealed class FileTrailerOptions
 
     public IPdfIndirectIdentifier<PdfDictionary<IPdfObject>>? Info { get; set; }
 
-    public PdfArray<PdfString>? Id { get; set; }
+    public IPdfArray<PdfString>? Id { get; set; }
 }

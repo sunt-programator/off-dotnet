@@ -101,8 +101,8 @@ public class PdfStreamTests
     {
         // Arrange
         IEnumerable<PdfName> pdfNames = filterNames.Select(filterName => new PdfName(filterName));
-        PdfArray<PdfName> pdfOptionNames = pdfNames.ToPdfArray();
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.Filter = pdfOptionNames);
+        IPdfArray<PdfName> pdfOptionNames = pdfNames.ToPdfArray();
+        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.Filter = new(pdfOptionNames));
         const int expectedDictionaryCount = 2; // Count + Current extent option
         const string expectedLengthKeyName = "Length";
         const string expectedOptionKeyName = "Filter";
@@ -116,7 +116,7 @@ public class PdfStreamTests
         Assert.Equal(expectedDictionaryCount, actualStreamExtent.Value.Count);
         Assert.True(isLengthInDictionary);
         Assert.True(isOptionInDictionary);
-        PdfArray<PdfName> actualPdfArray = Assert.IsType<PdfArray<PdfName>>(optionValue);
+        IPdfArray<PdfName> actualPdfArray = Assert.IsAssignableFrom<IPdfArray<PdfName>>(optionValue);
         Assert.Equal(filterNames.Length, actualPdfArray.Value.Count);
         Assert.Equal(pdfOptionNames.Value, actualPdfArray.Value);
     }
@@ -130,8 +130,8 @@ public class PdfStreamTests
     {
         // Arrange
         IEnumerable<PdfName> pdfNames = fileFilterNames.Select(filterName => new PdfName(filterName));
-        PdfArray<PdfName> pdfOptionNames = pdfNames.ToPdfArray();
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.FileFilter = pdfOptionNames);
+        IPdfArray<PdfName> pdfOptionNames = pdfNames.ToPdfArray();
+        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.FileFilter = new(pdfOptionNames));
         const int expectedDictionaryCount = 2; // Count + Current extent option
         const string expectedLengthKeyName = "Length";
         const string expectedOptionKeyName = "FFilter";
@@ -145,7 +145,7 @@ public class PdfStreamTests
         Assert.Equal(expectedDictionaryCount, actualStreamExtent.Value.Count);
         Assert.True(isLengthInDictionary);
         Assert.True(isOptionInDictionary);
-        PdfArray<PdfName> actualPdfArray = Assert.IsType<PdfArray<PdfName>>(optionValue);
+        IPdfArray<PdfName> actualPdfArray = Assert.IsAssignableFrom<IPdfArray<PdfName>>(optionValue);
         Assert.Equal(fileFilterNames.Length, actualPdfArray.Value.Count);
         Assert.Equal(pdfOptionNames.Value, actualPdfArray.Value);
     }
@@ -157,8 +157,8 @@ public class PdfStreamTests
     {
         // Arrange
         IEnumerable<PdfName> pdfNames = decodeParameters.Select(filterName => new PdfName(filterName));
-        PdfArray<PdfName> pdfOptionNames = pdfNames.ToPdfArray();
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.DecodeParameters = pdfOptionNames);
+        IPdfArray<PdfName> pdfOptionNames = pdfNames.ToPdfArray();
+        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.DecodeParameters = new(pdfOptionNames));
         const int expectedDictionaryCount = 2; // Count + Current extent option
         const string expectedLengthKeyName = "Length";
         const string expectedOptionKeyName = "DecodeParms";
@@ -172,7 +172,7 @@ public class PdfStreamTests
         Assert.Equal(expectedDictionaryCount, actualStreamExtent.Value.Count);
         Assert.True(isLengthInDictionary);
         Assert.True(isOptionInDictionary);
-        PdfArray<PdfName> actualPdfArray = Assert.IsType<PdfArray<PdfName>>(optionValue);
+        IPdfArray<PdfName> actualPdfArray = Assert.IsAssignableFrom<IPdfArray<PdfName>>(optionValue);
         Assert.Equal(decodeParameters.Length, actualPdfArray.Value.Count);
         Assert.Equal(pdfOptionNames.Value, actualPdfArray.Value);
     }
@@ -184,8 +184,8 @@ public class PdfStreamTests
     {
         // Arrange
         IEnumerable<PdfName> pdfNames = decodeParameters.Select(filterName => new PdfName(filterName));
-        PdfArray<PdfName> pdfOptionNames = pdfNames.ToPdfArray();
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.FileDecodeParameters = pdfOptionNames);
+        IPdfArray<PdfName> pdfOptionNames = pdfNames.ToPdfArray();
+        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.FileDecodeParameters = new(pdfOptionNames));
         const int expectedDictionaryCount = 2; // Count + Current extent option
         const string expectedLengthKeyName = "Length";
         const string expectedOptionKeyName = "FDecodeParms";
@@ -199,7 +199,7 @@ public class PdfStreamTests
         Assert.Equal(expectedDictionaryCount, actualStreamExtent.Value.Count);
         Assert.True(isLengthInDictionary);
         Assert.True(isOptionInDictionary);
-        PdfArray<PdfName> actualPdfArray = Assert.IsType<PdfArray<PdfName>>(optionValue);
+        IPdfArray<PdfName> actualPdfArray = Assert.IsAssignableFrom<IPdfArray<PdfName>>(optionValue);
         Assert.Equal(decodeParameters.Length, actualPdfArray.Value.Count);
         Assert.Equal(pdfOptionNames.Value, actualPdfArray.Value);
     }
@@ -410,7 +410,7 @@ public class PdfStreamTests
     }
 }
 
-[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
+[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData")]
 internal static class PdfStreamTestDataGenerator
 {
     public static IEnumerable<object[]> PdfStream_Bytes_TestCases()

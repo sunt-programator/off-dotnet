@@ -16,7 +16,7 @@ public class PdfArrayTests
     public void PdfArray_ParameterizedConstructor_CheckValue(List<IPdfObject> inputValue)
     {
         // Arrange
-        PdfArray<IPdfObject> pdfArray = PdfArray<IPdfObject>.CreateRange(inputValue); // Use the CreateRange static method to initialize an PdfArray instance
+        IPdfArray<IPdfObject> pdfArray = PdfArray<IPdfObject>.CreateRange(inputValue); // Use the CreateRange static method to initialize an PdfArray instance
 
         // Act
 
@@ -28,7 +28,7 @@ public class PdfArrayTests
     public void PdfArray_Equals_NullArgument_ShouldReturnFalse()
     {
         // Arrange
-        PdfArray<PdfName> pdfArray1 = new PdfName("Name1").ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+        IPdfArray<PdfName> pdfArray1 = new PdfName("Name1").ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
 
         // Act
         bool actualResult = pdfArray1.Equals(null);
@@ -41,10 +41,10 @@ public class PdfArrayTests
     public void PdfArray_Equals2_NullArgument_ShouldReturnFalse()
     {
         // Arrange
-        PdfArray<IPdfObject> pdfArray1 = PdfArray<IPdfObject>.Create(new PdfString("901FA", true)); // Use the Create static method to initialize an PdfArray instance
+        IPdfArray<IPdfObject> pdfArray1 = PdfArray<IPdfObject>.Create(new PdfString("901FA", true)); // Use the Create static method to initialize an PdfArray instance
 
         // Act
-        bool actualResult = pdfArray1.Equals((object?)null);
+        bool actualResult = pdfArray1.Equals(null);
 
         // Assert
         Assert.False(actualResult);
@@ -55,11 +55,11 @@ public class PdfArrayTests
     {
         // Arrange
         IReadOnlyCollection<IPdfObject> objects1 = new List<IPdfObject> { new PdfInteger(-65), new PdfName("#ABC") };
-        PdfArray<IPdfObject> pdfArray1 = objects1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
-        PdfArray<IPdfObject> pdfArray2 = pdfArray1; // Use the ToPdfArray extension method to initialize an PdfArray instance
+        IPdfArray<IPdfObject> pdfArray1 = objects1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+        IPdfArray<IPdfObject> pdfArray2 = pdfArray1; // Use the ToPdfArray extension method to initialize an PdfArray instance
 
         // Act
-        bool actualResult = pdfArray1.Equals((object)pdfArray2);
+        bool actualResult = pdfArray1.Equals(pdfArray2);
 
         // Assert
         Assert.True(actualResult);
@@ -70,11 +70,11 @@ public class PdfArrayTests
     {
         // Arrange
         IReadOnlyCollection<IPdfObject> objects1 = new List<IPdfObject> { new PdfInteger(-65), new PdfName("#ABC") };
-        PdfArray<IPdfObject> pdfArray1 = objects1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
-        PdfArray<IPdfObject> pdfArray2 = objects1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+        IPdfArray<IPdfObject> pdfArray1 = objects1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+        IPdfArray<IPdfObject> pdfArray2 = objects1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
 
         // Act
-        bool actualResult = pdfArray1.Equals((object)pdfArray2);
+        bool actualResult = pdfArray1.Equals(pdfArray2);
 
         // Assert
         Assert.False(actualResult);
@@ -85,7 +85,7 @@ public class PdfArrayTests
     public void PdfArray_Bytes_CheckValidity(IReadOnlyCollection<IPdfObject> value1, byte[] expectedBytes)
     {
         // Arrange
-        PdfArray<IPdfObject> pdfArray1 = value1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+        IPdfArray<IPdfObject> pdfArray1 = value1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
 
         // Act
         ReadOnlyMemory<byte> actualBytes = pdfArray1.Bytes;
@@ -99,7 +99,7 @@ public class PdfArrayTests
     public void PdfArray_GetHashCode_CheckValidity(IReadOnlyCollection<IPdfObject> value1)
     {
         // Arrange
-        PdfArray<IPdfObject> pdfArray1 = new(value1);
+        IPdfArray<IPdfObject> pdfArray1 = new PdfArray<IPdfObject>(value1);
         int expectedHashCode = HashCode.Combine(nameof(PdfArray<IPdfObject>), value1);
 
         // Act
@@ -121,8 +121,8 @@ public class PdfArrayTests
             new PdfString("Ralph"),
             new PdfName("SomeName"),
         };
-        PdfArray<IPdfObject> pdfArray1 = new(value1);
-        PdfArray<IPdfObject> pdfArray2 = new(value1);
+        IPdfArray<IPdfObject> pdfArray1 = new PdfArray<IPdfObject>(value1);
+        IPdfArray<IPdfObject> pdfArray2 = new PdfArray<IPdfObject>(value1);
         int expectedHashCode = HashCode.Combine(nameof(PdfArray<IPdfObject>), value1);
 
         // Act
@@ -156,8 +156,8 @@ public class PdfArrayTests
             new PdfString("Ralph"),
             new PdfName("SomeName"),
         };
-        PdfArray<IPdfObject> pdfArray1 = new(value1);
-        PdfArray<IPdfObject> pdfArray2 = new(value2);
+        IPdfArray<IPdfObject> pdfArray1 = new PdfArray<IPdfObject>(value1);
+        IPdfArray<IPdfObject> pdfArray2 = new PdfArray<IPdfObject>(value2);
 
         // Act
         int actualHashCode1 = pdfArray1.GetHashCode();
@@ -172,7 +172,7 @@ public class PdfArrayTests
     public void PdfArray_Value_Count_ShouldReturn1()
     {
         // Arrange
-        PdfArray<IPdfObject> pdfArray1 = PdfArray<IPdfObject>.Create(new PdfInteger(549));
+        IPdfArray<IPdfObject> pdfArray1 = PdfArray<IPdfObject>.Create(new PdfInteger(549));
 
         // Act
         int actualValueCount = pdfArray1.Value.Count;
@@ -186,7 +186,7 @@ public class PdfArrayTests
     public void PdfArray_Content_Check(IReadOnlyCollection<IPdfObject> inputValues, string expectedContentValue)
     {
         // Arrange
-        PdfArray<IPdfObject> pdfArray1 = inputValues.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
+        IPdfArray<IPdfObject> pdfArray1 = inputValues.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
 
         // Act
         string actualContentValue = pdfArray1.Content;

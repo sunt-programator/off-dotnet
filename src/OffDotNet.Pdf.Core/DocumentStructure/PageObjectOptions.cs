@@ -18,5 +18,5 @@ public sealed class PageObjectOptions
 
     public Rectangle MediaBox { get; set; } = default!;
 
-    public AnyOf<IPdfIndirectIdentifier<PdfStream>, PdfArray<IPdfIndirectIdentifier<PdfStream>>>? Contents { get; set; }
+    public AnyOf<IPdfIndirectIdentifier<PdfStream>, IPdfArray<IPdfIndirectIdentifier<PdfStream>>>? Contents { get; set; }
 }

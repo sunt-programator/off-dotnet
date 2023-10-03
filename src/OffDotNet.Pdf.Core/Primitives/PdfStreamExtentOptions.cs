@@ -9,13 +9,13 @@ namespace OffDotNet.Pdf.Core.Primitives;
 
 public sealed class PdfStreamExtentOptions
 {
-    public AnyOf<PdfName, PdfArray<PdfName>>? Filter { get; set; } // Name or Array
+    public AnyOf<PdfName, IPdfArray<PdfName>>? Filter { get; set; } // Name or Array
 
-    public AnyOf<PdfDictionary<PdfName>, PdfArray<PdfName>>? DecodeParameters { get; set; } // Dictionary or Array
+    public AnyOf<PdfDictionary<PdfName>, IPdfArray<PdfName>>? DecodeParameters { get; set; } // Dictionary or Array
 
     public PdfString? FileSpecification { get; set; }
 
-    public AnyOf<PdfName, PdfArray<PdfName>>? FileFilter { get; set; } // Name or Array
+    public AnyOf<PdfName, IPdfArray<PdfName>>? FileFilter { get; set; } // Name or Array
 
-    public AnyOf<PdfDictionary<PdfName>, PdfArray<PdfName>>? FileDecodeParameters { get; set; } // Dictionary or Array
+    public AnyOf<PdfDictionary<PdfName>, IPdfArray<PdfName>>? FileDecodeParameters { get; set; } // Dictionary or Array
 }
