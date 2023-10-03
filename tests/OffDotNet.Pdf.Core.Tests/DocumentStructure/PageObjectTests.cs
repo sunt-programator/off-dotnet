@@ -129,7 +129,7 @@ internal static class PageObjectTestsDataGenerator
                     { "F7", StandardFonts.TimesRoman.ToPdfIndirect(11).ToPdfIndirectIdentifier() },
                 }.ToPdfDictionary()),
                 MediaBox = new Rectangle(0, 0, 612, 792),
-                Contents = new(new PdfStream(string.Empty.AsMemory()).ToPdfIndirect(4, 2).ToPdfIndirectIdentifier()),
+                Contents = new(new PdfStream(string.Empty.AsMemory()).ToPdfIndirect<IPdfStream>(4, 2).ToPdfIndirectIdentifier()),
             },
             "<</Type /Page /Parent 3 0 R /Resources <</Font <</F3 7 0 R /F5 9 0 R /F7 11 0 R>> /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]>> /MediaBox [0 0 612 792] /Contents 4 2 R>>",
         };

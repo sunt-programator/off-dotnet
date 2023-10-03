@@ -19,7 +19,7 @@ namespace OffDotNet.Pdf.Document;
 
 public sealed class PdfDocument : IDisposable, IAsyncDisposable
 {
-    private readonly IPdfIndirectIdentifier<PdfStream> contentStreamIndirect;
+    private readonly IPdfIndirectIdentifier<IPdfStream> contentStreamIndirect;
     private readonly Stream stream;
 
     // ReSharper disable once UnusedParameter.Local
@@ -30,7 +30,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
         this.DocumentCatalog = new PdfIndirect<DocumentCatalog>(++objectNumber).ToPdfIndirectIdentifier();
         this.RootPageTree = new PdfIndirect<PageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
         this.Pages = new List<IPdfIndirectIdentifier<PageObject>>(1) { new PdfIndirect<PageObject>(++objectNumber).ToPdfIndirectIdentifier() }.ToImmutableList();
-        this.contentStreamIndirect = new PdfIndirect<PdfStream>(++objectNumber).ToPdfIndirectIdentifier();
+        this.contentStreamIndirect = new PdfIndirect<IPdfStream>(++objectNumber).ToPdfIndirectIdentifier();
         this.Fonts = new List<IPdfIndirectIdentifier<Type1Font>>(1) { new PdfIndirect<Type1Font>(++objectNumber).ToPdfIndirectIdentifier() }.ToImmutableList();
 
         PdfOperation[] pdfOperations =

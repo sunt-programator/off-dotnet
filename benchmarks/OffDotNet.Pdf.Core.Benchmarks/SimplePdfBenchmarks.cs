@@ -66,7 +66,7 @@ public class SimplePdfBenchmarks
             pageObjectsIndirectList.Add(new PdfIndirect<PageObject>(++objectNumber).ToPdfIndirectIdentifier());
         }
 
-        IPdfIndirectIdentifier<PdfStream> contentStreamIndirect = new PdfIndirect<PdfStream>(++objectNumber).ToPdfIndirectIdentifier();
+        IPdfIndirectIdentifier<IPdfStream> contentStreamIndirect = new PdfIndirect<IPdfStream>(++objectNumber).ToPdfIndirectIdentifier();
         IPdfIndirectIdentifier<Type1Font> fontIndirect = new PdfIndirect<Type1Font>(objectNumber).ToPdfIndirectIdentifier();
 
         PdfOperation[] pdfOperations =
@@ -166,7 +166,7 @@ public class SimplePdfBenchmarks
         IPdfIndirectIdentifier<PageTreeNode> rootPageTreeNodeIndirect = new PdfIndirect<PageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
 
         List<IPdfIndirectIdentifier<PageObject>> pageObjectsIndirectList = new(pagesCount);
-        List<IPdfIndirectIdentifier<PdfStream>> contentStreamsIndirectList = new(pagesCount);
+        List<IPdfIndirectIdentifier<IPdfStream>> contentStreamsIndirectList = new(pagesCount);
         for (int i = 0; i < pagesCount; i++)
         {
             pageObjectsIndirectList.Add(new PdfIndirect<PageObject>(++objectNumber).ToPdfIndirectIdentifier());
@@ -174,7 +174,7 @@ public class SimplePdfBenchmarks
 
         for (int i = 0; i < pagesCount; i++)
         {
-            contentStreamsIndirectList.Add(new PdfIndirect<PdfStream>(++objectNumber).ToPdfIndirectIdentifier());
+            contentStreamsIndirectList.Add(new PdfIndirect<IPdfStream>(++objectNumber).ToPdfIndirectIdentifier());
         }
 
         IPdfIndirectIdentifier<Type1Font> fontIndirect = new PdfIndirect<Type1Font>(objectNumber).ToPdfIndirectIdentifier();
@@ -205,7 +205,7 @@ public class SimplePdfBenchmarks
             });
         }
 
-        foreach (IPdfIndirectIdentifier<PdfStream> contentStreamIndirect in contentStreamsIndirectList)
+        foreach (IPdfIndirectIdentifier<IPdfStream> contentStreamIndirect in contentStreamsIndirectList)
         {
             contentStreamIndirect.PdfIndirect.Value = new PdfStream(textObject.Content.AsMemory());
         }
@@ -231,7 +231,7 @@ public class SimplePdfBenchmarks
             xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
         }
 
-        foreach (IPdfIndirectIdentifier<PdfStream> contentStreamIndirect in contentStreamsIndirectList)
+        foreach (IPdfIndirectIdentifier<IPdfStream> contentStreamIndirect in contentStreamsIndirectList)
         {
             byteOffset += contentStreamIndirect.PdfIndirect.Bytes.Length;
             xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
@@ -255,7 +255,7 @@ public class SimplePdfBenchmarks
             this.streamWriter.Write(pageObjectIndirect.PdfIndirect.Bytes.Span);
         }
 
-        foreach (IPdfIndirectIdentifier<PdfStream> contentStreamIndirect in contentStreamsIndirectList)
+        foreach (IPdfIndirectIdentifier<IPdfStream> contentStreamIndirect in contentStreamsIndirectList)
         {
             this.streamWriter.Write(contentStreamIndirect.PdfIndirect.Bytes.Span);
         }

@@ -15,7 +15,7 @@ public class PdfStreamTests
     public void PdfStream_ConstructorWithNullOptions_ShouldReturnOneStreamExtentItem()
     {
         // Arrange
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream();
+        IPdfStream pdfStream = new PdfString("Test").ToPdfStream();
         const string expectedKeyName = "Length";
 
         // Act
@@ -42,7 +42,7 @@ public class PdfStreamTests
     {
         // Arrange
         PdfName pdfOptionName = new(filterName);
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.Filter = pdfOptionName);
+        IPdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.Filter = pdfOptionName);
         const int expectedDictionaryCount = 2; // Count + Current extent option
         const string expectedLengthKeyName = "Length";
         const string expectedOptionKeyName = "Filter";
@@ -74,7 +74,7 @@ public class PdfStreamTests
     public void PdfStream_ConstructorWithFileFilter_ShouldReturnValidStreamExtend(string fileFilterName)
     {
         // Arrange
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.FileFilter = new PdfName(fileFilterName));
+        IPdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.FileFilter = new PdfName(fileFilterName));
         const int expectedDictionaryCount = 2; // Count + Current extent option
         const string expectedLengthKeyName = "Length";
         const string expectedOptionKeyName = "FFilter";
@@ -102,7 +102,7 @@ public class PdfStreamTests
         // Arrange
         IEnumerable<PdfName> pdfNames = filterNames.Select(filterName => new PdfName(filterName));
         IPdfArray<PdfName> pdfOptionNames = pdfNames.ToPdfArray();
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.Filter = new(pdfOptionNames));
+        IPdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.Filter = new(pdfOptionNames));
         const int expectedDictionaryCount = 2; // Count + Current extent option
         const string expectedLengthKeyName = "Length";
         const string expectedOptionKeyName = "Filter";
@@ -131,7 +131,7 @@ public class PdfStreamTests
         // Arrange
         IEnumerable<PdfName> pdfNames = fileFilterNames.Select(filterName => new PdfName(filterName));
         IPdfArray<PdfName> pdfOptionNames = pdfNames.ToPdfArray();
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.FileFilter = new(pdfOptionNames));
+        IPdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.FileFilter = new(pdfOptionNames));
         const int expectedDictionaryCount = 2; // Count + Current extent option
         const string expectedLengthKeyName = "Length";
         const string expectedOptionKeyName = "FFilter";
@@ -158,7 +158,7 @@ public class PdfStreamTests
         // Arrange
         IEnumerable<PdfName> pdfNames = decodeParameters.Select(filterName => new PdfName(filterName));
         IPdfArray<PdfName> pdfOptionNames = pdfNames.ToPdfArray();
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.DecodeParameters = new(pdfOptionNames));
+        IPdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.DecodeParameters = new(pdfOptionNames));
         const int expectedDictionaryCount = 2; // Count + Current extent option
         const string expectedLengthKeyName = "Length";
         const string expectedOptionKeyName = "DecodeParms";
@@ -185,7 +185,7 @@ public class PdfStreamTests
         // Arrange
         IEnumerable<PdfName> pdfNames = decodeParameters.Select(filterName => new PdfName(filterName));
         IPdfArray<PdfName> pdfOptionNames = pdfNames.ToPdfArray();
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.FileDecodeParameters = new(pdfOptionNames));
+        IPdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.FileDecodeParameters = new(pdfOptionNames));
         const int expectedDictionaryCount = 2; // Count + Current extent option
         const string expectedLengthKeyName = "Length";
         const string expectedOptionKeyName = "FDecodeParms";
@@ -210,7 +210,7 @@ public class PdfStreamTests
         // Arrange
         IDictionary<PdfName, PdfName> decodeParameters = new Dictionary<PdfName, PdfName> { { "Colors", new PdfName("None") } };
         IPdfDictionary<PdfName> pdfOptionNames = decodeParameters.ToPdfDictionary();
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.DecodeParameters = new(pdfOptionNames));
+        IPdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.DecodeParameters = new(pdfOptionNames));
         const int expectedDictionaryCount = 2; // Count + Current extent option
         const string expectedLengthKeyName = "Length";
         const string expectedOptionKeyName = "DecodeParms";
@@ -235,7 +235,7 @@ public class PdfStreamTests
         // Arrange
         IDictionary<PdfName, PdfName> decodeParameters = new Dictionary<PdfName, PdfName> { { "Colors", new PdfName("None") } };
         IPdfDictionary<PdfName> pdfOptionNames = decodeParameters.ToPdfDictionary();
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.FileDecodeParameters = new(pdfOptionNames));
+        IPdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.FileDecodeParameters = new(pdfOptionNames));
         const int expectedDictionaryCount = 2; // Count + Current extent option
         const string expectedLengthKeyName = "Length";
         const string expectedOptionKeyName = "FDecodeParms";
@@ -261,7 +261,7 @@ public class PdfStreamTests
     public void PdfStream_ConstructorWithFileSpecification_ShouldReturnValidStreamExtend(string fileSpecification)
     {
         // Arrange
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.FileSpecification = fileSpecification);
+        IPdfStream pdfStream = new PdfString("Test").ToPdfStream(options => options.FileSpecification = fileSpecification);
         const int expectedDictionaryCount = 2; // Count + Current extent option
         const string expectedLengthKeyName = "Length";
         const string expectedOptionKeyName = "F";
@@ -283,7 +283,7 @@ public class PdfStreamTests
     public void PdfStream_StreamExtent_MultipleAccesses_ShouldReturnSameReference()
     {
         // Arrange
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream();
+        IPdfStream pdfStream = new PdfString("Test").ToPdfStream();
 
         // Act
         IPdfDictionary<IPdfObject> actualStreamExtent1 = pdfStream.StreamExtent;
@@ -302,7 +302,7 @@ public class PdfStreamTests
     {
         // Arrange
         PdfString pdfString = new(pdfStringValue);
-        PdfStream pdfStream = pdfString.ToPdfStream();
+        IPdfStream pdfStream = pdfString.ToPdfStream();
         int expectedStreamExtentLengthValue = pdfString.Bytes.Length;
         string expectedStringContent = $"<</Length {expectedStreamExtentLengthValue}>>\nstream\n{pdfString.Content}\nendstream";
 
@@ -317,7 +317,7 @@ public class PdfStreamTests
     public void PdfStream_Content_MultipleAccesses_ShouldReturnSameReference()
     {
         // Arrange
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream();
+        IPdfStream pdfStream = new PdfString("Test").ToPdfStream();
 
         // Act
         string actualStreamContent1 = pdfStream.Content;
@@ -332,7 +332,7 @@ public class PdfStreamTests
     public void PdfStream_Bytes_ShouldReturnValidValue(string pdfStringValue, byte[] expectedBytes)
     {
         // Arrange
-        PdfStream pdfStream = new PdfString(pdfStringValue).ToPdfStream();
+        IPdfStream pdfStream = new PdfString(pdfStringValue).ToPdfStream();
 
         // Act
         ReadOnlyMemory<byte> actualBytes = pdfStream.Bytes;
@@ -345,7 +345,7 @@ public class PdfStreamTests
     public void PdfStream_Equals_NullArgument_ShouldReturnFalse()
     {
         // Arrange
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream();
+        IPdfStream pdfStream = new PdfString("Test").ToPdfStream();
 
         // Act
         bool actualResult = pdfStream.Equals(null);
@@ -358,7 +358,7 @@ public class PdfStreamTests
     public void PdfStream_Equals2_NullArgument_ShouldReturnFalse()
     {
         // Arrange
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream();
+        IPdfStream pdfStream = new PdfString("Test").ToPdfStream();
 
         // Act
         bool actualResult = pdfStream.Equals((object?)null);
@@ -371,8 +371,8 @@ public class PdfStreamTests
     public void PdfStream_Equals_SameReference_ShouldReturnTrue()
     {
         // Arrange
-        PdfStream pdfStream1 = new PdfString("Test").ToPdfStream();
-        PdfStream pdfStream2 = pdfStream1;
+        IPdfStream pdfStream1 = new PdfString("Test").ToPdfStream();
+        IPdfStream pdfStream2 = pdfStream1;
 
         // Act
         bool actualResult = pdfStream1.Equals(pdfStream2);
@@ -385,8 +385,8 @@ public class PdfStreamTests
     public void PdfStream_Equals_DifferentReferences_ShouldReturnFalse()
     {
         // Arrange
-        PdfStream pdfStream1 = new PdfString("Test").ToPdfStream();
-        PdfStream pdfStream2 = new PdfString("Test").ToPdfStream();
+        IPdfStream pdfStream1 = new PdfString("Test").ToPdfStream();
+        IPdfStream pdfStream2 = new PdfString("Test").ToPdfStream();
 
         // Act
         bool actualResult = pdfStream1.Equals(pdfStream2);
@@ -399,7 +399,7 @@ public class PdfStreamTests
     public void PdfStream_GetHashCode_CheckValidity()
     {
         // Arrange
-        PdfStream pdfStream = new PdfString("Test").ToPdfStream();
+        IPdfStream pdfStream = new PdfString("Test").ToPdfStream();
         int expectedHashCode = HashCode.Combine(nameof(PdfStream), pdfStream.Value);
 
         // Act

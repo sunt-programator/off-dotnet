@@ -117,7 +117,7 @@ public class PdfDocumentTests
         {
             pageObjectOptions.Parent = new PdfIndirect<PageTreeNode>(2).ToPdfIndirectIdentifier();
             pageObjectOptions.MediaBox = new Rectangle(0, 0, 612, 792);
-            pageObjectOptions.Contents = new(new PdfIndirect<PdfStream>(4).ToPdfIndirectIdentifier());
+            pageObjectOptions.Contents = new(new PdfIndirect<IPdfStream>(4).ToPdfIndirectIdentifier());
             pageObjectOptions.Resources = new ResourceDictionary(resourceDictionaryOptions =>
                 resourceDictionaryOptions.Font = new Dictionary<PdfName, IPdfIndirectIdentifier<Type1Font>>
                 {
