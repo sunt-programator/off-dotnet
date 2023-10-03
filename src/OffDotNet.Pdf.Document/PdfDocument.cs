@@ -119,7 +119,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
 
     public IImmutableList<IPdfIndirectIdentifier<Type1Font>> Fonts { get; }
 
-    public XRefTable XRefTable { get; }
+    public IXRefTable XRefTable { get; }
 
     public FileTrailer FileTrailer { get; }
 

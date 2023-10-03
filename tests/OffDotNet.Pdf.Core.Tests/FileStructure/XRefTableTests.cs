@@ -19,7 +19,7 @@ public class XRefTableTests
         ICollection<IXRefSection> sections = new List<IXRefSection>(0);
 
         // Act
-        XRefTable XRefTableFunction()
+        IXRefTable XRefTableFunction()
         {
             return new XRefTable(sections);
         }
@@ -31,7 +31,7 @@ public class XRefTableTests
 
     [Theory(DisplayName = $"{nameof(XRefTable.Content)} property should return a valid value")]
     [MemberData(nameof(XRefTableTestsDataGenerator.XRefTable_Content_TestCases), MemberType = typeof(XRefTableTestsDataGenerator))]
-    public void XRefTable_Content_ShouldReturnValidValue(XRefTable xRefTable, string expectedContent)
+    public void XRefTable_Content_ShouldReturnValidValue(IXRefTable xRefTable, string expectedContent)
     {
         // Arrange
 
@@ -44,7 +44,7 @@ public class XRefTableTests
 
     [Theory(DisplayName = $"{nameof(XRefTable.NumberOfSections)} property should return a valid value")]
     [MemberData(nameof(XRefTableTestsDataGenerator.XRefTable_NumberOfSections_TestCases), MemberType = typeof(XRefTableTestsDataGenerator))]
-    public void XRefTable_NumberOfEntries_ShouldReturnValidValue(XRefTable xRefTable, int expectedNumberOfEntries)
+    public void XRefTable_NumberOfEntries_ShouldReturnValidValue(IXRefTable xRefTable, int expectedNumberOfEntries)
     {
         // Arrange
 
@@ -57,7 +57,7 @@ public class XRefTableTests
 
     [Theory(DisplayName = $"{nameof(XRefTable.Bytes)} property should return a valid value")]
     [MemberData(nameof(XRefTableTestsDataGenerator.XRefTable_Bytes_TestCases), MemberType = typeof(XRefTableTestsDataGenerator))]
-    public void XRefTable_Bytes_ShouldReturnValidValue(XRefTable xRefTable, byte[] expectedBytes)
+    public void XRefTable_Bytes_ShouldReturnValidValue(IXRefTable xRefTable, byte[] expectedBytes)
     {
         // Arrange
 
@@ -70,7 +70,7 @@ public class XRefTableTests
 
     [Theory(DisplayName = $"{nameof(XRefTable.Content)} property, accessed multiple times, should return the same reference")]
     [MemberData(nameof(XRefTableTestsDataGenerator.XRefTable_NoExpectedData_TestCases), MemberType = typeof(XRefTableTestsDataGenerator))]
-    public void XRefTable_Content_MultipleAccesses_ShouldReturnSameReference(XRefTable xRefTable)
+    public void XRefTable_Content_MultipleAccesses_ShouldReturnSameReference(IXRefTable xRefTable)
     {
         // Arrange
 
@@ -84,7 +84,7 @@ public class XRefTableTests
 
     [Theory(DisplayName = "Check if Equals returns a valid result")]
     [MemberData(nameof(XRefTableTestsDataGenerator.XRefTable_Equals_TestCases), MemberType = typeof(XRefTableTestsDataGenerator))]
-    public void XRefTable_Equals_CheckValidity(XRefTable xRefTable1, XRefTable xRefTable2, bool expectedValue)
+    public void XRefTable_Equals_CheckValidity(IXRefTable xRefTable1, IXRefTable xRefTable2, bool expectedValue)
     {
         // Arrange
 
@@ -97,7 +97,7 @@ public class XRefTableTests
 
     [Theory(DisplayName = "Check if Equals method with null object returns always false")]
     [MemberData(nameof(XRefTableTestsDataGenerator.XRefTable_NoExpectedData_TestCases), MemberType = typeof(XRefTableTestsDataGenerator))]
-    public void XRefTable_EqualsNullObject_CheckValidity(XRefTable xRefTable)
+    public void XRefTable_EqualsNullObject_CheckValidity(IXRefTable xRefTable)
     {
         // Arrange
 
