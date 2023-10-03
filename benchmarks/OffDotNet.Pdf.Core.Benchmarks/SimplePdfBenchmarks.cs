@@ -99,7 +99,7 @@ public class SimplePdfBenchmarks
 
         // XTable
         int byteOffset = 0;
-        List<XRefEntry> xRefEntries = new(5 + pagesCount) { new XRefEntry(byteOffset, 65535, XRefEntryType.Free) };
+        List<IXRefEntry> xRefEntries = new(5 + pagesCount) { new XRefEntry(byteOffset, 65535, XRefEntryType.Free) };
 
         byteOffset += fileHeader.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
@@ -214,7 +214,7 @@ public class SimplePdfBenchmarks
 
         // XTable
         int byteOffset = 0;
-        List<XRefEntry> xRefEntries = new(5 + (pagesCount * 2)) { new XRefEntry(byteOffset, 65535, XRefEntryType.Free) };
+        List<IXRefEntry> xRefEntries = new(5 + (pagesCount * 2)) { new XRefEntry(byteOffset, 65535, XRefEntryType.Free) };
 
         byteOffset += fileHeader.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));

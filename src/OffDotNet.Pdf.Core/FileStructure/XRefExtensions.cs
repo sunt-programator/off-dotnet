@@ -7,12 +7,12 @@ namespace OffDotNet.Pdf.Core.FileStructure;
 
 public static class XRefExtensions
 {
-    public static XRefSubSection ToXRefSubSection(this XRefEntry entry, int objectNumber)
+    public static XRefSubSection ToXRefSubSection(this IXRefEntry entry, int objectNumber)
     {
-        return new XRefSubSection(objectNumber, new List<XRefEntry>(1) { entry });
+        return new XRefSubSection(objectNumber, new List<IXRefEntry>(1) { entry });
     }
 
-    public static XRefSubSection ToXRefSubSection(this ICollection<XRefEntry> entries, int objectNumber)
+    public static XRefSubSection ToXRefSubSection(this ICollection<IXRefEntry> entries, int objectNumber)
     {
         return new XRefSubSection(objectNumber, entries);
     }
@@ -27,12 +27,12 @@ public static class XRefExtensions
         return new XRefSection(subSections);
     }
 
-    public static XRefSection ToXRefSection(this XRefEntry entry, int objectNumber)
+    public static XRefSection ToXRefSection(this IXRefEntry entry, int objectNumber)
     {
         return entry.ToXRefSubSection(objectNumber).ToXRefSection();
     }
 
-    public static XRefSection ToXRefSection(this ICollection<XRefEntry> entries, int objectNumber)
+    public static XRefSection ToXRefSection(this ICollection<IXRefEntry> entries, int objectNumber)
     {
         return entries.ToXRefSubSection(objectNumber).ToXRefSection();
     }
@@ -57,12 +57,12 @@ public static class XRefExtensions
         return subSections.ToXRefSection().ToXRefTable();
     }
 
-    public static XRefTable ToXRefTable(this XRefEntry entry, int objectNumber)
+    public static XRefTable ToXRefTable(this IXRefEntry entry, int objectNumber)
     {
         return entry.ToXRefSubSection(objectNumber).ToXRefSection().ToXRefTable();
     }
 
-    public static XRefTable ToXRefTable(this ICollection<XRefEntry> entries, int objectNumber)
+    public static XRefTable ToXRefTable(this ICollection<IXRefEntry> entries, int objectNumber)
     {
         return entries.ToXRefSubSection(objectNumber).ToXRefSection().ToXRefTable();
     }

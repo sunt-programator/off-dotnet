@@ -62,7 +62,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
 
         // XTable
         int byteOffset = 0;
-        List<XRefEntry> xRefEntries = new(objectNumber) { new XRefEntry(byteOffset, 65535, XRefEntryType.Free) };
+        List<IXRefEntry> xRefEntries = new(objectNumber) { new XRefEntry(byteOffset, 65535, XRefEntryType.Free) };
 
         byteOffset += this.FileHeader.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));

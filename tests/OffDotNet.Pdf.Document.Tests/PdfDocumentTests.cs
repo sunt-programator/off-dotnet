@@ -170,14 +170,14 @@ public class PdfDocumentTests
     public async Task PdfDocument_ConstructorWithoutArguments_XRefTable_ShouldBePredefined()
     {
         // Arrange
-        XRefTable expectedXRefTable = new List<XRefEntry>
+        XRefTable expectedXRefTable = new List<IXRefEntry>
         {
-            new(0, 65535, XRefEntryType.Free),
-            new(9, 0, XRefEntryType.InUse),
-            new(56, 0, XRefEntryType.InUse),
-            new(111, 0, XRefEntryType.InUse),
-            new(277, 0, XRefEntryType.InUse),
-            new(368, 0, XRefEntryType.InUse),
+            new XRefEntry(0, 65535, XRefEntryType.Free),
+            new XRefEntry(9, 0, XRefEntryType.InUse),
+            new XRefEntry(56, 0, XRefEntryType.InUse),
+            new XRefEntry(111, 0, XRefEntryType.InUse),
+            new XRefEntry(277, 0, XRefEntryType.InUse),
+            new XRefEntry(368, 0, XRefEntryType.InUse),
         }.ToXRefTable(0);
 
         MemoryStream stream = new();

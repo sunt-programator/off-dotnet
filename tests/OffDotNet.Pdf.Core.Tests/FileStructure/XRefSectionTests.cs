@@ -116,10 +116,10 @@ public class XRefSectionTests
 [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
 internal static class XRefSectionTestsDataGenerator
 {
-    private static readonly XRefEntry EntryObj0Gen65535F = new(0, 65535, XRefEntryType.Free);
-    private static readonly XRefEntry EntryObj25325Gen0N = new(25325, 0, XRefEntryType.InUse);
-    private static readonly XRefEntry EntryObj257775Gen0N = new(25777, 0, XRefEntryType.InUse);
-    private static readonly List<XRefEntry> MultipleEntries = new() { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) };
+    private static readonly IXRefEntry EntryObj0Gen65535F = new XRefEntry(0, 65535, XRefEntryType.Free);
+    private static readonly IXRefEntry EntryObj25325Gen0N = new XRefEntry(25325, 0, XRefEntryType.InUse);
+    private static readonly IXRefEntry EntryObj257775Gen0N = new XRefEntry(25777, 0, XRefEntryType.InUse);
+    private static readonly List<IXRefEntry> MultipleEntries = new() { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) };
 
     private static readonly List<XRefSubSection> MultipleSubSections = new()
     {
