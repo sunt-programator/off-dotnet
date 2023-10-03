@@ -197,7 +197,7 @@ public class PdfDocumentTests
     public async Task PdfDocument_ConstructorWithoutArguments_FileTrailer_ShouldBePredefined()
     {
         // Arrange
-        var expectedFileTrailer = new FileTrailer(453, fileTrailerOptions =>
+        IFileTrailer expectedFileTrailer = new FileTrailer(453, fileTrailerOptions =>
         {
             fileTrailerOptions.Size = 5;
             fileTrailerOptions.Root = new PdfIndirect<DocumentCatalog>(1).ToPdfIndirectIdentifier();

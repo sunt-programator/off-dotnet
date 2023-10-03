@@ -32,7 +32,7 @@ public class FileTrailerTests
         FileTrailerOptions fileTrailerOptions = new() { Root = RootDictionary };
 
         // Act
-        FileTrailer FileTrailerFunction()
+        IFileTrailer FileTrailerFunction()
         {
             return fileTrailerOptions.ToFileTrailer(byteOffset);
         }
@@ -52,7 +52,7 @@ public class FileTrailerTests
         // Arrange
 
         // Act
-        FileTrailer FileTrailerFunction()
+        IFileTrailer FileTrailerFunction()
         {
             return new FileTrailer(123, options => options.Size = size);
         }
@@ -71,7 +71,7 @@ public class FileTrailerTests
         // Arrange
 
         // Act
-        FileTrailer FileTrailerFunction()
+        IFileTrailer FileTrailerFunction()
         {
             return new FileTrailer(123, options =>
         {
@@ -92,7 +92,7 @@ public class FileTrailerTests
         var encryptDictionary = new Dictionary<PdfName, IPdfObject>(1);
 
         // Act
-        FileTrailer FileTrailerFunction()
+        IFileTrailer FileTrailerFunction()
         {
             return new FileTrailer(123, options =>
         {
@@ -115,7 +115,7 @@ public class FileTrailerTests
         var encryptDictionary = new Dictionary<PdfName, IPdfObject>(1) { { "Test", new PdfInteger(1) } };
 
         // Act
-        FileTrailer FileTrailerFunction()
+        IFileTrailer FileTrailerFunction()
         {
             return new FileTrailer(123, options =>
         {
@@ -144,7 +144,7 @@ public class FileTrailerTests
             Prev = 789,
             Root = RootDictionary,
         };
-        FileTrailer fileTrailer = new(byteOffset, fileTrailerOptions);
+        IFileTrailer fileTrailer = new FileTrailer(byteOffset, fileTrailerOptions);
 
         // Act
         long actualByteOffset = fileTrailer.ByteOffset;
@@ -163,7 +163,7 @@ public class FileTrailerTests
             Prev = 789,
             Root = RootDictionary,
         };
-        FileTrailer fileTrailer = new(123, fileTrailerOptions);
+        IFileTrailer fileTrailer = new FileTrailer(123, fileTrailerOptions);
 
         // Act
         IPdfDictionary<IPdfObject> fileTrailerDictionary = fileTrailer.FileTrailerDictionary;
@@ -179,7 +179,7 @@ public class FileTrailerTests
 
     [Theory(DisplayName = $"{nameof(FileTrailer.Content)} property should return a valid value")]
     [MemberData(nameof(FileTrailerTestsDataGenerator.FileTrailer_Content_TestCases), MemberType = typeof(FileTrailerTestsDataGenerator))]
-    public void FileTrailer_Content_ShouldReturnValidValue(FileTrailer fileTrailer, string expectedContent)
+    public void FileTrailer_Content_ShouldReturnValidValue(IFileTrailer fileTrailer, string expectedContent)
     {
         // Arrange
 
@@ -192,7 +192,7 @@ public class FileTrailerTests
 
     [Theory(DisplayName = $"{nameof(FileTrailer.Content)} property, accessed multiple times, should return the same reference")]
     [MemberData(nameof(FileTrailerTestsDataGenerator.FileTrailer_NoExpectedData_TestCases), MemberType = typeof(FileTrailerTestsDataGenerator))]
-    public void FileTrailer_Content_MultipleAccesses_ShouldReturnSameReference(FileTrailer fileTrailer)
+    public void FileTrailer_Content_MultipleAccesses_ShouldReturnSameReference(IFileTrailer fileTrailer)
     {
         // Arrange
 
@@ -206,7 +206,7 @@ public class FileTrailerTests
 
     [Theory(DisplayName = $"{nameof(FileTrailer.Bytes)} property should return a valid value")]
     [MemberData(nameof(FileTrailerTestsDataGenerator.FileTrailer_Bytes_TestCases), MemberType = typeof(FileTrailerTestsDataGenerator))]
-    public void FileTrailer_Bytes_ShouldReturnValidValue(FileTrailer fileTrailer, byte[] expectedBytes)
+    public void FileTrailer_Bytes_ShouldReturnValidValue(IFileTrailer fileTrailer, byte[] expectedBytes)
     {
         // Arrange
 
@@ -219,7 +219,7 @@ public class FileTrailerTests
 
     [Theory(DisplayName = "Check if GetHashCode method returns valid value")]
     [MemberData(nameof(FileTrailerTestsDataGenerator.FileTrailer_NoExpectedData_TestCases), MemberType = typeof(FileTrailerTestsDataGenerator))]
-    public void XFileTrailer_GetHashCode_CheckValidity(FileTrailer fileTrailer)
+    public void XFileTrailer_GetHashCode_CheckValidity(IFileTrailer fileTrailer)
     {
         // Arrange
         int expectedHashCode = HashCode.Combine(nameof(FileTrailer), fileTrailer.Content);
@@ -233,7 +233,7 @@ public class FileTrailerTests
 
     [Theory(DisplayName = "Check if Equals returns a valid result")]
     [MemberData(nameof(FileTrailerTestsDataGenerator.FileTrailer_Equals_TestCases), MemberType = typeof(FileTrailerTestsDataGenerator))]
-    public void FileTrailer_Equals_CheckValidity(FileTrailer xRefEntry1, FileTrailer xRefEntry2, bool expectedValue)
+    public void FileTrailer_Equals_CheckValidity(IFileTrailer xRefEntry1, IFileTrailer xRefEntry2, bool expectedValue)
     {
         // Arrange
 
@@ -246,7 +246,7 @@ public class FileTrailerTests
 
     [Theory(DisplayName = "Check if Equals method with null object returns always false")]
     [MemberData(nameof(FileTrailerTestsDataGenerator.FileTrailer_NoExpectedData_TestCases), MemberType = typeof(FileTrailerTestsDataGenerator))]
-    public void FileTrailer_EqualsNullObject_CheckValidity(FileTrailer xRefEntry)
+    public void FileTrailer_EqualsNullObject_CheckValidity(IFileTrailer xRefEntry)
     {
         // Arrange
 

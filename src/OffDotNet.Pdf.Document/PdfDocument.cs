@@ -121,7 +121,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
 
     public IXRefTable XRefTable { get; }
 
-    public FileTrailer FileTrailer { get; }
+    public IFileTrailer FileTrailer { get; }
 
     public async Task GenerateOutputStream(CancellationToken cancellationToken = default)
     {

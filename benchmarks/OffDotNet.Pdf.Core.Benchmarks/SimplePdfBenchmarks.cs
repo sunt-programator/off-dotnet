@@ -122,7 +122,7 @@ public class SimplePdfBenchmarks
         byteOffset += fontIndirect.PdfIndirect.Bytes.Length;
         IXRefTable xRefTable = xRefEntries.ToXRefTable(0);
 
-        FileTrailer fileTrailer = new(byteOffset, options =>
+        IFileTrailer fileTrailer = new FileTrailer(byteOffset, options =>
         {
             options.Size = 5;
             options.Root = documentCatalogIndirect;
@@ -240,7 +240,7 @@ public class SimplePdfBenchmarks
         byteOffset += fontIndirect.PdfIndirect.Bytes.Length;
         IXRefTable xRefTable = xRefEntries.ToXRefTable(0);
 
-        FileTrailer fileTrailer = new(byteOffset, options =>
+        IFileTrailer fileTrailer = new FileTrailer(byteOffset, options =>
         {
             options.Size = 5;
             options.Root = documentCatalogIndirect;
