@@ -32,7 +32,7 @@ public class DocumentCatalogTests
     {
         // Arrange
         const string expectedContent = "<</Type /Catalog /Pages 3 0 R>>";
-        IPdfIndirectIdentifier<IPageTreeNode> pages = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<PageObject>>().ToPdfArray())
+        IPdfIndirectIdentifier<IPageTreeNode> pages = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<IPageObject>>().ToPdfArray())
             .ToPdfIndirect<IPageTreeNode>(3)
             .ToPdfIndirectIdentifier();
 

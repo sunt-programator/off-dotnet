@@ -32,7 +32,7 @@ public sealed class PageTreeNode : PdfDictionary<IPdfObject>, IPageTreeNode
 
     public IPdfIndirectIdentifier<IPageTreeNode>? Parent { get; }
 
-    public IPdfArray<IPdfIndirectIdentifier<PageObject>> Kids { get; }
+    public IPdfArray<IPdfIndirectIdentifier<IPageObject>> Kids { get; }
 
     private static PageTreeNodeOptions GetPageTreeNodeOptions(Action<PageTreeNodeOptions> optionsFunc)
     {

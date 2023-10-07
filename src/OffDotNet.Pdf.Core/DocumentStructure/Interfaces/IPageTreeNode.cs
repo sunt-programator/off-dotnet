@@ -12,5 +12,5 @@ public interface IPageTreeNode : IPdfObject
 {
     IPdfIndirectIdentifier<IPageTreeNode>? Parent { get; }
 
-    IPdfArray<IPdfIndirectIdentifier<PageObject>> Kids { get; }
+    IPdfArray<IPdfIndirectIdentifier<IPageObject>> Kids { get; }
 }

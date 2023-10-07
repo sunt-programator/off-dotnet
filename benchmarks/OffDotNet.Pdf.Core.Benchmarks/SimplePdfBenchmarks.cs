@@ -60,10 +60,10 @@ public class SimplePdfBenchmarks
         IPdfIndirectIdentifier<DocumentCatalog> documentCatalogIndirect = new PdfIndirect<DocumentCatalog>(++objectNumber).ToPdfIndirectIdentifier();
         IPdfIndirectIdentifier<IPageTreeNode> rootPageTreeNodeIndirect = new PdfIndirect<IPageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
 
-        List<IPdfIndirectIdentifier<PageObject>> pageObjectsIndirectList = new(pagesCount);
+        List<IPdfIndirectIdentifier<IPageObject>> pageObjectsIndirectList = new(pagesCount);
         for (int i = 0; i < pagesCount; i++)
         {
-            pageObjectsIndirectList.Add(new PdfIndirect<PageObject>(++objectNumber).ToPdfIndirectIdentifier());
+            pageObjectsIndirectList.Add(new PdfIndirect<IPageObject>(++objectNumber).ToPdfIndirectIdentifier());
         }
 
         IPdfIndirectIdentifier<IPdfStream> contentStreamIndirect = new PdfIndirect<IPdfStream>(++objectNumber).ToPdfIndirectIdentifier();
@@ -83,7 +83,7 @@ public class SimplePdfBenchmarks
         documentCatalogIndirect.PdfIndirect.Value = new DocumentCatalog(options => options.Pages = rootPageTreeNodeIndirect);
         rootPageTreeNodeIndirect.PdfIndirect.Value = new PageTreeNode(options => options.Kids = pageObjectsIndirectList.ToPdfArray());
 
-        foreach (IPdfIndirectIdentifier<PageObject> pageObjectIndirect in pageObjectsIndirectList)
+        foreach (IPdfIndirectIdentifier<IPageObject> pageObjectIndirect in pageObjectsIndirectList)
         {
             pageObjectIndirect.PdfIndirect.Value = new PageObject(options =>
             {
@@ -110,7 +110,7 @@ public class SimplePdfBenchmarks
         byteOffset += rootPageTreeNodeIndirect.PdfIndirect.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
-        foreach (IPdfIndirectIdentifier<PageObject> pageObjectIndirect in pageObjectsIndirectList)
+        foreach (IPdfIndirectIdentifier<IPageObject> pageObjectIndirect in pageObjectsIndirectList)
         {
             byteOffset += pageObjectIndirect.PdfIndirect.Bytes.Length;
             xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
@@ -132,7 +132,7 @@ public class SimplePdfBenchmarks
         this.streamWriter.Write(documentCatalogIndirect.PdfIndirect.Bytes.Span);
         this.streamWriter.Write(rootPageTreeNodeIndirect.PdfIndirect.Bytes.Span);
 
-        foreach (IPdfIndirectIdentifier<PageObject> pageObjectIndirect in pageObjectsIndirectList)
+        foreach (IPdfIndirectIdentifier<IPageObject> pageObjectIndirect in pageObjectsIndirectList)
         {
             this.streamWriter.Write(pageObjectIndirect.PdfIndirect.Bytes.Span);
         }
@@ -165,11 +165,11 @@ public class SimplePdfBenchmarks
         IPdfIndirectIdentifier<DocumentCatalog> documentCatalogIndirect = new PdfIndirect<DocumentCatalog>(++objectNumber).ToPdfIndirectIdentifier();
         IPdfIndirectIdentifier<IPageTreeNode> rootPageTreeNodeIndirect = new PdfIndirect<IPageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
 
-        List<IPdfIndirectIdentifier<PageObject>> pageObjectsIndirectList = new(pagesCount);
+        List<IPdfIndirectIdentifier<IPageObject>> pageObjectsIndirectList = new(pagesCount);
         List<IPdfIndirectIdentifier<IPdfStream>> contentStreamsIndirectList = new(pagesCount);
         for (int i = 0; i < pagesCount; i++)
         {
-            pageObjectsIndirectList.Add(new PdfIndirect<PageObject>(++objectNumber).ToPdfIndirectIdentifier());
+            pageObjectsIndirectList.Add(new PdfIndirect<IPageObject>(++objectNumber).ToPdfIndirectIdentifier());
         }
 
         for (int i = 0; i < pagesCount; i++)
@@ -225,7 +225,7 @@ public class SimplePdfBenchmarks
         byteOffset += rootPageTreeNodeIndirect.PdfIndirect.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
-        foreach (IPdfIndirectIdentifier<PageObject> pageObjectIndirect in pageObjectsIndirectList)
+        foreach (IPdfIndirectIdentifier<IPageObject> pageObjectIndirect in pageObjectsIndirectList)
         {
             byteOffset += pageObjectIndirect.PdfIndirect.Bytes.Length;
             xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
@@ -250,7 +250,7 @@ public class SimplePdfBenchmarks
         this.streamWriter.Write(documentCatalogIndirect.PdfIndirect.Bytes.Span);
         this.streamWriter.Write(rootPageTreeNodeIndirect.PdfIndirect.Bytes.Span);
 
-        foreach (IPdfIndirectIdentifier<PageObject> pageObjectIndirect in pageObjectsIndirectList)
+        foreach (IPdfIndirectIdentifier<IPageObject> pageObjectIndirect in pageObjectsIndirectList)
         {
             this.streamWriter.Write(pageObjectIndirect.PdfIndirect.Bytes.Span);
         }

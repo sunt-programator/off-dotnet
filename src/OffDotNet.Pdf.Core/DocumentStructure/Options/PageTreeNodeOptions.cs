@@ -11,5 +11,5 @@ public sealed class PageTreeNodeOptions
 {
     public IPdfIndirectIdentifier<IPageTreeNode>? Parent { get; set; }
 
-    public IPdfArray<IPdfIndirectIdentifier<PageObject>> Kids { get; set; } = default!;
+    public IPdfArray<IPdfIndirectIdentifier<IPageObject>> Kids { get; set; } = default!;
 }

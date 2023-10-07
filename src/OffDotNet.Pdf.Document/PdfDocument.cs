@@ -29,7 +29,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
         this.stream = stream;
         this.DocumentCatalog = new PdfIndirect<DocumentCatalog>(++objectNumber).ToPdfIndirectIdentifier();
         this.RootPageTree = new PdfIndirect<IPageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
-        this.Pages = new List<IPdfIndirectIdentifier<PageObject>>(1) { new PdfIndirect<PageObject>(++objectNumber).ToPdfIndirectIdentifier() }.ToImmutableList();
+        this.Pages = new List<IPdfIndirectIdentifier<IPageObject>>(1) { new PdfIndirect<IPageObject>(++objectNumber).ToPdfIndirectIdentifier() }.ToImmutableList();
         this.contentStreamIndirect = new PdfIndirect<IPdfStream>(++objectNumber).ToPdfIndirectIdentifier();
         this.Fonts = new List<IPdfIndirectIdentifier<Type1Font>>(1) { new PdfIndirect<Type1Font>(++objectNumber).ToPdfIndirectIdentifier() }.ToImmutableList();
 
@@ -46,7 +46,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
         this.DocumentCatalog.PdfIndirect.Value = new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = this.RootPageTree);
         this.RootPageTree.PdfIndirect.Value = new PageTreeNode(pageTreeNodeOptions => pageTreeNodeOptions.Kids = this.Pages.ToPdfArray());
 
-        foreach (IPdfIndirectIdentifier<PageObject> pageObjectIndirect in this.Pages)
+        foreach (IPdfIndirectIdentifier<IPageObject> pageObjectIndirect in this.Pages)
         {
             pageObjectIndirect.PdfIndirect.Value = new PageObject(pageObjectOptions =>
             {
@@ -73,7 +73,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
         byteOffset += this.RootPageTree.PdfIndirect.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
-        foreach (IPdfIndirectIdentifier<PageObject> pageObjectIndirect in this.Pages)
+        foreach (IPdfIndirectIdentifier<IPageObject> pageObjectIndirect in this.Pages)
         {
             byteOffset += pageObjectIndirect.PdfIndirect.Bytes.Length;
             xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
@@ -115,7 +115,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
 
     public IPdfIndirectIdentifier<IPageTreeNode> RootPageTree { get; }
 
-    public IImmutableList<IPdfIndirectIdentifier<PageObject>> Pages { get; }
+    public IImmutableList<IPdfIndirectIdentifier<IPageObject>> Pages { get; }
 
     public IImmutableList<IPdfIndirectIdentifier<Type1Font>> Fonts { get; }
 
@@ -129,7 +129,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
         await this.stream.WriteAsync(this.DocumentCatalog.PdfIndirect.Bytes, cancellationToken).ConfigureAwait(false);
         await this.stream.WriteAsync(this.RootPageTree.PdfIndirect.Bytes, cancellationToken).ConfigureAwait(false);
 
-        foreach (IPdfIndirectIdentifier<PageObject> pageObjectIndirect in this.Pages)
+        foreach (IPdfIndirectIdentifier<IPageObject> pageObjectIndirect in this.Pages)
         {
             await this.stream.WriteAsync(pageObjectIndirect.PdfIndirect.Bytes, cancellationToken).ConfigureAwait(false);
         }

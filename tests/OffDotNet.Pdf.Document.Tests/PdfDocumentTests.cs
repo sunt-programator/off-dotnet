@@ -92,7 +92,7 @@ public class PdfDocumentTests
     public async Task PdfDocument_ConstructorWithoutArguments_RootPageTree_ShouldBePredefined()
     {
         // Arrange
-        var pages = new List<IPdfIndirectIdentifier<PageObject>>(1) { new PdfIndirect<PageObject>(3).ToPdfIndirectIdentifier() }.ToImmutableList();
+        var pages = new List<IPdfIndirectIdentifier<IPageObject>>(1) { new PdfIndirect<IPageObject>(3).ToPdfIndirectIdentifier() }.ToImmutableList();
         var expectedPageTree = new PageTreeNode(pageTreeNodeOptions => pageTreeNodeOptions.Kids = pages.ToPdfArray()).ToPdfIndirect<IPageTreeNode>(2).ToPdfIndirectIdentifier();
 
         MemoryStream stream = new();
@@ -113,7 +113,7 @@ public class PdfDocumentTests
     public async Task PdfDocument_ConstructorWithoutArguments_Pages_ShouldBePredefined()
     {
         // Arrange
-        PageObject pageObject = new(pageObjectOptions =>
+        IPageObject pageObject = new PageObject(pageObjectOptions =>
         {
             pageObjectOptions.Parent = new PdfIndirect<IPageTreeNode>(2).ToPdfIndirectIdentifier();
             pageObjectOptions.MediaBox = new Rectangle(0, 0, 612, 792);
@@ -125,7 +125,7 @@ public class PdfDocumentTests
                 }.ToPdfDictionary());
         });
 
-        var expectedPages = new List<IPdfIndirectIdentifier<PageObject>>(1)
+        var expectedPages = new List<IPdfIndirectIdentifier<IPageObject>>(1)
         {
             pageObject.ToPdfIndirect(3).ToPdfIndirectIdentifier(),
         }.ToImmutableList();

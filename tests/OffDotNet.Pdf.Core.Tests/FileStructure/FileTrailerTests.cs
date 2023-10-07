@@ -15,7 +15,7 @@ namespace OffDotNet.Pdf.Core.Tests.FileStructure;
 
 public class FileTrailerTests
 {
-    private static readonly IPdfIndirectIdentifier<IPageTreeNode> Pages = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<PageObject>>().ToPdfArray())
+    private static readonly IPdfIndirectIdentifier<IPageTreeNode> Pages = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<IPageObject>>().ToPdfArray())
         .ToPdfIndirect<IPageTreeNode>(3)
         .ToPdfIndirectIdentifier();
 
@@ -265,7 +265,7 @@ public class FileTrailerTests
 [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
 internal static class FileTrailerTestsDataGenerator
 {
-    private static readonly IPdfIndirectIdentifier<IPageTreeNode> Pages = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<PageObject>>().ToPdfArray())
+    private static readonly IPdfIndirectIdentifier<IPageTreeNode> Pages = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<IPageObject>>().ToPdfArray())
         .ToPdfIndirect<IPageTreeNode>(3)
         .ToPdfIndirectIdentifier();
 

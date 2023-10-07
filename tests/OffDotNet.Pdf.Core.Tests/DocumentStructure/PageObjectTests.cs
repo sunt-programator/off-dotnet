@@ -21,7 +21,7 @@ public class PageObjectTests
         PageObjectOptions documentCatalogOptions = new() { Parent = null! };
 
         // Act
-        PageObject PageObjectFunction()
+        IPageObject PageObjectFunction()
         {
             return new PageObject(documentCatalogOptions);
         }
@@ -34,14 +34,14 @@ public class PageObjectTests
     public void PageObject_ConstructorWithNullResourceDictionary_ShouldThrowException()
     {
         // Arrange
-        IPdfIndirectIdentifier<IPageTreeNode> parent = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<PageObject>>().ToPdfArray())
+        IPdfIndirectIdentifier<IPageTreeNode> parent = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<IPageObject>>().ToPdfArray())
             .ToPdfIndirect<IPageTreeNode>(1)
             .ToPdfIndirectIdentifier();
 
         PageObjectOptions documentCatalogOptions = new() { Parent = parent, Resources = null! };
 
         // Act
-        PageObject PageObjectFunction()
+        IPageObject PageObjectFunction()
         {
             return new PageObject(documentCatalogOptions);
         }
@@ -54,7 +54,7 @@ public class PageObjectTests
     public void PageObject_ConstructorWithNullMediaBox_ShouldThrowException()
     {
         // Arrange
-        IPdfIndirectIdentifier<IPageTreeNode> parent = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<PageObject>>().ToPdfArray())
+        IPdfIndirectIdentifier<IPageTreeNode> parent = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<IPageObject>>().ToPdfArray())
             .ToPdfIndirect<IPageTreeNode>(1)
             .ToPdfIndirectIdentifier();
 
@@ -62,7 +62,7 @@ public class PageObjectTests
         PageObjectOptions documentCatalogOptions = new() { Parent = parent, Resources = resourceDictionary, MediaBox = null! };
 
         // Act
-        PageObject PageObjectFunction()
+        IPageObject PageObjectFunction()
         {
             return new PageObject(documentCatalogOptions);
         }
@@ -76,8 +76,8 @@ public class PageObjectTests
     public void PageObject_Content_ShouldReturnValidValue(PageObjectOptions pageObjectOptions, string expectedContent)
     {
         // Arrange
-        PageObject pageObject1 = new(pageObjectOptions); // Options as a class
-        PageObject pageObject2 = new(options =>
+        IPageObject pageObject1 = new PageObject(pageObjectOptions); // Options as a class
+        IPageObject pageObject2 = new PageObject(options =>
         {
             options.Parent = pageObjectOptions.Parent;
             options.Resources = pageObjectOptions.Resources;
@@ -100,7 +100,7 @@ internal static class PageObjectTestsDataGenerator
 {
     public static IEnumerable<object[]> PageObject_Content_TestCases()
     {
-        IPageTreeNode parent = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<PageObject>>().ToPdfArray());
+        IPageTreeNode parent = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<IPageObject>>().ToPdfArray());
 
         yield return new object[]
         {
