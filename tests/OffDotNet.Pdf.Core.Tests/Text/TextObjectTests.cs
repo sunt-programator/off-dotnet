@@ -16,7 +16,7 @@ public class TextObjectTests
 {
     [Theory(DisplayName = $"The {nameof(TextObject.Value)} property should return a valid value")]
     [MemberData(nameof(TextObjectTestsDataGenerator.TextObject_NoExpectedData_TestCases), MemberType = typeof(TextObjectTestsDataGenerator))]
-    public void TextObject_Value_ShouldReturnValidValues(TextObject textObject)
+    public void TextObject_Value_ShouldReturnValidValues(ITextObject textObject)
     {
         // Arrange
 
@@ -29,7 +29,7 @@ public class TextObjectTests
 
     [Theory(DisplayName = $"The {nameof(TextObject.Content)} property should return a valid value")]
     [MemberData(nameof(TextObjectTestsDataGenerator.TextObject_Content_TestCases), MemberType = typeof(TextObjectTestsDataGenerator))]
-    public void TextObject_Content_ShouldReturnValidValue(TextObject textObject, string expectedContent)
+    public void TextObject_Content_ShouldReturnValidValue(ITextObject textObject, string expectedContent)
     {
         // Arrange
 
@@ -42,7 +42,7 @@ public class TextObjectTests
 
     [Theory(DisplayName = $"The {nameof(TextObject.Bytes)} property should return a valid value")]
     [MemberData(nameof(TextObjectTestsDataGenerator.TextObject_Bytes_TestCases), MemberType = typeof(TextObjectTestsDataGenerator))]
-    public void TextObject_Bytes_ShouldReturnValidValue(TextObject textObject, byte[] expectedBytes)
+    public void TextObject_Bytes_ShouldReturnValidValue(ITextObject textObject, byte[] expectedBytes)
     {
         // Arrange
 
@@ -55,7 +55,7 @@ public class TextObjectTests
 
     [Theory(DisplayName = "The GetHashCode method should return a valid value")]
     [MemberData(nameof(TextObjectTestsDataGenerator.TextObject_NoExpectedData_TestCases), MemberType = typeof(TextObjectTestsDataGenerator))]
-    public void TextObject_GetHashCode_ShouldReturnValidValue(TextObject textObject)
+    public void TextObject_GetHashCode_ShouldReturnValidValue(ITextObject textObject)
     {
         // Arrange
         int expectedHashCode = HashCode.Combine(nameof(TextObject), textObject.Value);
@@ -69,7 +69,7 @@ public class TextObjectTests
 
     [Theory(DisplayName = "The Equals property should return a valid value")]
     [MemberData(nameof(TextObjectTestsDataGenerator.TextObject_Equals_TestCases), MemberType = typeof(TextObjectTestsDataGenerator))]
-    public void TextObject_Equals_ShouldReturnValidValue(TextObject textObject1, TextObject textObject2, bool expectedResult)
+    public void TextObject_Equals_ShouldReturnValidValue(ITextObject textObject1, ITextObject textObject2, bool expectedResult)
     {
         // Arrange
 

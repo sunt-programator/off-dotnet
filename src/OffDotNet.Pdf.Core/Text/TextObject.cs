@@ -8,7 +8,7 @@ using OffDotNet.Pdf.Core.Common;
 
 namespace OffDotNet.Pdf.Core.Text;
 
-public sealed class TextObject : PdfObject
+public sealed class TextObject : PdfObject, ITextObject
 {
     private readonly Lazy<string> literalValue;
     private readonly Lazy<byte[]> bytes;

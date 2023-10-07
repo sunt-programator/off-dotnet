@@ -41,7 +41,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
             new ShowTextOperation("Hello World"),
         };
 
-        TextObject textObject = new(pdfOperations);
+        ITextObject textObject = new TextObject(pdfOperations);
         IPdfDictionary<IPdfIndirectIdentifier<IType1Font>> fontDictionary = new Dictionary<PdfName, IPdfIndirectIdentifier<IType1Font>> { { "F1", this.Fonts[0] } }.ToPdfDictionary();
 
         this.DocumentCatalog.PdfIndirect.Value = new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = this.RootPageTree);
