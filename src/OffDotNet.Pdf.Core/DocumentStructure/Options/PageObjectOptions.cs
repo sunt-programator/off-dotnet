@@ -12,7 +12,7 @@ namespace OffDotNet.Pdf.Core.DocumentStructure;
 
 public sealed class PageObjectOptions
 {
-    public IPdfIndirectIdentifier<PageTreeNode> Parent { get; set; } = default!;
+    public IPdfIndirectIdentifier<IPageTreeNode> Parent { get; set; } = default!;
 
     public ResourceDictionary Resources { get; set; } = default!;
 

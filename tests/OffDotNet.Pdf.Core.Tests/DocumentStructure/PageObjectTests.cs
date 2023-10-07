@@ -34,8 +34,8 @@ public class PageObjectTests
     public void PageObject_ConstructorWithNullResourceDictionary_ShouldThrowException()
     {
         // Arrange
-        IPdfIndirectIdentifier<PageTreeNode> parent = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<PageObject>>().ToPdfArray())
-            .ToPdfIndirect(1)
+        IPdfIndirectIdentifier<IPageTreeNode> parent = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<PageObject>>().ToPdfArray())
+            .ToPdfIndirect<IPageTreeNode>(1)
             .ToPdfIndirectIdentifier();
 
         PageObjectOptions documentCatalogOptions = new() { Parent = parent, Resources = null! };
@@ -54,8 +54,8 @@ public class PageObjectTests
     public void PageObject_ConstructorWithNullMediaBox_ShouldThrowException()
     {
         // Arrange
-        IPdfIndirectIdentifier<PageTreeNode> parent = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<PageObject>>().ToPdfArray())
-            .ToPdfIndirect(1)
+        IPdfIndirectIdentifier<IPageTreeNode> parent = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<PageObject>>().ToPdfArray())
+            .ToPdfIndirect<IPageTreeNode>(1)
             .ToPdfIndirectIdentifier();
 
         ResourceDictionary resourceDictionary = new(new ResourceDictionaryOptions());
@@ -100,7 +100,7 @@ internal static class PageObjectTestsDataGenerator
 {
     public static IEnumerable<object[]> PageObject_Content_TestCases()
     {
-        PageTreeNode parent = new(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<PageObject>>().ToPdfArray());
+        IPageTreeNode parent = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<PageObject>>().ToPdfArray());
 
         yield return new object[]
         {

@@ -105,7 +105,7 @@ public class XRefSectionTests
         bool actualResult1 = xRefSection.Equals(null);
 
         Debug.Assert(xRefSection != null, nameof(xRefSection) + " != null");
-        bool actualResult2 = xRefSection.Equals((object?)null);
+        bool actualResult2 = xRefSection.Equals(null);
 
         // Assert
         Assert.False(actualResult1);

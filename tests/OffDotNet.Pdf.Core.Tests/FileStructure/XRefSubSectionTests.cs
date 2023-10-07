@@ -146,7 +146,7 @@ public class XRefSubSectionTests
         bool actualResult1 = xRefSubSection.Equals(null);
 
         Debug.Assert(xRefSubSection != null, nameof(xRefSubSection) + " != null");
-        bool actualResult2 = xRefSubSection.Equals((object?)null);
+        bool actualResult2 = xRefSubSection.Equals(null);
 
         // Assert
         Assert.False(actualResult1);

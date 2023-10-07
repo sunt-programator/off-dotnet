@@ -28,7 +28,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
         int objectNumber = 0;
         this.stream = stream;
         this.DocumentCatalog = new PdfIndirect<DocumentCatalog>(++objectNumber).ToPdfIndirectIdentifier();
-        this.RootPageTree = new PdfIndirect<PageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
+        this.RootPageTree = new PdfIndirect<IPageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
         this.Pages = new List<IPdfIndirectIdentifier<PageObject>>(1) { new PdfIndirect<PageObject>(++objectNumber).ToPdfIndirectIdentifier() }.ToImmutableList();
         this.contentStreamIndirect = new PdfIndirect<IPdfStream>(++objectNumber).ToPdfIndirectIdentifier();
         this.Fonts = new List<IPdfIndirectIdentifier<Type1Font>>(1) { new PdfIndirect<Type1Font>(++objectNumber).ToPdfIndirectIdentifier() }.ToImmutableList();
@@ -113,7 +113,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
 
     public IPdfIndirectIdentifier<DocumentCatalog> DocumentCatalog { get; }
 
-    public IPdfIndirectIdentifier<PageTreeNode> RootPageTree { get; }
+    public IPdfIndirectIdentifier<IPageTreeNode> RootPageTree { get; }
 
     public IImmutableList<IPdfIndirectIdentifier<PageObject>> Pages { get; }
 

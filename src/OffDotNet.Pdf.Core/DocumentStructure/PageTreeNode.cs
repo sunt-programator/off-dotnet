@@ -10,13 +10,13 @@ using OffDotNet.Pdf.Core.Primitives;
 
 namespace OffDotNet.Pdf.Core.DocumentStructure;
 
-public sealed class PageTreeNode : PdfDictionary<IPdfObject>
+public sealed class PageTreeNode : PdfDictionary<IPdfObject>, IPageTreeNode
 {
     private static readonly PdfName TypeName = "Type";
-    private static readonly PdfName TypeValue = "Pages";
-    private static readonly PdfName Parent = "Parent";
-    private static readonly PdfName Kids = "Kids";
-    private static readonly PdfName Count = "Count";
+    private static readonly PdfName PagesName = "Pages";
+    private static readonly PdfName ParentName = "Parent";
+    private static readonly PdfName KidsName = "Kids";
+    private static readonly PdfName CountName = "Count";
 
     public PageTreeNode(Action<PageTreeNodeOptions> optionsFunc)
         : this(GetPageTreeNodeOptions(optionsFunc))
@@ -26,7 +26,13 @@ public sealed class PageTreeNode : PdfDictionary<IPdfObject>
     public PageTreeNode(PageTreeNodeOptions options)
         : base(GenerateDictionary(options))
     {
+        this.Parent = options.Parent;
+        this.Kids = options.Kids;
     }
+
+    public IPdfIndirectIdentifier<IPageTreeNode>? Parent { get; }
+
+    public IPdfArray<IPdfIndirectIdentifier<PageObject>> Kids { get; }
 
     private static PageTreeNodeOptions GetPageTreeNodeOptions(Action<PageTreeNodeOptions> optionsFunc)
     {
@@ -40,10 +46,10 @@ public sealed class PageTreeNode : PdfDictionary<IPdfObject>
         options.NotNull(x => x.Kids);
 
         IDictionary<PdfName, IPdfObject> documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(4)
-            .WithKeyValue(TypeName, TypeValue)
-            .WithKeyValue(Parent, options.Parent)
-            .WithKeyValue(Kids, options.Kids)
-            .WithKeyValue(Count, (PdfInteger)options.Kids.Value.Count);
+            .WithKeyValue(TypeName, PagesName)
+            .WithKeyValue(ParentName, options.Parent)
+            .WithKeyValue(KidsName, options.Kids)
+            .WithKeyValue(CountName, (PdfInteger)options.Kids.Value.Count);
 
         return new ReadOnlyDictionary<PdfName, IPdfObject>(documentCatalogDictionary);
     }

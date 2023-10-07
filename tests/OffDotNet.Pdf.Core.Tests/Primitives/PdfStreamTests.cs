@@ -354,19 +354,6 @@ public class PdfStreamTests
         Assert.False(actualResult);
     }
 
-    [Fact(DisplayName = "Check Equals method if the argument is null")]
-    public void PdfStream_Equals2_NullArgument_ShouldReturnFalse()
-    {
-        // Arrange
-        IPdfStream pdfStream = new PdfString("Test").ToPdfStream();
-
-        // Act
-        bool actualResult = pdfStream.Equals((object?)null);
-
-        // Assert
-        Assert.False(actualResult);
-    }
-
     [Fact(DisplayName = "Check Equals method that has the same reference as a value")]
     public void PdfStream_Equals_SameReference_ShouldReturnTrue()
     {

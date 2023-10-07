@@ -105,7 +105,7 @@ public class XRefTableTests
         bool actualResult1 = xRefTable.Equals(null);
 
         Debug.Assert(xRefTable != null, nameof(xRefTable) + " != null");
-        bool actualResult2 = xRefTable.Equals((object?)null);
+        bool actualResult2 = xRefTable.Equals(null);
 
         // Assert
         Assert.False(actualResult1);

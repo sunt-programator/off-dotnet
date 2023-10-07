@@ -21,7 +21,7 @@ public class PageTreeNodeTests
         PageTreeNodeOptions pageTreeNodeOptions = new() { Kids = null! };
 
         // Act
-        PageTreeNode PageTreeNodeFunction()
+        IPageTreeNode PageTreeNodeFunction()
         {
             return new PageTreeNode(pageTreeNodeOptions);
         }
@@ -35,8 +35,8 @@ public class PageTreeNodeTests
     public void PageTreeNode_Content_ShouldReturnValidValue(PageTreeNodeOptions pageObjectOptions, string expectedContent)
     {
         // Arrange
-        PageTreeNode pageObject1 = new(pageObjectOptions); // Options as a class
-        PageTreeNode pageObject2 = new(options =>
+        IPageTreeNode pageObject1 = new PageTreeNode(pageObjectOptions); // Options as a class
+        IPageTreeNode pageObject2 = new PageTreeNode(options =>
         {
             options.Parent = pageObjectOptions.Parent;
             options.Kids = pageObjectOptions.Kids;
@@ -59,7 +59,7 @@ internal static class PageTreeNodeTestsDataGenerator
     {
         PageObjectOptions pageObjectOptions = new()
         {
-            Parent = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<PageObject>>().ToPdfArray()).ToPdfIndirect(3, 6).ToPdfIndirectIdentifier(),
+            Parent = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<PageObject>>().ToPdfArray()).ToPdfIndirect<IPageTreeNode>(3, 6).ToPdfIndirectIdentifier(),
             Resources = new ResourceDictionary(options => options.Font = new Dictionary<PdfName, IPdfIndirectIdentifier<Type1Font>>
             {
                 { "F3", StandardFonts.TimesRoman.ToPdfIndirect(7).ToPdfIndirectIdentifier() },
@@ -108,7 +108,7 @@ internal static class PageTreeNodeTestsDataGenerator
                     new PageObject(pageObjectOptions).ToPdfIndirect(12, 6).ToPdfIndirectIdentifier(),
                 }.ToPdfArray(),
                 Parent = new PageTreeNode(options => options.Kids = new[] { new PageObject(pageObjectOptions).ToPdfIndirect(5, 3).ToPdfIndirectIdentifier() }.ToPdfArray())
-                    .ToPdfIndirect(8)
+                    .ToPdfIndirect<IPageTreeNode>(8)
                     .ToPdfIndirectIdentifier(),
             },
             "<</Type /Pages /Parent 8 0 R /Kids [5 3 R 3 1 R 12 6 R] /Count 3>>",

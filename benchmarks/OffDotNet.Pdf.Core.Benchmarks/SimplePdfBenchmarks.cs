@@ -58,7 +58,7 @@ public class SimplePdfBenchmarks
 
         int objectNumber = 0;
         IPdfIndirectIdentifier<DocumentCatalog> documentCatalogIndirect = new PdfIndirect<DocumentCatalog>(++objectNumber).ToPdfIndirectIdentifier();
-        IPdfIndirectIdentifier<PageTreeNode> rootPageTreeNodeIndirect = new PdfIndirect<PageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
+        IPdfIndirectIdentifier<IPageTreeNode> rootPageTreeNodeIndirect = new PdfIndirect<IPageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
 
         List<IPdfIndirectIdentifier<PageObject>> pageObjectsIndirectList = new(pagesCount);
         for (int i = 0; i < pagesCount; i++)
@@ -163,7 +163,7 @@ public class SimplePdfBenchmarks
 
         int objectNumber = 0;
         IPdfIndirectIdentifier<DocumentCatalog> documentCatalogIndirect = new PdfIndirect<DocumentCatalog>(++objectNumber).ToPdfIndirectIdentifier();
-        IPdfIndirectIdentifier<PageTreeNode> rootPageTreeNodeIndirect = new PdfIndirect<PageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
+        IPdfIndirectIdentifier<IPageTreeNode> rootPageTreeNodeIndirect = new PdfIndirect<IPageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
 
         List<IPdfIndirectIdentifier<PageObject>> pageObjectsIndirectList = new(pagesCount);
         List<IPdfIndirectIdentifier<IPdfStream>> contentStreamsIndirectList = new(pagesCount);
