@@ -10,7 +10,7 @@ using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.Text.Operations.TextState;
 
-public sealed class FontOperation : PdfOperation
+public sealed class FontOperation : PdfOperation, IFontOperation
 {
     public const string OperatorName = "Tf";
 
