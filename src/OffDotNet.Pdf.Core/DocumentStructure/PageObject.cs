@@ -39,7 +39,7 @@ public sealed class PageObject : PdfDictionary<IPdfObject>, IPageObject
 
     public IResourceDictionary Resources { get;  }
 
-    public Rectangle MediaBox { get; }
+    public IRectangle MediaBox { get; }
 
     public AnyOf<IPdfIndirectIdentifier<IPdfStream>, IPdfArray<IPdfIndirectIdentifier<IPdfStream>>>? Contents { get; }
 

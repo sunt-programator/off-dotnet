@@ -17,7 +17,7 @@ public interface IPageObject : IPdfDictionary<IPdfObject>
 
     IResourceDictionary Resources { get; }
 
-    Rectangle MediaBox { get; }
+    IRectangle MediaBox { get; }
 
     AnyOf<IPdfIndirectIdentifier<IPdfStream>, IPdfArray<IPdfIndirectIdentifier<IPdfStream>>>? Contents { get; }
 }

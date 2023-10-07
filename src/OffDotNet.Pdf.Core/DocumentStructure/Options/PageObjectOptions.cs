@@ -16,7 +16,7 @@ public sealed class PageObjectOptions
 
     public IResourceDictionary Resources { get; set; } = default!;
 
-    public Rectangle MediaBox { get; set; } = default!;
+    public IRectangle MediaBox { get; set; } = default!;
 
     public AnyOf<IPdfIndirectIdentifier<IPdfStream>, IPdfArray<IPdfIndirectIdentifier<IPdfStream>>>? Contents { get; set; }
 }
