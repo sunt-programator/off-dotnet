@@ -15,7 +15,7 @@ public sealed class FileTrailerOptions
 
     public PdfInteger? Prev { get; set; }
 
-    public IPdfIndirectIdentifier<DocumentCatalog> Root { get; set; } = default!;
+    public IPdfIndirectIdentifier<IDocumentCatalog> Root { get; set; } = default!;
 
     public IPdfDictionary<IPdfObject>? Encrypt { get; set; }
 

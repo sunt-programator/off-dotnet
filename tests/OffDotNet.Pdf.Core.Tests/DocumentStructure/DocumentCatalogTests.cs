@@ -18,7 +18,7 @@ public class DocumentCatalogTests
         DocumentCatalogOptions documentCatalogOptions = new() { Pages = null! };
 
         // Act
-        DocumentCatalog DocumentCatalogFunction()
+        IDocumentCatalog DocumentCatalogFunction()
         {
             return new DocumentCatalog(documentCatalogOptions);
         }
@@ -36,7 +36,7 @@ public class DocumentCatalogTests
             .ToPdfIndirect<IPageTreeNode>(3)
             .ToPdfIndirectIdentifier();
 
-        DocumentCatalog documentCatalog = new(options => options.Pages = pages);
+        IDocumentCatalog documentCatalog = new DocumentCatalog(options => options.Pages = pages);
 
         // Act
         string actualContent = documentCatalog.Content;

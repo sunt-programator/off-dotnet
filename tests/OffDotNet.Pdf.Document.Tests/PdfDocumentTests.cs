@@ -70,8 +70,8 @@ public class PdfDocumentTests
     {
         // Arrange
         var rootPageTree = new PdfIndirect<IPageTreeNode>(2).ToPdfIndirectIdentifier();
-        IPdfIndirectIdentifier<DocumentCatalog> expectedDocumentCatalog = new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = rootPageTree)
-            .ToPdfIndirect(1)
+        IPdfIndirectIdentifier<IDocumentCatalog> expectedDocumentCatalog = new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = rootPageTree)
+            .ToPdfIndirect<IDocumentCatalog>(1)
             .ToPdfIndirectIdentifier();
 
         MemoryStream stream = new();
@@ -200,7 +200,7 @@ public class PdfDocumentTests
         IFileTrailer expectedFileTrailer = new FileTrailer(453, fileTrailerOptions =>
         {
             fileTrailerOptions.Size = 5;
-            fileTrailerOptions.Root = new PdfIndirect<DocumentCatalog>(1).ToPdfIndirectIdentifier();
+            fileTrailerOptions.Root = new PdfIndirect<IDocumentCatalog>(1).ToPdfIndirectIdentifier();
         });
 
         MemoryStream stream = new();

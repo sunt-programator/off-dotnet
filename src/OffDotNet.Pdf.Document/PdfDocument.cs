@@ -27,7 +27,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
     {
         int objectNumber = 0;
         this.stream = stream;
-        this.DocumentCatalog = new PdfIndirect<DocumentCatalog>(++objectNumber).ToPdfIndirectIdentifier();
+        this.DocumentCatalog = new PdfIndirect<IDocumentCatalog>(++objectNumber).ToPdfIndirectIdentifier();
         this.RootPageTree = new PdfIndirect<IPageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
         this.Pages = new List<IPdfIndirectIdentifier<IPageObject>>(1) { new PdfIndirect<IPageObject>(++objectNumber).ToPdfIndirectIdentifier() }.ToImmutableList();
         this.contentStreamIndirect = new PdfIndirect<IPdfStream>(++objectNumber).ToPdfIndirectIdentifier();
@@ -111,7 +111,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
 
     public FileHeader FileHeader => FileHeader.PdfVersion17;
 
-    public IPdfIndirectIdentifier<DocumentCatalog> DocumentCatalog { get; }
+    public IPdfIndirectIdentifier<IDocumentCatalog> DocumentCatalog { get; }
 
     public IPdfIndirectIdentifier<IPageTreeNode> RootPageTree { get; }
 

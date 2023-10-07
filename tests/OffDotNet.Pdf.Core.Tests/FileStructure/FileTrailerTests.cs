@@ -19,8 +19,8 @@ public class FileTrailerTests
         .ToPdfIndirect<IPageTreeNode>(3)
         .ToPdfIndirectIdentifier();
 
-    private static readonly IPdfIndirectIdentifier<DocumentCatalog> RootDictionary =
-        new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = Pages).ToPdfIndirect(2).ToPdfIndirectIdentifier();
+    private static readonly IPdfIndirectIdentifier<IDocumentCatalog> RootDictionary =
+        new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = Pages).ToPdfIndirect<IDocumentCatalog>(2).ToPdfIndirectIdentifier();
 
     [Theory(DisplayName = $"Constructor with negative {nameof(FileTrailer.ByteOffset)} should throw an {nameof(ArgumentOutOfRangeException)}")]
     [InlineData(-1)]
@@ -269,8 +269,8 @@ internal static class FileTrailerTestsDataGenerator
         .ToPdfIndirect<IPageTreeNode>(3)
         .ToPdfIndirectIdentifier();
 
-    private static readonly IPdfIndirectIdentifier<DocumentCatalog> RootDictionary =
-        new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = Pages).ToPdfIndirect(2).ToPdfIndirectIdentifier();
+    private static readonly IPdfIndirectIdentifier<IDocumentCatalog> RootDictionary =
+        new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = Pages).ToPdfIndirect<IDocumentCatalog>(2).ToPdfIndirectIdentifier();
 
     public static IEnumerable<object[]> FileTrailer_Content_TestCases()
     {
