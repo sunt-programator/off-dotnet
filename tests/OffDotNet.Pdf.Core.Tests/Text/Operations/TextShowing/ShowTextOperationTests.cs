@@ -16,7 +16,7 @@ public class ShowTextOperationTests
     {
         // Arrange
         const string expectedOperator = "Tj";
-        ShowTextOperation showTextOperation = new("test");
+        IShowTextOperation showTextOperation = new ShowTextOperation("test");
 
         // Act
         string actualPdfOperator = showTextOperation.PdfOperator;
@@ -31,7 +31,7 @@ public class ShowTextOperationTests
     public void ShowTextOperation_Text_ShouldReturnValidValues(string text)
     {
         // Arrange
-        ShowTextOperation showTextOperation = new(text);
+        IShowTextOperation showTextOperation = new ShowTextOperation(text);
 
         // Act
         string actualText = showTextOperation.Text;
@@ -46,7 +46,7 @@ public class ShowTextOperationTests
     public void ShowTextOperation_Content_ShouldReturnValidValue(string text, string expectedContent)
     {
         // Arrange
-        ShowTextOperation showTextOperation = new(text);
+        IShowTextOperation showTextOperation = new ShowTextOperation(text);
 
         // Act
         string actualContent = showTextOperation.Content;
@@ -60,7 +60,7 @@ public class ShowTextOperationTests
     public void ShowTextOperation_Bytes_ShouldReturnValidValue(string text, byte[] expectedBytes)
     {
         // Arrange
-        ShowTextOperation showTextOperation = new(text);
+        IShowTextOperation showTextOperation = new ShowTextOperation(text);
 
         // Act
         byte[] actualBytes = showTextOperation.Bytes.ToArray();
@@ -77,7 +77,7 @@ public class ShowTextOperationTests
         // Arrange
         PdfString pdfString = text;
         int expectedHashCode = HashCode.Combine(nameof(ShowTextOperation), pdfString, ShowTextOperation.OperatorName);
-        ShowTextOperation showTextOperation = new(pdfString);
+        IShowTextOperation showTextOperation = new ShowTextOperation(pdfString);
 
         // Act
         int actualHashCode = showTextOperation.GetHashCode();
@@ -88,7 +88,7 @@ public class ShowTextOperationTests
 
     [Theory(DisplayName = "The Equals property should return a valid value")]
     [MemberData(nameof(ShowTextOperationTestsDataGenerator.ShowTextOperation_Equals_TestCases), MemberType = typeof(ShowTextOperationTestsDataGenerator))]
-    public void ShowTextOperation_Equals_ShouldReturnValidValue(ShowTextOperation showTextOperation1, ShowTextOperation showTextOperation2, bool expectedResult)
+    public void ShowTextOperation_Equals_ShouldReturnValidValue(IShowTextOperation showTextOperation1, IShowTextOperation showTextOperation2, bool expectedResult)
     {
         // Arrange
 

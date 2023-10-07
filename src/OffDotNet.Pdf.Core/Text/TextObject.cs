@@ -5,7 +5,6 @@
 
 using System.Text;
 using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.ContentStreamAndResources;
 
 namespace OffDotNet.Pdf.Core.Text;
 

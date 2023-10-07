@@ -4,13 +4,12 @@
 // </copyright>
 
 using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.ContentStreamAndResources;
 using OffDotNet.Pdf.Core.Extensions;
 using OffDotNet.Pdf.Core.Primitives;
 
 namespace OffDotNet.Pdf.Core.Text.Operations.TextShowing;
 
-public sealed class ShowTextOperation : PdfOperation
+public sealed class ShowTextOperation : PdfOperation, IShowTextOperation
 {
     public const string OperatorName = "Tj";
 

@@ -4,7 +4,6 @@
 // </copyright>
 
 using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.ContentStreamAndResources;
 using OffDotNet.Pdf.Core.Primitives;
 
 namespace OffDotNet.Pdf.Core.Text.Operations.TextPosition;
