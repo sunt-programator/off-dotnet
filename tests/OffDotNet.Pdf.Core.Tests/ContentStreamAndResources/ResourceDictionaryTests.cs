@@ -17,8 +17,8 @@ public class ResourceDictionaryTests
     public void ResourceDictionary_Content_ShouldReturnValidValue(ResourceDictionaryOptions resourceDictionaryOptions, string expectedContent)
     {
         // Arrange
-        ResourceDictionary resourceDictionary1 = new(resourceDictionaryOptions); // Options as a class
-        ResourceDictionary resourceDictionary2 = new(options =>
+        IResourceDictionary resourceDictionary1 = new ResourceDictionary(resourceDictionaryOptions); // Options as a class
+        IResourceDictionary resourceDictionary2 = new ResourceDictionary(options =>
         {
             options.Font = resourceDictionaryOptions.Font;
             options.ProcSet = resourceDictionaryOptions.ProcSet;

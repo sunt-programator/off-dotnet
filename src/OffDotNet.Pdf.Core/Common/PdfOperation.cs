@@ -4,9 +4,8 @@
 // </copyright>
 
 using System.Text;
-using OffDotNet.Pdf.Core.Common;
 
-namespace OffDotNet.Pdf.Core.ContentStreamAndResources;
+namespace OffDotNet.Pdf.Core.Common;
 
 public abstract class PdfOperation : BasePdfObject
 {

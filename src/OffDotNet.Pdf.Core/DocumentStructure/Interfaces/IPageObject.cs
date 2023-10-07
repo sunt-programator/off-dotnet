@@ -1,4 +1,9 @@
-﻿using OffDotNet.Pdf.Core.Common;
+﻿// <copyright file="IPageObject.cs" company="Sunt Programator">
+// Copyright (c) Sunt Programator. All rights reserved.
+// Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.CommonDataStructures;
 using OffDotNet.Pdf.Core.ContentStreamAndResources;
 using OffDotNet.Pdf.Core.Extensions;
@@ -6,11 +11,11 @@ using OffDotNet.Pdf.Core.Primitives;
 
 namespace OffDotNet.Pdf.Core.DocumentStructure;
 
-public interface IPageObject : IPdfObject
+public interface IPageObject : IPdfDictionary<IPdfObject>
 {
     IPdfIndirectIdentifier<IPageTreeNode> Parent { get; }
 
-    ResourceDictionary Resources { get; }
+    IResourceDictionary Resources { get; }
 
     Rectangle MediaBox { get; }
 

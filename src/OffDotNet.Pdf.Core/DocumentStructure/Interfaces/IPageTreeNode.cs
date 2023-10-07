@@ -8,7 +8,7 @@ using OffDotNet.Pdf.Core.Primitives;
 
 namespace OffDotNet.Pdf.Core.DocumentStructure;
 
-public interface IPageTreeNode : IPdfObject
+public interface IPageTreeNode : IPdfDictionary<IPdfObject>
 {
     IPdfIndirectIdentifier<IPageTreeNode>? Parent { get; }
 

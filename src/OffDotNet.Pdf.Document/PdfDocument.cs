@@ -4,6 +4,7 @@
 // </copyright>
 
 using System.Collections.Immutable;
+using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.CommonDataStructures;
 using OffDotNet.Pdf.Core.ContentStreamAndResources;
 using OffDotNet.Pdf.Core.DocumentStructure;

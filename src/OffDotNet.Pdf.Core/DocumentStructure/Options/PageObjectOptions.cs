@@ -14,7 +14,7 @@ public sealed class PageObjectOptions
 {
     public IPdfIndirectIdentifier<IPageTreeNode> Parent { get; set; } = default!;
 
-    public ResourceDictionary Resources { get; set; } = default!;
+    public IResourceDictionary Resources { get; set; } = default!;
 
     public Rectangle MediaBox { get; set; } = default!;
 

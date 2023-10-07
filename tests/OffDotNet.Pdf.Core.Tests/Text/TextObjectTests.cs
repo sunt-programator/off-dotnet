@@ -3,6 +3,7 @@
 // Licensed under the GPL-3.0 license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.ContentStreamAndResources;
 using OffDotNet.Pdf.Core.Text;
 using OffDotNet.Pdf.Core.Text.Operations.TextPosition;

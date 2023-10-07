@@ -58,7 +58,7 @@ public class PageObjectTests
             .ToPdfIndirect<IPageTreeNode>(1)
             .ToPdfIndirectIdentifier();
 
-        ResourceDictionary resourceDictionary = new(new ResourceDictionaryOptions());
+        IResourceDictionary resourceDictionary = new ResourceDictionary(new ResourceDictionaryOptions());
         PageObjectOptions documentCatalogOptions = new() { Parent = parent, Resources = resourceDictionary, MediaBox = null! };
 
         // Act

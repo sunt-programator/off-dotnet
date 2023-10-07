@@ -6,13 +6,14 @@
 using System.Collections.ObjectModel;
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Primitives;
+using OffDotNet.Pdf.Core.Text.Fonts;
 
 namespace OffDotNet.Pdf.Core.ContentStreamAndResources;
 
-public sealed class ResourceDictionary : PdfDictionary<IPdfObject>
+public sealed class ResourceDictionary : PdfDictionary<IPdfObject>, IResourceDictionary
 {
-    private static readonly PdfName Font = "Font";
-    private static readonly PdfName ProcSet = "ProcSet";
+    private static readonly PdfName FontName = "Font";
+    private static readonly PdfName ProcSetName = "ProcSet";
 
     public ResourceDictionary(Action<ResourceDictionaryOptions> optionsFunc)
         : this(GetResourceDictionaryOptions(optionsFunc))
@@ -22,7 +23,13 @@ public sealed class ResourceDictionary : PdfDictionary<IPdfObject>
     public ResourceDictionary(ResourceDictionaryOptions options)
         : base(GenerateDictionary(options))
     {
+        this.Font = options.Font;
+        this.ProcSet = options.ProcSet;
     }
+
+    public IPdfDictionary<IPdfIndirectIdentifier<Type1Font>>? Font { get; }
+
+    public IPdfArray<PdfName>? ProcSet { get; }
 
     private static ResourceDictionaryOptions GetResourceDictionaryOptions(Action<ResourceDictionaryOptions> optionsFunc)
     {
@@ -34,8 +41,8 @@ public sealed class ResourceDictionary : PdfDictionary<IPdfObject>
     private static IReadOnlyDictionary<PdfName, IPdfObject> GenerateDictionary(ResourceDictionaryOptions options)
     {
         IDictionary<PdfName, IPdfObject> documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(2)
-            .WithKeyValue(Font, options.Font)
-            .WithKeyValue(ProcSet, options.ProcSet);
+            .WithKeyValue(FontName, options.Font)
+            .WithKeyValue(ProcSetName, options.ProcSet);
 
         return new ReadOnlyDictionary<PdfName, IPdfObject>(documentCatalogDictionary);
     }
