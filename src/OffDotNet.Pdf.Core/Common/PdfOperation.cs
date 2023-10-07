@@ -7,7 +7,7 @@ using System.Text;
 
 namespace OffDotNet.Pdf.Core.Common;
 
-public abstract class PdfOperation : BasePdfObject
+public abstract class PdfOperation : PdfObject, IPdfOperation
 {
     private readonly Lazy<string> literalValue;
     private readonly Lazy<byte[]> bytes;

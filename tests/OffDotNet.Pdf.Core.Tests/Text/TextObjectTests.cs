@@ -22,7 +22,7 @@ public class TextObjectTests
         // Arrange
 
         // Act
-        IReadOnlyCollection<PdfOperation> textOperations = textObject.Value.ToArray();
+        IReadOnlyCollection<IPdfOperation> textOperations = textObject.Value.ToArray();
 
         // Assert
         Assert.Equal(textOperations, textObject.Value);
@@ -85,9 +85,9 @@ public class TextObjectTests
 [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
 internal static class TextObjectTestsDataGenerator
 {
-    private static readonly PdfOperation[] PdfOperations1 = { new FontOperation("F12", 13), new MoveTextOperation(13, 46) };
+    private static readonly IPdfOperation[] PdfOperations1 = { new FontOperation("F12", 13), new MoveTextOperation(13, 46) };
 
-    private static readonly PdfOperation[] PdfOperations2 = { new FontOperation("F4", 13), new MoveTextOperation(2, 72), new ShowTextOperation("A text with special chars !@#$%^&*()") };
+    private static readonly IPdfOperation[] PdfOperations2 = { new FontOperation("F4", 13), new MoveTextOperation(2, 72), new ShowTextOperation("A text with special chars !@#$%^&*()") };
 
     public static IEnumerable<object[]> TextObject_NoExpectedData_TestCases()
     {

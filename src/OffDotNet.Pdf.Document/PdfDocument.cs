@@ -34,7 +34,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
         this.contentStreamIndirect = new PdfIndirect<IPdfStream>(++objectNumber).ToPdfIndirectIdentifier();
         this.Fonts = new List<IPdfIndirectIdentifier<Type1Font>>(1) { new PdfIndirect<Type1Font>(++objectNumber).ToPdfIndirectIdentifier() }.ToImmutableList();
 
-        PdfOperation[] pdfOperations =
+        IPdfOperation[] pdfOperations =
         {
             new FontOperation("F1", 24),
             new MoveTextOperation(100, 100),

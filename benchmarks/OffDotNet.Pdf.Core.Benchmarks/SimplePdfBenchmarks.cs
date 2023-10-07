@@ -70,7 +70,7 @@ public class SimplePdfBenchmarks
         IPdfIndirectIdentifier<IPdfStream> contentStreamIndirect = new PdfIndirect<IPdfStream>(++objectNumber).ToPdfIndirectIdentifier();
         IPdfIndirectIdentifier<Type1Font> fontIndirect = new PdfIndirect<Type1Font>(objectNumber).ToPdfIndirectIdentifier();
 
-        PdfOperation[] pdfOperations =
+        IPdfOperation[] pdfOperations =
         {
             new FontOperation("F1", 24),
             new MoveTextOperation(100, 100),
@@ -180,7 +180,7 @@ public class SimplePdfBenchmarks
 
         IPdfIndirectIdentifier<Type1Font> fontIndirect = new PdfIndirect<Type1Font>(objectNumber).ToPdfIndirectIdentifier();
 
-        PdfOperation[] pdfOperations =
+        IPdfOperation[] pdfOperations =
         {
             new FontOperation("F1", 24),
             new MoveTextOperation(100, 100),

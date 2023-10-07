@@ -11,7 +11,7 @@ using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.FileStructure;
 
-public sealed class FileTrailer : BasePdfObject, IFileTrailer
+public sealed class FileTrailer : PdfObject, IFileTrailer
 {
     private static readonly PdfName Size = "Size";
     private static readonly PdfName Prev = "Prev";

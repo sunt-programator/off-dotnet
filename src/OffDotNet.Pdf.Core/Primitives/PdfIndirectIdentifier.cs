@@ -8,7 +8,7 @@ using OffDotNet.Pdf.Core.Common;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public sealed class PdfIndirectIdentifier<T> : BasePdfObject, IPdfIndirectIdentifier<T>
+public sealed class PdfIndirectIdentifier<T> : PdfObject, IPdfIndirectIdentifier<T>
     where T : IPdfObject
 {
     private readonly Lazy<string> literalValue;
