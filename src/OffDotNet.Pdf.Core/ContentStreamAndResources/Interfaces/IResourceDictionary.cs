@@ -11,7 +11,7 @@ namespace OffDotNet.Pdf.Core.ContentStreamAndResources;
 
 public interface IResourceDictionary : IPdfDictionary<IPdfObject>
 {
-    IPdfDictionary<IPdfIndirectIdentifier<Type1Font>>? Font { get; }
+    IPdfDictionary<IPdfIndirectIdentifier<IType1Font>>? Font { get; }
 
     IPdfArray<PdfName>? ProcSet { get; }
 }

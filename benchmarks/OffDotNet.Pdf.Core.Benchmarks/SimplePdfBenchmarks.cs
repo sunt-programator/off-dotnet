@@ -68,7 +68,7 @@ public class SimplePdfBenchmarks
         }
 
         IPdfIndirectIdentifier<IPdfStream> contentStreamIndirect = new PdfIndirect<IPdfStream>(++objectNumber).ToPdfIndirectIdentifier();
-        IPdfIndirectIdentifier<Type1Font> fontIndirect = new PdfIndirect<Type1Font>(objectNumber).ToPdfIndirectIdentifier();
+        IPdfIndirectIdentifier<IType1Font> fontIndirect = new PdfIndirect<IType1Font>(objectNumber).ToPdfIndirectIdentifier();
 
         IPdfOperation[] pdfOperations =
         {
@@ -79,7 +79,7 @@ public class SimplePdfBenchmarks
 
         TextObject textObject = new(pdfOperations);
 
-        IPdfDictionary<IPdfIndirectIdentifier<Type1Font>> fontDictionary = new Dictionary<PdfName, IPdfIndirectIdentifier<Type1Font>> { { "F1", fontIndirect } }.ToPdfDictionary();
+        IPdfDictionary<IPdfIndirectIdentifier<IType1Font>> fontDictionary = new Dictionary<PdfName, IPdfIndirectIdentifier<IType1Font>> { { "F1", fontIndirect } }.ToPdfDictionary();
 
         documentCatalogIndirect.PdfIndirect.Value = new DocumentCatalog(options => options.Pages = rootPageTreeNodeIndirect);
         rootPageTreeNodeIndirect.PdfIndirect.Value = new PageTreeNode(options => options.Kids = pageObjectsIndirectList.ToPdfArray());
@@ -178,7 +178,7 @@ public class SimplePdfBenchmarks
             contentStreamsIndirectList.Add(new PdfIndirect<IPdfStream>(++objectNumber).ToPdfIndirectIdentifier());
         }
 
-        IPdfIndirectIdentifier<Type1Font> fontIndirect = new PdfIndirect<Type1Font>(objectNumber).ToPdfIndirectIdentifier();
+        IPdfIndirectIdentifier<IType1Font> fontIndirect = new PdfIndirect<IType1Font>(objectNumber).ToPdfIndirectIdentifier();
 
         IPdfOperation[] pdfOperations =
         {
@@ -189,7 +189,7 @@ public class SimplePdfBenchmarks
 
         TextObject textObject = new(pdfOperations);
 
-        IPdfDictionary<IPdfIndirectIdentifier<Type1Font>> fontDictionary = new Dictionary<PdfName, IPdfIndirectIdentifier<Type1Font>> { { "F1", fontIndirect } }.ToPdfDictionary();
+        IPdfDictionary<IPdfIndirectIdentifier<IType1Font>> fontDictionary = new Dictionary<PdfName, IPdfIndirectIdentifier<IType1Font>> { { "F1", fontIndirect } }.ToPdfDictionary();
 
         documentCatalogIndirect.PdfIndirect.Value = new DocumentCatalog(options => options.Pages = rootPageTreeNodeIndirect);
         rootPageTreeNodeIndirect.PdfIndirect.Value = new PageTreeNode(options => options.Kids = pageObjectsIndirectList.ToPdfArray());

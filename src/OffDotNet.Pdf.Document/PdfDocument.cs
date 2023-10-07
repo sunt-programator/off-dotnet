@@ -32,7 +32,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
         this.RootPageTree = new PdfIndirect<IPageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
         this.Pages = new List<IPdfIndirectIdentifier<IPageObject>>(1) { new PdfIndirect<IPageObject>(++objectNumber).ToPdfIndirectIdentifier() }.ToImmutableList();
         this.contentStreamIndirect = new PdfIndirect<IPdfStream>(++objectNumber).ToPdfIndirectIdentifier();
-        this.Fonts = new List<IPdfIndirectIdentifier<Type1Font>>(1) { new PdfIndirect<Type1Font>(++objectNumber).ToPdfIndirectIdentifier() }.ToImmutableList();
+        this.Fonts = new List<IPdfIndirectIdentifier<IType1Font>>(1) { new PdfIndirect<IType1Font>(++objectNumber).ToPdfIndirectIdentifier() }.ToImmutableList();
 
         IPdfOperation[] pdfOperations =
         {
@@ -42,7 +42,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
         };
 
         TextObject textObject = new(pdfOperations);
-        IPdfDictionary<IPdfIndirectIdentifier<Type1Font>> fontDictionary = new Dictionary<PdfName, IPdfIndirectIdentifier<Type1Font>> { { "F1", this.Fonts[0] } }.ToPdfDictionary();
+        IPdfDictionary<IPdfIndirectIdentifier<IType1Font>> fontDictionary = new Dictionary<PdfName, IPdfIndirectIdentifier<IType1Font>> { { "F1", this.Fonts[0] } }.ToPdfDictionary();
 
         this.DocumentCatalog.PdfIndirect.Value = new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = this.RootPageTree);
         this.RootPageTree.PdfIndirect.Value = new PageTreeNode(pageTreeNodeOptions => pageTreeNodeOptions.Kids = this.Pages.ToPdfArray());
@@ -85,7 +85,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
 
         for (int index = 0; index < this.Fonts.Count; index++)
         {
-            IPdfIndirectIdentifier<Type1Font> fontIndirect = this.Fonts[index];
+            IPdfIndirectIdentifier<IType1Font> fontIndirect = this.Fonts[index];
             byteOffset += fontIndirect.PdfIndirect.Bytes.Length;
 
             if (index == this.Fonts.Count - 1)
@@ -118,7 +118,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
 
     public IImmutableList<IPdfIndirectIdentifier<IPageObject>> Pages { get; }
 
-    public IImmutableList<IPdfIndirectIdentifier<Type1Font>> Fonts { get; }
+    public IImmutableList<IPdfIndirectIdentifier<IType1Font>> Fonts { get; }
 
     public IXRefTable XRefTable { get; }
 
@@ -137,7 +137,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
 
         await this.stream.WriteAsync(this.contentStreamIndirect.PdfIndirect.Bytes, cancellationToken).ConfigureAwait(false);
 
-        foreach (IPdfIndirectIdentifier<Type1Font> fontIndirect in this.Fonts)
+        foreach (IPdfIndirectIdentifier<IType1Font> fontIndirect in this.Fonts)
         {
             await this.stream.WriteAsync(fontIndirect.PdfIndirect.Bytes, cancellationToken).ConfigureAwait(false);
         }

@@ -17,7 +17,7 @@ public sealed class ResourceDictionaryOptions
     public static readonly PdfName ProcSetImageI = "ImageI";
     private static readonly IPdfArray<PdfName> DefaultProcedureSets = new[] { ProcSetPdf, ProcSetText, ProcSetImageB, ProcSetImageC, ProcSetImageI }.ToPdfArray();
 
-    public IPdfDictionary<IPdfIndirectIdentifier<Type1Font>>? Font { get; set; }
+    public IPdfDictionary<IPdfIndirectIdentifier<IType1Font>>? Font { get; set; }
 
     public IPdfArray<PdfName>? ProcSet { get; set; } = DefaultProcedureSets;
 }

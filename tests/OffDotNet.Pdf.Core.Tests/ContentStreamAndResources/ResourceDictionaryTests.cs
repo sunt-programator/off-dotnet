@@ -43,7 +43,7 @@ internal static class ResourceDictionaryTestsDataGenerator
         {
             new ResourceDictionaryOptions
             {
-                Font = new Dictionary<PdfName, IPdfIndirectIdentifier<Type1Font>>
+                Font = new Dictionary<PdfName, IPdfIndirectIdentifier<IType1Font>>
                 {
                     { "F5", StandardFonts.TimesRoman.ToPdfIndirect(6).ToPdfIndirectIdentifier() },
                     { "F6", StandardFonts.TimesRoman.ToPdfIndirect(8).ToPdfIndirectIdentifier() },

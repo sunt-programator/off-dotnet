@@ -17,7 +17,7 @@ public class Type1FontTests
         Type1FontOptions documentCatalogOptions = new() { BaseFont = null! };
 
         // Act
-        Type1Font Type1FontFunction()
+        IType1Font Type1FontFunction()
         {
             return new Type1Font(documentCatalogOptions);
         }
@@ -28,7 +28,7 @@ public class Type1FontTests
 
     [Theory(DisplayName = $"The {nameof(Type1Font.Content)} should return a valid value")]
     [MemberData(nameof(Type1FontTestsDataGenerator.Type1Font_Content_TestCases), MemberType = typeof(Type1FontTestsDataGenerator))]
-    public void Type1Font_Content_ShouldReturnValidValue(Type1Font type1Font, string expectedContent)
+    public void Type1Font_Content_ShouldReturnValidValue(IType1Font type1Font, string expectedContent)
     {
         // Arrange
 
@@ -44,10 +44,10 @@ public class Type1FontTests
 internal static class Type1FontTestsDataGenerator
 {
     private static readonly Type1FontOptions Options = new() { BaseFont = "Helvetica", FontName = "Custom-Font" };
-    private static readonly Type1Font CustomType1Font = new(Options);
+    private static readonly IType1Font CustomType1Font = new Type1Font(Options);
 
     private static readonly Type1FontOptions OptionsWithoutName = new() { BaseFont = "Helvetica" };
-    private static readonly Type1Font CustomType1FontWithoutName = new(OptionsWithoutName);
+    private static readonly IType1Font CustomType1FontWithoutName = new Type1Font(OptionsWithoutName);
 
     public static IEnumerable<object[]> Type1Font_Content_TestCases()
     {

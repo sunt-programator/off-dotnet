@@ -119,9 +119,9 @@ public class PdfDocumentTests
             pageObjectOptions.MediaBox = new Rectangle(0, 0, 612, 792);
             pageObjectOptions.Contents = new(new PdfIndirect<IPdfStream>(4).ToPdfIndirectIdentifier());
             pageObjectOptions.Resources = new ResourceDictionary(resourceDictionaryOptions =>
-                resourceDictionaryOptions.Font = new Dictionary<PdfName, IPdfIndirectIdentifier<Type1Font>>
+                resourceDictionaryOptions.Font = new Dictionary<PdfName, IPdfIndirectIdentifier<IType1Font>>
                 {
-                    { "F1", new PdfIndirect<Type1Font>(5).ToPdfIndirectIdentifier() },
+                    { "F1", new PdfIndirect<IType1Font>(5).ToPdfIndirectIdentifier() },
                 }.ToPdfDictionary());
         });
 
@@ -149,7 +149,7 @@ public class PdfDocumentTests
     public async Task PdfDocument_ConstructorWithoutArguments_Fonts_ShouldBePredefined()
     {
         // Arrange
-        var expectedFonts = new List<IPdfIndirectIdentifier<Type1Font>>(1) { StandardFonts.Helvetica.ToPdfIndirect(5).ToPdfIndirectIdentifier() }.ToImmutableList();
+        var expectedFonts = new List<IPdfIndirectIdentifier<IType1Font>>(1) { StandardFonts.Helvetica.ToPdfIndirect(5).ToPdfIndirectIdentifier() }.ToImmutableList();
 
         MemoryStream stream = new();
         PdfDocument pdfDocument = new(stream, new PdfDocumentOptions());

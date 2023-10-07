@@ -107,7 +107,7 @@ internal static class PageObjectTestsDataGenerator
             new PageObjectOptions
             {
                 Parent = parent.ToPdfIndirect(4).ToPdfIndirectIdentifier(),
-                Resources = new ResourceDictionary(options => options.Font = new Dictionary<PdfName, IPdfIndirectIdentifier<Type1Font>>
+                Resources = new ResourceDictionary(options => options.Font = new Dictionary<PdfName, IPdfIndirectIdentifier<IType1Font>>
                 {
                     { "F3", StandardFonts.TimesRoman.ToPdfIndirect(7).ToPdfIndirectIdentifier() },
                     { "F5", StandardFonts.TimesRoman.ToPdfIndirect(9).ToPdfIndirectIdentifier() },
@@ -122,7 +122,7 @@ internal static class PageObjectTestsDataGenerator
             new PageObjectOptions
             {
                 Parent = parent.ToPdfIndirect(3).ToPdfIndirectIdentifier(),
-                Resources = new ResourceDictionary(options => options.Font = new Dictionary<PdfName, IPdfIndirectIdentifier<Type1Font>>
+                Resources = new ResourceDictionary(options => options.Font = new Dictionary<PdfName, IPdfIndirectIdentifier<IType1Font>>
                 {
                     { "F3", StandardFonts.TimesRoman.ToPdfIndirect(7).ToPdfIndirectIdentifier() },
                     { "F5", StandardFonts.TimesRoman.ToPdfIndirect(9).ToPdfIndirectIdentifier() },

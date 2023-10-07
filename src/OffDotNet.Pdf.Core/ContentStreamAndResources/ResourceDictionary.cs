@@ -27,7 +27,7 @@ public sealed class ResourceDictionary : PdfDictionary<IPdfObject>, IResourceDic
         this.ProcSet = options.ProcSet;
     }
 
-    public IPdfDictionary<IPdfIndirectIdentifier<Type1Font>>? Font { get; }
+    public IPdfDictionary<IPdfIndirectIdentifier<IType1Font>>? Font { get; }
 
     public IPdfArray<PdfName>? ProcSet { get; }
 
