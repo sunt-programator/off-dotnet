@@ -9,7 +9,7 @@ using OffDotNet.Pdf.Core.Primitives;
 
 namespace OffDotNet.Pdf.Core.Text.Operations.TextPosition;
 
-public sealed class MoveTextOperation : PdfOperation
+public sealed class MoveTextOperation : PdfOperation, IMoveTextOperation
 {
     private const string OperatorName = "Td";
 

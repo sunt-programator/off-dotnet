@@ -16,7 +16,7 @@ public class MoveTextOperationTests
     {
         // Arrange
         const string expectedOperator = "Td";
-        MoveTextOperation moveTextOperation = new(3, 6);
+        IMoveTextOperation moveTextOperation = new MoveTextOperation(3, 6);
 
         // Act
         string actualPdfOperator = moveTextOperation.PdfOperator;
@@ -34,7 +34,7 @@ public class MoveTextOperationTests
     public void MoveTextOperation_XYProperties_ShouldReturnValidValues(float x, float y)
     {
         // Arrange
-        MoveTextOperation moveTextOperation = new(x, y);
+        IMoveTextOperation moveTextOperation = new MoveTextOperation(x, y);
 
         // Act
         float actualX = moveTextOperation.X;
@@ -54,7 +54,7 @@ public class MoveTextOperationTests
     public void MoveTextOperation_Content_ShouldReturnValidValue(float x, float y, string expectedContent)
     {
         // Arrange
-        MoveTextOperation moveTextOperation = new(x, y);
+        IMoveTextOperation moveTextOperation = new MoveTextOperation(x, y);
 
         // Act
         string actualContent = moveTextOperation.Content;
@@ -72,7 +72,7 @@ public class MoveTextOperationTests
     public void MoveTextOperation_Bytes_ShouldReturnValidValue(float x, float y, byte[] expectedBytes)
     {
         // Arrange
-        MoveTextOperation moveTextOperation = new(x, y);
+        IMoveTextOperation moveTextOperation = new MoveTextOperation(x, y);
 
         // Act
         byte[] actualBytes = moveTextOperation.Bytes.ToArray();
@@ -91,7 +91,7 @@ public class MoveTextOperationTests
     {
         // Arrange
         int expectedHashCode = HashCode.Combine(nameof(MoveTextOperation), (PdfReal)x, (PdfReal)y, "Td");
-        MoveTextOperation moveTextOperation = new(x, y);
+        IMoveTextOperation moveTextOperation = new MoveTextOperation(x, y);
 
         // Act
         int actualHashCode = moveTextOperation.GetHashCode();
@@ -102,7 +102,7 @@ public class MoveTextOperationTests
 
     [Theory(DisplayName = "The Equals property should return a valid value")]
     [MemberData(nameof(MoveTextOperationTestsDataGenerator.MoveTextOperation_Equals_TestCases), MemberType = typeof(MoveTextOperationTestsDataGenerator))]
-    public void MoveTextOperation_Equals_ShouldReturnValidValue(MoveTextOperation moveTextOperation1, MoveTextOperation moveTextOperation2, bool expectedResult)
+    public void MoveTextOperation_Equals_ShouldReturnValidValue(IMoveTextOperation moveTextOperation1, IMoveTextOperation moveTextOperation2, bool expectedResult)
     {
         // Arrange
 
