@@ -8,7 +8,7 @@ using OffDotNet.Pdf.Core.Common;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public class PdfArray<TValue> : BasePdfObject
+public class PdfArray<TValue> : PdfObject, IPdfArray<TValue>
     where TValue : IPdfObject
 {
     private string literalValue = string.Empty;
@@ -25,16 +25,6 @@ public class PdfArray<TValue> : BasePdfObject
     public override ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
     public override string Content => this.GenerateContent();
-
-    public static PdfArray<TValue> Create(TValue item)
-    {
-        return new PdfArray<TValue>(new List<TValue>(1) { item });
-    }
-
-    public static PdfArray<TValue> CreateRange(IEnumerable<TValue> items)
-    {
-        return new PdfArray<TValue>(items.ToList());
-    }
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

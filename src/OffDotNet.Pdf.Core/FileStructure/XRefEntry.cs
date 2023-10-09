@@ -10,13 +10,7 @@ using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.FileStructure;
 
-public enum XRefEntryType
-{
-    InUse,
-    Free,
-}
-
-public sealed class XRefEntry : BasePdfObject
+public sealed class XRefEntry : PdfObject, IXRefEntry
 {
     private readonly Lazy<string> literalValue;
     private readonly Lazy<byte[]> bytes;

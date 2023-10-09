@@ -10,12 +10,12 @@ using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.FileStructure;
 
-public sealed class XRefSubSection : BasePdfObject
+public sealed class XRefSubSection : PdfObject, IXRefSubSection
 {
     private readonly Lazy<string> literalValue;
     private readonly Lazy<byte[]> bytes;
 
-    public XRefSubSection(int objectNumber, ICollection<XRefEntry> xRefEntries)
+    public XRefSubSection(int objectNumber, ICollection<IXRefEntry> xRefEntries)
     {
         this.ObjectNumber = objectNumber.CheckConstraints(num => num >= 0, Resource.PdfIndirect_ObjectNumberMustBePositive);
         this.Value = xRefEntries.CheckConstraints(entry => entry.Count > 0, Resource.XRefSubSection_MustHaveNonEmptyEntriesCollection);
@@ -25,11 +25,9 @@ public sealed class XRefSubSection : BasePdfObject
 
     public int ObjectNumber { get; }
 
-    public int NumberOfEntries => this.Value.Count;
-
     public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
-    public ICollection<XRefEntry> Value { get; }
+    public ICollection<IXRefEntry> Value { get; }
 
     public override string Content => this.literalValue.Value;
 
@@ -48,10 +46,10 @@ public sealed class XRefSubSection : BasePdfObject
         StringBuilder stringBuilder = new StringBuilder()
             .Append(this.ObjectNumber)
             .Append(' ')
-            .Append(this.NumberOfEntries)
+            .Append(this.Value.Count)
             .Append('\n');
 
-        foreach (XRefEntry entry in this.Value)
+        foreach (IXRefEntry entry in this.Value)
         {
             stringBuilder.Append(entry.Content);
         }

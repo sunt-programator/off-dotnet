@@ -21,7 +21,7 @@ public sealed class RectangleTests
         // Arrange
 
         // Act
-        Rectangle RectangleFunction()
+        IRectangle RectangleFunction()
         {
             return new Rectangle(lowerLeftX, lowerLeftY, upperRightX, upperRightY);
         }
@@ -37,13 +37,13 @@ public sealed class RectangleTests
     public void Rectangle_PointsProperties_ShouldReturnValidValues(int lowerLeftX, int lowerLeftY, int upperRightX, int upperRightY)
     {
         // Arrange
-        Rectangle rectangle = new(lowerLeftX, lowerLeftY, upperRightX, upperRightY);
+        IRectangle rectangle = new Rectangle(lowerLeftX, lowerLeftY, upperRightX, upperRightY);
 
         // Act
-        int actualLowerLeftX = rectangle.LowerLeftX;
-        int actualLowerLeftY = rectangle.LowerLeftY;
-        int actualUpperRightX = rectangle.UpperRightX;
-        int actualUpperRightY = rectangle.UpperRightY;
+        float actualLowerLeftX = rectangle.LowerLeftX;
+        float actualLowerLeftY = rectangle.LowerLeftY;
+        float actualUpperRightX = rectangle.UpperRightX;
+        float actualUpperRightY = rectangle.UpperRightY;
 
         // Assert
         Assert.Equal(actualLowerLeftX, lowerLeftX);
@@ -58,7 +58,7 @@ public sealed class RectangleTests
     public void Rectangle_Content_ShouldReturnValidValue(int lowerLeftX, int lowerLeftY, int upperRightX, int upperRightY, string expectedContent)
     {
         // Arrange
-        Rectangle rectangle = new(lowerLeftX, lowerLeftY, upperRightX, upperRightY);
+        IRectangle rectangle = new Rectangle(lowerLeftX, lowerLeftY, upperRightX, upperRightY);
 
         // Act
         string actualContent = rectangle.Content;

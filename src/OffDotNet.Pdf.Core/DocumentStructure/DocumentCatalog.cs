@@ -10,11 +10,11 @@ using OffDotNet.Pdf.Core.Primitives;
 
 namespace OffDotNet.Pdf.Core.DocumentStructure;
 
-public sealed class DocumentCatalog : PdfDictionary<IPdfObject>
+public sealed class DocumentCatalog : PdfDictionary<IPdfObject>, IDocumentCatalog
 {
-    private static readonly PdfName Type = "Type";
-    private static readonly PdfName Catalog = "Catalog";
-    private static readonly PdfName Pages = "Pages";
+    private static readonly PdfName TypeName = "Type";
+    private static readonly PdfName CatalogName = "Catalog";
+    private static readonly PdfName PagesName = "Pages";
 
     public DocumentCatalog(Action<DocumentCatalogOptions> optionsFunc)
         : this(GetDocumentCatalogOptions(optionsFunc))
@@ -25,7 +25,10 @@ public sealed class DocumentCatalog : PdfDictionary<IPdfObject>
         : base(GenerateDictionary(options))
     {
         options.NotNull(x => x.Pages);
+        this.Pages = options.Pages;
     }
+
+    public IPdfIndirectIdentifier<IPageTreeNode> Pages { get; }
 
     private static DocumentCatalogOptions GetDocumentCatalogOptions(Action<DocumentCatalogOptions> optionsFunc)
     {
@@ -37,8 +40,8 @@ public sealed class DocumentCatalog : PdfDictionary<IPdfObject>
     private static IReadOnlyDictionary<PdfName, IPdfObject> GenerateDictionary(DocumentCatalogOptions options)
     {
         IDictionary<PdfName, IPdfObject> documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(2)
-            .WithKeyValue(Type, Catalog)
-            .WithKeyValue(Pages, options.Pages);
+            .WithKeyValue(TypeName, CatalogName)
+            .WithKeyValue(PagesName, options.Pages);
 
         return new ReadOnlyDictionary<PdfName, IPdfObject>(documentCatalogDictionary);
     }

@@ -18,7 +18,7 @@ public class DocumentCatalogTests
         DocumentCatalogOptions documentCatalogOptions = new() { Pages = null! };
 
         // Act
-        DocumentCatalog DocumentCatalogFunction()
+        IDocumentCatalog DocumentCatalogFunction()
         {
             return new DocumentCatalog(documentCatalogOptions);
         }
@@ -32,11 +32,11 @@ public class DocumentCatalogTests
     {
         // Arrange
         const string expectedContent = "<</Type /Catalog /Pages 3 0 R>>";
-        PdfIndirectIdentifier<PageTreeNode> pages = new PageTreeNode(options => options.Kids = Array.Empty<PdfIndirectIdentifier<PageObject>>().ToPdfArray())
-            .ToPdfIndirect(3)
+        IPdfIndirectIdentifier<IPageTreeNode> pages = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<IPageObject>>().ToPdfArray())
+            .ToPdfIndirect<IPageTreeNode>(3)
             .ToPdfIndirectIdentifier();
 
-        DocumentCatalog documentCatalog = new(options => options.Pages = pages);
+        IDocumentCatalog documentCatalog = new DocumentCatalog(options => options.Pages = pages);
 
         // Act
         string actualContent = documentCatalog.Content;

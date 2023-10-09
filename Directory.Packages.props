@@ -1,6 +1,7 @@
 <Project>
     <!-- Analyzers -->
     <ItemGroup>
+        <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.16"/>
         <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.11.0.78383">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -26,6 +27,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageVersion>
+        <PackageVersion Include="NSubstitute" Version="5.1.0"/>
     </ItemGroup>
     <!-- Benchmarking packages -->
     <ItemGroup>

@@ -9,7 +9,7 @@ using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public sealed class PdfString : BasePdfObject
+public sealed class PdfString : PdfObject
 {
     private readonly bool isHexString;
     private string literalValue = string.Empty;

@@ -12,14 +12,14 @@ namespace OffDotNet.Pdf.Core.Tests.FileStructure;
 
 public class XRefTableTests
 {
-    [Fact(DisplayName = $"Constructor with negative {nameof(XRefTable.NumberOfSections)} should throw an {nameof(ArgumentOutOfRangeException)}")]
+    [Fact(DisplayName = $"Constructor with an empty {nameof(XRefSection)}s collection should throw an {nameof(ArgumentOutOfRangeException)}")]
     public void XRefTable_NegativeGenerationNumber_ShouldThrowException()
     {
         // Arrange
-        ICollection<XRefSection> sections = new List<XRefSection>(0);
+        ICollection<IXRefSection> sections = new List<IXRefSection>(0);
 
         // Act
-        XRefTable XRefTableFunction()
+        IXRefTable XRefTableFunction()
         {
             return new XRefTable(sections);
         }
@@ -29,11 +29,18 @@ public class XRefTableTests
         Assert.StartsWith(Resource.XRefTable_MustHaveNonEmptyEntriesCollection, exception.Message);
     }
 
-    [Theory(DisplayName = $"{nameof(XRefTable.Content)} property should return a valid value")]
-    [MemberData(nameof(XRefTableTestsDataGenerator.XRefTable_Content_TestCases), MemberType = typeof(XRefTableTestsDataGenerator))]
-    public void XRefTable_Content_ShouldReturnValidValue(XRefTable xRefTable, string expectedContent)
+    [Fact(DisplayName = $"{nameof(XRefTable.Content)} property should return a valid value")]
+    public void XRefTable_Content_ShouldReturnValidValue()
     {
         // Arrange
+        const string expectedContent = "xref\n0 1\n0000000000 65535 f \n3 1\n0000025325 00000 n \n30 1\n0000025777 00000 n \n23 2\n0000025518 00002 n \n0000025635 00000 n \n";
+        IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
+        IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
+        IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
+        List<IXRefEntry> multipleEntries = new() { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) };
+        List<IXRefSubSection> subSections = new() { xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23) };
+
+        IXRefTable xRefTable = subSections.ToXRefTable();
 
         // Act
         string actualContent = xRefTable.Content;
@@ -42,24 +49,24 @@ public class XRefTableTests
         Assert.Equal(expectedContent, actualContent);
     }
 
-    [Theory(DisplayName = $"{nameof(XRefTable.NumberOfSections)} property should return a valid value")]
-    [MemberData(nameof(XRefTableTestsDataGenerator.XRefTable_NumberOfSections_TestCases), MemberType = typeof(XRefTableTestsDataGenerator))]
-    public void XRefTable_NumberOfEntries_ShouldReturnValidValue(XRefTable xRefTable, int expectedNumberOfEntries)
+    [Fact(DisplayName = $"{nameof(XRefTable.Bytes)} property should return a valid value")]
+    public void XRefTable_Bytes_ShouldReturnValidValue()
     {
         // Arrange
+        byte[] expectedBytes =
+        {
+            0x78, 0x72, 0x65, 0x66, 0x0A, 0x30, 0x20, 0x31, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x36, 0x35, 0x35, 0x33, 0x35, 0x20, 0x66, 0x20, 0x0A, 0x33, 0x20,
+            0x31, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x33, 0x32, 0x35, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A, 0x33, 0x30, 0x20, 0x31, 0x0A, 0x30, 0x30, 0x30, 0x30,
+            0x30, 0x32, 0x35, 0x37, 0x37, 0x37, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A, 0x32, 0x33, 0x20, 0x32, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x35, 0x31, 0x38,
+            0x20, 0x30, 0x30, 0x30, 0x30, 0x32, 0x20, 0x6E, 0x20, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x36, 0x33, 0x35, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A,
+        };
+        IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
+        IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
+        IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
+        List<IXRefEntry> multipleEntries = new() { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) };
+        List<IXRefSubSection> subSections = new() { xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23) };
 
-        // Act
-        long actualNumberOfEntries = xRefTable.NumberOfSections;
-
-        // Assert
-        Assert.Equal(expectedNumberOfEntries, actualNumberOfEntries);
-    }
-
-    [Theory(DisplayName = $"{nameof(XRefTable.Bytes)} property should return a valid value")]
-    [MemberData(nameof(XRefTableTestsDataGenerator.XRefTable_Bytes_TestCases), MemberType = typeof(XRefTableTestsDataGenerator))]
-    public void XRefTable_Bytes_ShouldReturnValidValue(XRefTable xRefTable, byte[] expectedBytes)
-    {
-        // Arrange
+        IXRefTable xRefTable = subSections.ToXRefTable();
 
         // Act
         byte[] actualBytes = xRefTable.Bytes.ToArray();
@@ -68,11 +75,17 @@ public class XRefTableTests
         Assert.Equal(expectedBytes, actualBytes);
     }
 
-    [Theory(DisplayName = $"{nameof(XRefTable.Content)} property, accessed multiple times, should return the same reference")]
-    [MemberData(nameof(XRefTableTestsDataGenerator.XRefTable_NoExpectedData_TestCases), MemberType = typeof(XRefTableTestsDataGenerator))]
-    public void XRefTable_Content_MultipleAccesses_ShouldReturnSameReference(XRefTable xRefTable)
+    [Fact(DisplayName = $"{nameof(XRefTable.Content)} property, accessed multiple times, should return the same reference")]
+    public void XRefTable_Content_MultipleAccesses_ShouldReturnSameReference()
     {
         // Arrange
+        IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
+        IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
+        IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
+        List<IXRefEntry> multipleEntries = new() { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) };
+        List<IXRefSubSection> subSections = new() { xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23) };
+
+        IXRefTable xRefTable = subSections.ToXRefTable();
 
         // Act
         string actualContent1 = xRefTable.Content;
@@ -82,167 +95,68 @@ public class XRefTableTests
         Assert.True(ReferenceEquals(actualContent1, actualContent2));
     }
 
-    [Theory(DisplayName = "Check if Equals returns a valid result")]
-    [MemberData(nameof(XRefTableTestsDataGenerator.XRefTable_Equals_TestCases), MemberType = typeof(XRefTableTestsDataGenerator))]
-    public void XRefTable_Equals_CheckValidity(XRefTable xRefTable1, XRefTable xRefTable2, bool expectedValue)
+    [Fact(DisplayName = "Check if Equals returns false")]
+    public void XRefTable_Equals_MustReturnFalse()
     {
         // Arrange
+        IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
+        IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
+        IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
+        List<IXRefEntry> multipleEntries = new() { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) };
+        List<IXRefSubSection> subSections1 = new() { xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23) };
+        List<IXRefSubSection> subSections2 = new() { xRefSubSection1, xRefSubSection2, xRefSubSection3 };
+
+        IXRefTable xRefTable1 = subSections1.ToXRefTable();
+        IXRefTable xRefTable2 = subSections2.ToXRefTable();
 
         // Act
         bool actualResult = xRefTable1.Equals(xRefTable2);
 
         // Assert
-        Assert.Equal(expectedValue, actualResult);
+        Assert.False(actualResult);
     }
 
-    [Theory(DisplayName = "Check if Equals method with null object returns always false")]
-    [MemberData(nameof(XRefTableTestsDataGenerator.XRefTable_NoExpectedData_TestCases), MemberType = typeof(XRefTableTestsDataGenerator))]
-    public void XRefTable_EqualsNullObject_CheckValidity(XRefTable xRefTable)
+    [Fact(DisplayName = "Check if Equals returns true")]
+    public void XRefTable_Equals_MustReturnTrue()
     {
         // Arrange
+        IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
+        IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
+        IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
+        List<IXRefEntry> multipleEntries = new() { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) };
+        List<IXRefSubSection> subSections1 = new() { xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23) };
+        List<IXRefSubSection> subSections2 = new() { xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23) };
+
+        IXRefTable xRefTable1 = subSections1.ToXRefTable();
+        IXRefTable xRefTable2 = subSections2.ToXRefTable();
+
+        // Act
+        bool actualResult = xRefTable1.Equals(xRefTable2);
+
+        // Assert
+        Assert.True(actualResult);
+    }
+
+    [Fact(DisplayName = "Check if Equals method with null object returns always false")]
+    public void XRefTable_EqualsNullObject_CheckValidity()
+    {
+        // Arrange
+        IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
+        IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
+        IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
+        List<IXRefEntry> multipleEntries = new() { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) };
+        List<IXRefSubSection> subSections = new() { xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23) };
+
+        IXRefTable xRefTable = subSections.ToXRefTable();
 
         // Act
         bool actualResult1 = xRefTable.Equals(null);
 
         Debug.Assert(xRefTable != null, nameof(xRefTable) + " != null");
-        bool actualResult2 = xRefTable.Equals((object?)null);
+        bool actualResult2 = xRefTable.Equals(null);
 
         // Assert
         Assert.False(actualResult1);
         Assert.False(actualResult2);
-    }
-}
-
-[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
-internal static class XRefTableTestsDataGenerator
-{
-    private static readonly XRefEntry EntryObj0Gen65535F = new(0, 65535, XRefEntryType.Free);
-    private static readonly XRefEntry EntryObj25325Gen0N = new(25325, 0, XRefEntryType.InUse);
-    private static readonly XRefEntry EntryObj257775Gen0N = new(25777, 0, XRefEntryType.InUse);
-    private static readonly List<XRefEntry> MultipleEntries = new() { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) };
-    private static readonly List<XRefSubSection> MultipleSubSections = new()
-    {
-        EntryObj0Gen65535F.ToXRefSubSection(0), EntryObj25325Gen0N.ToXRefSubSection(3), EntryObj257775Gen0N.ToXRefSubSection(30), MultipleEntries.ToXRefSubSection(23),
-    };
-
-    private static readonly List<XRefSection> MultipleSections = new() { MultipleEntries.ToXRefSection(23), MultipleEntries.ToXRefSection(41) };
-
-    public static IEnumerable<object[]> XRefTable_Content_TestCases()
-    {
-        yield return new object[] { EntryObj0Gen65535F.ToXRefSubSection(0).ToXRefSection().ToXRefTable(), "xref\n0 1\n0000000000 65535 f \n" };
-        yield return new object[] { EntryObj25325Gen0N.ToXRefSubSection(3).ToXRefTable(), "xref\n3 1\n0000025325 00000 n \n" };
-        yield return new object[] { EntryObj257775Gen0N.ToXRefTable(30), "xref\n30 1\n0000025777 00000 n \n" };
-        yield return new object[] { MultipleEntries.ToXRefTable(23), "xref\n23 2\n0000025518 00002 n \n0000025635 00000 n \n" };
-        yield return new object[] { MultipleSubSections.ToXRefTable(), "xref\n0 1\n0000000000 65535 f \n3 1\n0000025325 00000 n \n30 1\n0000025777 00000 n \n23 2\n0000025518 00002 n \n0000025635 00000 n \n" };
-        yield return new object[] { MultipleSections.ToXRefTable(), "xref\n23 2\n0000025518 00002 n \n0000025635 00000 n \nxref\n41 2\n0000025518 00002 n \n0000025635 00000 n \n" };
-    }
-
-    public static IEnumerable<object[]> XRefTable_NumberOfSections_TestCases()
-    {
-        yield return new object[] { EntryObj0Gen65535F.ToXRefSubSection(0).ToXRefSection().ToXRefTable(), 1 };
-        yield return new object[] { EntryObj25325Gen0N.ToXRefSubSection(3).ToXRefTable(), 1 };
-        yield return new object[] { EntryObj257775Gen0N.ToXRefTable(30), 1 };
-        yield return new object[] { MultipleEntries.ToXRefTable(23), 1 };
-        yield return new object[] { MultipleSubSections.ToXRefTable(), 1 };
-        yield return new object[] { MultipleSections.ToXRefTable(), 2 };
-    }
-
-    public static IEnumerable<object[]> XRefTable_NoExpectedData_TestCases()
-    {
-        yield return new object[] { EntryObj0Gen65535F.ToXRefSubSection(0).ToXRefSection().ToXRefTable() };
-        yield return new object[] { EntryObj25325Gen0N.ToXRefSubSection(3).ToXRefTable() };
-        yield return new object[] { EntryObj257775Gen0N.ToXRefTable(30) };
-        yield return new object[] { MultipleEntries.ToXRefTable(23) };
-        yield return new object[] { MultipleSubSections.ToXRefTable() };
-        yield return new object[] { MultipleSections.ToXRefTable() };
-    }
-
-    public static IEnumerable<object[]> XRefTable_Equals_TestCases()
-    {
-        yield return new object[]
-        {
-            EntryObj0Gen65535F.ToXRefTable(0),
-            EntryObj0Gen65535F.ToXRefTable(0),
-            true,
-        };
-        yield return new object[]
-        {
-            EntryObj0Gen65535F.ToXRefTable(0),
-            EntryObj0Gen65535F.ToXRefTable(560),
-            false,
-        };
-        yield return new object[]
-        {
-            EntryObj0Gen65535F.ToXRefTable(0),
-            EntryObj25325Gen0N.ToXRefTable(0),
-            false,
-        };
-        yield return new object[]
-        {
-            MultipleEntries.ToXRefTable(0),
-            MultipleEntries.ToXRefTable(0),
-            true,
-        };
-        yield return new object[]
-        {
-            MultipleEntries.ToXRefTable(0),
-            MultipleEntries.ToXRefTable(560),
-            false,
-        };
-        yield return new object[]
-        {
-            MultipleSections.ToXRefTable(),
-            MultipleSections.ToXRefTable(),
-            true,
-        };
-    }
-
-    public static IEnumerable<object[]> XRefTable_Bytes_TestCases()
-    {
-        yield return new object[]
-        {
-            EntryObj0Gen65535F.ToXRefSubSection(0).ToXRefSection().ToXRefTable(),
-            new byte[]
-            {
-                0x78, 0x72, 0x65, 0x66, 0x0A, 0x30, 0x20, 0x31, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x36, 0x35, 0x35, 0x33, 0x35, 0x20, 0x66, 0x20, 0x0A,
-            },
-        };
-        yield return new object[]
-        {
-            EntryObj25325Gen0N.ToXRefSubSection(3).ToXRefTable(),
-            new byte[]
-            {
-                0x78, 0x72, 0x65, 0x66, 0x0A, 0x33, 0x20, 0x31, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x33, 0x32, 0x35, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A,
-            },
-        };
-        yield return new object[]
-        {
-            EntryObj257775Gen0N.ToXRefTable(30),
-            new byte[]
-            {
-                0x78, 0x72, 0x65, 0x66, 0x0A, 0x33, 0x30, 0x20, 0x31, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x37, 0x37, 0x37, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20,
-                0x0A,
-            },
-        };
-        yield return new object[]
-        {
-            MultipleEntries.ToXRefTable(23),
-            new byte[]
-            {
-                0x78, 0x72, 0x65, 0x66, 0x0A, 0x32, 0x33, 0x20, 0x32, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x35, 0x31, 0x38, 0x20, 0x30, 0x30, 0x30, 0x30, 0x32, 0x20, 0x6E, 0x20,
-                0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x36, 0x33, 0x35, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A,
-            },
-        };
-        yield return new object[]
-        {
-            MultipleSections.ToXRefTable(),
-            new byte[]
-            {
-                0x78, 0x72, 0x65, 0x66, 0x0A, 0x32, 0x33, 0x20, 0x32, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x35, 0x31, 0x38, 0x20, 0x30, 0x30, 0x30, 0x30, 0x32, 0x20, 0x6E, 0x20,
-                0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x36, 0x33, 0x35, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A, 0x78, 0x72, 0x65, 0x66, 0x0A, 0x34, 0x31, 0x20,
-                0x32, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x35, 0x31, 0x38, 0x20, 0x30, 0x30, 0x30, 0x30, 0x32, 0x20, 0x6E, 0x20, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35,
-                0x36, 0x33, 0x35, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A,
-            },
-        };
     }
 }

@@ -10,23 +10,21 @@ using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.FileStructure;
 
-public sealed class XRefSection : BasePdfObject
+public sealed class XRefSection : PdfObject, IXRefSection
 {
     private readonly Lazy<string> literalValue;
     private readonly Lazy<byte[]> bytes;
 
-    public XRefSection(ICollection<XRefSubSection> xRefSubSections)
+    public XRefSection(ICollection<IXRefSubSection> xRefSubSections)
     {
         this.Value = xRefSubSections.CheckConstraints(subSections => subSections.Count > 0, Resource.XRefSection_MustHaveNonEmptyEntriesCollection);
         this.literalValue = new Lazy<string>(this.GenerateContent);
         this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
 
-    public int NumberOfSubSections => this.Value.Count;
-
     public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
-    public ICollection<XRefSubSection> Value { get; }
+    public ICollection<IXRefSubSection> Value { get; }
 
     public override string Content => this.literalValue.Value;
 
@@ -41,7 +39,7 @@ public sealed class XRefSection : BasePdfObject
             .Append("xref")
             .Append('\n');
 
-        foreach (XRefSubSection subSection in this.Value)
+        foreach (IXRefSubSection subSection in this.Value)
         {
             stringBuilder.Append(subSection.Content);
         }

@@ -11,7 +11,7 @@ using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.FileStructure;
 
-public sealed class FileTrailer : BasePdfObject
+public sealed class FileTrailer : PdfObject, IFileTrailer
 {
     private static readonly PdfName Size = "Size";
     private static readonly PdfName Prev = "Prev";
@@ -23,7 +23,7 @@ public sealed class FileTrailer : BasePdfObject
     private readonly FileTrailerOptions fileTrailerOptions;
     private readonly Lazy<string> literalValue;
     private readonly Lazy<byte[]> bytes;
-    private readonly Lazy<PdfDictionary<IPdfObject>> fileTrailerDictionary;
+    private readonly Lazy<IPdfDictionary<IPdfObject>> fileTrailerDictionary;
 
     public FileTrailer(long byteOffset, Action<FileTrailerOptions> fileTrailerOptionsFunc)
         : this(byteOffset, GetFileTrailerOptions(fileTrailerOptionsFunc))
@@ -44,12 +44,12 @@ public sealed class FileTrailer : BasePdfObject
 
         this.literalValue = new Lazy<string>(this.GenerateContent);
         this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
-        this.fileTrailerDictionary = new Lazy<PdfDictionary<IPdfObject>>(this.GenerateFileTrailerDictionary);
+        this.fileTrailerDictionary = new Lazy<IPdfDictionary<IPdfObject>>(this.GenerateFileTrailerDictionary);
     }
 
     public long ByteOffset { get; }
 
-    public PdfDictionary<IPdfObject> FileTrailerDictionary => this.fileTrailerDictionary.Value;
+    public IPdfDictionary<IPdfObject> FileTrailerDictionary => this.fileTrailerDictionary.Value;
 
     public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
@@ -82,7 +82,7 @@ public sealed class FileTrailer : BasePdfObject
             .ToString();
     }
 
-    private PdfDictionary<IPdfObject> GenerateFileTrailerDictionary()
+    private IPdfDictionary<IPdfObject> GenerateFileTrailerDictionary()
     {
         return new Dictionary<PdfName, IPdfObject>(6)
             .WithKeyValue(Size, this.fileTrailerOptions.Size)

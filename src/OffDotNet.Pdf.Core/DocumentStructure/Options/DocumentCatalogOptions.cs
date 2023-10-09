@@ -9,5 +9,5 @@ namespace OffDotNet.Pdf.Core.DocumentStructure;
 
 public sealed class DocumentCatalogOptions
 {
-    public PdfIndirectIdentifier<PageTreeNode> Pages { get; set; } = default!;
+    public IPdfIndirectIdentifier<IPageTreeNode> Pages { get; set; } = default!;
 }

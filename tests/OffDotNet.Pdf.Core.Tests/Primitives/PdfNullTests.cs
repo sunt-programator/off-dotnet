@@ -32,7 +32,7 @@ public class PdfNullTests
 
         // Act
         // ReSharper disable once RedundantCast
-        bool actualResult = pdfNull1.Equals((object)pdfNull2);
+        bool actualResult = pdfNull1.Equals(pdfNull2);
 
         // Assert
         Assert.True(actualResult);

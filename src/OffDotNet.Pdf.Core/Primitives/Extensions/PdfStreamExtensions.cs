@@ -9,7 +9,7 @@ namespace OffDotNet.Pdf.Core.Primitives;
 
 public static class PdfStreamExtensions
 {
-    public static PdfStream ToPdfStream(this IPdfObject pdfObject, Action<PdfStreamExtentOptions>? options = null)
+    public static IPdfStream ToPdfStream(this IPdfObject pdfObject, Action<PdfStreamExtentOptions>? options = null)
     {
         return new PdfStream(pdfObject.Content.AsMemory(), options);
     }

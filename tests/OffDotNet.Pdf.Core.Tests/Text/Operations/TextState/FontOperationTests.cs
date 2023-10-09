@@ -21,7 +21,7 @@ public class FontOperationTests
         // Arrange
 
         // Act
-        FontOperation FontOperationFunction()
+        IFontOperation FontOperationFunction()
         {
             return new FontOperation("F13", fontSize);
         }
@@ -36,7 +36,7 @@ public class FontOperationTests
     {
         // Arrange
         const string expectedOperator = "Tf";
-        FontOperation fontOperation = new("F13", 6);
+        IFontOperation fontOperation = new FontOperation("F13", 6);
 
         // Act
         string actualPdfOperator = fontOperation.PdfOperator;
@@ -54,7 +54,7 @@ public class FontOperationTests
     {
         // Arrange
         PdfName expectedFontName = fontName;
-        FontOperation fontOperation = new(expectedFontName, fontSize);
+        IFontOperation fontOperation = new FontOperation(expectedFontName, fontSize);
 
         // Act
         PdfName actualFontName = fontOperation.FontName;
@@ -72,7 +72,7 @@ public class FontOperationTests
     {
         // Arrange
         PdfInteger expectedFontSize = fontSize;
-        FontOperation fontOperation = new(fontName, fontSize);
+        IFontOperation fontOperation = new FontOperation(fontName, fontSize);
 
         // Act
         PdfInteger actualFontSize = fontOperation.FontSize;
@@ -89,7 +89,7 @@ public class FontOperationTests
     public void FontOperation_Content_ShouldReturnValidValue(string fontName, int fontSize, string expectedContent)
     {
         // Arrange
-        FontOperation fontOperation = new(fontName, fontSize);
+        IFontOperation fontOperation = new FontOperation(fontName, fontSize);
 
         // Act
         string actualContent = fontOperation.Content;
@@ -106,7 +106,7 @@ public class FontOperationTests
     public void FontOperation_Bytes_ShouldReturnValidValue(string fontName, int fontSize, byte[] expectedBytes)
     {
         // Arrange
-        FontOperation fontOperation = new(fontName, fontSize);
+        IFontOperation fontOperation = new FontOperation(fontName, fontSize);
 
         // Act
         byte[] actualBytes = fontOperation.Bytes.ToArray();
@@ -126,7 +126,7 @@ public class FontOperationTests
         PdfName pdfFontName = fontName;
         PdfInteger pdfFontSize = fontSize;
         int expectedHashCode = HashCode.Combine(nameof(FontOperation), pdfFontName, pdfFontSize, FontOperation.OperatorName);
-        FontOperation fontOperation = new(fontName, fontSize);
+        IFontOperation fontOperation = new FontOperation(fontName, fontSize);
 
         // Act
         int actualHashCode = fontOperation.GetHashCode();
@@ -136,29 +136,22 @@ public class FontOperationTests
     }
 
     [Theory(DisplayName = "The Equals property should return a valid value")]
-    [MemberData(nameof(FontOperationTestsDataGenerator.FontOperation_Equals_TestCases), MemberType = typeof(FontOperationTestsDataGenerator))]
-    public void FontOperation_Equals_ShouldReturnValidValue(FontOperation fontOperation1, FontOperation fontOperation2, bool expectedResult)
+    [InlineData("F1", 6, "F1", 6, true)]
+    [InlineData("F1", 6, "F2", 6, false)]
+    [InlineData("F1", 6, "F2", 8, false)]
+    [InlineData("F2", 6, "F2", 8, false)]
+    [InlineData("F2", 8, "F2", 8, true)]
+    [InlineData("F2", 8, null, null, false)]
+    public void FontOperation_Equals_ShouldReturnValidValue(string fontName1, int fontSize1, string? fontName2, int? fontSize2, bool expectedResult)
     {
         // Arrange
+        IFontOperation fontOperation1 = new FontOperation(fontName1, fontSize1);
+        IFontOperation? fontOperation2 = fontName2 != null && fontSize2 != null ? new FontOperation(fontName2, fontSize2.Value) : null;
 
         // Act
         bool actualResult = fontOperation1.Equals(fontOperation2);
 
         // Assert
         Assert.Equal(expectedResult, actualResult);
-    }
-}
-
-[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
-internal static class FontOperationTestsDataGenerator
-{
-    public static IEnumerable<object[]> FontOperation_Equals_TestCases()
-    {
-        yield return new object[] { new FontOperation("F1", 6), new FontOperation("F1", 6), true };
-        yield return new object[] { new FontOperation("F1", 6), new FontOperation("F2", 6), false };
-        yield return new object[] { new FontOperation("F1", 6), new FontOperation("F2", 8), false };
-        yield return new object[] { new FontOperation("F2", 6), new FontOperation("F2", 8), false };
-        yield return new object[] { new FontOperation("F2", 8), new FontOperation("F2", 8), true };
-        yield return new object[] { new FontOperation("F2", 8), null!, false };
     }
 }

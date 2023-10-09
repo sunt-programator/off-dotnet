@@ -5,16 +5,15 @@
 
 using System.Text;
 using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.ContentStreamAndResources;
 
 namespace OffDotNet.Pdf.Core.Text;
 
-public sealed class TextObject : BasePdfObject
+public sealed class TextObject : PdfObject, ITextObject
 {
     private readonly Lazy<string> literalValue;
     private readonly Lazy<byte[]> bytes;
 
-    public TextObject(IReadOnlyCollection<PdfOperation> operations)
+    public TextObject(IReadOnlyCollection<IPdfOperation> operations)
     {
         this.Value = operations;
 
@@ -24,7 +23,7 @@ public sealed class TextObject : BasePdfObject
 
     public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
-    public IReadOnlyCollection<PdfOperation> Value { get; }
+    public IReadOnlyCollection<IPdfOperation> Value { get; }
 
     public override string Content => this.literalValue.Value;
 
@@ -37,7 +36,7 @@ public sealed class TextObject : BasePdfObject
     {
         StringBuilder stringBuilder = new();
 
-        foreach (PdfOperation pdfOperation in this.Value)
+        foreach (IPdfOperation pdfOperation in this.Value)
         {
             stringBuilder.Append(pdfOperation.Content);
         }

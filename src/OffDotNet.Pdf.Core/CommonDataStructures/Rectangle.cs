@@ -9,10 +9,10 @@ using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.CommonDataStructures;
 
-public sealed class Rectangle : PdfArray<PdfInteger>
+public sealed class Rectangle : PdfArray<PdfReal>, IRectangle
 {
-    public Rectangle(int lowerLeftX, int lowerLeftY, int upperRightX, int upperRightY)
-        : base(new List<PdfInteger> { lowerLeftX, lowerLeftY, upperRightX, upperRightY })
+    public Rectangle(float lowerLeftX, float lowerLeftY, float upperRightX, float upperRightY)
+        : base(new List<PdfReal> { lowerLeftX, lowerLeftY, upperRightX, upperRightY })
     {
         this.LowerLeftX = lowerLeftX.CheckConstraints(x => x >= 0, Resource.Rectangle_PointMustBePositive);
         this.LowerLeftY = lowerLeftY.CheckConstraints(x => x >= 0, Resource.Rectangle_PointMustBePositive);
@@ -20,11 +20,11 @@ public sealed class Rectangle : PdfArray<PdfInteger>
         this.UpperRightY = upperRightY.CheckConstraints(x => x >= 0, Resource.Rectangle_PointMustBePositive);
     }
 
-    public int LowerLeftX { get; }
+    public float LowerLeftX { get; }
 
-    public int LowerLeftY { get; }
+    public float LowerLeftY { get; }
 
-    public int UpperRightX { get; }
+    public float UpperRightX { get; }
 
-    public int UpperRightY { get; }
+    public float UpperRightY { get; }
 }

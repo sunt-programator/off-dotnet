@@ -8,7 +8,7 @@ using OffDotNet.Pdf.Core.Common;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public sealed class PdfStream : BasePdfObject
+public sealed class PdfStream : PdfObject, IPdfStream
 {
     private static readonly PdfName LengthKey = "Length";
     private static readonly PdfName FilterKey = "Filter";
@@ -20,7 +20,7 @@ public sealed class PdfStream : BasePdfObject
     private readonly PdfStreamExtentOptions pdfStreamExtentOptions = new();
     private string literalValue = string.Empty;
     private byte[]? bytes;
-    private PdfDictionary<IPdfObject>? streamExtentDictionary;
+    private IPdfDictionary<IPdfObject>? streamExtentDictionary;
 
     public PdfStream(ReadOnlyMemory<char> value, Action<PdfStreamExtentOptions>? options = null)
     {
@@ -35,7 +35,7 @@ public sealed class PdfStream : BasePdfObject
 
     public override string Content => this.GenerateContent();
 
-    public PdfDictionary<IPdfObject> StreamExtent => this.GenerateStreamExtendDictionary();
+    public IPdfDictionary<IPdfObject> StreamExtent => this.GenerateStreamExtendDictionary();
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
@@ -67,7 +67,7 @@ public sealed class PdfStream : BasePdfObject
         return this.literalValue;
     }
 
-    private PdfDictionary<IPdfObject> GenerateStreamExtendDictionary()
+    private IPdfDictionary<IPdfObject> GenerateStreamExtendDictionary()
     {
         if (this.streamExtentDictionary != null)
         {

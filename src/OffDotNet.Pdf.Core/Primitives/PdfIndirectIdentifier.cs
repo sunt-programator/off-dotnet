@@ -8,13 +8,13 @@ using OffDotNet.Pdf.Core.Common;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public sealed class PdfIndirectIdentifier<T> : BasePdfObject
+public sealed class PdfIndirectIdentifier<T> : PdfObject, IPdfIndirectIdentifier<T>
     where T : IPdfObject
 {
     private readonly Lazy<string> literalValue;
     private readonly Lazy<byte[]> bytes;
 
-    public PdfIndirectIdentifier(PdfIndirect<T> pdfObject)
+    public PdfIndirectIdentifier(IPdfIndirect<T> pdfObject)
     {
         this.literalValue = new Lazy<string>(this.GenerateContent);
         this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
@@ -28,7 +28,7 @@ public sealed class PdfIndirectIdentifier<T> : BasePdfObject
 
     public int ObjectNumber { get; }
 
-    public PdfIndirect<T> PdfIndirect { get; }
+    public IPdfIndirect<T> PdfIndirect { get; }
 
     public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 

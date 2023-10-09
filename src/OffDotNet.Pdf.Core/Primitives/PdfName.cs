@@ -10,7 +10,7 @@ using OffDotNet.Pdf.Core.Properties;
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-public sealed class PdfName : BasePdfObject
+public sealed class PdfName : PdfObject
 {
     private const string NumberChar = "#23"; // '#'
     private const string SolidusChar = "#2F"; // '/'

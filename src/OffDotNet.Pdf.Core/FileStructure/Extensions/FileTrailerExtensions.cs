@@ -7,7 +7,7 @@ namespace OffDotNet.Pdf.Core.FileStructure;
 
 public static class FileTrailerExtensions
 {
-    public static FileTrailer ToFileTrailer(this FileTrailerOptions fileTrailerOptions, long byteOffset)
+    public static IFileTrailer ToFileTrailer(this FileTrailerOptions fileTrailerOptions, long byteOffset)
     {
         return new FileTrailer(byteOffset, fileTrailerOptions);
     }

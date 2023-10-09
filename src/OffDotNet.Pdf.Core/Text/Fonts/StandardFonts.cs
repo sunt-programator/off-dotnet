@@ -7,85 +7,85 @@ namespace OffDotNet.Pdf.Core.Text.Fonts;
 
 public static class StandardFonts
 {
-    public static readonly Type1Font TimesRoman = new(options =>
+    public static readonly IType1Font TimesRoman = new Type1Font(options =>
     {
         options.FontName = "Times-Roman";
         options.BaseFont = "Times-Roman";
     });
 
-    public static readonly Type1Font TimesBold = new(options =>
+    public static readonly IType1Font TimesBold = new Type1Font(options =>
     {
         options.FontName = "Times-Bold";
         options.BaseFont = "Times-Bold";
     });
 
-    public static readonly Type1Font TimesItalic = new(options =>
+    public static readonly IType1Font TimesItalic = new Type1Font(options =>
     {
         options.FontName = "Times-Italic";
         options.BaseFont = "Times-Italic";
     });
 
-    public static readonly Type1Font TimesBoldItalic = new(options =>
+    public static readonly IType1Font TimesBoldItalic = new Type1Font(options =>
     {
         options.FontName = "Times-BoldItalic";
         options.BaseFont = "Times-BoldItalic";
     });
 
-    public static readonly Type1Font Helvetica = new(options =>
+    public static readonly IType1Font Helvetica = new Type1Font(options =>
     {
         options.FontName = "Helvetica";
         options.BaseFont = "Helvetica";
     });
 
-    public static readonly Type1Font HelveticaBold = new(options =>
+    public static readonly IType1Font HelveticaBold = new Type1Font(options =>
     {
         options.FontName = "Helvetica-Bold";
         options.BaseFont = "Helvetica-Bold";
     });
 
-    public static readonly Type1Font HelveticaOblique = new(options =>
+    public static readonly IType1Font HelveticaOblique = new Type1Font(options =>
     {
         options.FontName = "Helvetica-Oblique";
         options.BaseFont = "Helvetica-Oblique";
     });
 
-    public static readonly Type1Font HelveticaBoldOblique = new(options =>
+    public static readonly IType1Font HelveticaBoldOblique = new Type1Font(options =>
     {
         options.FontName = "Helvetica-BoldOblique";
         options.BaseFont = "Helvetica-BoldOblique";
     });
 
-    public static readonly Type1Font Courier = new(options =>
+    public static readonly IType1Font Courier = new Type1Font(options =>
     {
         options.FontName = "Courier";
         options.BaseFont = "Courier";
     });
 
-    public static readonly Type1Font CourierBold = new(options =>
+    public static readonly IType1Font CourierBold = new Type1Font(options =>
     {
         options.FontName = "Courier-Bold";
         options.BaseFont = "Courier-Bold";
     });
 
-    public static readonly Type1Font CourierOblique = new(options =>
+    public static readonly IType1Font CourierOblique = new Type1Font(options =>
     {
         options.FontName = "Courier-Oblique";
         options.BaseFont = "Courier-Oblique";
     });
 
-    public static readonly Type1Font CourierBoldOblique = new(options =>
+    public static readonly IType1Font CourierBoldOblique = new Type1Font(options =>
     {
         options.FontName = "Courier-BoldOblique";
         options.BaseFont = "Courier-BoldOblique";
     });
 
-    public static readonly Type1Font Symbol = new(options =>
+    public static readonly IType1Font Symbol = new Type1Font(options =>
     {
         options.FontName = "Symbol";
         options.BaseFont = "Symbol";
     });
 
-    public static readonly Type1Font ZapfDingbats = new(options =>
+    public static readonly IType1Font ZapfDingbats = new Type1Font(options =>
     {
         options.FontName = "ZapfDingbats";
         options.BaseFont = "ZapfDingbats";
