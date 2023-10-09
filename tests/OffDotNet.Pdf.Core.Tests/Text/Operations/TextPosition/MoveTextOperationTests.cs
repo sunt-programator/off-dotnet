@@ -101,29 +101,22 @@ public class MoveTextOperationTests
     }
 
     [Theory(DisplayName = "The Equals property should return a valid value")]
-    [MemberData(nameof(MoveTextOperationTestsDataGenerator.MoveTextOperation_Equals_TestCases), MemberType = typeof(MoveTextOperationTestsDataGenerator))]
-    public void MoveTextOperation_Equals_ShouldReturnValidValue(IMoveTextOperation moveTextOperation1, IMoveTextOperation moveTextOperation2, bool expectedResult)
+    [InlineData(3f, 6f, 3f, 6f, true)]
+    [InlineData(3f, 6f, -3f, 6f, false)]
+    [InlineData(3f, 6f, -3f, -6f, false)]
+    [InlineData(-3f, 6f, -3f, -6f, false)]
+    [InlineData(-3.20f, 6f, -3.200f, 6f, true)]
+    [InlineData(3.20f, 6f, null, null, false)]
+    public void MoveTextOperation_Equals_ShouldReturnValidValue(float moveTextX1, float moveTextY1, float? moveTextX2, float? moveTextY2, bool expectedResult)
     {
         // Arrange
+        IMoveTextOperation moveTextOperation1 = new MoveTextOperation(moveTextX1, moveTextY1);
+        IMoveTextOperation? moveTextOperation2 = moveTextX2.HasValue && moveTextY2.HasValue ? new MoveTextOperation(moveTextX2.Value, moveTextY2.Value) : null;
 
         // Act
         bool actualResult = moveTextOperation1.Equals(moveTextOperation2);
 
         // Assert
         Assert.Equal(expectedResult, actualResult);
-    }
-}
-
-[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
-internal static class MoveTextOperationTestsDataGenerator
-{
-    public static IEnumerable<object[]> MoveTextOperation_Equals_TestCases()
-    {
-        yield return new object[] { new MoveTextOperation(3, 6), new MoveTextOperation(3, 6), true };
-        yield return new object[] { new MoveTextOperation(3, 6), new MoveTextOperation(-3, 6), false };
-        yield return new object[] { new MoveTextOperation(3, 6), new MoveTextOperation(-3, -6), false };
-        yield return new object[] { new MoveTextOperation(-3, 6), new MoveTextOperation(-3, -6), false };
-        yield return new object[] { new MoveTextOperation(-3.20f, 6), new MoveTextOperation(-3.200f, 6), true };
-        yield return new object[] { new MoveTextOperation(3.20f, 6), null!, false };
     }
 }

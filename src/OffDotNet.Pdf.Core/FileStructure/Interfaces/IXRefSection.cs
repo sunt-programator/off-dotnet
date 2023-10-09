@@ -9,7 +9,5 @@ namespace OffDotNet.Pdf.Core.FileStructure;
 
 public interface IXRefSection : IPdfObject
 {
-    int NumberOfSubSections { get; }
-
     ICollection<IXRefSubSection> Value { get; }
 }

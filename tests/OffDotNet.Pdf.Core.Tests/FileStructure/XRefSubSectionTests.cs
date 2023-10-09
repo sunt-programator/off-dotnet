@@ -32,7 +32,7 @@ public class XRefSubSectionTests
         Assert.StartsWith(Resource.PdfIndirect_ObjectNumberMustBePositive, exception.Message);
     }
 
-    [Fact(DisplayName = $"Constructor with negative {nameof(XRefSubSection.NumberOfEntries)} should throw an {nameof(ArgumentOutOfRangeException)}")]
+    [Fact(DisplayName = $"Constructor with an empty list of {nameof(XRefEntry)} should throw an {nameof(ArgumentOutOfRangeException)}")]
     public void XRefSubSection_NegativeGenerationNumber_ShouldThrowException()
     {
         // Arrange
@@ -49,12 +49,15 @@ public class XRefSubSectionTests
         Assert.StartsWith(Resource.XRefSubSection_MustHaveNonEmptyEntriesCollection, exception.Message);
     }
 
-    [Theory(DisplayName = $"{nameof(XRefSubSection.Content)} property should return a valid value")]
-    [MemberData(nameof(XRefSubSectionTestsDataGenerator.XRefSubSection_Content_TestCases), MemberType = typeof(XRefSubSectionTestsDataGenerator))]
-    public void XRefSubSection_Content_ShouldReturnValidValue(int objectNumber, List<IXRefEntry> entries, string expectedContent)
+    [Fact(DisplayName = $"{nameof(XRefSubSection.Content)} property should return a valid value")]
+    public void XRefSubSection_Content_ShouldReturnValidValue()
     {
         // Arrange
-        IXRefSubSection xRefSubSection = new XRefSubSection(objectNumber, entries);
+        const string expectedContent = "23 2\n0000025518 00002 n \n0000025635 00000 f \n";
+        const int objectNumber = 23;
+        IXRefEntry xRefEntry1 = new XRefEntry(25518, 2, XRefEntryType.InUse);
+        IXRefEntry xRefEntry2 = new XRefEntry(25635, 0, XRefEntryType.Free);
+        IXRefSubSection xRefSubSection = new XRefSubSection(objectNumber, new List<IXRefEntry> { xRefEntry1, xRefEntry2 });
 
         // Act
         string actualContent = xRefSubSection.Content;
@@ -63,40 +66,36 @@ public class XRefSubSectionTests
         Assert.Equal(expectedContent, actualContent);
     }
 
-    [Theory(DisplayName = $"{nameof(XRefSubSection.ObjectNumber)} property should return a valid value")]
-    [MemberData(nameof(XRefSubSectionTestsDataGenerator.XRefSubSection_ObjectNumber_TestCases), MemberType = typeof(XRefSubSectionTestsDataGenerator))]
-    public void XRefSubSection_ObjectNumber_ShouldReturnValidValue(int objectNumber, List<IXRefEntry> entries, int expectedObjectNumber)
+    [Fact(DisplayName = $"{nameof(XRefSubSection.ObjectNumber)} property should return a valid value")]
+    public void XRefSubSection_ObjectNumber_ShouldReturnValidValue()
     {
         // Arrange
-        IXRefSubSection xRefSubSection = new XRefSubSection(objectNumber, entries);
+        const int objectNumber = 23;
+        IXRefEntry xRefEntry1 = new XRefEntry(25518, 2, XRefEntryType.InUse);
+        IXRefEntry xRefEntry2 = new XRefEntry(25635, 0, XRefEntryType.Free);
+        IXRefSubSection xRefSubSection = new XRefSubSection(objectNumber, new List<IXRefEntry> { xRefEntry1, xRefEntry2 });
 
         // Act
         long actualObjectNumber = xRefSubSection.ObjectNumber;
 
         // Assert
-        Assert.Equal(expectedObjectNumber, actualObjectNumber);
+        Assert.Equal(objectNumber, actualObjectNumber);
     }
 
-    [Theory(DisplayName = $"{nameof(XRefSubSection.NumberOfEntries)} property should return a valid value")]
-    [MemberData(nameof(XRefSubSectionTestsDataGenerator.XRefSubSection_NumberOfEntries_TestCases), MemberType = typeof(XRefSubSectionTestsDataGenerator))]
-    public void XRefSubSection_NumberOfEntries_ShouldReturnValidValue(int objectNumber, List<IXRefEntry> entries, int expectedNumberOfEntries)
+    [Fact(DisplayName = $"{nameof(XRefSubSection.Bytes)} property should return a valid value")]
+    public void XRefSubSection_Bytes_ShouldReturnValidValue()
     {
         // Arrange
-        IXRefSubSection xRefSubSection = new XRefSubSection(objectNumber, entries);
+        byte[] expectedBytes =
+        {
+            0x32, 0x33, 0x20, 0x32, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x35, 0x31, 0x38, 0x20, 0x30, 0x30, 0x30, 0x30, 0x32, 0x20, 0x6E, 0x20, 0x0A, 0x30, 0x30, 0x30, 0x30,
+            0x30, 0x32, 0x35, 0x36, 0x33, 0x35, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A,
+        };
 
-        // Act
-        long actualNumberOfEntries = xRefSubSection.NumberOfEntries;
-
-        // Assert
-        Assert.Equal(expectedNumberOfEntries, actualNumberOfEntries);
-    }
-
-    [Theory(DisplayName = $"{nameof(XRefSubSection.Bytes)} property should return a valid value")]
-    [MemberData(nameof(XRefSubSectionTestsDataGenerator.XRefSubSection_Bytes_TestCases), MemberType = typeof(XRefSubSectionTestsDataGenerator))]
-    public void XRefSubSection_Bytes_ShouldReturnValidValue(int objectNumber, List<IXRefEntry> entries, byte[] expectedBytes)
-    {
-        // Arrange
-        IXRefSubSection xRefSubSection = new XRefSubSection(objectNumber, entries);
+        const int objectNumber = 23;
+        IXRefEntry xRefEntry1 = new XRefEntry(25518, 2, XRefEntryType.InUse);
+        IXRefEntry xRefEntry2 = new XRefEntry(25635, 0, XRefEntryType.InUse);
+        IXRefSubSection xRefSubSection = new XRefSubSection(objectNumber, new List<IXRefEntry> { xRefEntry1, xRefEntry2 });
 
         // Act
         byte[] actualBytes = xRefSubSection.Bytes.ToArray();
@@ -105,12 +104,14 @@ public class XRefSubSectionTests
         Assert.Equal(expectedBytes, actualBytes);
     }
 
-    [Theory(DisplayName = $"{nameof(XRefSubSection.Content)} property, accessed multiple times, should return the same reference")]
-    [MemberData(nameof(XRefSubSectionTestsDataGenerator.XRefSubSection_NoExpectedData_TestCases), MemberType = typeof(XRefSubSectionTestsDataGenerator))]
-    public void XRefSubSection_Content_MultipleAccesses_ShouldReturnSameReference(int objectNumber, List<IXRefEntry> entries)
+    [Fact(DisplayName = $"{nameof(XRefSubSection.Content)} property, accessed multiple times, should return the same reference")]
+    public void XRefSubSection_Content_MultipleAccesses_ShouldReturnSameReference()
     {
         // Arrange
-        IXRefSubSection xRefSubSection = new XRefSubSection(objectNumber, entries);
+        const int objectNumber = 23;
+        IXRefEntry xRefEntry1 = new XRefEntry(25518, 2, XRefEntryType.InUse);
+        IXRefEntry xRefEntry2 = new XRefEntry(25635, 0, XRefEntryType.InUse);
+        IXRefSubSection xRefSubSection = new XRefSubSection(objectNumber, new List<IXRefEntry> { xRefEntry1, xRefEntry2 });
 
         // Act
         string actualContent1 = xRefSubSection.Content;
@@ -120,27 +121,48 @@ public class XRefSubSectionTests
         Assert.True(ReferenceEquals(actualContent1, actualContent2));
     }
 
-    [Theory(DisplayName = "Check if Equals returns a valid result")]
-    [MemberData(nameof(XRefSubSectionTestsDataGenerator.XRefSubSection_Equals_TestCases), MemberType = typeof(XRefSubSectionTestsDataGenerator))]
-    public void XRefSubSection_Equals_CheckValidity(int objectNumber1, int objectNumber2, List<IXRefEntry> entries1, List<IXRefEntry> entries2, bool expectedValue)
+    [Fact(DisplayName = "Check if Equals returns true")]
+    public void XRefSubSection_Equals_MustReturnTrue()
     {
         // Arrange
-        IXRefSubSection xRefSubSection1 = new XRefSubSection(objectNumber1, entries1);
-        IXRefSubSection xRefSubSection2 = new XRefSubSection(objectNumber2, entries2);
+        const int objectNumber = 23;
+        IXRefEntry xRefEntry1 = new XRefEntry(25518, 2, XRefEntryType.InUse);
+        IXRefEntry xRefEntry2 = new XRefEntry(25635, 0, XRefEntryType.InUse);
+        IXRefSubSection xRefSubSection1 = new XRefSubSection(objectNumber, new List<IXRefEntry> { xRefEntry1, xRefEntry2 });
+        IXRefSubSection xRefSubSection2 = new XRefSubSection(objectNumber, new List<IXRefEntry> { xRefEntry1, xRefEntry2 });
 
         // Act
         bool actualResult = xRefSubSection1.Equals(xRefSubSection2);
 
         // Assert
-        Assert.Equal(expectedValue, actualResult);
+        Assert.True(actualResult);
     }
 
-    [Theory(DisplayName = "Check if Equals method with null object returns always false")]
-    [MemberData(nameof(XRefSubSectionTestsDataGenerator.XRefSubSection_NoExpectedData_TestCases), MemberType = typeof(XRefSubSectionTestsDataGenerator))]
-    public void XRefSubSection_EqualsNullObject_CheckValidity(int objectNumber, List<IXRefEntry> entries)
+    [Fact(DisplayName = "Check if Equals returns false")]
+    public void XRefSubSection_Equals_MustReturnFalse()
     {
         // Arrange
-        IXRefSubSection xRefSubSection = new XRefSubSection(objectNumber, entries);
+        const int objectNumber = 23;
+        IXRefEntry xRefEntry1 = new XRefEntry(25518, 2, XRefEntryType.InUse);
+        IXRefEntry xRefEntry2 = new XRefEntry(25635, 0, XRefEntryType.InUse);
+        IXRefSubSection xRefSubSection1 = new XRefSubSection(objectNumber, new List<IXRefEntry> { xRefEntry1, xRefEntry2 });
+        IXRefSubSection xRefSubSection2 = new XRefSubSection(objectNumber, new List<IXRefEntry> { xRefEntry1 });
+
+        // Act
+        bool actualResult = xRefSubSection1.Equals(xRefSubSection2);
+
+        // Assert
+        Assert.False(actualResult);
+    }
+
+    [Fact(DisplayName = "Check if Equals method with null object returns always false")]
+    public void XRefSubSection_EqualsNullObject_CheckValidity()
+    {
+        // Arrange
+        const int objectNumber = 23;
+        IXRefEntry xRefEntry1 = new XRefEntry(25518, 2, XRefEntryType.InUse);
+        IXRefEntry xRefEntry2 = new XRefEntry(25635, 0, XRefEntryType.InUse);
+        IXRefSubSection xRefSubSection = new XRefSubSection(objectNumber, new List<IXRefEntry> { xRefEntry1, xRefEntry2 });
 
         // Act
         bool actualResult1 = xRefSubSection.Equals(null);
@@ -151,84 +173,5 @@ public class XRefSubSectionTests
         // Assert
         Assert.False(actualResult1);
         Assert.False(actualResult2);
-    }
-}
-
-[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData")]
-internal static class XRefSubSectionTestsDataGenerator
-{
-    public static IEnumerable<object[]> XRefSubSection_Content_TestCases()
-    {
-        yield return new object[] { 0, new List<IXRefEntry> { new XRefEntry(0, 65535, XRefEntryType.Free) }, "0 1\n0000000000 65535 f \n" };
-        yield return new object[] { 3, new List<IXRefEntry> { new XRefEntry(25325, 0, XRefEntryType.InUse) }, "3 1\n0000025325 00000 n \n" };
-        yield return new object[]
-            {
-                23, new List<IXRefEntry> { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) }, "23 2\n0000025518 00002 n \n0000025635 00000 n \n",
-            };
-        yield return new object[] { 30, new List<IXRefEntry> { new XRefEntry(25777, 0, XRefEntryType.InUse) }, "30 1\n0000025777 00000 n \n" };
-    }
-
-    public static IEnumerable<object[]> XRefSubSection_ObjectNumber_TestCases()
-    {
-        yield return new object[] { 0, new List<IXRefEntry> { new XRefEntry(0, 65535, XRefEntryType.Free) }, 0 };
-        yield return new object[] { 3, new List<IXRefEntry> { new XRefEntry(25325, 0, XRefEntryType.InUse) }, 3 };
-        yield return new object[] { 23, new List<IXRefEntry> { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) }, 23 };
-        yield return new object[] { 30, new List<IXRefEntry> { new XRefEntry(25777, 0, XRefEntryType.InUse) }, 30 };
-    }
-
-    public static IEnumerable<object[]> XRefSubSection_NumberOfEntries_TestCases()
-    {
-        yield return new object[] { 0, new List<IXRefEntry> { new XRefEntry(0, 65535, XRefEntryType.Free) }, 1 };
-        yield return new object[] { 3, new List<IXRefEntry> { new XRefEntry(25325, 0, XRefEntryType.InUse) }, 1 };
-        yield return new object[] { 23, new List<IXRefEntry> { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) }, 2 };
-        yield return new object[] { 30, new List<IXRefEntry> { new XRefEntry(25777, 0, XRefEntryType.InUse) }, 1 };
-    }
-
-    public static IEnumerable<object[]> XRefSubSection_NoExpectedData_TestCases()
-    {
-        yield return new object[] { 0, new List<IXRefEntry> { new XRefEntry(0, 65535, XRefEntryType.Free) } };
-        yield return new object[] { 3, new List<IXRefEntry> { new XRefEntry(25325, 0, XRefEntryType.InUse) } };
-        yield return new object[] { 23, new List<IXRefEntry> { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) } };
-        yield return new object[] { 30, new List<IXRefEntry> { new XRefEntry(25777, 0, XRefEntryType.InUse) } };
-    }
-
-    public static IEnumerable<object[]> XRefSubSection_Equals_TestCases()
-    {
-        yield return new object[] { 0, 0, new List<IXRefEntry> { new XRefEntry(0, 65535, XRefEntryType.Free) }, new List<IXRefEntry> { new XRefEntry(0, 65535, XRefEntryType.Free) }, true };
-        yield return new object[] { 3, 1, new List<IXRefEntry> { new XRefEntry(25325, 0, XRefEntryType.InUse) }, new List<IXRefEntry> { new XRefEntry(25325, 0, XRefEntryType.InUse) }, false };
-        yield return new object[]
-        {
-            23, 23, new List<IXRefEntry> { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) },
-            new List<IXRefEntry> { new XRefEntry(25518, 2, XRefEntryType.InUse) }, false,
-        };
-        yield return new object[] { 30, 30, new List<IXRefEntry> { new XRefEntry(25777, 0, XRefEntryType.InUse) }, new List<IXRefEntry> { new XRefEntry(25777, 65535, XRefEntryType.InUse) }, false };
-    }
-
-    public static IEnumerable<object[]> XRefSubSection_Bytes_TestCases()
-    {
-        yield return new object[]
-        {
-            0, new List<IXRefEntry> { new XRefEntry(0, 65535, XRefEntryType.Free) },
-            new byte[] { 0x30, 0x20, 0x31, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x36, 0x35, 0x35, 0x33, 0x35, 0x20, 0x66, 0x20, 0x0A },
-        };
-        yield return new object[]
-        {
-            3, new List<IXRefEntry> { new XRefEntry(25325, 0, XRefEntryType.InUse) },
-            new byte[] { 0x33, 0x20, 0x31, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x33, 0x32, 0x35, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A },
-        };
-        yield return new object[]
-        {
-            23, new List<IXRefEntry> { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) },
-            new byte[]
-            {
-                0x32, 0x33, 0x20, 0x32, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x35, 0x31, 0x38, 0x20, 0x30, 0x30, 0x30, 0x30, 0x32, 0x20, 0x6E, 0x20, 0x0A, 0x30, 0x30, 0x30, 0x30,
-                0x30, 0x32, 0x35, 0x36, 0x33, 0x35, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A,
-            },
-        };
-        yield return new object[]
-        {
-            30, new List<IXRefEntry> { new XRefEntry(25777, 0, XRefEntryType.InUse) },
-            new byte[] { 0x33, 0x30, 0x20, 0x31, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x37, 0x37, 0x37, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A },
-        };
     }
 }

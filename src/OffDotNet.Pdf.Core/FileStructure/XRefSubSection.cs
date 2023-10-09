@@ -25,8 +25,6 @@ public sealed class XRefSubSection : PdfObject, IXRefSubSection
 
     public int ObjectNumber { get; }
 
-    public int NumberOfEntries => this.Value.Count;
-
     public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
     public ICollection<IXRefEntry> Value { get; }
@@ -48,7 +46,7 @@ public sealed class XRefSubSection : PdfObject, IXRefSubSection
         StringBuilder stringBuilder = new StringBuilder()
             .Append(this.ObjectNumber)
             .Append(' ')
-            .Append(this.NumberOfEntries)
+            .Append(this.Value.Count)
             .Append('\n');
 
         foreach (IXRefEntry entry in this.Value)

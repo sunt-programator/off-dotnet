@@ -136,29 +136,22 @@ public class FontOperationTests
     }
 
     [Theory(DisplayName = "The Equals property should return a valid value")]
-    [MemberData(nameof(FontOperationTestsDataGenerator.FontOperation_Equals_TestCases), MemberType = typeof(FontOperationTestsDataGenerator))]
-    public void FontOperation_Equals_ShouldReturnValidValue(IFontOperation fontOperation1, IFontOperation fontOperation2, bool expectedResult)
+    [InlineData("F1", 6, "F1", 6, true)]
+    [InlineData("F1", 6, "F2", 6, false)]
+    [InlineData("F1", 6, "F2", 8, false)]
+    [InlineData("F2", 6, "F2", 8, false)]
+    [InlineData("F2", 8, "F2", 8, true)]
+    [InlineData("F2", 8, null, null, false)]
+    public void FontOperation_Equals_ShouldReturnValidValue(string fontName1, int fontSize1, string? fontName2, int? fontSize2, bool expectedResult)
     {
         // Arrange
+        IFontOperation fontOperation1 = new FontOperation(fontName1, fontSize1);
+        IFontOperation? fontOperation2 = fontName2 != null && fontSize2 != null ? new FontOperation(fontName2, fontSize2.Value) : null;
 
         // Act
         bool actualResult = fontOperation1.Equals(fontOperation2);
 
         // Assert
         Assert.Equal(expectedResult, actualResult);
-    }
-}
-
-[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
-internal static class FontOperationTestsDataGenerator
-{
-    public static IEnumerable<object[]> FontOperation_Equals_TestCases()
-    {
-        yield return new object[] { new FontOperation("F1", 6), new FontOperation("F1", 6), true };
-        yield return new object[] { new FontOperation("F1", 6), new FontOperation("F2", 6), false };
-        yield return new object[] { new FontOperation("F1", 6), new FontOperation("F2", 8), false };
-        yield return new object[] { new FontOperation("F2", 6), new FontOperation("F2", 8), false };
-        yield return new object[] { new FontOperation("F2", 8), new FontOperation("F2", 8), true };
-        yield return new object[] { new FontOperation("F2", 8), null!, false };
     }
 }

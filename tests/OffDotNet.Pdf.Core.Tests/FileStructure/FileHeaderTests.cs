@@ -56,10 +56,19 @@ public class FileHeaderTests
     }
 
     [Theory(DisplayName = $"{nameof(FileHeader.Content)} property should return a valid value")]
-    [MemberData(nameof(FileHeaderTestsDataGenerator.FileHeader_Content_TestCases), MemberType = typeof(FileHeaderTestsDataGenerator))]
-    public void FileHeader_Content_ShouldReturnValidValue(FileHeader fileHeader, string expectedContent)
+    [InlineData(1, 0, "%PDF-1.0\n")]
+    [InlineData(1, 1, "%PDF-1.1\n")]
+    [InlineData(1, 2, "%PDF-1.2\n")]
+    [InlineData(1, 3, "%PDF-1.3\n")]
+    [InlineData(1, 4, "%PDF-1.4\n")]
+    [InlineData(1, 5, "%PDF-1.5\n")]
+    [InlineData(1, 6, "%PDF-1.6\n")]
+    [InlineData(1, 7, "%PDF-1.7\n")]
+    [InlineData(2, 0, "%PDF-2.0\n")]
+    public void FileHeader_Content_ShouldReturnValidValue(int majorVersion, int minorVersion, string expectedContent)
     {
         // Arrange
+        FileHeader fileHeader = new(majorVersion, minorVersion);
 
         // Act
         string actualContent = fileHeader.Content;
@@ -69,10 +78,19 @@ public class FileHeaderTests
     }
 
     [Theory(DisplayName = $"{nameof(FileHeader.MajorVersion)} property should return a valid value")]
-    [MemberData(nameof(FileHeaderTestsDataGenerator.FileHeader_MajorVersion_TestCases), MemberType = typeof(FileHeaderTestsDataGenerator))]
-    public void FileHeader_MajorVersion_ShouldReturnValidValue(FileHeader fileHeader, int expectedMajorVersion)
+    [InlineData(1, 0, 1)]
+    [InlineData(1, 1, 1)]
+    [InlineData(1, 2, 1)]
+    [InlineData(1, 3, 1)]
+    [InlineData(1, 4, 1)]
+    [InlineData(1, 5, 1)]
+    [InlineData(1, 6, 1)]
+    [InlineData(1, 7, 1)]
+    [InlineData(2, 0, 2)]
+    public void FileHeader_MajorVersion_ShouldReturnValidValue(int majorVersion, int minorVersion, int expectedMajorVersion)
     {
         // Arrange
+        FileHeader fileHeader = new(majorVersion, minorVersion);
 
         // Act
         int actualMajorVersion = fileHeader.MajorVersion;
@@ -82,10 +100,19 @@ public class FileHeaderTests
     }
 
     [Theory(DisplayName = $"{nameof(FileHeader.MinorVersion)} property should return a valid value")]
-    [MemberData(nameof(FileHeaderTestsDataGenerator.FileHeader_MinorVersion_TestCases), MemberType = typeof(FileHeaderTestsDataGenerator))]
-    public void FileHeader_MinorVersion_ShouldReturnValidValue(FileHeader fileHeader, int expectedMinorVersion)
+    [InlineData(1, 0, 0)]
+    [InlineData(1, 1, 1)]
+    [InlineData(1, 2, 2)]
+    [InlineData(1, 3, 3)]
+    [InlineData(1, 4, 4)]
+    [InlineData(1, 5, 5)]
+    [InlineData(1, 6, 6)]
+    [InlineData(1, 7, 7)]
+    [InlineData(2, 0, 0)]
+    public void FileHeader_MinorVersion_ShouldReturnValidValue(int majorVersion, int minorVersion, int expectedMinorVersion)
     {
         // Arrange
+        FileHeader fileHeader = new(majorVersion, minorVersion);
 
         // Act
         int actualMinorVersion = fileHeader.MinorVersion;
@@ -95,10 +122,19 @@ public class FileHeaderTests
     }
 
     [Theory(DisplayName = $"{nameof(FileHeader.Bytes)} property should return a valid value")]
-    [MemberData(nameof(FileHeaderTestsDataGenerator.FileHeader_Bytes_TestCases), MemberType = typeof(FileHeaderTestsDataGenerator))]
-    public void FileHeader_Bytes_ShouldReturnValidValue(FileHeader fileHeader, byte[] expectedBytes)
+    [InlineData(1, 0, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x30, 0x0A })]
+    [InlineData(1, 1, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x31, 0x0A })]
+    [InlineData(1, 2, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x32, 0x0A })]
+    [InlineData(1, 3, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x33, 0x0A })]
+    [InlineData(1, 4, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x34, 0x0A })]
+    [InlineData(1, 5, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x35, 0x0A })]
+    [InlineData(1, 6, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x36, 0x0A })]
+    [InlineData(1, 7, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x37, 0x0A })]
+    [InlineData(2, 0, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x32, 0x2E, 0x30, 0x0A })]
+    public void FileHeader_Bytes_ShouldReturnValidValue(int majorVersion, int minorVersion, byte[] expectedBytes)
     {
         // Arrange
+        FileHeader fileHeader = new(majorVersion, minorVersion);
 
         // Act
         byte[] actualBytes = fileHeader.Bytes.ToArray();
@@ -108,10 +144,15 @@ public class FileHeaderTests
     }
 
     [Theory(DisplayName = "Equals method should return a valid value")]
-    [MemberData(nameof(FileHeaderTestsDataGenerator.FileHeader_Equals_TestCases), MemberType = typeof(FileHeaderTestsDataGenerator))]
-    public void FileHeader_Equals_ShouldReturnValidValue(FileHeader fileHeader1, FileHeader fileHeader2, bool expectedResult)
+    [InlineData(1, 0, 1, 0, true)]
+    [InlineData(1, 1, 1, 0, false)]
+    [InlineData(1, 2, 1, 2, true)]
+    [InlineData(2, 0, 1, 0, false)]
+    public void FileHeader_Equals_ShouldReturnValidValue(int majorVersion1, int minorVersion1, int majorVersion2, int minorVersion2, bool expectedResult)
     {
         // Arrange
+        FileHeader fileHeader1 = new(majorVersion1, minorVersion1);
+        FileHeader fileHeader2 = new(majorVersion2, minorVersion2);
 
         // Act
         bool actualResult = fileHeader1.Equals(fileHeader2);
@@ -121,10 +162,15 @@ public class FileHeaderTests
     }
 
     [Theory(DisplayName = "Equals method should return a valid value")]
-    [MemberData(nameof(FileHeaderTestsDataGenerator.FileHeader_Equals_TestCases), MemberType = typeof(FileHeaderTestsDataGenerator))]
-    public void FileHeader_EqualsObject_ShouldReturnValidValue(FileHeader fileHeader1, object? fileHeader2, bool expectedResult)
+    [InlineData(1, 0, 1, 0, true)]
+    [InlineData(1, 1, 1, 0, false)]
+    [InlineData(1, 2, 1, 2, true)]
+    [InlineData(2, 0, 1, 0, false)]
+    public void FileHeader_EqualsObject_ShouldReturnValidValue(int majorVersion1, int minorVersion1, int majorVersion2, int minorVersion2, bool expectedResult)
     {
         // Arrange
+        FileHeader fileHeader1 = new(majorVersion1, minorVersion1);
+        object fileHeader2 = new FileHeader(majorVersion2, minorVersion2);
 
         // Act
         bool actualResult = fileHeader1.Equals(fileHeader2);
@@ -134,10 +180,15 @@ public class FileHeaderTests
     }
 
     [Theory(DisplayName = "The '==' operator should return a valid value")]
-    [MemberData(nameof(FileHeaderTestsDataGenerator.FileHeader_Equals_TestCases), MemberType = typeof(FileHeaderTestsDataGenerator))]
-    public void FileHeader_EqualOperator_ShouldReturnValidValue(FileHeader fileHeader1, FileHeader fileHeader2, bool expectedResult)
+    [InlineData(1, 0, 1, 0, true)]
+    [InlineData(1, 1, 1, 0, false)]
+    [InlineData(1, 2, 1, 2, true)]
+    [InlineData(2, 0, 1, 0, false)]
+    public void FileHeader_EqualOperator_ShouldReturnValidValue(int majorVersion1, int minorVersion1, int majorVersion2, int minorVersion2, bool expectedResult)
     {
         // Arrange
+        FileHeader fileHeader1 = new(majorVersion1, minorVersion1);
+        FileHeader fileHeader2 = new(majorVersion2, minorVersion2);
 
         // Act
         bool actualResult = fileHeader1 == fileHeader2;
@@ -147,10 +198,15 @@ public class FileHeaderTests
     }
 
     [Theory(DisplayName = "The '!=' operator should return a valid value")]
-    [MemberData(nameof(FileHeaderTestsDataGenerator.FileHeader_Equals_TestCases), MemberType = typeof(FileHeaderTestsDataGenerator))]
-    public void FileHeader_NotEqualOperator_ShouldReturnValidValue(FileHeader fileHeader1, FileHeader fileHeader2, bool expectedResult)
+    [InlineData(1, 0, 1, 0, true)]
+    [InlineData(1, 1, 1, 0, false)]
+    [InlineData(1, 2, 1, 2, true)]
+    [InlineData(2, 0, 1, 0, false)]
+    public void FileHeader_NotEqualOperator_ShouldReturnValidValue(int majorVersion1, int minorVersion1, int majorVersion2, int minorVersion2, bool expectedResult)
     {
         // Arrange
+        FileHeader fileHeader1 = new(majorVersion1, minorVersion1);
+        FileHeader fileHeader2 = new(majorVersion2, minorVersion2);
 
         // Act
         bool actualResult = fileHeader1 != fileHeader2;
@@ -160,10 +216,19 @@ public class FileHeaderTests
     }
 
     [Theory(DisplayName = "GetHashCode method should return a valid value")]
-    [MemberData(nameof(FileHeaderTestsDataGenerator.FileHeader_NoExpectedData_TestCases), MemberType = typeof(FileHeaderTestsDataGenerator))]
-    public void FileHeader_GetHashCode_ShouldReturnValidValue(FileHeader fileHeader)
+    [InlineData(1, 0)]
+    [InlineData(1, 1)]
+    [InlineData(1, 2)]
+    [InlineData(1, 3)]
+    [InlineData(1, 4)]
+    [InlineData(1, 5)]
+    [InlineData(1, 6)]
+    [InlineData(1, 7)]
+    [InlineData(2, 0)]
+    public void FileHeader_GetHashCode_ShouldReturnValidValue(int majorVersion, int minorVersion)
     {
         // Arrange
+        FileHeader fileHeader = new(majorVersion, minorVersion);
         int expectedHashCode = HashCode.Combine(nameof(FileHeader), fileHeader.MajorVersion, fileHeader.MinorVersion);
 
         // Act
@@ -171,91 +236,5 @@ public class FileHeaderTests
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
-    }
-}
-
-[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
-internal static class FileHeaderTestsDataGenerator
-{
-    public static IEnumerable<object[]> FileHeader_NoExpectedData_TestCases()
-    {
-        yield return new object[] { FileHeader.PdfVersion10 };
-        yield return new object[] { FileHeader.PdfVersion11 };
-        yield return new object[] { FileHeader.PdfVersion12 };
-        yield return new object[] { FileHeader.PdfVersion13 };
-        yield return new object[] { FileHeader.PdfVersion14 };
-        yield return new object[] { FileHeader.PdfVersion15 };
-        yield return new object[] { FileHeader.PdfVersion16 };
-        yield return new object[] { FileHeader.PdfVersion17 };
-        yield return new object[] { FileHeader.PdfVersion20 };
-    }
-
-    public static IEnumerable<object[]> FileHeader_Content_TestCases()
-    {
-        yield return new object[] { FileHeader.PdfVersion10, "%PDF-1.0\n" };
-        yield return new object[] { FileHeader.PdfVersion11, "%PDF-1.1\n" };
-        yield return new object[] { FileHeader.PdfVersion12, "%PDF-1.2\n" };
-        yield return new object[] { FileHeader.PdfVersion13, "%PDF-1.3\n" };
-        yield return new object[] { FileHeader.PdfVersion14, "%PDF-1.4\n" };
-        yield return new object[] { FileHeader.PdfVersion15, "%PDF-1.5\n" };
-        yield return new object[] { FileHeader.PdfVersion16, "%PDF-1.6\n" };
-        yield return new object[] { FileHeader.PdfVersion17, "%PDF-1.7\n" };
-        yield return new object[] { FileHeader.PdfVersion20, "%PDF-2.0\n" };
-    }
-
-    public static IEnumerable<object[]> FileHeader_MajorVersion_TestCases()
-    {
-        yield return new object[] { FileHeader.PdfVersion10, 1 };
-        yield return new object[] { FileHeader.PdfVersion11, 1 };
-        yield return new object[] { FileHeader.PdfVersion12, 1 };
-        yield return new object[] { FileHeader.PdfVersion13, 1 };
-        yield return new object[] { FileHeader.PdfVersion14, 1 };
-        yield return new object[] { FileHeader.PdfVersion15, 1 };
-        yield return new object[] { FileHeader.PdfVersion16, 1 };
-        yield return new object[] { FileHeader.PdfVersion17, 1 };
-        yield return new object[] { FileHeader.PdfVersion20, 2 };
-    }
-
-    public static IEnumerable<object[]> FileHeader_MinorVersion_TestCases()
-    {
-        yield return new object[] { FileHeader.PdfVersion10, 0 };
-        yield return new object[] { FileHeader.PdfVersion11, 1 };
-        yield return new object[] { FileHeader.PdfVersion12, 2 };
-        yield return new object[] { FileHeader.PdfVersion13, 3 };
-        yield return new object[] { FileHeader.PdfVersion14, 4 };
-        yield return new object[] { FileHeader.PdfVersion15, 5 };
-        yield return new object[] { FileHeader.PdfVersion16, 6 };
-        yield return new object[] { FileHeader.PdfVersion17, 7 };
-        yield return new object[] { FileHeader.PdfVersion20, 0 };
-    }
-
-    public static IEnumerable<object[]> FileHeader_Bytes_TestCases()
-    {
-        yield return new object[] { FileHeader.PdfVersion10, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x30, 0x0A } };
-        yield return new object[] { FileHeader.PdfVersion11, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x31, 0x0A } };
-        yield return new object[] { FileHeader.PdfVersion12, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x32, 0x0A } };
-        yield return new object[] { FileHeader.PdfVersion13, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x33, 0x0A } };
-        yield return new object[] { FileHeader.PdfVersion14, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x34, 0x0A } };
-        yield return new object[] { FileHeader.PdfVersion15, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x35, 0x0A } };
-        yield return new object[] { FileHeader.PdfVersion16, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x36, 0x0A } };
-        yield return new object[] { FileHeader.PdfVersion17, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x37, 0x0A } };
-        yield return new object[] { FileHeader.PdfVersion20, new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D, 0x32, 0x2E, 0x30, 0x0A } };
-    }
-
-    public static IEnumerable<object[]> FileHeader_Equals_TestCases()
-    {
-        yield return new object[] { FileHeader.PdfVersion10, FileHeader.PdfVersion10, true };
-        yield return new object[] { FileHeader.PdfVersion11, FileHeader.PdfVersion10, false };
-        yield return new object[] { FileHeader.PdfVersion12, FileHeader.PdfVersion12, true };
-        yield return new object[] { FileHeader.PdfVersion20, FileHeader.PdfVersion10, false };
-    }
-
-    public static IEnumerable<object[]> FileHeader_EqualsObject_TestCases()
-    {
-        yield return new object[] { FileHeader.PdfVersion10, FileHeader.PdfVersion10, true };
-        yield return new object[] { FileHeader.PdfVersion11, FileHeader.PdfVersion10, false };
-        yield return new object[] { FileHeader.PdfVersion12, FileHeader.PdfVersion12, true };
-        yield return new object[] { FileHeader.PdfVersion20, FileHeader.PdfVersion10, false };
-        yield return new object[] { FileHeader.PdfVersion20, null!, false };
     }
 }

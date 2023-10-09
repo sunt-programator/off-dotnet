@@ -22,8 +22,6 @@ public sealed class XRefSection : PdfObject, IXRefSection
         this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
 
-    public int NumberOfSubSections => this.Value.Count;
-
     public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
     public ICollection<IXRefSubSection> Value { get; }

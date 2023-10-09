@@ -11,7 +11,5 @@ public interface IXRefSubSection : IPdfObject
 {
     int ObjectNumber { get; }
 
-    int NumberOfEntries { get; }
-
     ICollection<IXRefEntry> Value { get; }
 }
