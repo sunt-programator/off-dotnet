@@ -37,7 +37,7 @@ public sealed class PageObject : PdfDictionary<IPdfObject>, IPageObject
 
     public IPdfIndirectIdentifier<IPageTreeNode> Parent { get; }
 
-    public IResourceDictionary Resources { get;  }
+    public IResourceDictionary Resources { get; }
 
     public IRectangle MediaBox { get; }
 
