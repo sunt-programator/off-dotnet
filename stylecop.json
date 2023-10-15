@@ -5,9 +5,9 @@
       "companyName": "Sunt Programator",
       "copyrightText": "Copyright (c) {companyName}. All rights reserved.\nLicensed under the {licenseName} license. See {licenseFile} file in the project root for full license information.",
       "variables": {
-        "licenseName": "GPL-3.0",
+        "licenseName": "MIT",
         "licenseFile": "LICENSE"
-      },
+      }
     }
   }
 }

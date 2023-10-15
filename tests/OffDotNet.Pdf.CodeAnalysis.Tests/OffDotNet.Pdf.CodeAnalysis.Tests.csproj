@@ -7,10 +7,11 @@
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <RootNamespace>OffDotNet.Pdf.CodeAnalysis.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\OffDotNet.Pdf.Syntax\OffDotNet.Pdf.Syntax.csproj" />
+    <ProjectReference Include="..\..\src\OffDotNet.Pdf.CodeAnalysis\OffDotNet.Pdf.CodeAnalysis.csproj" />
   </ItemGroup>
 
 </Project>
