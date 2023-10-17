@@ -48,14 +48,18 @@ internal sealed class InputReader
             return false;
         }
 
-        this.offset++;
-
+        this.AdvanceByte();
         nextByte = b;
         return true;
     }
 
-    public void AdvanceByte(int n)
+    public void AdvanceByte()
     {
-        this.offset += n;
+        this.offset++;
+    }
+
+    public void AdvanceByte(int delta)
+    {
+        this.offset += delta;
     }
 }
