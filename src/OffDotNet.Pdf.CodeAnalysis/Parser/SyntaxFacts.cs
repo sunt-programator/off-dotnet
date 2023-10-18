@@ -9,6 +9,11 @@ public static class SyntaxFacts
 {
     internal static bool IsDecDigit(this byte? b)
     {
+        return b.HasValue && b.Value.IsDecDigit();
+    }
+
+    internal static bool IsDecDigit(this byte b)
+    {
         return b is >= 0x30 and <= 0x39;
     }
 }

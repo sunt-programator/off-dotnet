@@ -3,8 +3,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System.Buffers;
-using System.Globalization;
+using System.Text;
+using OffDotNet.Pdf.CodeAnalysis.LexerHelpers;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Parser;
@@ -12,6 +12,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Parser;
 internal class Lexer
 {
     private readonly InputReader reader;
+    private readonly StringBuilder stringBuilder = new();
 
     public Lexer(byte[] source)
     {
@@ -20,53 +21,51 @@ internal class Lexer
 
     public SyntaxToken Lex()
     {
-        bool canPeek = this.reader.TryPeek(out byte? peekByte);
-
-        if (!canPeek)
-        {
-            return default;
-        }
-
-        switch (peekByte)
-        {
-            case >= 0x30 and <= 0x39: // 0-9
-                return this.ScanNumericLiteralSingleInteger();
-        }
-
-        return default;
+        TokenInfo tokenInfo = default;
+        this.SyntaxToken(ref tokenInfo);
+        return Create(in tokenInfo);
     }
 
-    private SyntaxToken ScanNumericLiteralSingleInteger()
+    private static SyntaxToken Create(in TokenInfo info)
     {
-        ArrayPool<byte> pool = ArrayPool<byte>.Shared;
-        byte[] numericByteArray = pool.Rent(12);
-        int i = 0;
-
-        while (true)
+        switch (info.Kind)
         {
-            this.reader.TryPeek(out byte? peekByte);
+            case SyntaxKind.NumericLiteralToken:
+                return info.ValueKind switch
+                {
+                    TokenInfoSpecialKind.Single => new SyntaxToken(SyntaxKind.NumericLiteralToken, info.Text, info.FloatValue),
+                    TokenInfoSpecialKind.Int32 => new SyntaxToken(SyntaxKind.NumericLiteralToken, info.Text, info.IntValue),
+                    TokenInfoSpecialKind.None => throw new InvalidOperationException(),
+                    _ => throw new InvalidOperationException(),
+                };
 
-            if (!peekByte.HasValue || !peekByte.IsDecDigit())
-            {
-                pool.Return(numericByteArray);
-                break;
-            }
+            case SyntaxKind.None:
+            case SyntaxKind.EndOfFileToken:
+            default:
+                throw new InvalidOperationException();
+        }
+    }
 
-            numericByteArray[i] = peekByte.Value;
-            i++;
-            this.reader.AdvanceByte();
+    private void SyntaxToken(ref TokenInfo info)
+    {
+        info.Kind = SyntaxKind.None;
+        info.Text = string.Empty;
+
+        byte? peekedByte = this.reader.Peek();
+
+        if (!peekedByte.HasValue)
+        {
+            return;
         }
 
-        pool.Return(numericByteArray);
-
-        string text = string.Create(i, numericByteArray, (span, bytes) =>
+        switch (peekedByte.Value)
         {
-            for (int j = 0; j < span.Length; j++)
-            {
-                span[j] = (char)bytes[j];
-            }
-        });
-
-        return new SyntaxToken(SyntaxKind.NumericLiteralToken, text, int.Parse(text, CultureInfo.InvariantCulture));
+            case 0x2e: // .
+                NumericLiteralHelpers.TryScanNumericLiteral(this.reader, this.stringBuilder, ref info);
+                break;
+            case >= 0x30 and <= 0x39: // 0-9
+                NumericLiteralHelpers.TryScanNumericLiteral(this.reader, this.stringBuilder, ref info);
+                break;
+        }
     }
 }

@@ -7,13 +7,6 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax;
 
 public readonly struct SyntaxToken
 {
-    public SyntaxToken()
-    {
-        this.Kind = SyntaxKind.None;
-        this.Text = string.Empty;
-        this.Value = null;
-    }
-
     internal SyntaxToken(SyntaxKind kind, string text, object? value)
     {
         this.Kind = kind;

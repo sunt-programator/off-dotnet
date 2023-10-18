@@ -7,4 +7,12 @@
       <RootNamespace>OffDotNet.Pdf.CodeAnalysis</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Syntax\InternalSyntax\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Syntax\InternalSyntax\SyntaxNodeFactory.cs" />
+    </ItemGroup>
+
 </Project>

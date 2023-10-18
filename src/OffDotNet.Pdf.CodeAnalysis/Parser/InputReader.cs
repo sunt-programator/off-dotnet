@@ -15,42 +15,36 @@ internal sealed class InputReader
         this.source = source;
     }
 
-    public bool TryPeek(out byte? nextByte)
+    public byte? Peek()
     {
         if (this.offset >= this.source.Length)
         {
-            nextByte = null;
-            return false;
+            return null;
         }
 
-        nextByte = this.source[this.offset];
-        return true;
+        return this.source[this.offset];
     }
 
-    public bool TryPeek(int delta, out byte? nextByte)
+    public byte? Peek(int delta)
     {
         if (delta < 0 || delta + this.offset >= this.source.Length)
         {
-            nextByte = null;
-            return false;
+            return null;
         }
 
-        nextByte = this.source[this.offset + delta];
-        return true;
+        return this.source[this.offset + delta];
     }
 
-    public bool TryConsume(out byte? nextByte)
+    public byte? Consume()
     {
-        bool canPeek = this.TryPeek(out byte? b);
-        if (!canPeek)
+        byte? b = this.Peek();
+        if (!b.HasValue)
         {
-            nextByte = null;
-            return false;
+            return null;
         }
 
         this.AdvanceByte();
-        nextByte = b;
-        return true;
+        return b;
     }
 
     public void AdvanceByte()
