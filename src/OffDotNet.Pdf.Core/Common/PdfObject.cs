@@ -3,11 +3,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace OffDotNet.Pdf.Core.Common;
 
-[SuppressMessage("Usage", "S4035:Seal class 'PdfObject' or implement 'IEqualityComparer' instead.", Justification = "GetEqualityComponents will contain property collection.")]
 public abstract class PdfObject : IPdfObject, IEquatable<PdfObject>, IEqualityComparer<PdfObject>
 {
     public abstract ReadOnlyMemory<byte> Bytes { get; }

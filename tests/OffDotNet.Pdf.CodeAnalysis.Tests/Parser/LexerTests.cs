@@ -1,8 +1,9 @@
-﻿// <copyright file="LexerTests.cs" company="Sunt Programator">
+// <copyright file="LexerTests.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 using OffDotNet.Pdf.CodeAnalysis.Errors;
@@ -13,6 +14,25 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Parser;
 
 public class LexerTests
 {
+    [Fact(DisplayName = "Test the PDF punctuation")]
+    [Trait("Feature", "Punctuation")]
+    [SuppressMessage("Usage", "S2699: Add at least one assertion to this test case.", Justification = "Not needed.")]
+    public void TestPunctuation_ShouldReturnValidToken()
+    {
+        TestPunctuation(SyntaxKind.LeftParenthesisToken);
+        TestPunctuation(SyntaxKind.RightParenthesisToken);
+        TestPunctuation(SyntaxKind.LessThanToken);
+        TestPunctuation(SyntaxKind.GreaterThanToken);
+        TestPunctuation(SyntaxKind.LeftSquareBracketToken);
+        TestPunctuation(SyntaxKind.RightSquareBracketToken);
+        TestPunctuation(SyntaxKind.LeftCurlyBracketToken);
+        TestPunctuation(SyntaxKind.RightCurlyBracketToken);
+        TestPunctuation(SyntaxKind.SolidusToken);
+        TestPunctuation(SyntaxKind.PercentSignToken);
+        TestPunctuation(SyntaxKind.LessThanLessThanToken);
+        TestPunctuation(SyntaxKind.GreaterThanGreaterThanToken);
+    }
+
     [Fact(DisplayName = $"The numeric literal should return a {nameof(SyntaxKind.NumericLiteralToken)}")]
     [Trait("Feature", "Literals")]
     public void TestNumericLiteral_IntegerValue_ShouldReturnNumericLiteralToken()
@@ -173,7 +193,7 @@ public class LexerTests
 
     private static SyntaxToken LexToken(byte[] source)
     {
-        SyntaxToken result = new SyntaxToken();
+        SyntaxToken result = default;
         foreach (var token in SyntaxFactory.ParseTokens(source))
         {
             if (result.Kind == SyntaxKind.None)
@@ -194,5 +214,20 @@ public class LexerTests
         }
 
         return result;
+    }
+
+    private static void TestPunctuation(SyntaxKind kind)
+    {
+        // Arrange
+        string text = SyntaxFacts.GetText(kind);
+
+        // Act
+        var token = LexToken(text);
+
+        // Assert
+        Assert.Equal(kind, token.Kind);
+        Assert.Equal(text, token.Text);
+        Assert.Equal(text, token.Value);
+        Assert.Empty(token.Errors());
     }
 }

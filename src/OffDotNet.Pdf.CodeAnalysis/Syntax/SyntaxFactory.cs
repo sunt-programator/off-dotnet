@@ -1,4 +1,4 @@
-﻿// <copyright file="SyntaxFactory.cs" company="Sunt Programator">
+// <copyright file="SyntaxFactory.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -10,6 +10,7 @@ internal static class SyntaxFactory
     public static IEnumerable<SyntaxToken> ParseTokens(byte[] source)
     {
         Lexer.Lexer lexer = new(source);
-        yield return lexer.Lex();
+        var token = lexer.Lex();
+        yield return new SyntaxToken(token);
     }
 }

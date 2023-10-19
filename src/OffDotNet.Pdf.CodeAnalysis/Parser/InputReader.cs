@@ -1,4 +1,4 @@
-﻿// <copyright file="InputReader.cs" company="Sunt Programator">
+// <copyright file="InputReader.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -45,6 +45,17 @@ internal sealed class InputReader
 
         this.AdvanceByte();
         return b;
+    }
+
+    public bool TryAdvanceByte(byte b)
+    {
+        if (this.Peek() != b)
+        {
+            return false;
+        }
+
+        this.AdvanceByte();
+        return true;
     }
 
     public void AdvanceByte()

@@ -1,4 +1,4 @@
-﻿// <copyright file="SyntaxExtensions.cs" company="Sunt Programator">
+// <copyright file="SyntaxExtensions.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -13,10 +13,15 @@ public static class SyntaxExtensions
 {
     internal static ImmutableArray<DiagnosticInfo> Errors(this SyntaxToken token)
     {
-        return token.ErrorsOrWarnings(errorsOnly: true);
+        if (token.Node is not AbstractSyntaxToken abstractSyntaxToken)
+        {
+            throw new InvalidOperationException("The token is not a syntax token");
+        }
+
+        return abstractSyntaxToken.ErrorsOrWarnings(errorsOnly: true);
     }
 
-    private static ImmutableArray<DiagnosticInfo> ErrorsOrWarnings(this SyntaxToken node, bool errorsOnly)
+    private static ImmutableArray<DiagnosticInfo> ErrorsOrWarnings(this AbstractSyntaxToken node, bool errorsOnly)
     {
         return node.GetDiagnostics()
             .Where(x => x.Severity == (errorsOnly ? DiagnosticSeverity.Error : DiagnosticSeverity.Warning))
