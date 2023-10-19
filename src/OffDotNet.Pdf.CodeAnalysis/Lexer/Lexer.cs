@@ -4,15 +4,17 @@
 // </copyright>
 
 using System.Text;
-using OffDotNet.Pdf.CodeAnalysis.LexerHelpers;
+using OffDotNet.Pdf.CodeAnalysis.Errors;
+using OffDotNet.Pdf.CodeAnalysis.Parser;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
-namespace OffDotNet.Pdf.CodeAnalysis.Parser;
+namespace OffDotNet.Pdf.CodeAnalysis.Lexer;
 
-internal class Lexer
+internal partial class Lexer
 {
     private readonly InputReader reader;
     private readonly StringBuilder stringBuilder = new();
+    private List<DiagnosticInfo>? errors;
 
     public Lexer(byte[] source)
     {
@@ -22,31 +24,39 @@ internal class Lexer
     public SyntaxToken Lex()
     {
         TokenInfo tokenInfo = default;
-        this.SyntaxToken(ref tokenInfo);
-        return Create(in tokenInfo);
+        this.ScanSyntaxToken(ref tokenInfo);
+        return this.Create(tokenInfo);
     }
 
-    private static SyntaxToken Create(in TokenInfo info)
+    private SyntaxToken Create(TokenInfo info)
     {
+        SyntaxToken token;
         switch (info.Kind)
         {
             case SyntaxKind.NumericLiteralToken:
-                return info.ValueKind switch
+                token = info.ValueKind switch
                 {
                     TokenInfoSpecialKind.Single => new SyntaxToken(SyntaxKind.NumericLiteralToken, info.Text, info.FloatValue),
                     TokenInfoSpecialKind.Int32 => new SyntaxToken(SyntaxKind.NumericLiteralToken, info.Text, info.IntValue),
                     TokenInfoSpecialKind.None => throw new InvalidOperationException(),
                     _ => throw new InvalidOperationException(),
                 };
+                break;
 
-            case SyntaxKind.None:
-            case SyntaxKind.EndOfFileToken:
             default:
-                throw new InvalidOperationException();
+                token = new SyntaxToken(info.Kind, info.Text, null);
+                break;
         }
+
+        if (this.errors != null)
+        {
+            token = token.SetDiagnostics(this.errors.ToArray());
+        }
+
+        return token;
     }
 
-    private void SyntaxToken(ref TokenInfo info)
+    private void ScanSyntaxToken(ref TokenInfo info)
     {
         info.Kind = SyntaxKind.None;
         info.Text = string.Empty;
@@ -61,10 +71,10 @@ internal class Lexer
         switch (peekedByte.Value)
         {
             case 0x2e: // .
-                NumericLiteralHelpers.TryScanNumericLiteral(this.reader, this.stringBuilder, ref info);
+                this.TryScanNumericLiteral(ref info);
                 break;
             case >= 0x30 and <= 0x39: // 0-9
-                NumericLiteralHelpers.TryScanNumericLiteral(this.reader, this.stringBuilder, ref info);
+                this.TryScanNumericLiteral(ref info);
                 break;
         }
     }
