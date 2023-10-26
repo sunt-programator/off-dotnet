@@ -186,6 +186,26 @@ public class LexerTests
         Assert.Equal("error PDF0100: Integer value is too large", error.ToString(CultureInfo.InvariantCulture));
     }
 
+    [Theory(DisplayName = "Test the PDF keywords")]
+    [Trait("Feature", "Keywords")]
+    [InlineData("true", SyntaxKind.TrueKeyword)]
+    [InlineData("false", SyntaxKind.FalseKeyword)]
+    [InlineData("null", SyntaxKind.NullKeyword)]
+    public void TestKeywords(string text, SyntaxKind expectedKind)
+    {
+        // Arrange
+
+        // Act
+        var token = LexToken(text);
+
+        // Assert
+        Assert.Equal(expectedKind, token.Kind);
+        Assert.Equal(text, token.Text);
+        Assert.Equal(text, token.Value);
+        Assert.Equal(text, token.ValueText);
+        Assert.Empty(token.Errors());
+    }
+
     private static SyntaxToken LexToken(string source)
     {
         return LexToken(Encoding.UTF8.GetBytes(source));

@@ -117,6 +117,9 @@ internal partial class Lexer
             case >= 0x30 and <= 0x39: // '0-9'
                 this.TryScanNumericLiteral(ref info);
                 break;
+            case (>= 0x41 and <= 0x5a) or (>= 0x61 and <= 0x7a): // 'A-Z' or 'a-z'
+                this.TryScanIdentifierOrKeyword(ref info);
+                break;
         }
     }
 }

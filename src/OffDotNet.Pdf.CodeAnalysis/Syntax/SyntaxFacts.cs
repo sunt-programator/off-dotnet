@@ -23,7 +23,21 @@ public static class SyntaxFacts
             SyntaxKind.PercentSignToken => "%",
             SyntaxKind.LessThanLessThanToken => "<<",
             SyntaxKind.GreaterThanGreaterThanToken => ">>",
+            SyntaxKind.TrueKeyword => "true",
+            SyntaxKind.FalseKeyword => "false",
+            SyntaxKind.NullKeyword => "null",
             _ => string.Empty,
+        };
+    }
+
+    public static SyntaxKind GetKeywordKind(string text)
+    {
+        return text switch
+        {
+            "true" => SyntaxKind.TrueKeyword,
+            "false" => SyntaxKind.FalseKeyword,
+            "null" => SyntaxKind.NullKeyword,
+            _ => SyntaxKind.None,
         };
     }
 }

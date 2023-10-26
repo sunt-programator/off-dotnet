@@ -10,8 +10,7 @@ public enum SyntaxKind : ushort
     /// <summary> Represents unknown token.</summary>
     None = 0,
 
-    NumericLiteralToken,
-
+    // Delimiters
     LeftParenthesisToken,
 
     RightParenthesisToken,
@@ -36,6 +35,29 @@ public enum SyntaxKind : ushort
 
     GreaterThanGreaterThanToken,
 
-    /// <summary> Represents <c>EOF</c> (End of file) token.</summary>
+    // Whitespaces
+    NullToken,
+
+    HorizontalTabToken,
+
+    LineFeedToken,
+
+    FormFeedToken,
+
+    CarrierReturnToken,
+
+    SpaceToken,
+
+    // Primitives
+    NumericLiteralToken,
+
+    // Keywords
+    TrueKeyword,
+
+    FalseKeyword,
+
+    NullKeyword,
+
+    // Other
     EndOfFileToken,
 }
