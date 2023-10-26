@@ -35,6 +35,10 @@ public enum SyntaxKind : ushort
 
     GreaterThanGreaterThanToken,
 
+    PlusToken,
+
+    MinusToken,
+
     // Whitespaces
     NullToken,
 
@@ -57,6 +61,22 @@ public enum SyntaxKind : ushort
     FalseKeyword,
 
     NullKeyword,
+
+    StartObjectKeyword,
+
+    EndObjectKeyword,
+
+    IndirectReferenceKeyword,
+
+    StartStreamKeyword,
+
+    EndStreamKeyword,
+
+    XRefKeyword,
+
+    TrailerKeyword,
+
+    StartXRefKeyword,
 
     // Other
     EndOfFileToken,

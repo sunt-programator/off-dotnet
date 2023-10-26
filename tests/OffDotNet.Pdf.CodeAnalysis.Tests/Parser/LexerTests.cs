@@ -3,7 +3,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 using OffDotNet.Pdf.CodeAnalysis.Errors;
@@ -14,23 +13,35 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Parser;
 
 public class LexerTests
 {
-    [Fact(DisplayName = "Test the PDF punctuation")]
+    [Theory(DisplayName = "Test the PDF punctuation")]
     [Trait("Feature", "Punctuation")]
-    [SuppressMessage("Usage", "S2699: Add at least one assertion to this test case.", Justification = "Not needed.")]
-    public void TestPunctuation_ShouldReturnValidToken()
+    [InlineData(SyntaxKind.LeftParenthesisToken)]
+    [InlineData(SyntaxKind.RightParenthesisToken)]
+    [InlineData(SyntaxKind.LessThanToken)]
+    [InlineData(SyntaxKind.GreaterThanToken)]
+    [InlineData(SyntaxKind.LeftSquareBracketToken)]
+    [InlineData(SyntaxKind.RightSquareBracketToken)]
+    [InlineData(SyntaxKind.LeftCurlyBracketToken)]
+    [InlineData(SyntaxKind.RightCurlyBracketToken)]
+    [InlineData(SyntaxKind.SolidusToken)]
+    [InlineData(SyntaxKind.PercentSignToken)]
+    [InlineData(SyntaxKind.LessThanLessThanToken)]
+    [InlineData(SyntaxKind.GreaterThanGreaterThanToken)]
+    [InlineData(SyntaxKind.PlusToken)]
+    [InlineData(SyntaxKind.MinusToken)]
+    public void TestPunctuation_ShouldReturnValidToken(SyntaxKind kind)
     {
-        TestPunctuation(SyntaxKind.LeftParenthesisToken);
-        TestPunctuation(SyntaxKind.RightParenthesisToken);
-        TestPunctuation(SyntaxKind.LessThanToken);
-        TestPunctuation(SyntaxKind.GreaterThanToken);
-        TestPunctuation(SyntaxKind.LeftSquareBracketToken);
-        TestPunctuation(SyntaxKind.RightSquareBracketToken);
-        TestPunctuation(SyntaxKind.LeftCurlyBracketToken);
-        TestPunctuation(SyntaxKind.RightCurlyBracketToken);
-        TestPunctuation(SyntaxKind.SolidusToken);
-        TestPunctuation(SyntaxKind.PercentSignToken);
-        TestPunctuation(SyntaxKind.LessThanLessThanToken);
-        TestPunctuation(SyntaxKind.GreaterThanGreaterThanToken);
+        // Arrange
+        string text = SyntaxFacts.GetText(kind);
+
+        // Act
+        var token = LexToken(text);
+
+        // Assert
+        Assert.Equal(kind, token.Kind);
+        Assert.Equal(text, token.Text);
+        Assert.Equal(text, token.Value);
+        Assert.Empty(token.Errors());
     }
 
     [Fact(DisplayName = $"The numeric literal should return a {nameof(SyntaxKind.NumericLiteralToken)}")]
@@ -191,6 +202,14 @@ public class LexerTests
     [InlineData("true", SyntaxKind.TrueKeyword)]
     [InlineData("false", SyntaxKind.FalseKeyword)]
     [InlineData("null", SyntaxKind.NullKeyword)]
+    [InlineData("obj", SyntaxKind.StartObjectKeyword)]
+    [InlineData("endobj", SyntaxKind.EndObjectKeyword)]
+    [InlineData("R", SyntaxKind.IndirectReferenceKeyword)]
+    [InlineData("stream", SyntaxKind.StartStreamKeyword)]
+    [InlineData("endstream", SyntaxKind.EndStreamKeyword)]
+    [InlineData("xref", SyntaxKind.XRefKeyword)]
+    [InlineData("trailer", SyntaxKind.TrailerKeyword)]
+    [InlineData("startxref", SyntaxKind.StartXRefKeyword)]
     public void TestKeywords(string text, SyntaxKind expectedKind)
     {
         // Arrange
@@ -234,20 +253,5 @@ public class LexerTests
         }
 
         return result;
-    }
-
-    private static void TestPunctuation(SyntaxKind kind)
-    {
-        // Arrange
-        string text = SyntaxFacts.GetText(kind);
-
-        // Act
-        var token = LexToken(text);
-
-        // Assert
-        Assert.Equal(kind, token.Kind);
-        Assert.Equal(text, token.Text);
-        Assert.Equal(text, token.Value);
-        Assert.Empty(token.Errors());
     }
 }

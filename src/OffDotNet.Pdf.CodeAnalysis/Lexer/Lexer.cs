@@ -114,6 +114,14 @@ internal partial class Lexer
                 this.reader.AdvanceByte();
                 info.Kind = SyntaxKind.PercentSignToken;
                 break;
+            case 0x2b: // '+'
+                this.reader.AdvanceByte();
+                info.Kind = SyntaxKind.PlusToken;
+                break;
+            case 0x2d: // '-'
+                this.reader.AdvanceByte();
+                info.Kind = SyntaxKind.MinusToken;
+                break;
             case >= 0x30 and <= 0x39: // '0-9'
                 this.TryScanNumericLiteral(ref info);
                 break;
