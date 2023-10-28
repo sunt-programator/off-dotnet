@@ -12,4 +12,5 @@ internal struct TokenInfo
     internal TokenInfoSpecialKind ValueKind;
     internal int IntValue;
     internal float FloatValue;
+    internal string? StringValue;
 }

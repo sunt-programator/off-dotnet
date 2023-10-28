@@ -14,9 +14,9 @@ internal partial class Lexer
 {
     private readonly InputReader reader;
     private readonly StringBuilder stringBuilder = new();
+    private readonly SyntaxListBuilder trailingTriviaCache = new(10);
     private List<SyntaxDiagnosticInfo>? errors;
     private SyntaxListBuilder leadingTriviaCache = new(10);
-    private readonly SyntaxListBuilder trailingTriviaCache = new(10);
 
     public Lexer(byte[] source)
     {
@@ -53,6 +53,9 @@ internal partial class Lexer
                 };
                 break;
 
+            case SyntaxKind.StringLiteralToken:
+                token = SyntaxFactory.Literal(info.Kind, leadingNode, info.Text, info.StringValue, trailingNode);
+                break;
             case SyntaxKind.EndOfFileToken:
                 token = SyntaxFactory.Token(leadingNode, info.Kind, trailingNode);
                 break;
@@ -108,8 +111,7 @@ internal partial class Lexer
                 this.TryScanNumericLiteral(ref info);
                 break;
             case 0x28: // '('
-                this.reader.AdvanceByte();
-                info.Kind = SyntaxKind.LeftParenthesisToken;
+                this.ScanStringLiteral(ref info);
                 break;
             case 0x29: // ')'
                 this.reader.AdvanceByte();

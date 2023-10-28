@@ -15,7 +15,6 @@ public class LexerTests
 {
     [Theory(DisplayName = "Test the PDF punctuation")]
     [Trait("Feature", "Punctuation")]
-    [InlineData(SyntaxKind.LeftParenthesisToken)]
     [InlineData(SyntaxKind.RightParenthesisToken)]
     [InlineData(SyntaxKind.LessThanToken)]
     [InlineData(SyntaxKind.GreaterThanToken)]
@@ -176,7 +175,7 @@ public class LexerTests
         Assert.Empty(token.Errors());
     }
 
-    [Fact(DisplayName = $"The numeric literal with overflowed should return a {nameof(SyntaxKind.NumericLiteralToken)} with an error")]
+    [Fact(DisplayName = $"The numeric literal with overflowed value should return a {nameof(SyntaxKind.NumericLiteralToken)} with an error")]
     [Trait("Feature", "Literals")]
     public void TestNumericLiteral_IntegerValueWithOverflow_ShouldReturnNumericLiteralToken()
     {
@@ -223,8 +222,32 @@ public class LexerTests
         Assert.Empty(token.Errors());
     }
 
+    [Theory(DisplayName = $"The string literal with should return a {nameof(SyntaxKind.StringLiteralToken)}")]
+    [Trait("Feature", "Literals")]
+    [InlineData("(This is a string)")]
+    [InlineData("(Strings can contain newlines \nand such.)")]
+    [InlineData("(Strings can contain balanced parentheses () \r\nand special characters ( * ! & } ^ %and so on) .)")]
+    [InlineData("(The following is an empty string .)")]
+    [InlineData("()")]
+    [InlineData("(It has zero (0) length.)")]
+    public void TestStringLiteral_ShouldReturnStringLiteralToken(string text)
+    {
+        // Arrange
+        string expectedText = text.TrimStart('(').TrimEnd(')');
+
+        // Act
+        var token = LexToken(text);
+
+        // Assert
+        Assert.NotEqual(default, token);
+        Assert.Equal(SyntaxKind.StringLiteralToken, token.Kind);
+        Assert.Equal(expectedText, token.Text);
+        Assert.Equal(text, token.Value);
+        Assert.Empty(token.Errors());
+    }
+
     [Fact(DisplayName = "Test the PDF comment")]
-    [Trait("Feature", "Comments")]
+    [Trait("Feature", "Literals")]
     public void TestComment_WithoutTrivia_ShouldReturnValidToken()
     {
         // Arrange

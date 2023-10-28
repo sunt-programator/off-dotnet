@@ -42,9 +42,6 @@ public enum SyntaxKind : ushort
     // Trivia
     SingleLineCommentTrivia,
 
-    // Primitives
-    NumericLiteralToken,
-
     // Keywords
     TrueKeyword,
 
@@ -71,5 +68,10 @@ public enum SyntaxKind : ushort
     // Other
     EndOfFileToken,
 
+    // Primitives
     BadToken,
+
+    NumericLiteralToken,
+
+    StringLiteralToken,
 }

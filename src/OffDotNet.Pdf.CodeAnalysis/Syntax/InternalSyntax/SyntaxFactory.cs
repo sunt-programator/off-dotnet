@@ -17,6 +17,11 @@ internal static class SyntaxFactory
         return SyntaxToken.WithValue(SyntaxKind.NumericLiteralToken, leading, text, value, trailing);
     }
 
+    internal static SyntaxToken Literal(SyntaxKind kind, GreenNode? leading, string text, string? value, GreenNode? trailing)
+    {
+        return SyntaxToken.WithValue(kind, leading, text, value ?? string.Empty, trailing);
+    }
+
     internal static SyntaxToken Token(GreenNode? leading, SyntaxKind kind, GreenNode? trailing)
     {
         return SyntaxToken.Create(kind, leading, trailing);
