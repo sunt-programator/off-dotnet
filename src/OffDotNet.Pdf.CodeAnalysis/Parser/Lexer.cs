@@ -3,58 +3,90 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using OffDotNet.Pdf.CodeAnalysis.Errors;
 using OffDotNet.Pdf.CodeAnalysis.Parser;
-using OffDotNet.Pdf.CodeAnalysis.Syntax;
-using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
-namespace OffDotNet.Pdf.CodeAnalysis.Lexer;
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal partial class Lexer
 {
     private readonly InputReader reader;
     private readonly StringBuilder stringBuilder = new();
-    private List<DiagnosticInfo>? errors;
+    private List<SyntaxDiagnosticInfo>? errors;
+    private SyntaxListBuilder leadingTriviaCache = new(10);
+    private readonly SyntaxListBuilder trailingTriviaCache = new(10);
 
     public Lexer(byte[] source)
     {
         this.reader = new InputReader(source);
     }
 
-    public InternalSyntaxToken Lex()
+    public SyntaxToken Lex()
     {
-        TokenInfo tokenInfo = default;
+        var tokenInfo = default(TokenInfo);
+
+        this.LexSyntaxTrivia(triviaList: ref this.leadingTriviaCache);
         this.ScanSyntaxToken(ref tokenInfo);
-        return this.Create(tokenInfo);
+
+        var diagnosticErrors = this.GetErrors(GetFullWidth(this.leadingTriviaCache));
+
+        return Create(in tokenInfo, this.leadingTriviaCache, this.trailingTriviaCache, diagnosticErrors);
     }
 
-    private InternalSyntaxToken Create(TokenInfo info)
+    [SuppressMessage("Roslynator", "RCS1242:Do not pass non-read-only struct by read-only reference.", Justification = "Performance")]
+    private static SyntaxToken Create(in TokenInfo info, SyntaxListBuilder? leading, SyntaxListBuilder? trailing, SyntaxDiagnosticInfo[]? diagnosticErrors)
     {
-        InternalSyntaxToken token;
+        var leadingNode = leading?.ToListNode();
+        var trailingNode = trailing?.ToListNode();
+
+        SyntaxToken token;
         switch (info.Kind)
         {
             case SyntaxKind.NumericLiteralToken:
                 token = info.ValueKind switch
                 {
-                    TokenInfoSpecialKind.Single => InternalSyntaxFactory.Literal(info.Text, info.FloatValue),
-                    TokenInfoSpecialKind.Int32 => InternalSyntaxFactory.Literal(info.Text, info.IntValue),
-                    TokenInfoSpecialKind.None => throw new InvalidOperationException(),
+                    TokenInfoSpecialKind.Single => SyntaxFactory.Literal(leadingNode, info.Text, info.FloatValue, trailingNode),
+                    TokenInfoSpecialKind.Int32 => SyntaxFactory.Literal(leadingNode, info.Text, info.IntValue, trailingNode),
                     _ => throw new InvalidOperationException(),
                 };
                 break;
 
+            case SyntaxKind.EndOfFileToken:
+                token = SyntaxFactory.Token(leadingNode, info.Kind, trailingNode);
+                break;
+            case SyntaxKind.None:
+                token = SyntaxFactory.BadToken(leadingNode, info.Text, trailingNode);
+                break;
             default:
-                token = InternalSyntaxFactory.Create(info.Kind);
+                token = SyntaxFactory.Token(leadingNode, info.Kind, trailingNode);
                 break;
         }
 
-        if (this.errors != null)
+        if (diagnosticErrors != null)
         {
-            token = token.WithDiagnostics(this.errors.ToArray());
+            token = token.WithDiagnosticsGreen(diagnosticErrors);
         }
 
         return token;
+    }
+
+    private static int GetFullWidth(SyntaxListBuilder? builder)
+    {
+        int width = 0;
+
+        if (builder == null)
+        {
+            return width;
+        }
+
+        for (int i = 0; i < builder.Count; i++)
+        {
+            width += builder[i]!.FullWidth;
+        }
+
+        return width;
     }
 
     private void ScanSyntaxToken(ref TokenInfo info)
@@ -62,10 +94,11 @@ internal partial class Lexer
         info.Kind = SyntaxKind.None;
         info.Text = string.Empty;
 
-        byte? peekedByte = this.reader.Peek();
+        byte? peekedByte = this.reader.PeekByte();
 
         if (!peekedByte.HasValue)
         {
+            info.Kind = SyntaxKind.EndOfFileToken;
             return;
         }
 
@@ -127,6 +160,10 @@ internal partial class Lexer
                 break;
             case (>= 0x41 and <= 0x5a) or (>= 0x61 and <= 0x7a): // 'A-Z' or 'a-z'
                 this.TryScanIdentifierOrKeyword(ref info);
+                break;
+            default:
+                this.AddError(MakeError(ErrorCode.ErrorUnexpectedCharacter));
+                info.Text = $"{(char)peekedByte.Value}";
                 break;
         }
     }

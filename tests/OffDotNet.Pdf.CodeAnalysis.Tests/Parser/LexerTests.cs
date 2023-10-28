@@ -24,7 +24,6 @@ public class LexerTests
     [InlineData(SyntaxKind.LeftCurlyBracketToken)]
     [InlineData(SyntaxKind.RightCurlyBracketToken)]
     [InlineData(SyntaxKind.SolidusToken)]
-    [InlineData(SyntaxKind.PercentSignToken)]
     [InlineData(SyntaxKind.LessThanLessThanToken)]
     [InlineData(SyntaxKind.GreaterThanGreaterThanToken)]
     [InlineData(SyntaxKind.PlusToken)]
@@ -210,7 +209,7 @@ public class LexerTests
     [InlineData("xref", SyntaxKind.XRefKeyword)]
     [InlineData("trailer", SyntaxKind.TrailerKeyword)]
     [InlineData("startxref", SyntaxKind.StartXRefKeyword)]
-    public void TestKeywords(string text, SyntaxKind expectedKind)
+    public void TestKeywords_ShouldReturnValidToken(string text, SyntaxKind expectedKind)
     {
         // Arrange
 
@@ -221,13 +220,54 @@ public class LexerTests
         Assert.Equal(expectedKind, token.Kind);
         Assert.Equal(text, token.Text);
         Assert.Equal(text, token.Value);
-        Assert.Equal(text, token.ValueText);
         Assert.Empty(token.Errors());
+    }
+
+    [Fact(DisplayName = "Test the PDF comment")]
+    [Trait("Feature", "Comments")]
+    public void TestComment_WithoutTrivia_ShouldReturnValidToken()
+    {
+        // Arrange
+        const string text = "%comment";
+
+        // Act
+        var token = LexToken(text);
+
+        // Assert
+        Assert.Equal(SyntaxKind.EndOfFileToken, token.Kind);
+        Assert.Equal(text, token.ToFullString());
+        Assert.Empty(token.Errors());
+
+        SyntaxTrivia trivia = token.LeadingTrivia;
+        Assert.Equal(SyntaxKind.SingleLineCommentTrivia, trivia.Kind);
+        Assert.Equal(text, trivia.ToFullString());
+        Assert.Equal(text, trivia.ToString());
+        Assert.Empty(trivia.Errors());
+    }
+
+    [Fact(DisplayName = "Test the bad token")]
+    [Trait("Feature", "BadToken")]
+    public void TestBadInput_ShouldReturnBadToken()
+    {
+        // Arrange
+        string text = $"{(char)255}";
+
+        // Act
+        var token = LexToken(text);
+
+        // Assert
+        Assert.NotEqual(default, token);
+        Assert.Equal(SyntaxKind.BadToken, token.Kind);
+        Assert.Equal(text, token.Text);
+
+        var errors = token.Errors();
+        var error = Assert.Single(errors);
+        Assert.Equal(ErrorCode.ErrorUnexpectedCharacter, error.Code);
     }
 
     private static SyntaxToken LexToken(string source)
     {
-        return LexToken(Encoding.UTF8.GetBytes(source));
+        return LexToken(Encoding.Latin1.GetBytes(source));
     }
 
     private static SyntaxToken LexToken(byte[] source)

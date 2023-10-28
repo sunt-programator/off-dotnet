@@ -9,10 +9,13 @@ namespace OffDotNet.Pdf.CodeAnalysis.Errors;
 
 internal class DiagnosticInfo : IFormattable
 {
-    internal DiagnosticInfo(ErrorCode code)
+    private readonly object[] arguments;
+
+    internal DiagnosticInfo(ErrorCode code, params object[] args)
     {
         this.Code = code;
         this.Severity = code.GetSeverity();
+        this.arguments = args;
     }
 
     public ErrorCode Code { get; }
@@ -20,6 +23,8 @@ internal class DiagnosticInfo : IFormattable
     public string MessageIdentifier => $"PDF{(int)this.Code:D4}";
 
     public DiagnosticSeverity Severity { get; }
+
+    internal object[] Arguments => this.arguments;
 
     public string ToString(IFormatProvider? formatProvider)
     {

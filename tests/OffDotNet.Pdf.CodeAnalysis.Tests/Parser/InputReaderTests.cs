@@ -11,7 +11,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Parser;
 
 public class InputReaderTests
 {
-    [Fact(DisplayName = $"The {nameof(InputReader.Peek)} method should return first character")]
+    [Fact(DisplayName = $"The {nameof(InputReader.PeekByte)} method should return first character")]
     public void InputReader_Peek_ShouldReturnFirstCharacter()
     {
         // Arrange
@@ -19,13 +19,13 @@ public class InputReaderTests
         InputReader inputReader = new(inputBytes);
 
         // Act
-        byte? nextByte = inputReader.Peek();
+        byte? nextByte = inputReader.PeekByte();
 
         // Assert
         Assert.Equal('H', (char)nextByte!);
     }
 
-    [Fact(DisplayName = $"The {nameof(InputReader.Peek)} method accessed multiple times should return same character")]
+    [Fact(DisplayName = $"The {nameof(InputReader.PeekByte)} method accessed multiple times should return same character")]
     public void InputReader_PeekMultipleTimes_ShouldReturnSameCharacter()
     {
         // Arrange
@@ -33,14 +33,14 @@ public class InputReaderTests
         InputReader inputReader = new(inputBytes);
 
         // Act
-        _ = inputReader.Peek();
-        byte? nextByte = inputReader.Peek();
+        _ = inputReader.PeekByte();
+        byte? nextByte = inputReader.PeekByte();
 
         // Assert
         Assert.Equal('H', (char)nextByte!);
     }
 
-    [Fact(DisplayName = $"The {nameof(InputReader.Peek)} method with out of range offset should return false")]
+    [Fact(DisplayName = $"The {nameof(InputReader.PeekByte)} method with out of range offset should return false")]
     public void InputReader_PeekWithOutOfRangeOffset_ShouldReturnFalse()
     {
         // Arrange
@@ -48,13 +48,13 @@ public class InputReaderTests
         InputReader inputReader = new(inputBytes);
 
         // Act
-        byte? nextByte = inputReader.Peek();
+        byte? nextByte = inputReader.PeekByte();
 
         // Assert
         Assert.Null(nextByte);
     }
 
-    [Fact(DisplayName = $"The {nameof(InputReader.Peek)} method should return first character")]
+    [Fact(DisplayName = $"The {nameof(InputReader.PeekByte)} method should return first character")]
     public void InputReader_PeekWithDelta_ShouldReturnNthCharacter()
     {
         // Arrange
@@ -62,12 +62,12 @@ public class InputReaderTests
         InputReader inputReader = new(inputBytes);
 
         // Act
-        byte? nextByte1 = inputReader.Peek(0);
-        byte? nextByte2 = inputReader.Peek(1);
-        byte? nextByte3 = inputReader.Peek(2);
-        byte? nextByte4 = inputReader.Peek(3);
-        byte? nextByte5 = inputReader.Peek(4);
-        byte? nextByte6 = inputReader.Peek(5);
+        byte? nextByte1 = inputReader.PeekByte(0);
+        byte? nextByte2 = inputReader.PeekByte(1);
+        byte? nextByte3 = inputReader.PeekByte(2);
+        byte? nextByte4 = inputReader.PeekByte(3);
+        byte? nextByte5 = inputReader.PeekByte(4);
+        byte? nextByte6 = inputReader.PeekByte(5);
 
         // Assert
         Assert.Equal('H', (char)nextByte1!);
@@ -78,7 +78,7 @@ public class InputReaderTests
         Assert.Equal('!', (char)nextByte6!);
     }
 
-    [Fact(DisplayName = $"The {nameof(InputReader.Peek)} method with out of range delta should return false")]
+    [Fact(DisplayName = $"The {nameof(InputReader.PeekByte)} method with out of range delta should return false")]
     public void InputReader_PeekWithOutOfRangeDelta_ShouldReturnFalse()
     {
         // Arrange
@@ -86,13 +86,13 @@ public class InputReaderTests
         InputReader inputReader = new(inputBytes);
 
         // Act
-        byte? nextByte = inputReader.Peek(6);
+        byte? nextByte = inputReader.PeekByte(6);
 
         // Assert
         Assert.Null(nextByte);
     }
 
-    [Fact(DisplayName = $"The {nameof(InputReader.Peek)} method with negative delta should return false")]
+    [Fact(DisplayName = $"The {nameof(InputReader.PeekByte)} method with negative delta should return false")]
     public void InputReader_PeekWithNegativeDelta_ShouldReturnFalse()
     {
         // Arrange
@@ -100,13 +100,13 @@ public class InputReaderTests
         InputReader inputReader = new(inputBytes);
 
         // Act
-        byte? nextByte = inputReader.Peek(-1);
+        byte? nextByte = inputReader.PeekByte(-1);
 
         // Assert
         Assert.Null(nextByte);
     }
 
-    [Fact(DisplayName = $"The {nameof(InputReader.Consume)} method should return the next character and advance the offset")]
+    [Fact(DisplayName = $"The {nameof(InputReader.ConsumeByte)} method should return the next character and advance the offset")]
     public void InputReader_Consume_ShouldReturnNextCharacterAndAdvanceOffset()
     {
         // Arrange
@@ -114,12 +114,12 @@ public class InputReaderTests
         InputReader inputReader = new(inputBytes);
 
         // Act
-        byte? nextByte1 = inputReader.Consume();
-        byte? nextByte2 = inputReader.Consume();
-        byte? nextByte3 = inputReader.Consume();
-        byte? nextByte4 = inputReader.Consume();
-        byte? nextByte5 = inputReader.Consume();
-        byte? nextByte6 = inputReader.Consume();
+        byte? nextByte1 = inputReader.ConsumeByte();
+        byte? nextByte2 = inputReader.ConsumeByte();
+        byte? nextByte3 = inputReader.ConsumeByte();
+        byte? nextByte4 = inputReader.ConsumeByte();
+        byte? nextByte5 = inputReader.ConsumeByte();
+        byte? nextByte6 = inputReader.ConsumeByte();
 
         // Assert
         Assert.Equal('H', (char)nextByte1!);
@@ -130,7 +130,7 @@ public class InputReaderTests
         Assert.Equal('!', (char)nextByte6!);
     }
 
-    [Fact(DisplayName = $"The {nameof(InputReader.Consume)} method with out of range offset should return false")]
+    [Fact(DisplayName = $"The {nameof(InputReader.ConsumeByte)} method with out of range offset should return false")]
     public void InputReader_ConsumeWithOutOfRangeOffset_ShouldReturnNextCharacterAndAdvanceOffset()
     {
         // Arrange
@@ -138,8 +138,8 @@ public class InputReaderTests
         InputReader inputReader = new(inputBytes);
 
         // Act
-        byte? nextByte1 = inputReader.Consume();
-        byte? nextByte2 = inputReader.Consume();
+        byte? nextByte1 = inputReader.ConsumeByte();
+        byte? nextByte2 = inputReader.ConsumeByte();
 
         // Assert
         Assert.Equal('H', (char)nextByte1!);
@@ -155,7 +155,7 @@ public class InputReaderTests
 
         // Act
         inputReader.AdvanceByte(4);
-        byte? nextByte = inputReader.Peek();
+        byte? nextByte = inputReader.PeekByte();
 
         // Assert
         Assert.Equal('o', (char)nextByte!);

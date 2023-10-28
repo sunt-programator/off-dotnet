@@ -7,9 +7,12 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax;
 
 public readonly struct SyntaxToken
 {
-    internal SyntaxToken(AbstractSyntaxToken token)
+    internal SyntaxToken(SyntaxNode? parent, GreenNode? token, int position, int index)
     {
+        this.Parent = parent;
         this.Node = token;
+        this.Position = position;
+        this.Index = index;
     }
 
     public SyntaxKind Kind => this.Node?.Kind ?? SyntaxKind.None;
@@ -18,12 +21,25 @@ public readonly struct SyntaxToken
 
     public object? Value => this.Node?.Value;
 
-    public string ValueText => this.Node?.ValueText ?? string.Empty;
+    public SyntaxTrivia LeadingTrivia => this.Node != null
+        ? new SyntaxTrivia(this, this.Node.LeadingTrivia, this.Position, 0)
+        : default;
 
-    internal AbstractSyntaxToken? Node { get; }
+    public SyntaxNode? Parent { get; }
+
+    internal GreenNode? Node { get; }
+
+    internal int Index { get; }
+
+    internal int Position { get; }
 
     public override string ToString()
     {
         return this.Node?.ToString() ?? string.Empty;
+    }
+
+    public string ToFullString()
+    {
+        return this.Node?.ToFullString() ?? string.Empty;
     }
 }

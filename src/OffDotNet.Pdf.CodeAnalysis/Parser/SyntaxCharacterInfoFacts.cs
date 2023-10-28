@@ -26,4 +26,14 @@ public static class SyntaxCharacterInfoFacts
     {
         return b is >= 0x41 and <= 0x5a or >= 0x61 and <= 0x7a;
     }
+
+    internal static bool IsNewLine(this byte? b)
+    {
+        return b.HasValue && b.Value.IsNewLine();
+    }
+
+    internal static bool IsNewLine(this byte b)
+    {
+        return b is 0x0A or 0x0D;
+    }
 }

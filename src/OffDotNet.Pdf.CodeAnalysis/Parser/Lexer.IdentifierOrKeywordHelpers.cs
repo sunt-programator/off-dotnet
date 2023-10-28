@@ -4,9 +4,8 @@
 // </copyright>
 
 using OffDotNet.Pdf.CodeAnalysis.Parser;
-using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
-namespace OffDotNet.Pdf.CodeAnalysis.Lexer;
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal partial class Lexer
 {
@@ -28,7 +27,7 @@ internal partial class Lexer
     {
         while (true)
         {
-            byte? peekedByte = this.reader.Peek();
+            byte? peekedByte = this.reader.PeekByte();
 
             if (!peekedByte.HasValue || !peekedByte.IsLetter())
             {

@@ -6,9 +6,8 @@
 using System.Globalization;
 using OffDotNet.Pdf.CodeAnalysis.Errors;
 using OffDotNet.Pdf.CodeAnalysis.Parser;
-using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
-namespace OffDotNet.Pdf.CodeAnalysis.Lexer;
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal partial class Lexer
 {
@@ -40,7 +39,7 @@ internal partial class Lexer
 
     private void ScanNumericLiteralIntegerWithDecimalPoint(ref TokenInfo info)
     {
-        byte? peekedByte = this.reader.Peek();
+        byte? peekedByte = this.reader.PeekByte();
         if (peekedByte != 0x2e)
         {
             return;
@@ -50,7 +49,7 @@ internal partial class Lexer
         this.stringBuilder.Append((char)peekedByte.Value);
         this.reader.AdvanceByte();
 
-        byte? peekedByte2 = this.reader.Peek();
+        byte? peekedByte2 = this.reader.PeekByte();
         if (peekedByte2.HasValue && peekedByte2.Value.IsDecDigit())
         {
             this.ScanNumericLiteralInteger();
@@ -61,7 +60,7 @@ internal partial class Lexer
     {
         while (true)
         {
-            byte? peekedByte = this.reader.Peek();
+            byte? peekedByte = this.reader.PeekByte();
 
             if (!peekedByte.HasValue || !peekedByte.IsDecDigit())
             {

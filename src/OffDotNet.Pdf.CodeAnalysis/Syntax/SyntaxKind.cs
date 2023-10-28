@@ -39,18 +39,8 @@ public enum SyntaxKind : ushort
 
     MinusToken,
 
-    // Whitespaces
-    NullToken,
-
-    HorizontalTabToken,
-
-    LineFeedToken,
-
-    FormFeedToken,
-
-    CarrierReturnToken,
-
-    SpaceToken,
+    // Trivia
+    SingleLineCommentTrivia,
 
     // Primitives
     NumericLiteralToken,
@@ -80,4 +70,6 @@ public enum SyntaxKind : ushort
 
     // Other
     EndOfFileToken,
+
+    BadToken,
 }

@@ -13,7 +13,7 @@ public static class SyntaxExtensions
 {
     internal static ImmutableArray<DiagnosticInfo> Errors(this SyntaxToken token)
     {
-        if (token.Node is not AbstractSyntaxToken abstractSyntaxToken)
+        if (token.Node is not GreenNode abstractSyntaxToken)
         {
             throw new InvalidOperationException("The token is not a syntax token");
         }
@@ -21,7 +21,17 @@ public static class SyntaxExtensions
         return abstractSyntaxToken.ErrorsOrWarnings(errorsOnly: true);
     }
 
-    private static ImmutableArray<DiagnosticInfo> ErrorsOrWarnings(this AbstractSyntaxToken node, bool errorsOnly)
+    internal static ImmutableArray<DiagnosticInfo> Errors(this SyntaxTrivia trivia)
+    {
+        if (trivia.UnderlyingNode is not GreenNode abstractSyntaxToken)
+        {
+            throw new InvalidOperationException("The token is not a syntax token");
+        }
+
+        return abstractSyntaxToken.ErrorsOrWarnings(errorsOnly: true);
+    }
+
+    private static ImmutableArray<DiagnosticInfo> ErrorsOrWarnings(this GreenNode node, bool errorsOnly)
     {
         return node.GetDiagnostics()
             .Where(x => x.Severity == (errorsOnly ? DiagnosticSeverity.Error : DiagnosticSeverity.Warning))

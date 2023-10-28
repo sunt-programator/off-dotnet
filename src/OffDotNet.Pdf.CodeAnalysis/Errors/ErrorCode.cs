@@ -8,4 +8,5 @@ namespace OffDotNet.Pdf.CodeAnalysis.Errors;
 internal enum ErrorCode
 {
     ErrorIntOverflow = 100,
+    ErrorUnexpectedCharacter = 1000,
 }

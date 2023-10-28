@@ -15,7 +15,7 @@ internal sealed class InputReader
         this.source = source;
     }
 
-    public byte? Peek()
+    public byte? PeekByte()
     {
         if (this.offset >= this.source.Length)
         {
@@ -25,7 +25,7 @@ internal sealed class InputReader
         return this.source[this.offset];
     }
 
-    public byte? Peek(int delta)
+    public byte? PeekByte(int delta)
     {
         if (delta < 0 || delta + this.offset >= this.source.Length)
         {
@@ -35,9 +35,9 @@ internal sealed class InputReader
         return this.source[this.offset + delta];
     }
 
-    public byte? Consume()
+    public byte? ConsumeByte()
     {
-        byte? b = this.Peek();
+        byte? b = this.PeekByte();
         if (!b.HasValue)
         {
             return null;
@@ -49,7 +49,7 @@ internal sealed class InputReader
 
     public bool TryAdvanceByte(byte b)
     {
-        if (this.Peek() != b)
+        if (this.PeekByte() != b)
         {
             return false;
         }

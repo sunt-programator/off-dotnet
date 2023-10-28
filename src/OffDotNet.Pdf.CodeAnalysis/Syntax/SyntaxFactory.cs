@@ -7,10 +7,10 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax;
 
 internal static class SyntaxFactory
 {
-    public static IEnumerable<SyntaxToken> ParseTokens(byte[] source)
+    public static IEnumerable<SyntaxToken> ParseTokens(byte[] source, int offset = 0, int initialTokenPosition = 0)
     {
-        Lexer.Lexer lexer = new(source);
+        InternalSyntax.Lexer lexer = new(source);
         var token = lexer.Lex();
-        yield return new SyntaxToken(token);
+        yield return new SyntaxToken(parent: null, token: token, position: 0, index: 0);
     }
 }
