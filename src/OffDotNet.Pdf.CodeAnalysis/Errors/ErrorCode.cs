@@ -9,5 +9,7 @@ internal enum ErrorCode
 {
     ErrorIntOverflow = 100,
     ErrorStringUnbalancedParenthesis,
+    WarnStringEscapeSequenceIncomplete,
+    WarnStringEscapeSequenceInvalid,
     ErrorUnexpectedCharacter = 1000,
 }

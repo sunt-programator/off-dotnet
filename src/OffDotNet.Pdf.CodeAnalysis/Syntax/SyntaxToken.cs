@@ -17,8 +17,20 @@ public readonly struct SyntaxToken
 
     public SyntaxKind Kind => this.Node?.Kind ?? SyntaxKind.None;
 
+    /// <summary>
+    /// Gets the string representation of the token without leading and trailing trivia.
+    /// </summary>
     public string Text => this.ToString();
 
+    /// <summary>
+    /// Gets the string representation of the token including its leading and trailing trivia.
+    /// </summary>
+    public string FullText => this.Node?.ToFullString() ?? string.Empty;
+
+    /// <summary>
+    /// Gets the value of the token.
+    /// </summary>
+    /// <example>If the token is a PDF numeric literal, this property will return the numeric value.</example>
     public object? Value => this.Node?.Value;
 
     public SyntaxTrivia LeadingTrivia => this.Node != null
@@ -33,13 +45,12 @@ public readonly struct SyntaxToken
 
     internal int Position { get; }
 
+    /// <summary>
+    /// Returns the string representation of the token without leading and trailing trivia.
+    /// </summary>
+    /// <returns>The string representation of the token without leading and trailing trivia.</returns>
     public override string ToString()
     {
         return this.Node?.ToString() ?? string.Empty;
-    }
-
-    public string ToFullString()
-    {
-        return this.Node?.ToFullString() ?? string.Empty;
     }
 }

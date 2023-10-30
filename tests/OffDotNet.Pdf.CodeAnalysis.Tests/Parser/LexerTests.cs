@@ -222,18 +222,11 @@ public class LexerTests
         Assert.Empty(token.Errors());
     }
 
-    [Theory(DisplayName = $"The string literal with should return a {nameof(SyntaxKind.StringLiteralToken)}")]
-    [Trait("Feature", "Literals")]
-    [InlineData("(This is a string)")]
-    [InlineData("(Strings can contain newlines \nand such.)")]
-    [InlineData("(Strings can contain balanced parentheses () \r\nand special characters ( * ! & } ^ %and so on) .)")]
-    [InlineData("(The following is an empty string .)")]
-    [InlineData("()")]
-    [InlineData("(It has zero (0) length.)")]
-    public void TestStringLiteral_ShouldReturnStringLiteralToken(string text)
+    [Fact(DisplayName = $"The string literal with unbalanced parentheses should return a {nameof(SyntaxKind.StringLiteralToken)} with an error")]
+    public void TestStringLiteral_WithUnbalancedParentheses_ShouldReturnStringLiteralTokenWithError()
     {
         // Arrange
-        string expectedText = text.TrimStart('(').TrimEnd(')');
+        const string text = "(Some unbalanced (( parentheses in a string)";
 
         // Act
         var token = LexToken(text);
@@ -241,13 +234,71 @@ public class LexerTests
         // Assert
         Assert.NotEqual(default, token);
         Assert.Equal(SyntaxKind.StringLiteralToken, token.Kind);
-        Assert.Equal(expectedText, token.Text);
-        Assert.Equal(text, token.Value);
-        Assert.Empty(token.Errors());
+        Assert.Equal(text, token.Text);
+        var errors = token.Errors();
+        var error = Assert.Single(errors);
+        Assert.Equal(ErrorCode.ErrorStringUnbalancedParenthesis, error.Code);
+    }
+
+    [Fact(DisplayName = $"The string literal with invalid character after solidus should return a {nameof(SyntaxKind.StringLiteralToken)} with a warning")]
+    public void TestStringLiteral_WithInvalidCharacterAfterSolidus_ShouldReturnStringLiteralTokenWithError()
+    {
+        // Arrange
+        const string text = "(Ignore \\zz reverse solidus character)";
+        const string value = "Ignore zz reverse solidus character";
+
+        // Act
+        var token = LexToken(text);
+
+        // Assert
+        Assert.NotEqual(default, token);
+        Assert.Equal(SyntaxKind.StringLiteralToken, token.Kind);
+        Assert.Equal(text, token.Text);
+        Assert.Equal(value, token.Value);
+        var errors = token.Errors();
+        var error = Assert.Single(errors);
+        Assert.Equal(ErrorCode.WarnStringEscapeSequenceInvalid, error.Code);
+    }
+
+    [Theory(DisplayName = $"The string literal with escape characters should return a {nameof(SyntaxKind.StringLiteralToken)}")]
+    [Trait("Feature", "Literals")]
+    [InlineData("(This is a string)", "This is a string")]
+    [InlineData("(Strings can contain newlines \nand such.)", "Strings can contain newlines \nand such.")]
+    [InlineData("(Strings can contain balanced parentheses ())", "Strings can contain balanced parentheses ()")]
+    [InlineData("(Strings can contain special characters ( * ! & } ^ %and so on) .)", "Strings can contain special characters ( * ! & } ^ %and so on) .")]
+    [InlineData("()", "")]
+    [InlineData("(String with \\r escape character)", "String with \r escape character")]
+    [InlineData("(String with \\n escape character)", "String with \n escape character")]
+    [InlineData("(String with \\t escape character)", "String with \t escape character")]
+    [InlineData("(String with \\b escape character)", "String with \b escape character")]
+    [InlineData("(String with \\f escape character)", "String with \f escape character")]
+    [InlineData("(String with \\( escape character)", "String with ( escape character")]
+    [InlineData("(String with \\) escape character)", "String with ) escape character")]
+    [InlineData("(Inline string with solidus and\\\r end-of-line marker)", "Inline string with solidus and end-of-line marker")]
+    [InlineData("(Inline string with solidus and\\\n end-of-line marker)", "Inline string with solidus and end-of-line marker")]
+    [InlineData("(Inline string with solidus and\\\r\n end-of-line marker)", "Inline string with solidus and end-of-line marker")]
+    [InlineData("(Treat \n end-of-line maker as \\n)", "Treat \n end-of-line maker as \n")]
+    [InlineData("(Treat \r end-of-line maker as \\n)", "Treat \r end-of-line maker as \n")]
+    [InlineData("(Treat \r\n end-of-line maker as \\n)", "Treat \n end-of-line maker as \n")]
+    [InlineData("(Treat \\105 octal character as 'E')", "Treat E octal character as 'E'")]
+    [InlineData("(Treat \\12 octal character as '\n')", "Treat \n octal character as '\n'")]
+    [InlineData("(Ignore \\400 octal character as it the high-order overflow case)", "Ignore  octal character as it the high-order overflow case")]
+    public void TestStringLiteral_WithEscapeCharacters_ShouldReturnStringLiteralToken(string text, string expectedValue)
+    {
+        // Arrange
+
+        // Act
+        var token = LexToken(text);
+
+        // Assert
+        Assert.NotEqual(default, token);
+        Assert.Equal(SyntaxKind.StringLiteralToken, token.Kind);
+        Assert.Equal(text, token.Text);
+        Assert.Equal(expectedValue, token.Value);
     }
 
     [Fact(DisplayName = "Test the PDF comment")]
-    [Trait("Feature", "Literals")]
+    [Trait("Feature", "Comments")]
     public void TestComment_WithoutTrivia_ShouldReturnValidToken()
     {
         // Arrange
@@ -258,7 +309,7 @@ public class LexerTests
 
         // Assert
         Assert.Equal(SyntaxKind.EndOfFileToken, token.Kind);
-        Assert.Equal(text, token.ToFullString());
+        Assert.Equal(text, token.FullText);
         Assert.Empty(token.Errors());
 
         SyntaxTrivia trivia = token.LeadingTrivia;

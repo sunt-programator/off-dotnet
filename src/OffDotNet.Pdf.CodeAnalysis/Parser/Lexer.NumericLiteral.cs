@@ -39,7 +39,7 @@ internal partial class Lexer
 
     private void ScanNumericLiteralIntegerWithDecimalPoint(ref TokenInfo info)
     {
-        byte? peekedByte = this.reader.PeekByte();
+        byte? peekedByte = this.textWindow.PeekByte();
         if (peekedByte != 0x2e)
         {
             return;
@@ -47,9 +47,9 @@ internal partial class Lexer
 
         info.ValueKind = TokenInfoSpecialKind.Single;
         this.stringBuilder.Append((char)peekedByte.Value);
-        this.reader.AdvanceByte();
+        this.textWindow.AdvanceByte();
 
-        byte? peekedByte2 = this.reader.PeekByte();
+        byte? peekedByte2 = this.textWindow.PeekByte();
         if (peekedByte2.HasValue && peekedByte2.Value.IsDecDigit())
         {
             this.ScanNumericLiteralInteger();
@@ -60,7 +60,7 @@ internal partial class Lexer
     {
         while (true)
         {
-            byte? peekedByte = this.reader.PeekByte();
+            byte? peekedByte = this.textWindow.PeekByte();
 
             if (!peekedByte.HasValue || !peekedByte.IsDecDigit())
             {
@@ -68,7 +68,7 @@ internal partial class Lexer
             }
 
             this.stringBuilder.Append((char)peekedByte.Value);
-            this.reader.AdvanceByte();
+            this.textWindow.AdvanceByte();
         }
     }
 

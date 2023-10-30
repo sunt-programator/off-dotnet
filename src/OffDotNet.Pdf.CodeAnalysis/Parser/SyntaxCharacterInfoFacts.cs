@@ -17,6 +17,16 @@ public static class SyntaxCharacterInfoFacts
         return b is >= 0x30 and <= 0x39;
     }
 
+    internal static bool IsOctDigit(this byte? b)
+    {
+        return b.HasValue && b.Value.IsOctDigit();
+    }
+
+    internal static bool IsOctDigit(this byte b)
+    {
+        return b is >= 0x30 and <= 0x37;
+    }
+
     internal static bool IsLetter(this byte? b)
     {
         return b.HasValue && b.Value.IsLetter();

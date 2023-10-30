@@ -27,7 +27,7 @@ internal partial class Lexer
     {
         while (true)
         {
-            byte? peekedByte = this.reader.PeekByte();
+            byte? peekedByte = this.textWindow.PeekByte();
 
             if (!peekedByte.HasValue || !peekedByte.IsLetter())
             {
@@ -35,7 +35,7 @@ internal partial class Lexer
             }
 
             this.stringBuilder.Append((char)peekedByte.Value);
-            this.reader.AdvanceByte();
+            this.textWindow.AdvanceByte();
         }
     }
 }

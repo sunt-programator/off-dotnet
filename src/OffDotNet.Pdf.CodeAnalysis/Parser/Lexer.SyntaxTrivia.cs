@@ -4,7 +4,6 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
-using OffDotNet.Pdf.CodeAnalysis.Parser;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
@@ -19,7 +18,7 @@ internal partial class Lexer
 
         while (true)
         {
-            byte? peekedByte = this.reader.PeekByte();
+            byte? peekedByte = this.textWindow.PeekByte();
 
             switch (peekedByte)
             {
@@ -42,21 +41,5 @@ internal partial class Lexer
 
         list ??= new SyntaxListBuilder(TriviaListInitialCapacity);
         list.Add(trivia);
-    }
-
-    private void ScanToEndOfLine()
-    {
-        while (true)
-        {
-            byte? peekedByte = this.reader.PeekByte();
-
-            if (!peekedByte.HasValue || peekedByte.IsNewLine())
-            {
-                break;
-            }
-
-            this.stringBuilder.Append((char)peekedByte.Value);
-            this.reader.AdvanceByte();
-        }
     }
 }

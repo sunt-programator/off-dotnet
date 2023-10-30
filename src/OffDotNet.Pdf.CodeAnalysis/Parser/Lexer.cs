@@ -10,9 +10,9 @@ using OffDotNet.Pdf.CodeAnalysis.Parser;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
-internal partial class Lexer
+internal partial class Lexer : IDisposable
 {
-    private readonly InputReader reader;
+    private readonly SlidingTextWindow textWindow;
     private readonly StringBuilder stringBuilder = new();
     private readonly SyntaxListBuilder trailingTriviaCache = new(10);
     private List<SyntaxDiagnosticInfo>? errors;
@@ -20,7 +20,12 @@ internal partial class Lexer
 
     public Lexer(byte[] source)
     {
-        this.reader = new InputReader(source);
+        this.textWindow = new SlidingTextWindow(source);
+    }
+
+    public void Dispose()
+    {
+        this.textWindow.Dispose();
     }
 
     public SyntaxToken Lex()
@@ -97,7 +102,7 @@ internal partial class Lexer
         info.Kind = SyntaxKind.None;
         info.Text = string.Empty;
 
-        byte? peekedByte = this.reader.PeekByte();
+        byte? peekedByte = this.textWindow.PeekByte();
 
         if (!peekedByte.HasValue)
         {
@@ -114,47 +119,47 @@ internal partial class Lexer
                 this.ScanStringLiteral(ref info);
                 break;
             case 0x29: // ')'
-                this.reader.AdvanceByte();
+                this.textWindow.AdvanceByte();
                 info.Kind = SyntaxKind.RightParenthesisToken;
                 break;
             case 0x3c: // '<'
-                this.reader.AdvanceByte();
-                info.Kind = this.reader.TryAdvanceByte(0x3c) ? SyntaxKind.LessThanLessThanToken : SyntaxKind.LessThanToken; // '<<' or '<'
+                this.textWindow.AdvanceByte();
+                info.Kind = this.textWindow.TryAdvanceByte(0x3c) ? SyntaxKind.LessThanLessThanToken : SyntaxKind.LessThanToken; // '<<' or '<'
                 break;
             case 0x3e: // '>'
-                this.reader.AdvanceByte();
-                info.Kind = this.reader.TryAdvanceByte(0x3e) ? SyntaxKind.GreaterThanGreaterThanToken : SyntaxKind.GreaterThanToken; // '>>' or '>'
+                this.textWindow.AdvanceByte();
+                info.Kind = this.textWindow.TryAdvanceByte(0x3e) ? SyntaxKind.GreaterThanGreaterThanToken : SyntaxKind.GreaterThanToken; // '>>' or '>'
                 break;
             case 0x5b: // '['
-                this.reader.AdvanceByte();
+                this.textWindow.AdvanceByte();
                 info.Kind = SyntaxKind.LeftSquareBracketToken;
                 break;
             case 0x5d: // ']'
-                this.reader.AdvanceByte();
+                this.textWindow.AdvanceByte();
                 info.Kind = SyntaxKind.RightSquareBracketToken;
                 break;
             case 0x7b: // '{'
-                this.reader.AdvanceByte();
+                this.textWindow.AdvanceByte();
                 info.Kind = SyntaxKind.LeftCurlyBracketToken;
                 break;
             case 0x7d: // '}'
-                this.reader.AdvanceByte();
+                this.textWindow.AdvanceByte();
                 info.Kind = SyntaxKind.RightCurlyBracketToken;
                 break;
             case 0x2f: // '/'
-                this.reader.AdvanceByte();
+                this.textWindow.AdvanceByte();
                 info.Kind = SyntaxKind.SolidusToken;
                 break;
             case 0x25: // '%'
-                this.reader.AdvanceByte();
+                this.textWindow.AdvanceByte();
                 info.Kind = SyntaxKind.PercentSignToken;
                 break;
             case 0x2b: // '+'
-                this.reader.AdvanceByte();
+                this.textWindow.AdvanceByte();
                 info.Kind = SyntaxKind.PlusToken;
                 break;
             case 0x2d: // '-'
-                this.reader.AdvanceByte();
+                this.textWindow.AdvanceByte();
                 info.Kind = SyntaxKind.MinusToken;
                 break;
             case >= 0x30 and <= 0x39: // '0-9'
@@ -167,6 +172,22 @@ internal partial class Lexer
                 this.AddError(MakeError(ErrorCode.ErrorUnexpectedCharacter));
                 info.Text = $"{(char)peekedByte.Value}";
                 break;
+        }
+    }
+
+    private void ScanToEndOfLine()
+    {
+        while (true)
+        {
+            byte? peekedByte = this.textWindow.PeekByte();
+
+            if (!peekedByte.HasValue || peekedByte.IsNewLine())
+            {
+                break;
+            }
+
+            this.stringBuilder.Append((char)peekedByte.Value);
+            this.textWindow.AdvanceByte();
         }
     }
 }

@@ -25,7 +25,7 @@ public readonly struct SyntaxTrivia
 
     internal int Index { get; }
 
-    public IEnumerable<char> ToFullString()
+    public string ToFullString()
     {
         return this.UnderlyingNode?.ToFullString() ?? string.Empty;
     }
