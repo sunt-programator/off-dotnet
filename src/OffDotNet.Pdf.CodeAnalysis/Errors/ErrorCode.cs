@@ -11,5 +11,8 @@ internal enum ErrorCode
     ErrorStringUnbalancedParenthesis,
     WarnStringEscapeSequenceIncomplete,
     WarnStringEscapeSequenceInvalid,
+    WarningStringOverflowOctValue,
+    ErrorNameNullCharacterNotAllowed,
+    ErrorNameHexSequenceIncomplete,
     ErrorUnexpectedCharacter = 1000,
 }

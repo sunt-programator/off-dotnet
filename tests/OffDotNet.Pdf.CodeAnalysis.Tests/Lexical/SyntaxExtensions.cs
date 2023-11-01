@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using OffDotNet.Pdf.CodeAnalysis.Errors;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
-namespace OffDotNet.Pdf.CodeAnalysis.Tests.Parser;
+namespace OffDotNet.Pdf.CodeAnalysis.Tests.Lexical;
 
 public static class SyntaxExtensions
 {

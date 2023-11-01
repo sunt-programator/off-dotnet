@@ -125,11 +125,13 @@ internal partial class Lexer
         byte? peekedByte = this.textWindow.PeekByte();
         Debug.Assert(peekedByte is >= 0x30 and <= 0x37, "Octal escape sequence must start with digit.");
 
-        ArrayPool<byte> arrayPool = ArrayPool<byte>.Shared;
-        byte[] bytes = arrayPool.Rent(3);
-
+        const int maxOctDigits = 3;
         int i;
-        for (i = 0; i < bytes.Length; i++)
+
+        ArrayPool<byte> arrayPool = ArrayPool<byte>.Shared;
+        byte[] bytes = arrayPool.Rent(maxOctDigits);
+
+        for (i = 0; i < maxOctDigits; i++)
         {
             peekedByte = this.textWindow.PeekByte(i);
 
@@ -147,6 +149,7 @@ internal partial class Lexer
 
         if (decValue > 255)
         {
+            this.AddError(MakeError(ErrorCode.WarningStringOverflowOctValue));
             this.textWindow.AdvanceByte(i);
             return null;
         }

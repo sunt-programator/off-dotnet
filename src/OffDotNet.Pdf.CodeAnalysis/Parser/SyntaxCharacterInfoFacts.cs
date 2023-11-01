@@ -27,6 +27,16 @@ public static class SyntaxCharacterInfoFacts
         return b is >= 0x30 and <= 0x37;
     }
 
+    internal static bool IsHexDigit(this byte? b)
+    {
+        return b.HasValue && b.Value.IsHexDigit();
+    }
+
+    internal static bool IsHexDigit(this byte b)
+    {
+        return b.IsDecDigit() || b is >= 0x41 and <= 0x46 or >= 0x61 and <= 0x66;
+    }
+
     internal static bool IsLetter(this byte? b)
     {
         return b.HasValue && b.Value.IsLetter();

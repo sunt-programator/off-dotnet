@@ -74,4 +74,6 @@ public enum SyntaxKind : ushort
     NumericLiteralToken,
 
     StringLiteralToken,
+
+    NameLiteralToken,
 }

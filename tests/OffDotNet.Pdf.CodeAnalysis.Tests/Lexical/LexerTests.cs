@@ -9,7 +9,7 @@ using OffDotNet.Pdf.CodeAnalysis.Errors;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using Xunit;
 
-namespace OffDotNet.Pdf.CodeAnalysis.Tests.Parser;
+namespace OffDotNet.Pdf.CodeAnalysis.Tests.Lexical;
 
 public class LexerTests
 {
@@ -22,7 +22,6 @@ public class LexerTests
     [InlineData(SyntaxKind.RightSquareBracketToken)]
     [InlineData(SyntaxKind.LeftCurlyBracketToken)]
     [InlineData(SyntaxKind.RightCurlyBracketToken)]
-    [InlineData(SyntaxKind.SolidusToken)]
     [InlineData(SyntaxKind.LessThanLessThanToken)]
     [InlineData(SyntaxKind.GreaterThanGreaterThanToken)]
     [InlineData(SyntaxKind.PlusToken)]
@@ -295,6 +294,74 @@ public class LexerTests
         Assert.Equal(SyntaxKind.StringLiteralToken, token.Kind);
         Assert.Equal(text, token.Text);
         Assert.Equal(expectedValue, token.Value);
+    }
+
+    [Theory(DisplayName = $"The name literal should return a {nameof(SyntaxKind.NameLiteralToken)}")]
+    [Trait("Feature", "Literals")]
+    [InlineData("/Name1", "Name1")]
+    [InlineData("/ASomewhatLongerName", "ASomewhatLongerName")]
+    [InlineData("/A;Name_With-Various***Characters?", "A;Name_With-Various***Characters?")]
+    [InlineData("/1.2", "1.2")]
+    [InlineData("/$$", "$$")]
+    [InlineData("/@pattern", "@pattern")]
+    [InlineData("/.notdef", ".notdef")]
+    [InlineData("/Lime#20Green", "Lime Green")]
+    [InlineData("/paired#28#29parentheses", "paired()parentheses")]
+    [InlineData("/The_Key_of_F#23_Minor", "The_Key_of_F#_Minor")]
+    [InlineData("/A#42", "AB")]
+    public void TestNameLiteral_ShouldReturnStringLiteralToken(string text, string expectedValue)
+    {
+        // Arrange
+
+        // Act
+        var token = LexToken(text);
+
+        // Assert
+        Assert.NotEqual(default, token);
+        Assert.Equal(SyntaxKind.NameLiteralToken, token.Kind);
+        Assert.Equal(text, token.Text);
+        Assert.Equal(expectedValue, token.Value);
+    }
+
+    [Theory(DisplayName = $"The name literal with invalid null character should return a {nameof(SyntaxKind.StringLiteralToken)} with an error")]
+    [InlineData("/\0", "")]
+    [InlineData("/Name1\0", "Name1")]
+    [InlineData("/Name1#0", "Name1")]
+    public void TestNameLiteral_WithNullCharacter_ShouldReturnNameLiteralTokenWithError(string text, string expectedValue)
+    {
+        // Arrange
+
+        // Act
+        var token = LexToken(text);
+
+        // Assert
+        Assert.NotEqual(default, token);
+        Assert.Equal(SyntaxKind.NameLiteralToken, token.Kind);
+        Assert.Equal(text, token.Text);
+        Assert.Equal(expectedValue, token.Value);
+        var errors = token.Errors();
+        var error = Assert.Single(errors);
+        Assert.Equal(ErrorCode.ErrorNameNullCharacterNotAllowed, error.Code);
+    }
+
+    [Fact(DisplayName = $"The name literal with invalid hex sequence after number sign should return a {nameof(SyntaxKind.StringLiteralToken)} with an error")]
+    public void TestNameLiteral_WithInvalidHexSequence_ShouldReturnNameLiteralTokenWithError()
+    {
+        // Arrange
+        const string text = "/Name#";
+        const string expectedValue = "Name";
+
+        // Act
+        var token = LexToken(text);
+
+        // Assert
+        Assert.NotEqual(default, token);
+        Assert.Equal(SyntaxKind.NameLiteralToken, token.Kind);
+        Assert.Equal(text, token.Text);
+        Assert.Equal(expectedValue, token.Value);
+        var errors = token.Errors();
+        var error = Assert.Single(errors);
+        Assert.Equal(ErrorCode.ErrorNameHexSequenceIncomplete, error.Code);
     }
 
     [Fact(DisplayName = "Test the PDF comment")]

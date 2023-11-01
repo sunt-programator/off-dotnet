@@ -55,11 +55,6 @@ internal sealed class SlidingTextWindow : IDisposable
     public byte? NextByte()
     {
         byte? b = this.PeekByte();
-        if (!b.HasValue)
-        {
-            return null;
-        }
-
         this.AdvanceByte();
         return b;
     }
@@ -67,11 +62,6 @@ internal sealed class SlidingTextWindow : IDisposable
     public byte? NextByte(int delta)
     {
         byte? b = this.PeekByte(delta);
-        if (!b.HasValue)
-        {
-            return null;
-        }
-
         this.AdvanceByte(delta);
         return b;
     }

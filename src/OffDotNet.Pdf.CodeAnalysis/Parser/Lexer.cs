@@ -59,6 +59,7 @@ internal partial class Lexer : IDisposable
                 break;
 
             case SyntaxKind.StringLiteralToken:
+            case SyntaxKind.NameLiteralToken:
                 token = SyntaxFactory.Literal(info.Kind, leadingNode, info.Text, info.StringValue, trailingNode);
                 break;
             case SyntaxKind.EndOfFileToken:
@@ -147,8 +148,7 @@ internal partial class Lexer : IDisposable
                 info.Kind = SyntaxKind.RightCurlyBracketToken;
                 break;
             case 0x2f: // '/'
-                this.textWindow.AdvanceByte();
-                info.Kind = SyntaxKind.SolidusToken;
+                this.ScanNameLiteral(ref info);
                 break;
             case 0x25: // '%'
                 this.textWindow.AdvanceByte();
