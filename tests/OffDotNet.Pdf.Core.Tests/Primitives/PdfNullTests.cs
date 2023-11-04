@@ -4,7 +4,6 @@
 // </copyright>
 
 using OffDotNet.Pdf.Core.Primitives;
-using Xunit;
 
 namespace OffDotNet.Pdf.Core.Tests.Primitives;
 

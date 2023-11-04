@@ -4,14 +4,12 @@
 // </copyright>
 
 using System.Collections.Immutable;
-using System.Text;
 using OffDotNet.Pdf.Core.CommonDataStructures;
 using OffDotNet.Pdf.Core.ContentStreamAndResources;
 using OffDotNet.Pdf.Core.DocumentStructure;
 using OffDotNet.Pdf.Core.FileStructure;
 using OffDotNet.Pdf.Core.Primitives;
 using OffDotNet.Pdf.Core.Text.Fonts;
-using Xunit;
 
 namespace OffDotNet.Pdf.Document.Tests;
 

@@ -3,11 +3,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using NSubstitute;
 using OffDotNet.Pdf.Core.ContentStreamAndResources;
 using OffDotNet.Pdf.Core.Primitives;
 using OffDotNet.Pdf.Core.Text.Fonts;
-using Xunit;
 
 namespace OffDotNet.Pdf.Core.Tests.ContentStreamAndResources;
 

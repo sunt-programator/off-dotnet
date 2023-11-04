@@ -5,7 +5,6 @@
 
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Primitives;
-using Xunit;
 
 namespace OffDotNet.Pdf.Core.Tests.Primitives;
 

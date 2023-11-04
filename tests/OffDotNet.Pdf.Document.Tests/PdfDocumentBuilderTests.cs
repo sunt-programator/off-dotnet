@@ -3,9 +3,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System.Text;
-using Xunit;
-
 namespace OffDotNet.Pdf.Document.Tests;
 
 public class PdfDocumentBuilderTests

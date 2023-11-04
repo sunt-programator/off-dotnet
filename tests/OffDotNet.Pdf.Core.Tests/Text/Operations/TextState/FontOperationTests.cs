@@ -6,7 +6,6 @@
 using OffDotNet.Pdf.Core.Primitives;
 using OffDotNet.Pdf.Core.Properties;
 using OffDotNet.Pdf.Core.Text.Operations.TextState;
-using Xunit;
 
 namespace OffDotNet.Pdf.Core.Tests.Text.Operations.TextState;
 

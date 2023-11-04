@@ -8,7 +8,6 @@ using OffDotNet.Pdf.Core.Text;
 using OffDotNet.Pdf.Core.Text.Operations.TextPosition;
 using OffDotNet.Pdf.Core.Text.Operations.TextShowing;
 using OffDotNet.Pdf.Core.Text.Operations.TextState;
-using Xunit;
 
 namespace OffDotNet.Pdf.Core.Tests.Text;
 

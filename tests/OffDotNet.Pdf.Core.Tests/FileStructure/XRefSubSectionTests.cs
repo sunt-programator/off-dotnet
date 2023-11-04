@@ -6,7 +6,6 @@
 using System.Diagnostics;
 using OffDotNet.Pdf.Core.FileStructure;
 using OffDotNet.Pdf.Core.Properties;
-using Xunit;
 
 namespace OffDotNet.Pdf.Core.Tests.FileStructure;
 

@@ -5,7 +5,6 @@
 
 using OffDotNet.Pdf.Core.Primitives;
 using OffDotNet.Pdf.Core.Text.Operations.TextPosition;
-using Xunit;
 
 namespace OffDotNet.Pdf.Core.Tests.Text.Operations.TextPosition;
 

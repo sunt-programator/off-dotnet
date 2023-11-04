@@ -3,10 +3,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using NSubstitute;
 using OffDotNet.Pdf.Core.DocumentStructure;
 using OffDotNet.Pdf.Core.Primitives;
-using Xunit;
 
 namespace OffDotNet.Pdf.Core.Tests.DocumentStructure;
 

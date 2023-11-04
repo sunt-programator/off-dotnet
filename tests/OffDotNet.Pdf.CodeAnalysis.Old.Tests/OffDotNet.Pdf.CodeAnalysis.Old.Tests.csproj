@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>OffDotNet.Pdf.CodeAnalysis.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\OffDotNet.Pdf.CodeAnalysis.Old\OffDotNet.Pdf.CodeAnalysis.Old.csproj" />
+  </ItemGroup>
+
+</Project>

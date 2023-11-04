@@ -4,13 +4,11 @@
 // </copyright>
 
 using System.Diagnostics;
-using NSubstitute;
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.DocumentStructure;
 using OffDotNet.Pdf.Core.FileStructure;
 using OffDotNet.Pdf.Core.Primitives;
 using OffDotNet.Pdf.Core.Properties;
-using Xunit;
 
 namespace OffDotNet.Pdf.Core.Tests.FileStructure;
 

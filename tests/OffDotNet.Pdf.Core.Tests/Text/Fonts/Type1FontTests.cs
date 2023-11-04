@@ -4,7 +4,6 @@
 // </copyright>
 
 using OffDotNet.Pdf.Core.Text.Fonts;
-using Xunit;
 
 namespace OffDotNet.Pdf.Core.Tests.Text.Fonts;
 
