@@ -7,7 +7,6 @@
 // ReSharper disable RedundantUsingDirective.Global
 #pragma warning restore SA1512
 
-global using System.Globalization;
 global using System.Text;
 global using NSubstitute;
 global using Xunit;

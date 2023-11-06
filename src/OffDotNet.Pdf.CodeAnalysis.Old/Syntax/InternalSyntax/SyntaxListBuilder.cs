@@ -4,6 +4,7 @@
 // </copyright>
 
 using System.Diagnostics;
+using OffDotNet.Pdf.CodeAnalysis.Old.Collections;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Old.Syntax.InternalSyntax;
 

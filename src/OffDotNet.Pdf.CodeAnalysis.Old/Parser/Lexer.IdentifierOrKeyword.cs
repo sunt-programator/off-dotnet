@@ -3,9 +3,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using OffDotNet.Pdf.CodeAnalysis.Old.Parser;
+using OffDotNet.Pdf.CodeAnalysis.Old.Syntax;
 
-namespace OffDotNet.Pdf.CodeAnalysis.Old.Syntax.InternalSyntax;
+namespace OffDotNet.Pdf.CodeAnalysis.Old.Parser;
 
 internal partial class Lexer
 {

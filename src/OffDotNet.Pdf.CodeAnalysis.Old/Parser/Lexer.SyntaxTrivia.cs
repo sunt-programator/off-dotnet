@@ -4,8 +4,11 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
+using OffDotNet.Pdf.CodeAnalysis.Old.Syntax;
+using OffDotNet.Pdf.CodeAnalysis.Old.Syntax.InternalSyntax;
+using SyntaxFactory = OffDotNet.Pdf.CodeAnalysis.Old.Syntax.InternalSyntax.SyntaxFactory;
 
-namespace OffDotNet.Pdf.CodeAnalysis.Old.Syntax.InternalSyntax;
+namespace OffDotNet.Pdf.CodeAnalysis.Old.Parser;
 
 internal partial class Lexer
 {

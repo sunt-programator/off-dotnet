@@ -5,7 +5,7 @@
 
 using System.Diagnostics;
 
-namespace OffDotNet.Pdf.CodeAnalysis;
+namespace OffDotNet.Pdf.CodeAnalysis.Old.Collections;
 
 [DebuggerDisplay("{Value,nq}")]
 internal struct ArrayElement<T>

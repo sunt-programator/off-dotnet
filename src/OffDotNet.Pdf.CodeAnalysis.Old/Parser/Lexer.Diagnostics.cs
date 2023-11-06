@@ -5,7 +5,7 @@
 
 using OffDotNet.Pdf.CodeAnalysis.Old.Errors;
 
-namespace OffDotNet.Pdf.CodeAnalysis.Old.Syntax.InternalSyntax;
+namespace OffDotNet.Pdf.CodeAnalysis.Old.Parser;
 
 internal partial class Lexer
 {

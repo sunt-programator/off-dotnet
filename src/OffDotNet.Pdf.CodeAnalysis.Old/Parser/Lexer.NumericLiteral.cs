@@ -5,9 +5,9 @@
 
 using System.Globalization;
 using OffDotNet.Pdf.CodeAnalysis.Old.Errors;
-using OffDotNet.Pdf.CodeAnalysis.Old.Parser;
+using OffDotNet.Pdf.CodeAnalysis.Old.Syntax;
 
-namespace OffDotNet.Pdf.CodeAnalysis.Old.Syntax.InternalSyntax;
+namespace OffDotNet.Pdf.CodeAnalysis.Old.Parser;
 
 internal partial class Lexer
 {
