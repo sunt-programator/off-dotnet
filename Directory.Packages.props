@@ -31,7 +31,7 @@
     </ItemGroup>
     <!-- Benchmarking packages -->
     <ItemGroup>
-        <PackageVersion Include="BenchmarkDotNet" Version="0.13.9"/>
-        <PackageVersion Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.9"/>
+        <PackageVersion Include="BenchmarkDotNet" Version="0.13.10"/>
+        <PackageVersion Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.10"/>
     </ItemGroup>
 </Project>
