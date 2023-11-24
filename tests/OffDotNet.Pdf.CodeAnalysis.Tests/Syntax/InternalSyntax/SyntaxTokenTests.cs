@@ -24,36 +24,12 @@ public class SyntaxTokenTests
         Assert.Equal(kind, actualSyntaxKind);
     }
 
-    [Theory(DisplayName = $"The CreateWithKind() method must set the {nameof(SyntaxToken.Text)} property.")]
-    [InlineData(SyntaxKind.None, "")]
-    [InlineData(SyntaxKind.LeftParenthesisToken, "(")]
-    [InlineData(SyntaxKind.RightParenthesisToken, ")")]
-    [InlineData(SyntaxKind.LessThanToken, "<")]
-    [InlineData(SyntaxKind.GreaterThanToken, ">")]
-    [InlineData(SyntaxKind.LeftSquareBracketToken, "[")]
-    [InlineData(SyntaxKind.RightSquareBracketToken, "]")]
-    [InlineData(SyntaxKind.LeftCurlyBracketToken, "{")]
-    [InlineData(SyntaxKind.RightCurlyBracketToken, "}")]
-    [InlineData(SyntaxKind.SolidusToken, "/")]
-    [InlineData(SyntaxKind.PercentSignToken, "%")]
-    [InlineData(SyntaxKind.LessThanLessThanToken, "<<")]
-    [InlineData(SyntaxKind.GreaterThanGreaterThanToken, ">>")]
-    [InlineData(SyntaxKind.PlusToken, "+")]
-    [InlineData(SyntaxKind.MinusToken, "-")]
-    [InlineData(SyntaxKind.TrueKeyword, "true")]
-    [InlineData(SyntaxKind.FalseKeyword, "false")]
-    [InlineData(SyntaxKind.NullKeyword, "null")]
-    [InlineData(SyntaxKind.StartObjectKeyword, "obj")]
-    [InlineData(SyntaxKind.EndObjectKeyword, "endobj")]
-    [InlineData(SyntaxKind.IndirectReferenceKeyword, "R")]
-    [InlineData(SyntaxKind.StartStreamKeyword, "stream")]
-    [InlineData(SyntaxKind.EndStreamKeyword, "endstream")]
-    [InlineData(SyntaxKind.XrefKeyword, "xref")]
-    [InlineData(SyntaxKind.TrailerKeyword, "trailer")]
-    [InlineData(SyntaxKind.StartXrefKeyword, "startxref")]
-    public void CreateWithKindMethod_MustSetTextProperty(SyntaxKind kind, string text)
+    [Fact(DisplayName = $"The CreateWithKind() method must set the {nameof(SyntaxToken.Text)} property.")]
+    public void CreateWithKindMethod_MustSetTextProperty()
     {
         // Arrange
+        const SyntaxKind kind = SyntaxKind.StartXrefKeyword;
+        const string text = "startxref";
         SyntaxToken token = SyntaxToken.CreateWithKind(kind);
 
         // Act

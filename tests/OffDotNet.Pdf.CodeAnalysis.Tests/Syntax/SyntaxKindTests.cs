@@ -37,6 +37,8 @@ public class SyntaxKindTests
     [InlineData(SyntaxKind.StartXrefKeyword, 8309)]
     [InlineData(SyntaxKind.TrailerKeyword, 8310)]
     [InlineData(SyntaxKind.NumericLiteralToken, 8509)]
+    [InlineData(SyntaxKind.EndOfLineTrivia, 8600)]
+    [InlineData(SyntaxKind.WhitespaceTrivia, 8601)]
     public void SyntaxKindEnum_MustHavePredefinedValues(SyntaxKind kind, ushort intKind)
     {
         // Arrange

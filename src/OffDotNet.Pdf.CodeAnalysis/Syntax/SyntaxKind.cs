@@ -93,4 +93,12 @@ public enum SyntaxKind : ushort
 
     /// <summary>Represents a numeric literal token.</summary>
     NumericLiteralToken = 8509,
+
+    // Trivia
+
+    /// <summary>Represents an end of line trivia.</summary>
+    EndOfLineTrivia = 8600,
+
+    /// <summary>Represents a whitespace trivia.</summary>
+    WhitespaceTrivia = 8601,
 }

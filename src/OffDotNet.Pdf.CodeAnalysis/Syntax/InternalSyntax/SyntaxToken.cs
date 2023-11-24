@@ -44,6 +44,7 @@ internal sealed class SyntaxToken : GreenNode
         return new SyntaxToken(kind, text, fullWidth);
     }
 
+    /// <inheritdoc cref="GreenNode.GetSlot"/>
     internal override GreenNode GetSlot(int index)
     {
         throw ExceptionUtilities.Unreachable();
