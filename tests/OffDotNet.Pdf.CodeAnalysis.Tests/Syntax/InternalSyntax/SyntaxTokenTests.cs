@@ -24,12 +24,36 @@ public class SyntaxTokenTests
         Assert.Equal(kind, actualSyntaxKind);
     }
 
-    [Fact(DisplayName = $"The CreateWithKind() method must set the {nameof(SyntaxToken.Text)} property.")]
-    public void CreateWithKindMethod_MustSetTextProperty()
+    [Theory(DisplayName = $"The CreateWithKind() method must set the {nameof(SyntaxToken.Text)} property.")]
+    [InlineData(SyntaxKind.None, "")]
+    [InlineData(SyntaxKind.LeftParenthesisToken, "(")]
+    [InlineData(SyntaxKind.RightParenthesisToken, ")")]
+    [InlineData(SyntaxKind.LessThanToken, "<")]
+    [InlineData(SyntaxKind.GreaterThanToken, ">")]
+    [InlineData(SyntaxKind.LeftSquareBracketToken, "[")]
+    [InlineData(SyntaxKind.RightSquareBracketToken, "]")]
+    [InlineData(SyntaxKind.LeftCurlyBracketToken, "{")]
+    [InlineData(SyntaxKind.RightCurlyBracketToken, "}")]
+    [InlineData(SyntaxKind.SolidusToken, "/")]
+    [InlineData(SyntaxKind.PercentSignToken, "%")]
+    [InlineData(SyntaxKind.LessThanLessThanToken, "<<")]
+    [InlineData(SyntaxKind.GreaterThanGreaterThanToken, ">>")]
+    [InlineData(SyntaxKind.PlusToken, "+")]
+    [InlineData(SyntaxKind.MinusToken, "-")]
+    [InlineData(SyntaxKind.TrueKeyword, "true")]
+    [InlineData(SyntaxKind.FalseKeyword, "false")]
+    [InlineData(SyntaxKind.NullKeyword, "null")]
+    [InlineData(SyntaxKind.StartObjectKeyword, "obj")]
+    [InlineData(SyntaxKind.EndObjectKeyword, "endobj")]
+    [InlineData(SyntaxKind.IndirectReferenceKeyword, "R")]
+    [InlineData(SyntaxKind.StartStreamKeyword, "stream")]
+    [InlineData(SyntaxKind.EndStreamKeyword, "endstream")]
+    [InlineData(SyntaxKind.XrefKeyword, "xref")]
+    [InlineData(SyntaxKind.TrailerKeyword, "trailer")]
+    [InlineData(SyntaxKind.StartXrefKeyword, "startxref")]
+    public void CreateWithKindMethod_MustSetTextProperty(SyntaxKind kind, string text)
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.StartXrefKeyword;
-        const string text = "startxref";
         SyntaxToken token = SyntaxToken.CreateWithKind(kind);
 
         // Act
@@ -37,6 +61,26 @@ public class SyntaxTokenTests
 
         // Assert
         Assert.Equal(text, actualText);
+    }
+
+    [Theory(DisplayName = $"Two SyntaxTokens with the same {nameof(SyntaxToken.Kind)} must have the same reference on {nameof(SyntaxToken.Value)} property.")]
+    [InlineData(SyntaxKind.TrueKeyword, true)]
+    [InlineData(SyntaxKind.FalseKeyword, false)]
+    [InlineData(SyntaxKind.NullKeyword, null)]
+    public void TwoSyntaxTokens_Keywords_MustHaveSameReferenceValue(SyntaxKind kind, object? value)
+    {
+        // Arrange
+        SyntaxToken token1 = SyntaxToken.CreateWithKind(kind);
+        SyntaxToken token2 = SyntaxToken.CreateWithKind(kind);
+
+        // Act
+        object? actualValue1 = token1.Value;
+        object? actualValue2 = token2.Value;
+
+        // Assert
+        Assert.Equal(value, actualValue1);
+        Assert.Equal(value, actualValue2);
+        Assert.True(ReferenceEquals(actualValue1, actualValue2));
     }
 
     [Fact(DisplayName = $"The ToString() method must return the {nameof(SyntaxToken.Text)} property value.")]

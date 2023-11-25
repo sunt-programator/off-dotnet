@@ -3,11 +3,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.InternalUtilities;
+
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax;
 
 internal static class SyntaxKindFacts
 {
-    public static string GetText(SyntaxKind kind)
+    public static string GetText(this SyntaxKind kind)
     {
         return kind switch
         {
@@ -37,6 +39,17 @@ internal static class SyntaxKindFacts
             SyntaxKind.TrailerKeyword => "trailer",
             SyntaxKind.StartXrefKeyword => "startxref",
             _ => string.Empty,
+        };
+    }
+
+    public static object? GetValue(this SyntaxKind kind)
+    {
+        return kind switch
+        {
+            SyntaxKind.TrueKeyword => BoxedValuesUtilities.BoxedTrue,
+            SyntaxKind.FalseKeyword => BoxedValuesUtilities.BoxedFalse,
+            SyntaxKind.NullKeyword => null,
+            _ => null,
         };
     }
 }
