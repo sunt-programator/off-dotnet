@@ -37,7 +37,7 @@ internal sealed class SyntaxToken : GreenNode
         return this.Text;
     }
 
-    internal static SyntaxToken CreateWithKind(SyntaxKind kind)
+    internal static SyntaxToken Create(SyntaxKind kind)
     {
         string text = kind.GetText();
         int fullWidth = text.Length;
@@ -45,7 +45,7 @@ internal sealed class SyntaxToken : GreenNode
         return new SyntaxToken(kind, text, value, fullWidth);
     }
 
-    internal static SyntaxToken CreateWithKindAndFullWidth(SyntaxKind kind, int fullWidth)
+    internal static SyntaxToken Create(SyntaxKind kind, int fullWidth)
     {
         string text = kind.GetText();
         object? value = kind.GetValue();

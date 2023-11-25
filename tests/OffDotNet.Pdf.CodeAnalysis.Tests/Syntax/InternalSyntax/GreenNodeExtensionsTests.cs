@@ -15,7 +15,7 @@ public class GreenNodeExtensionsTests
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        SyntaxToken token = SyntaxToken.CreateWithKind(kind);
+        SyntaxToken token = SyntaxToken.Create(kind);
 
         // Act
         GreenNode? actualFirstTerminal = token.GetFirstTerminal();
@@ -29,7 +29,7 @@ public class GreenNodeExtensionsTests
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        SyntaxToken token = SyntaxToken.CreateWithKind(kind);
+        SyntaxToken token = SyntaxToken.Create(kind);
 
         // Act
         GreenNode? actualFirstTerminal = token.GetLastTerminal();

@@ -10,12 +10,12 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntax;
 
 public class SyntaxTokenTests
 {
-    [Fact(DisplayName = $"The CreateWithKind() method must set the {nameof(SyntaxToken.Kind)} property.")]
-    public void CreateWithKindMethod_MustSetKindProperty()
+    [Fact(DisplayName = $"The Create() method must set the {nameof(SyntaxToken.Kind)} property.")]
+    public void CreateMethod_MustSetKindProperty()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.NumericLiteralToken;
-        SyntaxToken token = SyntaxToken.CreateWithKind(kind);
+        SyntaxToken token = SyntaxToken.Create(kind);
 
         // Act
         SyntaxKind actualSyntaxKind = token.Kind;
@@ -24,7 +24,7 @@ public class SyntaxTokenTests
         Assert.Equal(kind, actualSyntaxKind);
     }
 
-    [Theory(DisplayName = $"The CreateWithKind() method must set the {nameof(SyntaxToken.Text)} property.")]
+    [Theory(DisplayName = $"The Create() method must set the {nameof(SyntaxToken.Text)} property.")]
     [InlineData(SyntaxKind.None, "")]
     [InlineData(SyntaxKind.LeftParenthesisToken, "(")]
     [InlineData(SyntaxKind.RightParenthesisToken, ")")]
@@ -51,10 +51,10 @@ public class SyntaxTokenTests
     [InlineData(SyntaxKind.XrefKeyword, "xref")]
     [InlineData(SyntaxKind.TrailerKeyword, "trailer")]
     [InlineData(SyntaxKind.StartXrefKeyword, "startxref")]
-    public void CreateWithKindMethod_MustSetTextProperty(SyntaxKind kind, string text)
+    public void CreateMethod_MustSetTextProperty(SyntaxKind kind, string text)
     {
         // Arrange
-        SyntaxToken token = SyntaxToken.CreateWithKind(kind);
+        SyntaxToken token = SyntaxToken.Create(kind);
 
         // Act
         string actualText = token.Text;
@@ -67,11 +67,12 @@ public class SyntaxTokenTests
     [InlineData(SyntaxKind.TrueKeyword, true)]
     [InlineData(SyntaxKind.FalseKeyword, false)]
     [InlineData(SyntaxKind.NullKeyword, null)]
+    [InlineData(SyntaxKind.None, null)]
     public void TwoSyntaxTokens_Keywords_MustHaveSameReferenceValue(SyntaxKind kind, object? value)
     {
         // Arrange
-        SyntaxToken token1 = SyntaxToken.CreateWithKind(kind);
-        SyntaxToken token2 = SyntaxToken.CreateWithKind(kind);
+        SyntaxToken token1 = SyntaxToken.Create(kind);
+        SyntaxToken token2 = SyntaxToken.Create(kind);
 
         // Act
         object? actualValue1 = token1.Value;
@@ -90,7 +91,7 @@ public class SyntaxTokenTests
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
         const string expectedToStringValue = "true";
 
-        SyntaxToken token = SyntaxToken.CreateWithKind(kind);
+        SyntaxToken token = SyntaxToken.Create(kind);
 
         // Act
         string actualToStringValue = token.ToString();
@@ -99,13 +100,13 @@ public class SyntaxTokenTests
         Assert.Equal(expectedToStringValue, actualToStringValue);
     }
 
-    [Fact(DisplayName = $"The CreateWithKind() method must set the {nameof(SyntaxToken.FullWidth)} property with the computed {nameof(SyntaxToken.Text)} property length.")]
-    public void CreateWithKindMethod_MustSetFullWidthPropertyWithTextPropertyLength()
+    [Fact(DisplayName = $"The Create() method must set the {nameof(SyntaxToken.FullWidth)} property with the computed {nameof(SyntaxToken.Text)} property length.")]
+    public void CreateMethod_MustSetFullWidthPropertyWithTextPropertyLength()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
         const int expectedFullWidth = 4;
-        SyntaxToken token = SyntaxToken.CreateWithKind(kind);
+        SyntaxToken token = SyntaxToken.Create(kind);
 
         // Act
         int actualFullWidth = token.FullWidth;
@@ -114,13 +115,13 @@ public class SyntaxTokenTests
         Assert.Equal(expectedFullWidth, actualFullWidth);
     }
 
-    [Fact(DisplayName = $"The CreateWithKindAndFullWidth() method must set the {nameof(SyntaxToken.Kind)} and {nameof(SyntaxToken.FullWidth)} properties.")]
-    public void CreateWithKindAndFullWidthMethod_MustSetKindAndWidthProperties()
+    [Fact(DisplayName = $"The Create() method must set the {nameof(SyntaxToken.Kind)} and {nameof(SyntaxToken.FullWidth)} properties.")]
+    public void CreateMethod_MustSetKindAndWidthProperties()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.NumericLiteralToken;
         const int fullWidth = 3;
-        SyntaxToken token = SyntaxToken.CreateWithKindAndFullWidth(kind, fullWidth);
+        SyntaxToken token = SyntaxToken.Create(kind, fullWidth);
 
         // Act
         int actualFullWidth = token.FullWidth;
@@ -129,13 +130,13 @@ public class SyntaxTokenTests
         Assert.Equal(fullWidth, actualFullWidth);
     }
 
-    [Fact(DisplayName = $"The CreateWithKind() method must set the {nameof(SyntaxToken.Width)} property the same value as the {nameof(SyntaxToken.FullWidth)} property.")]
-    public void CreateWithKindMethod_NoTrivia_MustSetToFullWidthTheWithProperty()
+    [Fact(DisplayName = $"The Create() method must set the {nameof(SyntaxToken.Width)} property the same value as the {nameof(SyntaxToken.FullWidth)} property.")]
+    public void CreateMethod_NoTrivia_MustSetToFullWidthTheWithProperty()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
         const int expectedWidth = 4;
-        SyntaxToken token = SyntaxToken.CreateWithKind(kind);
+        SyntaxToken token = SyntaxToken.Create(kind);
 
         // Act
         int actualWidth = token.Width;
@@ -144,12 +145,12 @@ public class SyntaxTokenTests
         Assert.Equal(expectedWidth, actualWidth);
     }
 
-    [Fact(DisplayName = $"The CreateWithKind() method must set the {nameof(SyntaxToken.LeadingTrivia)} property to null.")]
-    public void CreateWithKindMethod_MustSetLeadingTriviaToNull()
+    [Fact(DisplayName = $"The Create() method must set the {nameof(SyntaxToken.LeadingTrivia)} property to null.")]
+    public void CreateMethod_MustSetLeadingTriviaToNull()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        GreenNode token = SyntaxToken.CreateWithKind(kind);
+        GreenNode token = SyntaxToken.Create(kind);
 
         // Act
         GreenNode? actualLeadingTrivia = token.LeadingTrivia;
@@ -158,12 +159,12 @@ public class SyntaxTokenTests
         Assert.Null(actualLeadingTrivia);
     }
 
-    [Fact(DisplayName = $"The CreateWithKind() method must set the {nameof(SyntaxToken.TrailingTrivia)} property to null.")]
-    public void CreateWithKindMethod_MustSetTrailingTriviaToNull()
+    [Fact(DisplayName = $"The Create() method must set the {nameof(SyntaxToken.TrailingTrivia)} property to null.")]
+    public void CreateMethod_MustSetTrailingTriviaToNull()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        GreenNode token = SyntaxToken.CreateWithKind(kind);
+        GreenNode token = SyntaxToken.Create(kind);
 
         // Act
         GreenNode? actualTrailingTrivia = token.TrailingTrivia;
@@ -173,11 +174,11 @@ public class SyntaxTokenTests
     }
 
     [Fact(DisplayName = $"The SyntaxToken with no trivia must have the {nameof(SyntaxToken.LeadingTriviaWidth)} set to 0.")]
-    public void CreateWithKindMethod_NoTrivia_MustSetLeadingTriviaWidthToZero()
+    public void CreateMethod_NoTrivia_MustSetLeadingTriviaWidthToZero()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        GreenNode token = SyntaxToken.CreateWithKind(kind);
+        GreenNode token = SyntaxToken.Create(kind);
 
         // Act
         int actualLeadingTriviaWidth = token.LeadingTriviaWidth;
@@ -187,11 +188,11 @@ public class SyntaxTokenTests
     }
 
     [Fact(DisplayName = $"The SyntaxToken with no trivia must have the {nameof(SyntaxToken.TrailingTriviaWidth)} set to 0.")]
-    public void CreateWithKindMethod_NoTrivia_MustSetTrailingTriviaWidthToZero()
+    public void CreateMethod_NoTrivia_MustSetTrailingTriviaWidthToZero()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        GreenNode token = SyntaxToken.CreateWithKind(kind);
+        GreenNode token = SyntaxToken.Create(kind);
 
         // Act
         int actualTrailingTriviaWidth = token.TrailingTriviaWidth;
@@ -205,7 +206,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        GreenNode token = SyntaxToken.CreateWithKind(kind);
+        GreenNode token = SyntaxToken.Create(kind);
 
         // Act
         int actualSlotCount = token.SlotCount;
@@ -219,7 +220,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        GreenNode token = SyntaxToken.CreateWithKind(kind);
+        GreenNode token = SyntaxToken.Create(kind);
 
         // Act
         GreenNode? ActualSlotFunc()
