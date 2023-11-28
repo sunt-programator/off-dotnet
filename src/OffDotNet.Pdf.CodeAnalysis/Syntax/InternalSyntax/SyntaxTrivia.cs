@@ -31,6 +31,10 @@ internal sealed class SyntaxTrivia : GreenNode
     /// <remarks>As this object represents a trivia, it cannot have any nested <see cref="GreenNode.TrailingTrivia"/>, so the <see cref="TrailingTriviaWidth"/> is always 0.</remarks>
     public override int TrailingTriviaWidth => 0;
 
+    /// <summary>Gets a value indicating whether the node represents a trivia.</summary>
+    /// <remarks>Trivia or minutiae are parts of the source text that are largely insignificant for normal understanding of the PDF Syntax, such as whitespace, comments, etc.</remarks>
+    public override bool IsTrivia => true;
+
     /// <summary>Returns the <see cref="Text"/> value.</summary>
     /// <returns>The <see cref="Text"/> value.</returns>
     public override string ToString()

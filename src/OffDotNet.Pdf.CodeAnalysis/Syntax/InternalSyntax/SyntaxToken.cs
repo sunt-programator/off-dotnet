@@ -7,6 +7,9 @@ using OffDotNet.Pdf.CodeAnalysis.InternalUtilities;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
+/// <summary>Represents the terminal node in the PDF Syntax tree.</summary>
+/// <remarks>Token is the smallest individual element of a PDF Syntax that has meaning and are not subject to further analysis.</remarks>
+/// <example>PDF identifiers, keywords, literals.</example>
 internal sealed class SyntaxToken : GreenNode
 {
     /// <summary>Initializes a new instance of the <see cref="SyntaxToken"/> class.</summary>

@@ -5,8 +5,9 @@
 
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using InternalSyntax = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
-namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntax;
+namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxTests;
 
 public class GreenNodeExtensionsTests
 {
@@ -15,7 +16,7 @@ public class GreenNodeExtensionsTests
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        SyntaxToken token = SyntaxToken.Create(kind);
+        InternalSyntax.SyntaxToken token = InternalSyntax.SyntaxToken.Create(kind);
 
         // Act
         GreenNode? actualFirstTerminal = token.GetFirstTerminal();
@@ -29,7 +30,7 @@ public class GreenNodeExtensionsTests
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        SyntaxToken token = SyntaxToken.Create(kind);
+        InternalSyntax.SyntaxToken token = InternalSyntax.SyntaxToken.Create(kind);
 
         // Act
         GreenNode? actualFirstTerminal = token.GetLastTerminal();
