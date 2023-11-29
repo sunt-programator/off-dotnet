@@ -41,10 +41,10 @@ public class SyntaxTriviaTests
         SyntaxTrivia token = new(syntaxToken, triviaNode, position, index);
 
         // Act
-        InternalSyntax.GreenNode? Node = token.Node;
+        InternalSyntax.GreenNode? node = token.Node;
 
         // Assert
-        Assert.Null(Node);
+        Assert.Null(node);
     }
 
     [Fact(DisplayName = $"The {nameof(SyntaxTrivia.Node)} property must be assigned from constructor.")]
@@ -59,10 +59,10 @@ public class SyntaxTriviaTests
         SyntaxTrivia token = new(syntaxToken, triviaNode, position, index);
 
         // Act
-        InternalSyntax.GreenNode? Node = token.Node;
+        InternalSyntax.GreenNode? node = token.Node;
 
         // Assert
-        Assert.Equal(triviaNode, Node);
+        Assert.Equal(triviaNode, node);
     }
 
     [Fact(DisplayName = $"The {nameof(SyntaxTrivia.Kind)} property must be assigned from {nameof(SyntaxTrivia.Node)} property.")]
@@ -276,15 +276,15 @@ public class SyntaxTriviaTests
         Assert.False(equals);
     }
 
-    [Fact(DisplayName = $"The Equals() method must return false by comparing their {nameof(SyntaxTrivia.Node)} properties.", Skip = "true")]
+    [Fact(DisplayName = $"The Equals() method must return false by comparing their {nameof(SyntaxTrivia.Node)} properties.")]
     public void EqualsMethod_DifferentNodes_MustReturnFalse()
     {
         // Arrange
         const string triviaText = "\r\n";
         const int position = 0;
         const int index = 0;
-        SyntaxToken syntaxToken1 = default;
-        SyntaxToken syntaxToken2 = default;
+        SyntaxToken syntaxToken1 = new(null, null, 0, 0);
+        SyntaxToken syntaxToken2 = new(null, null, 3, 0);
         InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, triviaText);
 
         SyntaxTrivia token1 = new(syntaxToken1, triviaNode, position, index);
@@ -295,6 +295,27 @@ public class SyntaxTriviaTests
 
         // Assert
         Assert.False(equals);
+    }
+
+    [Fact(DisplayName = $"The Equals() method must return true by comparing their {nameof(SyntaxTrivia.Node)} properties.")]
+    public void EqualsMethod_EqualNodes_MustReturnTrue()
+    {
+        // Arrange
+        const string triviaText = "\r\n";
+        const int position = 0;
+        const int index = 0;
+        SyntaxToken syntaxToken1 = new(null, null, 3, 0);
+        SyntaxToken syntaxToken2 = new(null, null, 3, 0);
+        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, triviaText);
+
+        SyntaxTrivia token1 = new(syntaxToken1, triviaNode, position, index);
+        SyntaxTrivia token2 = new(syntaxToken2, triviaNode, position, index);
+
+        // Act
+        bool equals = token1.Equals(token2);
+
+        // Assert
+        Assert.True(equals);
     }
 
     [Fact(DisplayName = $"The Equals() method (object overload) must return false by comparing their {nameof(SyntaxTrivia.Position)} properties.")]

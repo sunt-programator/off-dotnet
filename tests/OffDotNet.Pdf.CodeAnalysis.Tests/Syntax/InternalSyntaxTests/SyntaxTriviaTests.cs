@@ -154,4 +154,20 @@ public class SyntaxTriviaTests
         // Assert
         Assert.True(actualIsTrivia);
     }
+
+    [Fact(DisplayName = $"The {nameof(InternalSyntax.SyntaxTrivia.IsToken)} property must return false.")]
+    public void IsTokenProperty_MustReturnFalse()
+    {
+        // Arrange
+        const SyntaxKind kind = SyntaxKind.EndOfLineTrivia;
+        const string text = "\r\n";
+
+        InternalSyntax.SyntaxTrivia token = InternalSyntax.SyntaxTrivia.Create(kind, text);
+
+        // Act
+        bool actualIsToken = token.IsToken;
+
+        // Assert
+        Assert.False(actualIsToken);
+    }
 }

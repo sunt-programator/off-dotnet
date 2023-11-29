@@ -246,4 +246,18 @@ public class SyntaxTokenTests
         // Assert
         Assert.False(actualIsTrivia);
     }
+
+    [Fact(DisplayName = $"The {nameof(InternalSyntax.SyntaxTrivia.IsTrivia)} property must return true.")]
+    public void IsTokenProperty_MustReturnTrue()
+    {
+        // Arrange
+        const SyntaxKind kind = SyntaxKind.TrueKeyword;
+        GreenNode token = InternalSyntax.SyntaxToken.Create(kind);
+
+        // Act
+        bool actualIsToken = token.IsToken;
+
+        // Assert
+        Assert.True(actualIsToken);
+    }
 }

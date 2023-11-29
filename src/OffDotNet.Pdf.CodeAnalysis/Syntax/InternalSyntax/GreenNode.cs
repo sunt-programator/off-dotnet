@@ -32,4 +32,7 @@ internal abstract partial class GreenNode
     /// <summary>Gets a value indicating whether the node represents a trivia.</summary>
     /// <remarks>Trivia or minutiae are parts of the source text that are largely insignificant for normal understanding of the PDF Syntax, such as whitespace, comments, etc.</remarks>
     public virtual bool IsTrivia => false;
+
+    /// <summary>Gets a value indicating whether the node represents a token.</summary>
+    public virtual bool IsToken => false;
 }

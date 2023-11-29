@@ -33,6 +33,9 @@ internal sealed class SyntaxToken : GreenNode
     /// <example>If the token is a <see cref="SyntaxKind.NumericLiteralToken"/>, the value is a <see cref="int"/> or a <see cref="double"/>.</example>
     public object? Value { get; }
 
+    /// <summary>Gets a value indicating whether the node represents a token.</summary>
+    public override bool IsToken => true;
+
     /// <summary>Returns the <see cref="Text"/> value.</summary>
     /// <returns>The <see cref="Text"/> value.</returns>
     public override string ToString()
