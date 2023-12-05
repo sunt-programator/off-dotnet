@@ -12,16 +12,13 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 /// <example>PDF identifiers, keywords, literals.</example>
 internal sealed class SyntaxToken : GreenNode
 {
-    /// <summary>Initializes a new instance of the <see cref="SyntaxToken"/> class.</summary>
-    /// <param name="kind">The <see cref="SyntaxKind"/> of the token.</param>
-    /// <param name="text">The lexeme of the token, including its <see cref="GreenNode.LeadingTrivia"/> and <see cref="GreenNode.TrailingTrivia"/>.</param>
-    /// <param name="value">The value of the token.</param>
-    /// <param name="fullWidth">The width of the token, including its <see cref="GreenNode.LeadingTrivia"/> and <see cref="GreenNode.TrailingTrivia"/>.</param>
-    private SyntaxToken(SyntaxKind kind, string text, object? value, int fullWidth)
+    private SyntaxToken(SyntaxKind kind, string text, object? value, GreenNode? leading, GreenNode? trailing, int fullWidth)
         : base(kind, fullWidth)
     {
         this.Text = text;
         this.Value = value;
+        this.LeadingTrivia = leading;
+        this.TrailingTrivia = trailing;
     }
 
     /// <summary>Gets the lexeme of the token, not including its <see cref="GreenNode.LeadingTrivia"/> and <see cref="GreenNode.TrailingTrivia"/>.</summary>
@@ -36,6 +33,12 @@ internal sealed class SyntaxToken : GreenNode
     /// <summary>Gets a value indicating whether the node represents a token.</summary>
     public override bool IsToken => true;
 
+    /// <summary>Gets the <see cref="GreenNode.TrailingTrivia"/> width.</summary>
+    public override int LeadingTriviaWidth => this.LeadingTrivia?.FullWidth ?? 0;
+
+    /// <summary>Gets the <see cref="GreenNode.TrailingTrivia"/> width.</summary>
+    public override int TrailingTriviaWidth => this.TrailingTrivia?.FullWidth ?? 0;
+
     /// <summary>Returns the <see cref="Text"/> value.</summary>
     /// <returns>The <see cref="Text"/> value.</returns>
     public override string ToString()
@@ -48,14 +51,26 @@ internal sealed class SyntaxToken : GreenNode
         string text = kind.GetText();
         int fullWidth = text.Length;
         object? value = kind.GetValue();
-        return new SyntaxToken(kind, text, value, fullWidth);
+        return new SyntaxToken(kind, text, value, null, null, fullWidth);
     }
 
     internal static SyntaxToken Create(SyntaxKind kind, int fullWidth)
     {
         string text = kind.GetText();
         object? value = kind.GetValue();
-        return new SyntaxToken(kind, text, value, fullWidth);
+        return new SyntaxToken(kind, text, value, null, null, fullWidth);
+    }
+
+    internal static GreenNode Create(SyntaxKind kind, GreenNode? leading, GreenNode? trailing)
+    {
+        string text = kind.GetText();
+        object? value = kind.GetValue();
+
+        int leadingFullWidth = leading?.FullWidth ?? 0;
+        int trailingFullWidth = trailing?.FullWidth ?? 0;
+        int nodeFullWidth = text.Length + leadingFullWidth + trailingFullWidth;
+
+        return new SyntaxToken(kind, text, value, leading, trailing, nodeFullWidth);
     }
 
     /// <inheritdoc cref="GreenNode.GetSlot"/>

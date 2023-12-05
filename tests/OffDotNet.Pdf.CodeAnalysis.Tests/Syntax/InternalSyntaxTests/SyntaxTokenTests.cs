@@ -260,4 +260,98 @@ public class SyntaxTokenTests
         // Assert
         Assert.True(actualIsToken);
     }
+
+    [Fact(DisplayName = $"The {nameof(InternalSyntax.SyntaxTrivia.LeadingTrivia)} property must be assigned from constructor.")]
+    public void LeadingTriviaProperty_MustBeAssignedFromConstructor()
+    {
+        // Arrange
+        const SyntaxKind kind = SyntaxKind.TrueKeyword;
+        GreenNode leadingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "  ");
+        GreenNode token = InternalSyntax.SyntaxToken.Create(kind, leadingTrivia, null);
+
+        // Act
+        GreenNode? actualLeadingTrivia = token.LeadingTrivia;
+
+        // Assert
+        Assert.Equal(leadingTrivia, actualLeadingTrivia);
+    }
+
+    [Fact(DisplayName = $"The {nameof(InternalSyntax.SyntaxTrivia.TrailingTrivia)} property must be assigned from constructor.")]
+    public void TrailingTriviaProperty_MustBeAssignedFromConstructor()
+    {
+        // Arrange
+        const SyntaxKind kind = SyntaxKind.TrueKeyword;
+        GreenNode trailingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "  ");
+        GreenNode token = InternalSyntax.SyntaxToken.Create(kind, null, trailingTrivia);
+
+        // Act
+        GreenNode? actualTrailingTrivia = token.TrailingTrivia;
+
+        // Assert
+        Assert.Equal(trailingTrivia, actualTrailingTrivia);
+    }
+
+    [Fact(DisplayName = $"The {nameof(InternalSyntax.SyntaxToken.FullWidth)} property must take into account the leading and trailing trivia.")]
+    public void FullWidthProperty_WithLeadingAndTrailingTrivia_MustTakeIntoAccountLeadingAndTrailingTrivia()
+    {
+        // Arrange
+        const SyntaxKind kind = SyntaxKind.TrueKeyword; // FullWidth = 4
+        GreenNode leadingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "   "); // FullWidth = 3
+        GreenNode trailingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "  "); // FullWidth = 2
+        GreenNode token = InternalSyntax.SyntaxToken.Create(kind, leadingTrivia, trailingTrivia);
+
+        // Act
+        int actualFullWidth = token.FullWidth;
+
+        // Assert
+        Assert.Equal(9, actualFullWidth);
+    }
+
+    [Fact(DisplayName = $"The {nameof(InternalSyntax.SyntaxToken.Width)} property must not take into account the leading and trailing trivia.")]
+    public void WidthProperty_WithLeadingAndTrailingTrivia_MustNotTakeIntoAccountLeadingAndTrailingTrivia()
+    {
+        // Arrange
+        const SyntaxKind kind = SyntaxKind.TrueKeyword; // FullWidth = 4
+        GreenNode leadingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "   "); // FullWidth = 3
+        GreenNode trailingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "  "); // FullWidth = 2
+        GreenNode token = InternalSyntax.SyntaxToken.Create(kind, leadingTrivia, trailingTrivia);
+
+        // Act
+        int actualWidth = token.Width;
+
+        // Assert
+        Assert.Equal(4, actualWidth);
+    }
+
+    [Fact(DisplayName = $"The {nameof(InternalSyntax.SyntaxToken.LeadingTriviaWidth)} property must be assigned from {nameof(InternalSyntax.SyntaxTrivia)}.")]
+    public void LeadingTriviaWidthProperty_MustBeAssignedFromSyntaxTrivia()
+    {
+        // Arrange
+        const SyntaxKind kind = SyntaxKind.TrueKeyword; // FullWidth = 4
+        GreenNode leadingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "   "); // FullWidth = 3
+        GreenNode trailingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "  "); // FullWidth = 2
+        GreenNode token = InternalSyntax.SyntaxToken.Create(kind, leadingTrivia, trailingTrivia);
+
+        // Act
+        int leadingTriviaWidth = token.LeadingTriviaWidth;
+
+        // Assert
+        Assert.Equal(3, leadingTriviaWidth);
+    }
+
+    [Fact(DisplayName = $"The {nameof(InternalSyntax.SyntaxToken.TrailingTrivia)} property must be assigned from {nameof(InternalSyntax.SyntaxTrivia)}.")]
+    public void TrailingTriviaWidthProperty_MustBeAssignedFromSyntaxTrivia()
+    {
+        // Arrange
+        const SyntaxKind kind = SyntaxKind.TrueKeyword; // FullWidth = 4
+        GreenNode leadingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "   "); // FullWidth = 3
+        GreenNode trailingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "  "); // FullWidth = 2
+        GreenNode token = InternalSyntax.SyntaxToken.Create(kind, leadingTrivia, trailingTrivia);
+
+        // Act
+        int trailingTriviaWidth = token.TrailingTriviaWidth;
+
+        // Assert
+        Assert.Equal(2, trailingTriviaWidth);
+    }
 }

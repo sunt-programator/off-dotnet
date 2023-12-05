@@ -14,6 +14,7 @@ public readonly struct SyntaxTrivia : IEquatable<SyntaxTrivia>
 {
     internal SyntaxTrivia(in SyntaxToken token, GreenNode? triviaNode, int position, int index)
     {
+        Debug.Assert(triviaNode?.IsTrivia != false, "Invalid trivia node.");
         this.Node = triviaNode;
         this.Position = position;
         this.Index = index;
