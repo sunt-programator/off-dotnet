@@ -92,7 +92,10 @@ public enum SyntaxKind : ushort
     // Tokens with text
 
     /// <summary>Represents a numeric literal token.</summary>
-    NumericLiteralToken = 8509,
+    NumericLiteralToken = 8501,
+
+    /// <summary>Represents a string literal token.</summary>
+    StringLiteralToken = 8502,
 
     // Trivia
 
@@ -101,4 +104,24 @@ public enum SyntaxKind : ushort
 
     /// <summary>Represents a whitespace trivia.</summary>
     WhitespaceTrivia = 8601,
+
+    // Expressions
+
+    /// <summary>Represents a <c>true</c> literal expression.</summary>
+    TrueLiteralExpression = 8700,
+
+    /// <summary>Represents a <c>false</c> literal expression.</summary>
+    FalseLiteralExpression = 8701,
+
+    /// <summary>Represents a numeric literal expression.</summary>
+    NumericLiteralExpression = 8702,
+
+    /// <summary>Represents a string literal expression.</summary>
+    StringLiteralExpression = 8703,
+
+    /// <summary>Represents a <c>null</c> literal expression.</summary>
+    NullLiteralExpression = 8704,
+
+    /// <summary>Represents an <c>R</c> (indirect reference) literal expression.</summary>
+    IndirectReferenceLiteralExpression = 8705,
 }

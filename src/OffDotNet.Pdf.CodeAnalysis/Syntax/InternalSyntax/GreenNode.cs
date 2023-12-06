@@ -11,11 +11,9 @@ internal abstract partial class GreenNode
 {
     /// <summary>Initializes a new instance of the <see cref="GreenNode"/> class.</summary>
     /// <param name="kind">The <see cref="SyntaxKind"/> of the token.</param>
-    /// <param name="fullWidth">The width of the token, including its <see cref="LeadingTrivia"/> and <see cref="TrailingTrivia"/>.</param>
-    protected GreenNode(SyntaxKind kind, int fullWidth)
+    protected GreenNode(SyntaxKind kind)
     {
         this.Kind = kind;
-        this.FullWidth = fullWidth;
     }
 
     /// <summary>Gets the <see cref="SyntaxKind"/> of the token.</summary>

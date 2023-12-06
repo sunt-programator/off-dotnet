@@ -8,10 +8,11 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 internal sealed class LiteralExpressionSyntax : GreenNode
 {
     internal LiteralExpressionSyntax(SyntaxKind kind, SyntaxToken token)
-        : base(kind, token.FullWidth)
+        : base(kind)
     {
         this.Token = token;
         this.SlotCount = 1;
+        this.FullWidth = token.FullWidth;
     }
 
     public SyntaxToken Token { get; }

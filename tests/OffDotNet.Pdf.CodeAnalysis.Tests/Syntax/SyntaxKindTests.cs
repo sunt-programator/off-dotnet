@@ -36,9 +36,16 @@ public class SyntaxKindTests
     [InlineData(SyntaxKind.XrefKeyword, 8308)]
     [InlineData(SyntaxKind.StartXrefKeyword, 8309)]
     [InlineData(SyntaxKind.TrailerKeyword, 8310)]
-    [InlineData(SyntaxKind.NumericLiteralToken, 8509)]
+    [InlineData(SyntaxKind.NumericLiteralToken, 8501)]
+    [InlineData(SyntaxKind.StringLiteralToken, 8502)]
     [InlineData(SyntaxKind.EndOfLineTrivia, 8600)]
     [InlineData(SyntaxKind.WhitespaceTrivia, 8601)]
+    [InlineData(SyntaxKind.TrueLiteralExpression, 8700)]
+    [InlineData(SyntaxKind.FalseLiteralExpression, 8701)]
+    [InlineData(SyntaxKind.NumericLiteralExpression, 8702)]
+    [InlineData(SyntaxKind.StringLiteralExpression, 8703)]
+    [InlineData(SyntaxKind.NullLiteralExpression, 8704)]
+    [InlineData(SyntaxKind.IndirectReferenceLiteralExpression, 8705)]
     public void SyntaxKindEnum_MustHavePredefinedValues(SyntaxKind kind, ushort intKind)
     {
         // Arrange

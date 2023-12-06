@@ -14,9 +14,8 @@ public class LiteralExpressionSyntaxTests
     public void KeywordProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        InternalSyntax.SyntaxToken keyword = InternalSyntax.SyntaxToken.Create(kind);
-        InternalSyntax.LiteralExpressionSyntax literalExpression = new(kind, keyword);
+        InternalSyntax.SyntaxToken keyword = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        InternalSyntax.LiteralExpressionSyntax literalExpression = InternalSyntax.SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
 
         // Act
         InternalSyntax.SyntaxToken actualToken = literalExpression.Token;
@@ -29,9 +28,8 @@ public class LiteralExpressionSyntaxTests
     public void SlotCountProperty_MustBeEqualTo1()
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        InternalSyntax.SyntaxToken keyword = InternalSyntax.SyntaxToken.Create(kind);
-        InternalSyntax.LiteralExpressionSyntax literalExpression = new(kind, keyword);
+        InternalSyntax.SyntaxToken keyword = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        InternalSyntax.LiteralExpressionSyntax literalExpression = InternalSyntax.SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
 
         // Act
         int actualSlotCount = literalExpression.SlotCount;
@@ -44,9 +42,8 @@ public class LiteralExpressionSyntaxTests
     public void GetSlotMethod_Index0_MustReturnKeywordProperty()
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        InternalSyntax.SyntaxToken keyword = InternalSyntax.SyntaxToken.Create(kind);
-        InternalSyntax.LiteralExpressionSyntax literalExpression = new(kind, keyword);
+        InternalSyntax.SyntaxToken keyword = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        InternalSyntax.LiteralExpressionSyntax literalExpression = InternalSyntax.SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
 
         // Act
         InternalSyntax.GreenNode? actualSlot = literalExpression.GetSlot(0);
@@ -59,9 +56,8 @@ public class LiteralExpressionSyntaxTests
     public void GetSlotMethod_Index1_MustReturnNull()
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        InternalSyntax.SyntaxToken keyword = InternalSyntax.SyntaxToken.Create(kind);
-        InternalSyntax.LiteralExpressionSyntax literalExpression = new(kind, keyword);
+        InternalSyntax.SyntaxToken keyword = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        InternalSyntax.LiteralExpressionSyntax literalExpression = InternalSyntax.SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
 
         // Act
         InternalSyntax.GreenNode? actualSlot = literalExpression.GetSlot(1);

@@ -13,10 +13,11 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 internal sealed class SyntaxToken : GreenNode
 {
     private SyntaxToken(SyntaxKind kind, string text, object? value, GreenNode? leading, GreenNode? trailing, int fullWidth)
-        : base(kind, fullWidth)
+        : base(kind)
     {
         this.Text = text;
         this.Value = value;
+        this.FullWidth = fullWidth;
         this.LeadingTrivia = leading;
         this.TrailingTrivia = trailing;
     }
@@ -62,18 +63,20 @@ internal sealed class SyntaxToken : GreenNode
         return new SyntaxToken(kind, text, value, null, null, fullWidth);
     }
 
-    internal static SyntaxToken Create(SyntaxKind kind, int fullWidth)
+    internal static SyntaxToken Create(SyntaxKind kind, GreenNode? leading, GreenNode? trailing)
     {
         string text = kind.GetText();
         object? value = kind.GetValue();
-        return new SyntaxToken(kind, text, value, null, null, fullWidth);
+
+        int leadingFullWidth = leading?.FullWidth ?? 0;
+        int trailingFullWidth = trailing?.FullWidth ?? 0;
+        int nodeFullWidth = text.Length + leadingFullWidth + trailingFullWidth;
+
+        return new SyntaxToken(kind, text, value, leading, trailing, nodeFullWidth);
     }
 
-    internal static GreenNode Create(SyntaxKind kind, GreenNode? leading, GreenNode? trailing)
+    internal static SyntaxToken Create<T>(SyntaxKind kind, string text, T? value, GreenNode? leading, GreenNode? trailing)
     {
-        string text = kind.GetText();
-        object? value = kind.GetValue();
-
         int leadingFullWidth = leading?.FullWidth ?? 0;
         int trailingFullWidth = trailing?.FullWidth ?? 0;
         int nodeFullWidth = text.Length + leadingFullWidth + trailingFullWidth;

@@ -116,21 +116,6 @@ public class SyntaxTokenTests
         Assert.Equal(expectedFullWidth, actualFullWidth);
     }
 
-    [Fact(DisplayName = $"The Create() method must set the {nameof(InternalSyntax.SyntaxToken.Kind)} and {nameof(InternalSyntax.SyntaxToken.FullWidth)} properties.")]
-    public void CreateMethod_MustSetKindAndWidthProperties()
-    {
-        // Arrange
-        const SyntaxKind kind = SyntaxKind.NumericLiteralToken;
-        const int fullWidth = 3;
-        InternalSyntax.SyntaxToken token = InternalSyntax.SyntaxToken.Create(kind, fullWidth);
-
-        // Act
-        int actualFullWidth = token.FullWidth;
-
-        // Assert
-        Assert.Equal(fullWidth, actualFullWidth);
-    }
-
     [Fact(DisplayName = $"The Create() method must set the {nameof(InternalSyntax.SyntaxToken.Width)} property the same value as the {nameof(InternalSyntax.SyntaxToken.FullWidth)} property.")]
     public void CreateMethod_NoTrivia_MustSetToFullWidthTheWithProperty()
     {

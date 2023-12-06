@@ -10,9 +10,10 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 internal sealed class SyntaxTrivia : GreenNode
 {
     private SyntaxTrivia(SyntaxKind kind, string text)
-        : base(kind, text.Length)
+        : base(kind)
     {
         this.Text = text;
+        this.FullWidth = text.Length;
     }
 
     /// <summary>Gets the lexeme of the trivia.</summary>
