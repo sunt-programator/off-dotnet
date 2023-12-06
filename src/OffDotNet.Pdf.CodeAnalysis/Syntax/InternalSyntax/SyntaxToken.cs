@@ -30,6 +30,14 @@ internal sealed class SyntaxToken : GreenNode
     /// <example>If the token is a <see cref="SyntaxKind.NumericLiteralToken"/>, the value is a <see cref="int"/> or a <see cref="double"/>.</example>
     public object? Value { get; }
 
+    /// <summary>Gets the leading trivia of the token that is preceding the token.</summary>
+    /// <remarks>Trivia or minutiae are parts of the source text that are largely insignificant for normal understanding of the PDF Syntax, such as whitespace, comments, etc.</remarks>
+    public override GreenNode? LeadingTrivia { get; }
+
+    /// <summary>Gets the trailing trivia of the token that is succeeding the token.</summary>
+    /// <remarks>Trivia or minutiae are parts of the source text that are largely insignificant for normal understanding of the PDF Syntax, such as whitespace, comments, etc.</remarks>
+    public override GreenNode? TrailingTrivia { get; }
+
     /// <summary>Gets a value indicating whether the node represents a token.</summary>
     public override bool IsToken => true;
 

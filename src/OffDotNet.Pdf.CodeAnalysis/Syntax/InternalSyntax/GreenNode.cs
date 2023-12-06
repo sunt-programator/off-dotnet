@@ -23,11 +23,11 @@ internal abstract partial class GreenNode
 
     /// <summary>Gets the leading trivia of the token that is preceding the token.</summary>
     /// <remarks>Trivia or minutiae are parts of the source text that are largely insignificant for normal understanding of the PDF Syntax, such as whitespace, comments, etc.</remarks>
-    public GreenNode? LeadingTrivia { get; protected init; }
+    public virtual GreenNode? LeadingTrivia => null;
 
     /// <summary>Gets the trailing trivia of the token that is succeeding the token.</summary>
     /// <remarks>Trivia or minutiae are parts of the source text that are largely insignificant for normal understanding of the PDF Syntax, such as whitespace, comments, etc.</remarks>
-    public GreenNode? TrailingTrivia { get; protected init; }
+    public virtual GreenNode? TrailingTrivia => null;
 
     /// <summary>Gets a value indicating whether the node represents a trivia.</summary>
     /// <remarks>Trivia or minutiae are parts of the source text that are largely insignificant for normal understanding of the PDF Syntax, such as whitespace, comments, etc.</remarks>
