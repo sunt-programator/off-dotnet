@@ -9,6 +9,16 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal static class SyntaxFactory
 {
+    public static IndirectObjectSyntax Object(LiteralExpressionSyntax objectNumber, LiteralExpressionSyntax generationNumber, SyntaxToken objectKeyword, GreenNode content, SyntaxToken endObjectKeyword)
+    {
+        return new IndirectObjectSyntax(SyntaxKind.IndirectObject, objectNumber, generationNumber, objectKeyword, content, endObjectKeyword);
+    }
+
+    public static IndirectReferenceSyntax IndirectReference(LiteralExpressionSyntax objectNumber, LiteralExpressionSyntax generationNumber, SyntaxToken referenceKeyword)
+    {
+        return new IndirectReferenceSyntax(SyntaxKind.IndirectReference, objectNumber, generationNumber, referenceKeyword);
+    }
+
     [SuppressMessage("ReSharper", "SwitchStatementHandlesSomeKnownEnumValuesWithDefault", Justification = "The switch statement is used to validate the kind of the literal expression.")]
     public static LiteralExpressionSyntax LiteralExpression(SyntaxKind kind, SyntaxToken token)
     {
@@ -19,7 +29,6 @@ internal static class SyntaxFactory
             case SyntaxKind.NumericLiteralExpression:
             case SyntaxKind.StringLiteralExpression:
             case SyntaxKind.NullLiteralExpression:
-            case SyntaxKind.IndirectReferenceLiteralExpression:
                 break;
             default: throw new ArgumentException($"The {nameof(kind)} must be a literal expression kind.", nameof(kind));
         }
@@ -32,7 +41,6 @@ internal static class SyntaxFactory
             case SyntaxKind.NumericLiteralToken:
             case SyntaxKind.StringLiteralToken:
             case SyntaxKind.NullKeyword:
-            case SyntaxKind.IndirectReferenceKeyword:
                 break;
             default: throw new ArgumentException("The token kind must be a literal token.", nameof(token));
         }

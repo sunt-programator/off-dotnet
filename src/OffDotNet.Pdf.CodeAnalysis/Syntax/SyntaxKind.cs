@@ -89,6 +89,9 @@ public enum SyntaxKind : ushort
     /// <summary>Represents <c>trailer</c> keyword.</summary>
     TrailerKeyword = 8310,
 
+    /// <summary>Represents <c>PDF</c> keyword.</summary>
+    PdfKeyword = 8311,
+
     // Tokens with text
 
     /// <summary>Represents a numeric literal token.</summary>
@@ -122,6 +125,11 @@ public enum SyntaxKind : ushort
     /// <summary>Represents a <c>null</c> literal expression.</summary>
     NullLiteralExpression = 8704,
 
-    /// <summary>Represents an <c>R</c> (indirect reference) literal expression.</summary>
-    IndirectReferenceLiteralExpression = 8705,
+    // PDF Types
+
+    /// <summary>Represents an indirect reference expression.</summary>
+    IndirectReference = 8800,
+
+    /// <summary>Represents an indirect object expression.</summary>
+    IndirectObject = 8801,
 }

@@ -1,4 +1,4 @@
-// <copyright file="IndirectReferenceExpressionSyntaxTests.cs" company="Sunt Programator">
+// <copyright file="IndirectReferenceSyntaxTests.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -10,42 +10,41 @@ using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxTriv
 
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxTests;
 
-public class IndirectReferenceExpressionSyntaxTests
+public class IndirectReferenceSyntaxTests
 {
     private readonly LiteralExpressionSyntax objectNumber;
     private readonly LiteralExpressionSyntax generationNumber;
-    private readonly LiteralExpressionSyntax referenceKeyword;
+    private readonly SyntaxToken referenceKeyword;
 
-    public IndirectReferenceExpressionSyntaxTests()
+    public IndirectReferenceSyntaxTests()
     {
         GreenNode trivia = SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, " ");
         SyntaxToken objectNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "123", 123, trivia, trivia);
         SyntaxToken generationNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "32", 32, trivia, trivia);
-        SyntaxToken referenceKeywordToken = SyntaxFactory.Token(SyntaxKind.IndirectReferenceKeyword, trivia, trivia);
 
         this.objectNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, objectNumberToken);
         this.generationNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, generationNumberToken);
-        this.referenceKeyword = SyntaxFactory.LiteralExpression(SyntaxKind.IndirectReferenceLiteralExpression, referenceKeywordToken);
+        this.referenceKeyword = SyntaxFactory.Token(SyntaxKind.IndirectReferenceKeyword, trivia, trivia);
     }
 
-    [Fact(DisplayName = $"The {nameof(IndirectReferenceExpressionSyntax.Kind)} property must be {nameof(SyntaxKind.IndirectReferenceLiteralExpression)}")]
+    [Fact(DisplayName = $"The {nameof(IndirectReferenceSyntax.Kind)} property must be {nameof(SyntaxKind.IndirectReference)}")]
     public void KindProperty_MustBeIndirectReferenceExpression()
     {
         // Arrange
-        IndirectReferenceExpressionSyntax indirectReference = new(this.objectNumber, this.generationNumber, this.referenceKeyword);
+        IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);
 
         // Act
         SyntaxKind actualObjectNumber = indirectReference.Kind;
 
         // Assert
-        Assert.Equal(SyntaxKind.IndirectReferenceLiteralExpression, actualObjectNumber);
+        Assert.Equal(SyntaxKind.IndirectReference, actualObjectNumber);
     }
 
-    [Fact(DisplayName = $"The {nameof(IndirectReferenceExpressionSyntax.ObjectNumber)} property must be assigned from constructor.")]
+    [Fact(DisplayName = $"The {nameof(IndirectReferenceSyntax.ObjectNumber)} property must be assigned from constructor.")]
     public void ObjectNumberProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        IndirectReferenceExpressionSyntax indirectReference = new(this.objectNumber, this.generationNumber, this.referenceKeyword);
+        IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);
 
         // Act
         LiteralExpressionSyntax actualObjectNumber = indirectReference.ObjectNumber;
@@ -54,11 +53,11 @@ public class IndirectReferenceExpressionSyntaxTests
         Assert.Equal(this.objectNumber, actualObjectNumber);
     }
 
-    [Fact(DisplayName = $"The {nameof(IndirectReferenceExpressionSyntax.GenerationNumber)} property must be assigned from constructor.")]
+    [Fact(DisplayName = $"The {nameof(IndirectReferenceSyntax.GenerationNumber)} property must be assigned from constructor.")]
     public void GenerationNumberProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        IndirectReferenceExpressionSyntax indirectReference = new(this.objectNumber, this.generationNumber, this.referenceKeyword);
+        IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);
 
         // Act
         LiteralExpressionSyntax actualGenerationNumber = indirectReference.GenerationNumber;
@@ -67,14 +66,14 @@ public class IndirectReferenceExpressionSyntaxTests
         Assert.Equal(this.generationNumber, actualGenerationNumber);
     }
 
-    [Fact(DisplayName = $"The {nameof(IndirectReferenceExpressionSyntax.ReferenceKeyword)} property must be assigned from constructor.")]
+    [Fact(DisplayName = $"The {nameof(IndirectReferenceSyntax.ReferenceKeyword)} property must be assigned from constructor.")]
     public void ReferenceKeywordProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        IndirectReferenceExpressionSyntax indirectReference = new(this.objectNumber, this.generationNumber, this.referenceKeyword);
+        IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);
 
         // Act
-        LiteralExpressionSyntax actualReferenceKeyword = indirectReference.ReferenceKeyword;
+        SyntaxToken actualReferenceKeyword = indirectReference.ReferenceKeyword;
 
         // Assert
         Assert.Equal(this.referenceKeyword, actualReferenceKeyword);
@@ -84,7 +83,7 @@ public class IndirectReferenceExpressionSyntaxTests
     public void SlotCountProperty_MustBeEqualTo3()
     {
         // Arrange
-        IndirectReferenceExpressionSyntax indirectReference = new(this.objectNumber, this.generationNumber, this.referenceKeyword);
+        IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);
 
         // Act
         int actualSlotCount = indirectReference.SlotCount;
@@ -93,11 +92,11 @@ public class IndirectReferenceExpressionSyntaxTests
         Assert.Equal(3, actualSlotCount);
     }
 
-    [Fact(DisplayName = $"The GetSlot() method with index 0 must return {nameof(IndirectReferenceExpressionSyntax.ObjectNumber)} property.")]
+    [Fact(DisplayName = $"The GetSlot() method with index 0 must return {nameof(IndirectReferenceSyntax.ObjectNumber)} property.")]
     public void GetSlotMethod_Index0_MustReturnObjectNumber()
     {
         // Arrange
-        IndirectReferenceExpressionSyntax indirectReference = new(this.objectNumber, this.generationNumber, this.referenceKeyword);
+        IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);
 
         // Act
         GreenNode? actualSlot = indirectReference.GetSlot(0);
@@ -106,11 +105,11 @@ public class IndirectReferenceExpressionSyntaxTests
         Assert.Equal(this.objectNumber, actualSlot);
     }
 
-    [Fact(DisplayName = $"The GetSlot() method with index 1 must return {nameof(IndirectReferenceExpressionSyntax.GenerationNumber)} property.")]
+    [Fact(DisplayName = $"The GetSlot() method with index 1 must return {nameof(IndirectReferenceSyntax.GenerationNumber)} property.")]
     public void GetSlotMethod_Index1_MustReturnObjectNumber()
     {
         // Arrange
-        IndirectReferenceExpressionSyntax indirectReference = new(this.objectNumber, this.generationNumber, this.referenceKeyword);
+        IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);
 
         // Act
         GreenNode? actualSlot = indirectReference.GetSlot(1);
@@ -119,11 +118,11 @@ public class IndirectReferenceExpressionSyntaxTests
         Assert.Equal(this.generationNumber, actualSlot);
     }
 
-    [Fact(DisplayName = $"The GetSlot() method with index 2 must return {nameof(IndirectReferenceExpressionSyntax.ReferenceKeyword)} property.")]
+    [Fact(DisplayName = $"The GetSlot() method with index 2 must return {nameof(IndirectReferenceSyntax.ReferenceKeyword)} property.")]
     public void GetSlotMethod_Index2_MustReturnObjectNumber()
     {
         // Arrange
-        IndirectReferenceExpressionSyntax indirectReference = new(this.objectNumber, this.generationNumber, this.referenceKeyword);
+        IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);
 
         // Act
         GreenNode? actualSlot = indirectReference.GetSlot(2);
@@ -136,7 +135,7 @@ public class IndirectReferenceExpressionSyntaxTests
     public void GetSlotMethod_Index3_MustReturnNull()
     {
         // Arrange
-        IndirectReferenceExpressionSyntax indirectReference = new(this.objectNumber, this.generationNumber, this.referenceKeyword);
+        IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);
 
         // Act
         GreenNode? actualSlot = indirectReference.GetSlot(3);
@@ -149,7 +148,7 @@ public class IndirectReferenceExpressionSyntaxTests
     public void WidthProperty_MustIncludeAllSlots()
     {
         // Arrange
-        IndirectReferenceExpressionSyntax indirectReference = new(this.objectNumber, this.generationNumber, this.referenceKeyword);
+        IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);
 
         // Act
         int actualWidth = indirectReference.Width;
@@ -162,7 +161,7 @@ public class IndirectReferenceExpressionSyntaxTests
     public void FullWidthProperty_MustIncludeAllSlots()
     {
         // Arrange
-        IndirectReferenceExpressionSyntax indirectReference = new(this.objectNumber, this.generationNumber, this.referenceKeyword);
+        IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);
 
         // Act
         int actualFullWidth = indirectReference.FullWidth;

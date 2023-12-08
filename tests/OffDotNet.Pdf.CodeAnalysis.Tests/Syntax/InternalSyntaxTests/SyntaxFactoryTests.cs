@@ -17,7 +17,6 @@ public class SyntaxFactoryTests
     [InlineData(SyntaxKind.NumericLiteralExpression)]
     [InlineData(SyntaxKind.StringLiteralExpression)]
     [InlineData(SyntaxKind.NullLiteralExpression)]
-    [InlineData(SyntaxKind.IndirectReferenceLiteralExpression)]
     public void LiteralExpression_ValidExpressionKind_MustCreateObject(SyntaxKind kind)
     {
         // Arrange
@@ -54,7 +53,6 @@ public class SyntaxFactoryTests
     [InlineData(SyntaxKind.NumericLiteralToken)]
     [InlineData(SyntaxKind.StringLiteralToken)]
     [InlineData(SyntaxKind.NullKeyword)]
-    [InlineData(SyntaxKind.IndirectReferenceKeyword)]
     public void LiteralExpression_ValidTokenKind_MustCreateObject(SyntaxKind kind)
     {
         // Arrange

@@ -46,13 +46,12 @@ public class GreenNodeExtensionsTests
         GreenNode trailingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
         SyntaxToken objectNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "123", 123, null, trailingTrivia);
         SyntaxToken generationNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "32", 32, null, trailingTrivia);
-        SyntaxToken referenceKeywordToken = SyntaxFactory.Token(SyntaxKind.IndirectReferenceKeyword, null, trailingTrivia);
 
         LiteralExpressionSyntax objectNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, objectNumberToken);
         LiteralExpressionSyntax generationNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, generationNumberToken);
-        LiteralExpressionSyntax referenceKeyword = SyntaxFactory.LiteralExpression(SyntaxKind.IndirectReferenceLiteralExpression, referenceKeywordToken);
+        SyntaxToken referenceKeyword = SyntaxFactory.Token(SyntaxKind.IndirectReferenceKeyword, null, trailingTrivia);
 
-        IndirectReferenceExpressionSyntax indirectReference = new(objectNumber, generationNumber, referenceKeyword);
+        IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(objectNumber, generationNumber, referenceKeyword);
 
         // Act
         GreenNode? actualFirstTerminal = indirectReference.GetFirstTerminal();
@@ -68,18 +67,17 @@ public class GreenNodeExtensionsTests
         GreenNode trailingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
         SyntaxToken objectNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "123", 123, null, trailingTrivia);
         SyntaxToken generationNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "32", 32, null, trailingTrivia);
-        SyntaxToken referenceKeywordToken = SyntaxFactory.Token(SyntaxKind.IndirectReferenceKeyword, null, trailingTrivia);
 
         LiteralExpressionSyntax objectNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, objectNumberToken);
         LiteralExpressionSyntax generationNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, generationNumberToken);
-        LiteralExpressionSyntax referenceKeyword = SyntaxFactory.LiteralExpression(SyntaxKind.IndirectReferenceLiteralExpression, referenceKeywordToken);
+        SyntaxToken referenceKeyword = SyntaxFactory.Token(SyntaxKind.IndirectReferenceKeyword, null, trailingTrivia);
 
-        IndirectReferenceExpressionSyntax indirectReference = new(objectNumber, generationNumber, referenceKeyword);
+        IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(objectNumber, generationNumber, referenceKeyword);
 
         // Act
         GreenNode? actualLastTerminal = indirectReference.GetLastTerminal();
 
         // Assert
-        Assert.Equal(referenceKeywordToken, actualLastTerminal);
+        Assert.Equal(referenceKeyword, actualLastTerminal);
     }
 }
