@@ -9,7 +9,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal sealed class SyntaxTrivia : GreenNode
 {
-    private SyntaxTrivia(SyntaxKind kind, string text)
+    internal SyntaxTrivia(SyntaxKind kind, string text)
         : base(kind)
     {
         this.Text = text;

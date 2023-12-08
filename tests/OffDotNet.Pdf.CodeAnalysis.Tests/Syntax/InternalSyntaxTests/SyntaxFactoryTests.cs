@@ -4,7 +4,8 @@
 // </copyright>
 
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
-using InternalSyntax = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using SyntaxToken = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxToken;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxTests;
 
@@ -20,8 +21,8 @@ public class SyntaxFactoryTests
     public void LiteralExpression_ValidExpressionKind_MustCreateObject(SyntaxKind kind)
     {
         // Arrange
-        InternalSyntax.SyntaxToken keyword = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
-        InternalSyntax.LiteralExpressionSyntax literalExpression = InternalSyntax.SyntaxFactory.LiteralExpression(kind, keyword);
+        SyntaxToken keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
+        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(kind, keyword);
 
         // Act
         SyntaxKind actualKind = literalExpression.Kind;
@@ -35,12 +36,12 @@ public class SyntaxFactoryTests
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.None;
-        InternalSyntax.SyntaxToken keyword = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        SyntaxToken keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
 
         // Act
-        InternalSyntax.LiteralExpressionSyntax LiteralExpressionFunc()
+        LiteralExpressionSyntax LiteralExpressionFunc()
         {
-            return InternalSyntax.SyntaxFactory.LiteralExpression(kind, keyword);
+            return SyntaxFactory.LiteralExpression(kind, keyword);
         }
 
         // Assert
@@ -57,8 +58,8 @@ public class SyntaxFactoryTests
     public void LiteralExpression_ValidTokenKind_MustCreateObject(SyntaxKind kind)
     {
         // Arrange
-        InternalSyntax.SyntaxToken keyword = InternalSyntax.SyntaxToken.Create(kind);
-        InternalSyntax.LiteralExpressionSyntax literalExpression = InternalSyntax.SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
+        SyntaxToken keyword = SyntaxFactory.Token(kind);
+        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
 
         // Act
         SyntaxKind actualKind = literalExpression.Token.Kind;
@@ -72,12 +73,12 @@ public class SyntaxFactoryTests
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.None;
-        InternalSyntax.SyntaxToken keyword = InternalSyntax.SyntaxToken.Create(kind);
+        SyntaxToken keyword = SyntaxFactory.Token(kind);
 
         // Act
-        InternalSyntax.LiteralExpressionSyntax LiteralExpressionFunc()
+        LiteralExpressionSyntax LiteralExpressionFunc()
         {
-            return InternalSyntax.SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
+            return SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
         }
 
         // Assert

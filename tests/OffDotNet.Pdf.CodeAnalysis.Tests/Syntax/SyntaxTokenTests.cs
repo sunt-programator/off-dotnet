@@ -4,8 +4,10 @@
 // </copyright>
 
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
+using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 using OffDotNet.Pdf.CodeAnalysis.Text;
-using InternalSyntax = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using SyntaxToken = OffDotNet.Pdf.CodeAnalysis.Syntax.SyntaxToken;
+using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.SyntaxTrivia;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax;
 
@@ -16,14 +18,14 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode? underlyingNode = null;
+        GreenNode? underlyingNode = null;
         const int position = 0;
         const int index = 0;
 
         SyntaxToken token = new(parent, underlyingNode, position, index);
 
         // Act
-        InternalSyntax.GreenNode? actualNode = token.Node;
+        GreenNode? actualNode = token.Node;
 
         // Assert
         Assert.Null(actualNode);
@@ -34,14 +36,14 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode underlyingNode = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int position = 0;
         const int index = 0;
 
         SyntaxToken token = new(parent, underlyingNode, position, index);
 
         // Act
-        InternalSyntax.GreenNode? actualNode = token.Node;
+        GreenNode? actualNode = token.Node;
 
         // Assert
         Assert.Equal(underlyingNode, actualNode);
@@ -51,8 +53,8 @@ public class SyntaxTokenTests
     public void ParentProperty_MustBeSetFromConstructor()
     {
         // Arrange
-        SyntaxNode parent = new(InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword), null, 0);
-        InternalSyntax.GreenNode underlyingNode = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        SyntaxNode parent = new(SyntaxFactory.Token(SyntaxKind.TrueKeyword), null, 0);
+        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int position = 150;
         const int index = 0;
 
@@ -70,7 +72,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode? underlyingToken = null;
+        GreenNode? underlyingToken = null;
         const int position = 0;
         const int index = 0;
 
@@ -88,7 +90,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode underlyingNode = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int position = 150;
         const int index = 0;
 
@@ -106,7 +108,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode underlyingNode = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int position = 0;
         const int index = 3;
 
@@ -124,7 +126,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode underlyingNode = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int position = 0;
         const int index = 0;
 
@@ -142,7 +144,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode underlyingNode = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int position = 0;
         const int index = 0;
 
@@ -160,7 +162,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode underlyingNode = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int position = 3;
         const int index = 0;
 
@@ -179,7 +181,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode? underlyingNode = null;
+        GreenNode? underlyingNode = null;
         const int position = 3;
         const int index = 0;
 
@@ -197,7 +199,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode underlyingNode = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int position = 3;
         const int index = 0;
 
@@ -215,7 +217,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode underlyingNode = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int position = 3;
         const int index = 0;
 
@@ -231,7 +233,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode underlyingNode = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int position = 3;
         const int index = 0;
 
@@ -250,7 +252,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode underlyingNode = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int position1 = 0;
         const int position2 = 3;
         const int index = 0;
@@ -270,7 +272,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode underlyingNode = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int position = 3;
         const int index1 = 0;
         const int index2 = 5;
@@ -290,8 +292,8 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode underlyingNode1 = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
-        InternalSyntax.GreenNode underlyingNode2 = InternalSyntax.SyntaxToken.Create(SyntaxKind.FalseKeyword);
+        GreenNode underlyingNode1 = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
+        GreenNode underlyingNode2 = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
         const int position = 3;
         const int index = 0;
 
@@ -310,7 +312,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode underlyingNode = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int position1 = 0;
         const int position2 = 3;
         const int index = 0;
@@ -330,7 +332,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode underlyingNode = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int position1 = 3;
         const int position2 = 3;
         const int index = 0;
@@ -350,7 +352,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode underlyingNode = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int position1 = 0;
         const int position2 = 3;
         const int index = 0;
@@ -370,7 +372,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode underlyingNode = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int position1 = 3;
         const int position2 = 3;
         const int index = 0;
@@ -390,7 +392,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         SyntaxNode? parent = null;
-        InternalSyntax.GreenNode underlyingNode = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
+        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int position = 3;
         const int index = 0;
 

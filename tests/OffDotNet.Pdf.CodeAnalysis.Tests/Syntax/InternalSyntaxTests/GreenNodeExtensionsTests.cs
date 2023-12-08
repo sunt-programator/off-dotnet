@@ -5,7 +5,7 @@
 
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
-using InternalSyntax = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using SyntaxToken = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxToken;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxTests;
 
@@ -16,7 +16,7 @@ public class GreenNodeExtensionsTests
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        InternalSyntax.SyntaxToken token = InternalSyntax.SyntaxToken.Create(kind);
+        SyntaxToken token = SyntaxFactory.Token(kind);
 
         // Act
         GreenNode? actualFirstTerminal = token.GetFirstTerminal();
@@ -30,7 +30,7 @@ public class GreenNodeExtensionsTests
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        InternalSyntax.SyntaxToken token = InternalSyntax.SyntaxToken.Create(kind);
+        SyntaxToken token = SyntaxFactory.Token(kind);
 
         // Act
         GreenNode? actualFirstTerminal = token.GetLastTerminal();
@@ -43,10 +43,10 @@ public class GreenNodeExtensionsTests
     public void GetFirstTerminal_ShouldFirstTerminalSyntaxToken()
     {
         // Arrange
-        GreenNode trailingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, " ");
-        InternalSyntax.SyntaxToken objectNumberToken = InternalSyntax.SyntaxToken.Create(SyntaxKind.NumericLiteralToken, "123", 123, null, trailingTrivia);
-        InternalSyntax.SyntaxToken generationNumberToken = InternalSyntax.SyntaxToken.Create(SyntaxKind.NumericLiteralToken, "32", 32, null, trailingTrivia);
-        InternalSyntax.SyntaxToken referenceKeywordToken = InternalSyntax.SyntaxToken.Create(SyntaxKind.IndirectReferenceKeyword, null, trailingTrivia);
+        GreenNode trailingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        SyntaxToken objectNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "123", 123, null, trailingTrivia);
+        SyntaxToken generationNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "32", 32, null, trailingTrivia);
+        SyntaxToken referenceKeywordToken = SyntaxFactory.Token(SyntaxKind.IndirectReferenceKeyword, null, trailingTrivia);
 
         LiteralExpressionSyntax objectNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, objectNumberToken);
         LiteralExpressionSyntax generationNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, generationNumberToken);
@@ -65,10 +65,10 @@ public class GreenNodeExtensionsTests
     public void GetLastTerminal_ShouldFirstTerminalSyntaxToken()
     {
         // Arrange
-        GreenNode trailingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, " ");
-        InternalSyntax.SyntaxToken objectNumberToken = InternalSyntax.SyntaxToken.Create(SyntaxKind.NumericLiteralToken, "123", 123, null, trailingTrivia);
-        InternalSyntax.SyntaxToken generationNumberToken = InternalSyntax.SyntaxToken.Create(SyntaxKind.NumericLiteralToken, "32", 32, null, trailingTrivia);
-        InternalSyntax.SyntaxToken referenceKeywordToken = InternalSyntax.SyntaxToken.Create(SyntaxKind.IndirectReferenceKeyword, null, trailingTrivia);
+        GreenNode trailingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        SyntaxToken objectNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "123", 123, null, trailingTrivia);
+        SyntaxToken generationNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "32", 32, null, trailingTrivia);
+        SyntaxToken referenceKeywordToken = SyntaxFactory.Token(SyntaxKind.IndirectReferenceKeyword, null, trailingTrivia);
 
         LiteralExpressionSyntax objectNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, objectNumberToken);
         LiteralExpressionSyntax generationNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, generationNumberToken);

@@ -5,18 +5,19 @@
 
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
-using InternalSyntax = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using SyntaxToken = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxToken;
+using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxTrivia;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxTests;
 
 public class SyntaxTokenTests
 {
-    [Fact(DisplayName = $"The Create() method must set the {nameof(InternalSyntax.SyntaxToken.Kind)} property.")]
+    [Fact(DisplayName = $"The Create() method must set the {nameof(SyntaxToken.Kind)} property.")]
     public void CreateMethod_MustSetKindProperty()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.NumericLiteralToken;
-        InternalSyntax.SyntaxToken token = InternalSyntax.SyntaxToken.Create(kind);
+        SyntaxToken token = SyntaxFactory.Token(kind);
 
         // Act
         SyntaxKind actualSyntaxKind = token.Kind;
@@ -25,7 +26,7 @@ public class SyntaxTokenTests
         Assert.Equal(kind, actualSyntaxKind);
     }
 
-    [Theory(DisplayName = $"The Create() method must set the {nameof(InternalSyntax.SyntaxToken.Text)} property.")]
+    [Theory(DisplayName = $"The Create() method must set the {nameof(SyntaxToken.Text)} property.")]
     [InlineData(SyntaxKind.None, "")]
     [InlineData(SyntaxKind.LeftParenthesisToken, "(")]
     [InlineData(SyntaxKind.RightParenthesisToken, ")")]
@@ -55,7 +56,7 @@ public class SyntaxTokenTests
     public void CreateMethod_MustSetTextProperty(SyntaxKind kind, string text)
     {
         // Arrange
-        InternalSyntax.SyntaxToken token = InternalSyntax.SyntaxToken.Create(kind);
+        SyntaxToken token = SyntaxFactory.Token(kind);
 
         // Act
         string actualText = token.Text;
@@ -64,7 +65,7 @@ public class SyntaxTokenTests
         Assert.Equal(text, actualText);
     }
 
-    [Theory(DisplayName = $"Two SyntaxTokens with the same {nameof(InternalSyntax.SyntaxToken.Kind)} must have the same reference on {nameof(InternalSyntax.SyntaxToken.Value)} property.")]
+    [Theory(DisplayName = $"Two SyntaxTokens with the same {nameof(SyntaxToken.Kind)} must have the same reference on {nameof(SyntaxToken.Value)} property.")]
     [InlineData(SyntaxKind.TrueKeyword, true)]
     [InlineData(SyntaxKind.FalseKeyword, false)]
     [InlineData(SyntaxKind.NullKeyword, null)]
@@ -72,8 +73,8 @@ public class SyntaxTokenTests
     public void TwoSyntaxTokens_Keywords_MustHaveSameReferenceValue(SyntaxKind kind, object? value)
     {
         // Arrange
-        InternalSyntax.SyntaxToken token1 = InternalSyntax.SyntaxToken.Create(kind);
-        InternalSyntax.SyntaxToken token2 = InternalSyntax.SyntaxToken.Create(kind);
+        SyntaxToken token1 = SyntaxFactory.Token(kind);
+        SyntaxToken token2 = SyntaxFactory.Token(kind);
 
         // Act
         object? actualValue1 = token1.Value;
@@ -85,14 +86,14 @@ public class SyntaxTokenTests
         Assert.True(ReferenceEquals(actualValue1, actualValue2));
     }
 
-    [Fact(DisplayName = $"The ToString() method must return the {nameof(InternalSyntax.SyntaxToken.Text)} property value.")]
+    [Fact(DisplayName = $"The ToString() method must return the {nameof(SyntaxToken.Text)} property value.")]
     public void ToStringMethod_MustReturnTheTextPropertyValue()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
         const string expectedToStringValue = "true";
 
-        InternalSyntax.SyntaxToken token = InternalSyntax.SyntaxToken.Create(kind);
+        SyntaxToken token = SyntaxFactory.Token(kind);
 
         // Act
         string actualToStringValue = token.ToString();
@@ -101,13 +102,13 @@ public class SyntaxTokenTests
         Assert.Equal(expectedToStringValue, actualToStringValue);
     }
 
-    [Fact(DisplayName = $"The Create() method must set the {nameof(InternalSyntax.SyntaxToken.FullWidth)} property with the computed {nameof(InternalSyntax.SyntaxToken.Text)} property length.")]
+    [Fact(DisplayName = $"The Create() method must set the {nameof(SyntaxToken.FullWidth)} property with the computed {nameof(SyntaxToken.Text)} property length.")]
     public void CreateMethod_MustSetFullWidthPropertyWithTextPropertyLength()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
         const int expectedFullWidth = 4;
-        InternalSyntax.SyntaxToken token = InternalSyntax.SyntaxToken.Create(kind);
+        SyntaxToken token = SyntaxFactory.Token(kind);
 
         // Act
         int actualFullWidth = token.FullWidth;
@@ -116,13 +117,13 @@ public class SyntaxTokenTests
         Assert.Equal(expectedFullWidth, actualFullWidth);
     }
 
-    [Fact(DisplayName = $"The Create() method must set the {nameof(InternalSyntax.SyntaxToken.Width)} property the same value as the {nameof(InternalSyntax.SyntaxToken.FullWidth)} property.")]
+    [Fact(DisplayName = $"The Create() method must set the {nameof(SyntaxToken.Width)} property the same value as the {nameof(SyntaxToken.FullWidth)} property.")]
     public void CreateMethod_NoTrivia_MustSetToFullWidthTheWithProperty()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
         const int expectedWidth = 4;
-        InternalSyntax.SyntaxToken token = InternalSyntax.SyntaxToken.Create(kind);
+        SyntaxToken token = SyntaxFactory.Token(kind);
 
         // Act
         int actualWidth = token.Width;
@@ -131,12 +132,12 @@ public class SyntaxTokenTests
         Assert.Equal(expectedWidth, actualWidth);
     }
 
-    [Fact(DisplayName = $"The Create() method must set the {nameof(InternalSyntax.SyntaxToken.LeadingTrivia)} property to null.")]
+    [Fact(DisplayName = $"The Create() method must set the {nameof(SyntaxToken.LeadingTrivia)} property to null.")]
     public void CreateMethod_MustSetLeadingTriviaToNull()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        GreenNode token = InternalSyntax.SyntaxToken.Create(kind);
+        GreenNode token = SyntaxFactory.Token(kind);
 
         // Act
         GreenNode? actualLeadingTrivia = token.LeadingTrivia;
@@ -145,12 +146,12 @@ public class SyntaxTokenTests
         Assert.Null(actualLeadingTrivia);
     }
 
-    [Fact(DisplayName = $"The Create() method must set the {nameof(InternalSyntax.SyntaxToken.TrailingTrivia)} property to null.")]
+    [Fact(DisplayName = $"The Create() method must set the {nameof(SyntaxToken.TrailingTrivia)} property to null.")]
     public void CreateMethod_MustSetTrailingTriviaToNull()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        GreenNode token = InternalSyntax.SyntaxToken.Create(kind);
+        GreenNode token = SyntaxFactory.Token(kind);
 
         // Act
         GreenNode? actualTrailingTrivia = token.TrailingTrivia;
@@ -159,12 +160,12 @@ public class SyntaxTokenTests
         Assert.Null(actualTrailingTrivia);
     }
 
-    [Fact(DisplayName = $"The SyntaxToken with no trivia must have the {nameof(InternalSyntax.SyntaxToken.LeadingTriviaWidth)} set to 0.")]
+    [Fact(DisplayName = $"The SyntaxToken with no trivia must have the {nameof(SyntaxToken.LeadingTriviaWidth)} set to 0.")]
     public void CreateMethod_NoTrivia_MustSetLeadingTriviaWidthToZero()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        GreenNode token = InternalSyntax.SyntaxToken.Create(kind);
+        GreenNode token = SyntaxFactory.Token(kind);
 
         // Act
         int actualLeadingTriviaWidth = token.LeadingTriviaWidth;
@@ -173,12 +174,12 @@ public class SyntaxTokenTests
         Assert.Equal(0, actualLeadingTriviaWidth);
     }
 
-    [Fact(DisplayName = $"The SyntaxToken with no trivia must have the {nameof(InternalSyntax.SyntaxToken.TrailingTriviaWidth)} set to 0.")]
+    [Fact(DisplayName = $"The SyntaxToken with no trivia must have the {nameof(SyntaxToken.TrailingTriviaWidth)} set to 0.")]
     public void CreateMethod_NoTrivia_MustSetTrailingTriviaWidthToZero()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        GreenNode token = InternalSyntax.SyntaxToken.Create(kind);
+        GreenNode token = SyntaxFactory.Token(kind);
 
         // Act
         int actualTrailingTriviaWidth = token.TrailingTriviaWidth;
@@ -187,12 +188,12 @@ public class SyntaxTokenTests
         Assert.Equal(0, actualTrailingTriviaWidth);
     }
 
-    [Fact(DisplayName = $"The default SyntaxToken must have the {nameof(InternalSyntax.SyntaxToken.SlotCount)} set to 0.")]
+    [Fact(DisplayName = $"The default SyntaxToken must have the {nameof(SyntaxToken.SlotCount)} set to 0.")]
     public void DefaultSyntaxToken_MustSetSlotCountToZero()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        GreenNode token = InternalSyntax.SyntaxToken.Create(kind);
+        GreenNode token = SyntaxFactory.Token(kind);
 
         // Act
         int actualSlotCount = token.SlotCount;
@@ -206,7 +207,7 @@ public class SyntaxTokenTests
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        GreenNode token = InternalSyntax.SyntaxToken.Create(kind);
+        GreenNode token = SyntaxFactory.Token(kind);
 
         // Act
         GreenNode? ActualSlotFunc()
@@ -218,12 +219,12 @@ public class SyntaxTokenTests
         Assert.Throws<InvalidOperationException>(ActualSlotFunc);
     }
 
-    [Fact(DisplayName = $"The {nameof(InternalSyntax.SyntaxTrivia.IsTrivia)} property must return false.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.IsTrivia)} property must return false.")]
     public void IsTriviaProperty_MustReturnFalse()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        GreenNode token = InternalSyntax.SyntaxToken.Create(kind);
+        GreenNode token = SyntaxFactory.Token(kind);
 
         // Act
         bool actualIsTrivia = token.IsTrivia;
@@ -232,12 +233,12 @@ public class SyntaxTokenTests
         Assert.False(actualIsTrivia);
     }
 
-    [Fact(DisplayName = $"The {nameof(InternalSyntax.SyntaxTrivia.IsTrivia)} property must return true.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.IsTrivia)} property must return true.")]
     public void IsTokenProperty_MustReturnTrue()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        GreenNode token = InternalSyntax.SyntaxToken.Create(kind);
+        GreenNode token = SyntaxFactory.Token(kind);
 
         // Act
         bool actualIsToken = token.IsToken;
@@ -246,13 +247,13 @@ public class SyntaxTokenTests
         Assert.True(actualIsToken);
     }
 
-    [Fact(DisplayName = $"The {nameof(InternalSyntax.SyntaxTrivia.LeadingTrivia)} property must be assigned from constructor.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.LeadingTrivia)} property must be assigned from constructor.")]
     public void LeadingTriviaProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        GreenNode leadingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "  ");
-        GreenNode token = InternalSyntax.SyntaxToken.Create(kind, leadingTrivia, null);
+        GreenNode leadingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, "  ");
+        GreenNode token = SyntaxFactory.Token(kind, leadingTrivia, null);
 
         // Act
         GreenNode? actualLeadingTrivia = token.LeadingTrivia;
@@ -261,13 +262,13 @@ public class SyntaxTokenTests
         Assert.Equal(leadingTrivia, actualLeadingTrivia);
     }
 
-    [Fact(DisplayName = $"The {nameof(InternalSyntax.SyntaxTrivia.TrailingTrivia)} property must be assigned from constructor.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.TrailingTrivia)} property must be assigned from constructor.")]
     public void TrailingTriviaProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword;
-        GreenNode trailingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "  ");
-        GreenNode token = InternalSyntax.SyntaxToken.Create(kind, null, trailingTrivia);
+        GreenNode trailingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, "  ");
+        GreenNode token = SyntaxFactory.Token(kind, null, trailingTrivia);
 
         // Act
         GreenNode? actualTrailingTrivia = token.TrailingTrivia;
@@ -276,14 +277,14 @@ public class SyntaxTokenTests
         Assert.Equal(trailingTrivia, actualTrailingTrivia);
     }
 
-    [Fact(DisplayName = $"The {nameof(InternalSyntax.SyntaxToken.FullWidth)} property must take into account the leading and trailing trivia.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxToken.FullWidth)} property must take into account the leading and trailing trivia.")]
     public void FullWidthProperty_WithLeadingAndTrailingTrivia_MustTakeIntoAccountLeadingAndTrailingTrivia()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword; // FullWidth = 4
-        GreenNode leadingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "   "); // FullWidth = 3
-        GreenNode trailingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "  "); // FullWidth = 2
-        GreenNode token = InternalSyntax.SyntaxToken.Create(kind, leadingTrivia, trailingTrivia);
+        GreenNode leadingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, "   "); // FullWidth = 3
+        GreenNode trailingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, "  "); // FullWidth = 2
+        GreenNode token = SyntaxFactory.Token(kind, leadingTrivia, trailingTrivia);
 
         // Act
         int actualFullWidth = token.FullWidth;
@@ -292,14 +293,14 @@ public class SyntaxTokenTests
         Assert.Equal(9, actualFullWidth);
     }
 
-    [Fact(DisplayName = $"The {nameof(InternalSyntax.SyntaxToken.Width)} property must not take into account the leading and trailing trivia.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxToken.Width)} property must not take into account the leading and trailing trivia.")]
     public void WidthProperty_WithLeadingAndTrailingTrivia_MustNotTakeIntoAccountLeadingAndTrailingTrivia()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword; // FullWidth = 4
-        GreenNode leadingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "   "); // FullWidth = 3
-        GreenNode trailingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "  "); // FullWidth = 2
-        GreenNode token = InternalSyntax.SyntaxToken.Create(kind, leadingTrivia, trailingTrivia);
+        GreenNode leadingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, "   "); // FullWidth = 3
+        GreenNode trailingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, "  "); // FullWidth = 2
+        GreenNode token = SyntaxFactory.Token(kind, leadingTrivia, trailingTrivia);
 
         // Act
         int actualWidth = token.Width;
@@ -308,14 +309,14 @@ public class SyntaxTokenTests
         Assert.Equal(4, actualWidth);
     }
 
-    [Fact(DisplayName = $"The {nameof(InternalSyntax.SyntaxToken.LeadingTriviaWidth)} property must be assigned from {nameof(InternalSyntax.SyntaxTrivia)}.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxToken.LeadingTriviaWidth)} property must be assigned from {nameof(SyntaxTrivia)}.")]
     public void LeadingTriviaWidthProperty_MustBeAssignedFromSyntaxTrivia()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword; // FullWidth = 4
-        GreenNode leadingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "   "); // FullWidth = 3
-        GreenNode trailingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "  "); // FullWidth = 2
-        GreenNode token = InternalSyntax.SyntaxToken.Create(kind, leadingTrivia, trailingTrivia);
+        GreenNode leadingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, "   "); // FullWidth = 3
+        GreenNode trailingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, "  "); // FullWidth = 2
+        GreenNode token = SyntaxFactory.Token(kind, leadingTrivia, trailingTrivia);
 
         // Act
         int leadingTriviaWidth = token.LeadingTriviaWidth;
@@ -324,14 +325,14 @@ public class SyntaxTokenTests
         Assert.Equal(3, leadingTriviaWidth);
     }
 
-    [Fact(DisplayName = $"The {nameof(InternalSyntax.SyntaxToken.TrailingTrivia)} property must be assigned from {nameof(InternalSyntax.SyntaxTrivia)}.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxToken.TrailingTrivia)} property must be assigned from {nameof(SyntaxTrivia)}.")]
     public void TrailingTriviaWidthProperty_MustBeAssignedFromSyntaxTrivia()
     {
         // Arrange
         const SyntaxKind kind = SyntaxKind.TrueKeyword; // FullWidth = 4
-        GreenNode leadingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "   "); // FullWidth = 3
-        GreenNode trailingTrivia = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, "  "); // FullWidth = 2
-        GreenNode token = InternalSyntax.SyntaxToken.Create(kind, leadingTrivia, trailingTrivia);
+        GreenNode leadingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, "   "); // FullWidth = 3
+        GreenNode trailingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, "  "); // FullWidth = 2
+        GreenNode token = SyntaxFactory.Token(kind, leadingTrivia, trailingTrivia);
 
         // Act
         int trailingTriviaWidth = token.TrailingTriviaWidth;

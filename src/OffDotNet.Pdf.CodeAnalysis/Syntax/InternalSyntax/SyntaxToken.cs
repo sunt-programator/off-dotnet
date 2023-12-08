@@ -12,7 +12,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 /// <example>PDF identifiers, keywords, literals.</example>
 internal sealed class SyntaxToken : GreenNode
 {
-    private SyntaxToken(SyntaxKind kind, string text, object? value, GreenNode? leading, GreenNode? trailing, int fullWidth)
+    internal SyntaxToken(SyntaxKind kind, string text, object? value, GreenNode? leading, GreenNode? trailing, int fullWidth)
         : base(kind)
     {
         this.Text = text;
@@ -53,35 +53,6 @@ internal sealed class SyntaxToken : GreenNode
     public override string ToString()
     {
         return this.Text;
-    }
-
-    internal static SyntaxToken Create(SyntaxKind kind)
-    {
-        string text = kind.GetText();
-        int fullWidth = text.Length;
-        object? value = kind.GetValue();
-        return new SyntaxToken(kind, text, value, null, null, fullWidth);
-    }
-
-    internal static SyntaxToken Create(SyntaxKind kind, GreenNode? leading, GreenNode? trailing)
-    {
-        string text = kind.GetText();
-        object? value = kind.GetValue();
-
-        int leadingFullWidth = leading?.FullWidth ?? 0;
-        int trailingFullWidth = trailing?.FullWidth ?? 0;
-        int nodeFullWidth = text.Length + leadingFullWidth + trailingFullWidth;
-
-        return new SyntaxToken(kind, text, value, leading, trailing, nodeFullWidth);
-    }
-
-    internal static SyntaxToken Create<T>(SyntaxKind kind, string text, T? value, GreenNode? leading, GreenNode? trailing)
-    {
-        int leadingFullWidth = leading?.FullWidth ?? 0;
-        int trailingFullWidth = trailing?.FullWidth ?? 0;
-        int nodeFullWidth = text.Length + leadingFullWidth + trailingFullWidth;
-
-        return new SyntaxToken(kind, text, value, leading, trailing, nodeFullWidth);
     }
 
     /// <inheritdoc cref="GreenNode.GetSlot"/>

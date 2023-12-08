@@ -40,4 +40,38 @@ internal static class SyntaxFactory
 
         return new LiteralExpressionSyntax(kind, token);
     }
+
+    public static SyntaxToken Token(SyntaxKind kind)
+    {
+        string text = kind.GetText();
+        int fullWidth = text.Length;
+        object? value = kind.GetValue();
+        return new SyntaxToken(kind, text, value, null, null, fullWidth);
+    }
+
+    public static SyntaxToken Token(SyntaxKind kind, GreenNode? leading, GreenNode? trailing)
+    {
+        string text = kind.GetText();
+        object? value = kind.GetValue();
+
+        int leadingFullWidth = leading?.FullWidth ?? 0;
+        int trailingFullWidth = trailing?.FullWidth ?? 0;
+        int nodeFullWidth = text.Length + leadingFullWidth + trailingFullWidth;
+
+        return new SyntaxToken(kind, text, value, leading, trailing, nodeFullWidth);
+    }
+
+    public static SyntaxToken Token<T>(SyntaxKind kind, string text, T? value, GreenNode? leading, GreenNode? trailing)
+    {
+        int leadingFullWidth = leading?.FullWidth ?? 0;
+        int trailingFullWidth = trailing?.FullWidth ?? 0;
+        int nodeFullWidth = text.Length + leadingFullWidth + trailingFullWidth;
+
+        return new SyntaxToken(kind, text, value, leading, trailing, nodeFullWidth);
+    }
+
+    public static SyntaxTrivia Trivia(SyntaxKind kind, string text)
+    {
+        return new SyntaxTrivia(kind, text);
+    }
 }

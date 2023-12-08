@@ -4,32 +4,33 @@
 // </copyright>
 
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
-using InternalSyntax = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using SyntaxToken = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxToken;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxTests;
 
 public class LiteralExpressionSyntaxTests
 {
-    [Fact(DisplayName = $"The {nameof(InternalSyntax.LiteralExpressionSyntax.Token)} property must be assigned from constructor.")]
+    [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.Token)} property must be assigned from constructor.")]
     public void KeywordProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        InternalSyntax.SyntaxToken keyword = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
-        InternalSyntax.LiteralExpressionSyntax literalExpression = InternalSyntax.SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
+        SyntaxToken keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
+        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
 
         // Act
-        InternalSyntax.SyntaxToken actualToken = literalExpression.Token;
+        SyntaxToken actualToken = literalExpression.Token;
 
         // Assert
         Assert.Equal(keyword, actualToken);
     }
 
-    [Fact(DisplayName = $"The {nameof(InternalSyntax.LiteralExpressionSyntax.SlotCount)} property must be equal to 1.")]
+    [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.SlotCount)} property must be equal to 1.")]
     public void SlotCountProperty_MustBeEqualTo1()
     {
         // Arrange
-        InternalSyntax.SyntaxToken keyword = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
-        InternalSyntax.LiteralExpressionSyntax literalExpression = InternalSyntax.SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
+        SyntaxToken keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
+        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
 
         // Act
         int actualSlotCount = literalExpression.SlotCount;
@@ -38,15 +39,15 @@ public class LiteralExpressionSyntaxTests
         Assert.Equal(1, actualSlotCount);
     }
 
-    [Fact(DisplayName = $"The GetSlot() method with index 0 must return {nameof(InternalSyntax.LiteralExpressionSyntax.Token)} property.")]
+    [Fact(DisplayName = $"The GetSlot() method with index 0 must return {nameof(LiteralExpressionSyntax.Token)} property.")]
     public void GetSlotMethod_Index0_MustReturnKeywordProperty()
     {
         // Arrange
-        InternalSyntax.SyntaxToken keyword = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
-        InternalSyntax.LiteralExpressionSyntax literalExpression = InternalSyntax.SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
+        SyntaxToken keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
+        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
 
         // Act
-        InternalSyntax.GreenNode? actualSlot = literalExpression.GetSlot(0);
+        GreenNode? actualSlot = literalExpression.GetSlot(0);
 
         // Assert
         Assert.Equal(keyword, actualSlot);
@@ -56,11 +57,11 @@ public class LiteralExpressionSyntaxTests
     public void GetSlotMethod_Index1_MustReturnNull()
     {
         // Arrange
-        InternalSyntax.SyntaxToken keyword = InternalSyntax.SyntaxToken.Create(SyntaxKind.TrueKeyword);
-        InternalSyntax.LiteralExpressionSyntax literalExpression = InternalSyntax.SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
+        SyntaxToken keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
+        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
 
         // Act
-        InternalSyntax.GreenNode? actualSlot = literalExpression.GetSlot(1);
+        GreenNode? actualSlot = literalExpression.GetSlot(1);
 
         // Assert
         Assert.Null(actualSlot);
