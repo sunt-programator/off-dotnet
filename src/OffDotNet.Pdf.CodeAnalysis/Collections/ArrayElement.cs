@@ -10,7 +10,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Collections;
 
 [DebuggerDisplay("{Value,nq}")]
 internal struct ArrayElement<TNode>
-    where TNode : GreenNode
+    where TNode : GreenNode?
 {
     internal TNode Value;
 

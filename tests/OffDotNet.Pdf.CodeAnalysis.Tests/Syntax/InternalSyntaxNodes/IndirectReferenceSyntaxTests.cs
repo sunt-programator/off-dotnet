@@ -93,7 +93,7 @@ public class IndirectReferenceSyntaxTests
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 0 must return {nameof(IndirectReferenceSyntax.ObjectNumber)} property.")]
-    public void GetSlotMethod_Index0_MustReturnObjectNumber()
+    public void GetSlotMethod_Index0_MustReturnFirstObject()
     {
         // Arrange
         IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);
@@ -106,7 +106,7 @@ public class IndirectReferenceSyntaxTests
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 1 must return {nameof(IndirectReferenceSyntax.GenerationNumber)} property.")]
-    public void GetSlotMethod_Index1_MustReturnObjectNumber()
+    public void GetSlotMethod_Index1_MustReturnSecondObject()
     {
         // Arrange
         IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);
@@ -119,7 +119,7 @@ public class IndirectReferenceSyntaxTests
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 2 must return {nameof(IndirectReferenceSyntax.ReferenceKeyword)} property.")]
-    public void GetSlotMethod_Index2_MustReturnObjectNumber()
+    public void GetSlotMethod_Index2_MustReturnThirdObject()
     {
         // Arrange
         IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);

@@ -50,7 +50,7 @@ public class SyntaxTokenTests
     [InlineData(SyntaxKind.IndirectReferenceKeyword, "R")]
     [InlineData(SyntaxKind.StartStreamKeyword, "stream")]
     [InlineData(SyntaxKind.EndStreamKeyword, "endstream")]
-    [InlineData(SyntaxKind.XrefKeyword, "xref")]
+    [InlineData(SyntaxKind.XRefKeyword, "xref")]
     [InlineData(SyntaxKind.TrailerKeyword, "trailer")]
     [InlineData(SyntaxKind.StartXrefKeyword, "startxref")]
     public void CreateMethod_MustSetTextProperty(SyntaxKind kind, string text)

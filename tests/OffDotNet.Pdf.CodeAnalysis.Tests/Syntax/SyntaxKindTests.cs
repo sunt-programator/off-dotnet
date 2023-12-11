@@ -11,6 +11,7 @@ public class SyntaxKindTests
 {
     [Theory(DisplayName = "The SyntaxKind enum must have predefined and immutable values.")]
     [InlineData(SyntaxKind.None, 0)]
+    [InlineData(SyntaxKind.List, 1)]
     [InlineData(SyntaxKind.LeftParenthesisToken, 8100)]
     [InlineData(SyntaxKind.RightParenthesisToken, 8101)]
     [InlineData(SyntaxKind.LessThanToken, 8102)]
@@ -33,7 +34,7 @@ public class SyntaxKindTests
     [InlineData(SyntaxKind.IndirectReferenceKeyword, 8305)]
     [InlineData(SyntaxKind.StartStreamKeyword, 8306)]
     [InlineData(SyntaxKind.EndStreamKeyword, 8307)]
-    [InlineData(SyntaxKind.XrefKeyword, 8308)]
+    [InlineData(SyntaxKind.XRefKeyword, 8308)]
     [InlineData(SyntaxKind.StartXrefKeyword, 8309)]
     [InlineData(SyntaxKind.TrailerKeyword, 8310)]
     [InlineData(SyntaxKind.PdfKeyword, 8311)]

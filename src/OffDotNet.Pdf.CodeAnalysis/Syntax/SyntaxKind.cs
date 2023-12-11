@@ -10,6 +10,9 @@ public enum SyntaxKind : ushort
     /// <summary>Represents an unknown token.</summary>
     None = 0,
 
+    /// <summary>Represents a list of tokens.</summary>
+    List = 1,
+
     // Punctuations
 
     /// <summary>Represents <c>(</c> token.</summary>
@@ -81,7 +84,7 @@ public enum SyntaxKind : ushort
     EndStreamKeyword = 8307,
 
     /// <summary>Represents <c>xref</c> keyword.</summary>
-    XrefKeyword = 8308,
+    XRefKeyword = 8308,
 
     /// <summary>Represents <c>startxref</c> keyword.</summary>
     StartXrefKeyword = 8309,

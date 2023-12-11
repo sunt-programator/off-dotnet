@@ -4,12 +4,14 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
+using OffDotNet.Pdf.CodeAnalysis.Collections;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal static class SyntaxFactory
 {
-    public static IndirectObjectSyntax Object(LiteralExpressionSyntax objectNumber, LiteralExpressionSyntax generationNumber, SyntaxToken objectKeyword, GreenNode content, SyntaxToken endObjectKeyword)
+    public static IndirectObjectSyntax Object(LiteralExpressionSyntax objectNumber, LiteralExpressionSyntax generationNumber, SyntaxToken objectKeyword, GreenNode content,
+        SyntaxToken endObjectKeyword)
     {
         return new IndirectObjectSyntax(SyntaxKind.IndirectObject, objectNumber, generationNumber, objectKeyword, content, endObjectKeyword);
     }
@@ -47,6 +49,28 @@ internal static class SyntaxFactory
 #endif
 
         return new LiteralExpressionSyntax(kind, token);
+    }
+
+    public static GreenNode List(GreenNode child)
+    {
+        return child;
+    }
+
+    public static GreenNode List(GreenNode child0, GreenNode child1)
+    {
+        return new SyntaxList.WithTwoChildren(child0, child1);
+    }
+
+    public static GreenNode List(GreenNode child0, GreenNode child1, GreenNode child2)
+    {
+        return new SyntaxList.WithThreeChildren(child0, child1, child2);
+    }
+
+    public static GreenNode List(ArrayElement<GreenNode>[] children)
+    {
+        return children.Length < 10
+            ? new SyntaxList.WithManyChildren(children)
+            : new SyntaxList.WithLotsOfChildren(children);
     }
 
     public static SyntaxToken Token(SyntaxKind kind)

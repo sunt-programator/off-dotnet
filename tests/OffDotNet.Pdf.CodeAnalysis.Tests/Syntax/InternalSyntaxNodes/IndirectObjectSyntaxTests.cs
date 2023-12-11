@@ -120,7 +120,7 @@ public class IndirectObjectSyntaxTests
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 0 must return {nameof(IndirectObjectSyntax.ObjectNumber)} property.")]
-    public void GetSlotMethod_Index0_MustReturnObjectNumber()
+    public void GetSlotMethod_Index0_MustReturnFirstObject()
     {
         // Arrange
         IndirectObjectSyntax indirectObject = SyntaxFactory.Object(this.objectNumber, this.generationNumber, this.objKeyword, this.content, this.endObjKeyword);
@@ -133,7 +133,7 @@ public class IndirectObjectSyntaxTests
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 1 must return {nameof(IndirectObjectSyntax.GenerationNumber)} property.")]
-    public void GetSlotMethod_Index1_MustReturnObjectNumber()
+    public void GetSlotMethod_Index1_MustReturnSecondObject()
     {
         // Arrange
         IndirectObjectSyntax indirectObject = SyntaxFactory.Object(this.objectNumber, this.generationNumber, this.objKeyword, this.content, this.endObjKeyword);
@@ -146,7 +146,7 @@ public class IndirectObjectSyntaxTests
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 2 must return {nameof(IndirectObjectSyntax.ObjectKeyword)} property.")]
-    public void GetSlotMethod_Index2_MustReturnObjectNumber()
+    public void GetSlotMethod_Index2_MustReturnThirdObject()
     {
         // Arrange
         IndirectObjectSyntax indirectObject = SyntaxFactory.Object(this.objectNumber, this.generationNumber, this.objKeyword, this.content, this.endObjKeyword);
