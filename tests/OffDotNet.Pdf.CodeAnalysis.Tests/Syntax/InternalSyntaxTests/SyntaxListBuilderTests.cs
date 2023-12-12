@@ -372,7 +372,7 @@ public class SyntaxListBuilderTests
         Assert.Equal(0, actualCount);
     }
 
-    [Fact(DisplayName = $"The RemoveLast() method set the node to null.")]
+    [Fact(DisplayName = "The RemoveLast() method set the node to null.")]
     public void RemoveLastMethod_MustSetNodeToNull()
     {
         // Arrange
