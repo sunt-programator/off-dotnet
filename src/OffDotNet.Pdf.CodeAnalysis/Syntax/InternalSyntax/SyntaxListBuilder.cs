@@ -30,18 +30,35 @@ internal sealed class SyntaxListBuilder
         return new SyntaxListBuilder(DefaultCapacity);
     }
 
-    public void Add(GreenNode? item)
+    public SyntaxListBuilder Add(GreenNode? item)
     {
-        this.EnsureAdditionalCapacity(1);
-        this.nodes[this.Count++].Value = item;
+        if (item == null)
+        {
+            return this;
+        }
+
+        if (item.Kind != SyntaxKind.List)
+        {
+            this.EnsureAdditionalCapacity(1);
+            this.nodes[this.Count++].Value = item;
+            return this;
+        }
+
+        this.EnsureAdditionalCapacity(item.SlotCount); // Necessary, but not sufficient (e.g. for nested lists).
+        for (int i = 0; i < item.SlotCount; i++)
+        {
+            this.Add(item.GetSlot(i));
+        }
+
+        return this;
     }
 
-    public void AddRange(GreenNode[] items)
+    public SyntaxListBuilder AddRange(GreenNode[] items)
     {
-        this.AddRange(items, 0, items.Length);
+        return this.AddRange(items, 0, items.Length);
     }
 
-    public void AddRange(GreenNode[] items, int offset, int length)
+    public SyntaxListBuilder AddRange(GreenNode[] items, int offset, int length)
     {
         if (offset < 0 || offset >= items.Length)
         {
@@ -63,11 +80,58 @@ internal sealed class SyntaxListBuilder
         }
 
         this.Validate(oldCount, this.Count);
+        return this;
     }
 
-    public void Clear()
+    public SyntaxListBuilder AddRange(SyntaxList<GreenNode> items)
+    {
+        this.AddRange(items, 0, items.Count);
+        return this;
+    }
+
+    public SyntaxListBuilder AddRange(SyntaxList<GreenNode> items, int offset, int length)
+    {
+        if (offset < 0 || offset >= items.Count)
+        {
+            throw new ArgumentOutOfRangeException(nameof(offset), "The offset must be greater than or equal to zero and less than the length of the items array.");
+        }
+
+        int offsetAndLength = offset + length;
+        if (length < 0 || offsetAndLength > items.Count)
+        {
+            throw new ArgumentOutOfRangeException(nameof(length), "The length must be greater than or equal to zero and less than or equal to the length of the items array.");
+        }
+
+        this.EnsureAdditionalCapacity(length - offset);
+        int oldCount = this.Count;
+
+        for (int i = offset; i < offsetAndLength; i++)
+        {
+            this.Add(items[i]);
+        }
+
+        this.Validate(oldCount, this.Count);
+        return this;
+    }
+
+    public SyntaxListBuilder AddRange<TNode>(SyntaxList<TNode> items)
+        where TNode : GreenNode
+    {
+        this.AddRange(items, 0, items.Count);
+        return this;
+    }
+
+    public SyntaxListBuilder AddRange<TNode>(SyntaxList<TNode> items, int offset, int length)
+        where TNode : GreenNode
+    {
+        this.AddRange(new SyntaxList<GreenNode>(items.Node), offset, length);
+        return this;
+    }
+
+    public SyntaxListBuilder Clear()
     {
         this.Count = 0;
+        return this;
     }
 
     public void RemoveLast()
@@ -98,6 +162,17 @@ internal sealed class SyntaxListBuilder
         }
 
         return array;
+    }
+
+    public SyntaxList<GreenNode> ToList()
+    {
+        return new SyntaxList<GreenNode>(this.ToListNode());
+    }
+
+    public SyntaxList<TNode> ToList<TNode>()
+        where TNode : GreenNode
+    {
+        return new SyntaxList<TNode>(this.ToListNode());
     }
 
     public GreenNode? ToListNode()
