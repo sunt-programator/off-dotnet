@@ -16,8 +16,8 @@ public class SyntaxList1Tests
     {
         // Arrange
         SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
+        LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        LiteralExpressionSyntax literalExpression2 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
         GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
@@ -59,8 +59,8 @@ public class SyntaxList1Tests
     {
         // Arrange
         SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
+        LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        LiteralExpressionSyntax literalExpression2 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
         GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
@@ -76,7 +76,7 @@ public class SyntaxList1Tests
     {
         // Arrange
         SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(literalExpression1);
@@ -104,8 +104,8 @@ public class SyntaxList1Tests
     {
         // Arrange
         SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
+        LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        LiteralExpressionSyntax literalExpression2 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
         GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
@@ -121,8 +121,8 @@ public class SyntaxList1Tests
     {
         // Arrange
         SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
+        LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        LiteralExpressionSyntax literalExpression2 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
         GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
@@ -138,7 +138,7 @@ public class SyntaxList1Tests
     {
         // Arrange
         SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(literalExpression1);
@@ -153,7 +153,7 @@ public class SyntaxList1Tests
     {
         // Arrange
         SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(literalExpression1);
@@ -184,7 +184,7 @@ public class SyntaxList1Tests
     public void AnyMethod_WithNode_MustReturnTrue()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(literalExpression1);
@@ -210,7 +210,7 @@ public class SyntaxList1Tests
     public void AnyMethod_NonExistingKind_MustReturnFalse()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(literalExpression1);
@@ -224,7 +224,7 @@ public class SyntaxList1Tests
     public void AnyMethod_ExistingKind_MustReturnTrue()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(literalExpression1);
@@ -238,8 +238,8 @@ public class SyntaxList1Tests
     public void NodesProperty_MustReturnTheNodesArray()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        LiteralExpressionSyntax literalExpression2 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
         GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
@@ -268,8 +268,8 @@ public class SyntaxList1Tests
     public void EqualsMethod_MustReturnFalse()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        LiteralExpressionSyntax literalExpression2 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
         GreenNode list1 = SyntaxFactory.List(literalExpression1, literalExpression2);
         GreenNode list2 = SyntaxFactory.List(literalExpression1, literalExpression2);
 
@@ -294,8 +294,8 @@ public class SyntaxList1Tests
     public void EqualsMethod_MustReturnTrue()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        LiteralExpressionSyntax literalExpression2 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
         GreenNode list1 = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
@@ -330,8 +330,8 @@ public class SyntaxList1Tests
     public void GetHashCodeMethod_ExistingNode_MustReturnActualHashCode()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        LiteralExpressionSyntax literalExpression2 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
         GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
         int expectedHashCode = list.GetHashCode();
 

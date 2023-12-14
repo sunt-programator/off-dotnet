@@ -10,7 +10,11 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal static class SyntaxFactory
 {
-    public static IndirectObjectSyntax Object(LiteralExpressionSyntax objectNumber, LiteralExpressionSyntax generationNumber, SyntaxToken objectKeyword, GreenNode content,
+    public static IndirectObjectSyntax Object(
+        LiteralExpressionSyntax objectNumber,
+        LiteralExpressionSyntax generationNumber,
+        SyntaxToken objectKeyword,
+        GreenNode content,
         SyntaxToken endObjectKeyword)
     {
         return new IndirectObjectSyntax(SyntaxKind.IndirectObject, objectNumber, generationNumber, objectKeyword, content, endObjectKeyword);
@@ -18,7 +22,19 @@ internal static class SyntaxFactory
 
     public static IndirectReferenceSyntax IndirectReference(LiteralExpressionSyntax objectNumber, LiteralExpressionSyntax generationNumber, SyntaxToken referenceKeyword)
     {
-        return new IndirectReferenceSyntax(SyntaxKind.IndirectReference, objectNumber, generationNumber, referenceKeyword);
+        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.IndirectReference, objectNumber, generationNumber, referenceKeyword, out int hash);
+        if (cached != null)
+        {
+            return (IndirectReferenceSyntax)cached;
+        }
+
+        IndirectReferenceSyntax result = new(SyntaxKind.IndirectReference, objectNumber, generationNumber, referenceKeyword);
+        if (hash > 0)
+        {
+            SyntaxNodeCache.AddNode(result, hash);
+        }
+
+        return result;
     }
 
     [SuppressMessage("ReSharper", "SwitchStatementHandlesSomeKnownEnumValuesWithDefault", Justification = "The switch statement is used to validate the kind of the literal expression.")]
@@ -48,7 +64,19 @@ internal static class SyntaxFactory
         }
 #endif
 
-        return new LiteralExpressionSyntax(kind, token);
+        GreenNode? cached = SyntaxNodeCache.TryGetNode(kind, token, out int hash);
+        if (cached != null)
+        {
+            return (LiteralExpressionSyntax)cached;
+        }
+
+        LiteralExpressionSyntax result = new(kind, token);
+        if (hash > 0)
+        {
+            SyntaxNodeCache.AddNode(result, hash);
+        }
+
+        return result;
     }
 
     public static GreenNode List(GreenNode child)
@@ -56,14 +84,38 @@ internal static class SyntaxFactory
         return child;
     }
 
-    public static GreenNode List(GreenNode child0, GreenNode child1)
+    public static GreenNode List(GreenNode child1, GreenNode child2)
     {
-        return new SyntaxList.WithTwoChildren(child0, child1);
+        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.List, child1, child2, out int hash);
+        if (cached != null)
+        {
+            return (SyntaxList.WithTwoChildren)cached;
+        }
+
+        SyntaxList.WithTwoChildren result = new(child1, child2);
+        if (hash > 0)
+        {
+            SyntaxNodeCache.AddNode(result, hash);
+        }
+
+        return result;
     }
 
-    public static GreenNode List(GreenNode child0, GreenNode child1, GreenNode child2)
+    public static GreenNode List(GreenNode child1, GreenNode child2, GreenNode child3)
     {
-        return new SyntaxList.WithThreeChildren(child0, child1, child2);
+        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.List, child1, child2, child3, out int hash);
+        if (cached != null)
+        {
+            return (SyntaxList.WithThreeChildren)cached;
+        }
+
+        SyntaxList.WithThreeChildren result = new(child1, child2, child3);
+        if (hash > 0)
+        {
+            SyntaxNodeCache.AddNode(result, hash);
+        }
+
+        return result;
     }
 
     public static GreenNode List(ArrayElement<GreenNode>[] children)
