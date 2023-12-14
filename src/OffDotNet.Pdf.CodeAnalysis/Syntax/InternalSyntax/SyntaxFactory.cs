@@ -10,14 +10,38 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal static class SyntaxFactory
 {
-    public static IndirectObjectSyntax Object(
-        LiteralExpressionSyntax objectNumber,
-        LiteralExpressionSyntax generationNumber,
-        SyntaxToken objectKeyword,
-        GreenNode content,
-        SyntaxToken endObjectKeyword)
+    public static IndirectObjectSyntax Object(IndirectObjectHeaderSyntax header, GreenNode content, SyntaxToken endObjectKeyword)
     {
-        return new IndirectObjectSyntax(SyntaxKind.IndirectObject, objectNumber, generationNumber, objectKeyword, content, endObjectKeyword);
+        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.IndirectObject, header, content, endObjectKeyword, out int hash);
+        if (cached != null)
+        {
+            return (IndirectObjectSyntax)cached;
+        }
+
+        IndirectObjectSyntax result = new(SyntaxKind.IndirectObject, header, content, endObjectKeyword);
+        if (hash > 0)
+        {
+            SyntaxNodeCache.AddNode(result, hash);
+        }
+
+        return result;
+    }
+
+    public static IndirectObjectHeaderSyntax IndirectObjectHeader(LiteralExpressionSyntax objectNumber, LiteralExpressionSyntax generationNumber, SyntaxToken startObjectKeyword)
+    {
+        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.IndirectObjectHeader, objectNumber, generationNumber, startObjectKeyword, out int hash);
+        if (cached != null)
+        {
+            return (IndirectObjectHeaderSyntax)cached;
+        }
+
+        IndirectObjectHeaderSyntax result = new(SyntaxKind.IndirectObjectHeader, objectNumber, generationNumber, startObjectKeyword);
+        if (hash > 0)
+        {
+            SyntaxNodeCache.AddNode(result, hash);
+        }
+
+        return result;
     }
 
     public static IndirectReferenceSyntax IndirectReference(LiteralExpressionSyntax objectNumber, LiteralExpressionSyntax generationNumber, SyntaxToken referenceKeyword)

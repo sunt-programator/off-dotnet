@@ -48,6 +48,8 @@ public class SyntaxKindTests
     [InlineData(SyntaxKind.StringLiteralExpression, 8703)]
     [InlineData(SyntaxKind.NullLiteralExpression, 8704)]
     [InlineData(SyntaxKind.IndirectReference, 8800)]
+    [InlineData(SyntaxKind.IndirectObject, 8801)]
+    [InlineData(SyntaxKind.IndirectObjectHeader, 8802)]
     public void SyntaxKindEnum_MustHavePredefinedValues(SyntaxKind kind, ushort intKind)
     {
         // Arrange

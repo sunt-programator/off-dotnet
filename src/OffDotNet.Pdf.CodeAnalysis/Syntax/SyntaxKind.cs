@@ -135,4 +135,7 @@ public enum SyntaxKind : ushort
 
     /// <summary>Represents an indirect object expression.</summary>
     IndirectObject = 8801,
+
+    /// <summary>Represents an indirect object header expression.</summary>
+    IndirectObjectHeader = 8802,
 }
