@@ -70,6 +70,7 @@ internal static class SyntaxFactory
             case SyntaxKind.FalseLiteralExpression:
             case SyntaxKind.NumericLiteralExpression:
             case SyntaxKind.StringLiteralExpression:
+            case SyntaxKind.NameLiteralExpression:
             case SyntaxKind.NullLiteralExpression:
                 break;
             default: throw new ArgumentException($"The {nameof(kind)} must be a literal expression kind.", nameof(kind));
@@ -82,6 +83,7 @@ internal static class SyntaxFactory
             case SyntaxKind.FalseKeyword:
             case SyntaxKind.NumericLiteralToken:
             case SyntaxKind.StringLiteralToken:
+            case SyntaxKind.NameLiteralToken:
             case SyntaxKind.NullKeyword:
                 break;
             default: throw new ArgumentException("The token kind must be a literal token.", nameof(token));
@@ -95,6 +97,69 @@ internal static class SyntaxFactory
         }
 
         LiteralExpressionSyntax result = new(kind, token);
+        if (hash > 0)
+        {
+            SyntaxNodeCache.AddNode(result, hash);
+        }
+
+        return result;
+    }
+
+    public static ArrayExpressionSyntax ArrayExpression(SyntaxToken openBracketToken, SyntaxList<ArrayElementSyntax> elements, SyntaxToken closeBracketToken)
+    {
+#if DEBUG
+        if (openBracketToken == null)
+        {
+            throw new ArgumentNullException(nameof(openBracketToken), "The open bracket token must not be null.");
+        }
+
+        if (openBracketToken.Kind != SyntaxKind.LeftSquareBracketToken)
+        {
+            throw new ArgumentException("The open bracket token must be a left square bracket token.", nameof(openBracketToken));
+        }
+
+        if (closeBracketToken == null)
+        {
+            throw new ArgumentNullException(nameof(closeBracketToken), "The close bracket token must not be null.");
+        }
+
+        if (closeBracketToken.Kind != SyntaxKind.RightSquareBracketToken)
+        {
+            throw new ArgumentException("The close bracket token must be a right square bracket token.", nameof(closeBracketToken));
+        }
+#endif
+
+        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.ArrayExpression, openBracketToken, elements.Node, closeBracketToken, out int hash);
+        if (cached != null)
+        {
+            return (ArrayExpressionSyntax)cached;
+        }
+
+        ArrayExpressionSyntax result = new(SyntaxKind.ArrayExpression, openBracketToken, elements.Node, closeBracketToken);
+        if (hash > 0)
+        {
+            SyntaxNodeCache.AddNode(result, hash);
+        }
+
+        return result;
+    }
+
+    public static ArrayElementSyntax ArrayElement(ExpressionSyntax expression)
+    {
+#if DEBUG
+        if (expression == null)
+        {
+            throw new ArgumentNullException(nameof(expression), "The expression must not be null.");
+        }
+#endif
+
+        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.ArrayElement, expression, out int hash);
+        if (cached != null)
+        {
+            return (ArrayElementSyntax)cached;
+        }
+
+        ArrayElementSyntax result = new(SyntaxKind.ArrayElement, expression);
         if (hash > 0)
         {
             SyntaxNodeCache.AddNode(result, hash);
@@ -167,6 +232,15 @@ internal static class SyntaxFactory
         int nodeFullWidth = text.Length + leadingFullWidth + trailingFullWidth;
 
         return new SyntaxToken(kind, text, value, leading, trailing, nodeFullWidth);
+    }
+
+    public static SyntaxToken Token(SyntaxKind kind, string text, GreenNode? leading, GreenNode? trailing)
+    {
+        int leadingFullWidth = leading?.FullWidth ?? 0;
+        int trailingFullWidth = trailing?.FullWidth ?? 0;
+        int nodeFullWidth = text.Length + leadingFullWidth + trailingFullWidth;
+
+        return new SyntaxToken(kind, text, text, leading, trailing, nodeFullWidth);
     }
 
     public static SyntaxToken Token<T>(SyntaxKind kind, string text, T? value, GreenNode? leading, GreenNode? trailing)

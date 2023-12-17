@@ -27,8 +27,8 @@ public class IndirectObjectHeaderSyntaxTests
         this.startObjectKeyword = SyntaxFactory.Token(SyntaxKind.StartObjectKeyword, trivia, trivia);
     }
 
-    [Fact(DisplayName = $"The {nameof(IndirectObjectHeaderSyntax.Kind)} property must be {nameof(SyntaxKind.IndirectReference)}")]
-    public void KindProperty_MustBeIndirectReferenceExpression()
+    [Fact(DisplayName = $"The {nameof(IndirectObjectHeaderSyntax.Kind)} property must be {nameof(SyntaxKind.IndirectObjectHeader)}")]
+    public void KindProperty_MustBeIndirectObjectHeader()
     {
         // Arrange
         IndirectObjectHeaderSyntax indirectObjectHeader = SyntaxFactory.IndirectObjectHeader(this.objectNumber, this.generationNumber, this.startObjectKeyword);

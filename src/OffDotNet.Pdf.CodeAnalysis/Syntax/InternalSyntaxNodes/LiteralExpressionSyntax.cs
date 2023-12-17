@@ -5,7 +5,7 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
-internal sealed class LiteralExpressionSyntax : GreenNode
+internal sealed class LiteralExpressionSyntax : ExpressionSyntax
 {
     internal LiteralExpressionSyntax(SyntaxKind kind, SyntaxToken token)
         : base(kind)

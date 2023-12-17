@@ -103,6 +103,9 @@ public enum SyntaxKind : ushort
     /// <summary>Represents a string literal token.</summary>
     StringLiteralToken = 8502,
 
+    /// <summary>Represents a name literal token.</summary>
+    NameLiteralToken = 8503,
+
     // Trivia
 
     /// <summary>Represents an end of line trivia.</summary>
@@ -125,8 +128,11 @@ public enum SyntaxKind : ushort
     /// <summary>Represents a string literal expression.</summary>
     StringLiteralExpression = 8703,
 
+    /// <summary>Represents a name literal expression.</summary>
+    NameLiteralExpression = 8704,
+
     /// <summary>Represents a <c>null</c> literal expression.</summary>
-    NullLiteralExpression = 8704,
+    NullLiteralExpression = 8705,
 
     // PDF Types
 
@@ -138,4 +144,10 @@ public enum SyntaxKind : ushort
 
     /// <summary>Represents an indirect object header expression.</summary>
     IndirectObjectHeader = 8802,
+
+    /// <summary>Represents an array expression.</summary>
+    ArrayExpression = 8803,
+
+    /// <summary>Represents an array element.</summary>
+    ArrayElement = 8804,
 }

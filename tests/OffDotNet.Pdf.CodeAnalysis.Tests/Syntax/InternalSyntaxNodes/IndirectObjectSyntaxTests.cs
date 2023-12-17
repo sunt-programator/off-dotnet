@@ -28,7 +28,7 @@ public class IndirectObjectSyntaxTests
     }
 
     [Fact(DisplayName = $"The {nameof(IndirectObjectSyntax.Kind)} property must be {nameof(SyntaxKind.IndirectObject)}")]
-    public void KindProperty_MustBeIndirectReferenceExpression()
+    public void KindProperty_MustBeIndirectObject()
     {
         // Arrange
         IndirectObjectSyntax indirectObject = SyntaxFactory.Object(this.header, this.content, this.endObjKeyword);
@@ -154,7 +154,7 @@ public class IndirectObjectSyntaxTests
         int actualWidth = indirectObject.Width;
 
         // Assert
-        Assert.Equal(24, actualWidth); // [12  0  obj  true  endobj]
+        Assert.Equal(24, actualWidth);
     }
 
     [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.FullWidth)} property must consider all slots.")]
@@ -167,6 +167,6 @@ public class IndirectObjectSyntaxTests
         int actualFullWidth = indirectObject.FullWidth;
 
         // Assert
-        Assert.Equal(26, actualFullWidth); // [ 12  0  obj  true  endobj ]
+        Assert.Equal(26, actualFullWidth);
     }
 }

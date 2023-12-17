@@ -5,7 +5,7 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
-internal sealed class IndirectReferenceSyntax : GreenNode
+internal sealed class IndirectReferenceSyntax : ExpressionSyntax
 {
     internal IndirectReferenceSyntax(SyntaxKind kind, LiteralExpressionSyntax objectNumber, LiteralExpressionSyntax generationNumber, SyntaxToken referenceKeyword)
         : base(kind)

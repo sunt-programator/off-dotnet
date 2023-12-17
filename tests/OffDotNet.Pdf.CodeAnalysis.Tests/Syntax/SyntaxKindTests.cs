@@ -40,16 +40,20 @@ public class SyntaxKindTests
     [InlineData(SyntaxKind.PdfKeyword, 8311)]
     [InlineData(SyntaxKind.NumericLiteralToken, 8501)]
     [InlineData(SyntaxKind.StringLiteralToken, 8502)]
+    [InlineData(SyntaxKind.NameLiteralToken, 8503)]
     [InlineData(SyntaxKind.EndOfLineTrivia, 8600)]
     [InlineData(SyntaxKind.WhitespaceTrivia, 8601)]
     [InlineData(SyntaxKind.TrueLiteralExpression, 8700)]
     [InlineData(SyntaxKind.FalseLiteralExpression, 8701)]
     [InlineData(SyntaxKind.NumericLiteralExpression, 8702)]
     [InlineData(SyntaxKind.StringLiteralExpression, 8703)]
-    [InlineData(SyntaxKind.NullLiteralExpression, 8704)]
+    [InlineData(SyntaxKind.NameLiteralExpression, 8704)]
+    [InlineData(SyntaxKind.NullLiteralExpression, 8705)]
     [InlineData(SyntaxKind.IndirectReference, 8800)]
     [InlineData(SyntaxKind.IndirectObject, 8801)]
     [InlineData(SyntaxKind.IndirectObjectHeader, 8802)]
+    [InlineData(SyntaxKind.ArrayExpression, 8803)]
+    [InlineData(SyntaxKind.ArrayElement, 8804)]
     public void SyntaxKindEnum_MustHavePredefinedValues(SyntaxKind kind, ushort intKind)
     {
         // Arrange
