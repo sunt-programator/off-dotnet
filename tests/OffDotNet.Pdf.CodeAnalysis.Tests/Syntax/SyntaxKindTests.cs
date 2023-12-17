@@ -38,6 +38,8 @@ public class SyntaxKindTests
     [InlineData(SyntaxKind.StartXrefKeyword, 8309)]
     [InlineData(SyntaxKind.TrailerKeyword, 8310)]
     [InlineData(SyntaxKind.PdfKeyword, 8311)]
+    [InlineData(SyntaxKind.FreeXRefEntryKeyword, 8312)]
+    [InlineData(SyntaxKind.InUseXRefEntryKeyword, 8313)]
     [InlineData(SyntaxKind.NumericLiteralToken, 8501)]
     [InlineData(SyntaxKind.StringLiteralToken, 8502)]
     [InlineData(SyntaxKind.NameLiteralToken, 8503)]

@@ -10,6 +10,23 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal static class SyntaxFactory
 {
+    public static XRefEntryExpressionSyntax XRefEntry(LiteralExpressionSyntax offset, LiteralExpressionSyntax generationNumber, SyntaxToken entryType)
+    {
+        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.IndirectReference, offset, generationNumber, entryType, out int hash);
+        if (cached != null)
+        {
+            return (XRefEntryExpressionSyntax)cached;
+        }
+
+        XRefEntryExpressionSyntax result = new(SyntaxKind.IndirectReference, offset, generationNumber, entryType);
+        if (hash > 0)
+        {
+            SyntaxNodeCache.AddNode(result, hash);
+        }
+
+        return result;
+    }
+
     public static IndirectObjectSyntax Object(IndirectObjectHeaderSyntax header, GreenNode content, SyntaxToken endObjectKeyword)
     {
         GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.IndirectObject, header, content, endObjectKeyword, out int hash);

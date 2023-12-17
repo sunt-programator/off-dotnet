@@ -95,6 +95,12 @@ public enum SyntaxKind : ushort
     /// <summary>Represents <c>PDF</c> keyword.</summary>
     PdfKeyword = 8311,
 
+    /// <summary>Represents <c>f</c> keyword.</summary>
+    FreeXRefEntryKeyword = 8312,
+
+    /// <summary>Represents <c>n</c> keyword.</summary>
+    InUseXRefEntryKeyword = 8313,
+
     // Tokens with text
 
     /// <summary>Represents a numeric literal token.</summary>
