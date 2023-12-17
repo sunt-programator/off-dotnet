@@ -146,8 +146,11 @@ public enum SyntaxKind : ushort
     IndirectObjectHeader = 8802,
 
     /// <summary>Represents an array expression.</summary>
-    ArrayExpression = 8803,
+    CollectionExpression = 8803,
 
     /// <summary>Represents an array element.</summary>
     ArrayElement = 8804,
+
+    /// <summary>Represents a dictionary element.</summary>
+    DictionaryElement = 8805,
 }

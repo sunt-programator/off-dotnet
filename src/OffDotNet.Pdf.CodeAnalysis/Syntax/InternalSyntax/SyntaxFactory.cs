@@ -105,37 +105,35 @@ internal static class SyntaxFactory
         return result;
     }
 
-    public static ArrayExpressionSyntax ArrayExpression(SyntaxToken openBracketToken, SyntaxList<ArrayElementSyntax> elements, SyntaxToken closeBracketToken)
+    public static CollectionExpressionSyntax CollectionExpression(SyntaxToken openToken, SyntaxList<CollectionElementSyntax> elements, SyntaxToken closeToken)
     {
 #if DEBUG
-        if (openBracketToken == null)
+        if (openToken == null)
         {
-            throw new ArgumentNullException(nameof(openBracketToken), "The open bracket token must not be null.");
+            throw new ArgumentNullException(nameof(openToken), "The open bracket token must not be null.");
         }
 
-        if (openBracketToken.Kind != SyntaxKind.LeftSquareBracketToken)
+        if (closeToken == null)
         {
-            throw new ArgumentException("The open bracket token must be a left square bracket token.", nameof(openBracketToken));
+            throw new ArgumentNullException(nameof(closeToken), "The close bracket token must not be null.");
         }
 
-        if (closeBracketToken == null)
-        {
-            throw new ArgumentNullException(nameof(closeBracketToken), "The close bracket token must not be null.");
-        }
+        bool isValidArray = openToken.Kind == SyntaxKind.LeftSquareBracketToken && closeToken.Kind == SyntaxKind.RightSquareBracketToken;
+        bool isValidDictionary = openToken.Kind == SyntaxKind.LessThanLessThanToken && closeToken.Kind == SyntaxKind.GreaterThanGreaterThanToken;
 
-        if (closeBracketToken.Kind != SyntaxKind.RightSquareBracketToken)
+        if (!isValidArray && !isValidDictionary)
         {
-            throw new ArgumentException("The close bracket token must be a right square bracket token.", nameof(closeBracketToken));
+            throw new ArgumentException("The open and close bracket tokens must be valid for array or dictionary.", nameof(openToken));
         }
 #endif
 
-        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.ArrayExpression, openBracketToken, elements.Node, closeBracketToken, out int hash);
+        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.CollectionExpression, openToken, elements.Node, closeToken, out int hash);
         if (cached != null)
         {
-            return (ArrayExpressionSyntax)cached;
+            return (CollectionExpressionSyntax)cached;
         }
 
-        ArrayExpressionSyntax result = new(SyntaxKind.ArrayExpression, openBracketToken, elements.Node, closeBracketToken);
+        CollectionExpressionSyntax result = new(SyntaxKind.CollectionExpression, openToken, elements.Node, closeToken);
         if (hash > 0)
         {
             SyntaxNodeCache.AddNode(result, hash);
@@ -160,6 +158,40 @@ internal static class SyntaxFactory
         }
 
         ArrayElementSyntax result = new(SyntaxKind.ArrayElement, expression);
+        if (hash > 0)
+        {
+            SyntaxNodeCache.AddNode(result, hash);
+        }
+
+        return result;
+    }
+
+    public static DictionaryElementSyntax DictionaryElement(LiteralExpressionSyntax key, ExpressionSyntax value)
+    {
+#if DEBUG
+        if (key == null)
+        {
+            throw new ArgumentNullException(nameof(key), "The key must not be null.");
+        }
+
+        if (key.Kind != SyntaxKind.NameLiteralExpression)
+        {
+            throw new ArgumentException("The key must be a name literal expression.", nameof(key));
+        }
+
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value), "The expression must not be null.");
+        }
+#endif
+
+        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.DictionaryElement, key, value, out int hash);
+        if (cached != null)
+        {
+            return (DictionaryElementSyntax)cached;
+        }
+
+        DictionaryElementSyntax result = new(SyntaxKind.DictionaryElement, key, value);
         if (hash > 0)
         {
             SyntaxNodeCache.AddNode(result, hash);

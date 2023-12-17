@@ -5,7 +5,7 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
-internal sealed class ArrayElementSyntax : GreenNode
+internal sealed class ArrayElementSyntax : CollectionElementSyntax
 {
     internal ArrayElementSyntax(SyntaxKind kind, ExpressionSyntax expression)
         : base(kind)

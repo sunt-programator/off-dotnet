@@ -52,8 +52,9 @@ public class SyntaxKindTests
     [InlineData(SyntaxKind.IndirectReference, 8800)]
     [InlineData(SyntaxKind.IndirectObject, 8801)]
     [InlineData(SyntaxKind.IndirectObjectHeader, 8802)]
-    [InlineData(SyntaxKind.ArrayExpression, 8803)]
+    [InlineData(SyntaxKind.CollectionExpression, 8803)]
     [InlineData(SyntaxKind.ArrayElement, 8804)]
+    [InlineData(SyntaxKind.DictionaryElement, 8805)]
     public void SyntaxKindEnum_MustHavePredefinedValues(SyntaxKind kind, ushort intKind)
     {
         // Arrange

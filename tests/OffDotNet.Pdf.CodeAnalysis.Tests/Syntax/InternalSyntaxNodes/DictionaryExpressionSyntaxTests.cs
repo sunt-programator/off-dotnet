@@ -1,4 +1,4 @@
-// <copyright file="ArrayExpressionSyntaxTests.cs" company="Sunt Programator">
+// <copyright file="DictionaryExpressionSyntaxTests.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -10,45 +10,32 @@ using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxTriv
 
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxTests;
 
-public class ArrayExpressionSyntaxTests
+public class DictionaryExpressionSyntaxTests
 {
     private readonly SyntaxToken openBracketToken;
     private readonly SyntaxList<CollectionElementSyntax> elements;
     private readonly SyntaxToken closeBracketToken;
 
-    public ArrayExpressionSyntaxTests()
+    public DictionaryExpressionSyntaxTests()
     {
         GreenNode trivia = SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, " ");
-        ArrayElementSyntax number =
-            SyntaxFactory.ArrayElement(
-                SyntaxFactory.LiteralExpression(
-                    SyntaxKind.NumericLiteralExpression,
-                    SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "549", 549, trivia, trivia)));
 
-        ArrayElementSyntax @bool =
-            SyntaxFactory.ArrayElement(
-                SyntaxFactory.LiteralExpression(
-                    SyntaxKind.FalseLiteralExpression,
-                    SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia)));
+        var key = SyntaxFactory.LiteralExpression(
+            SyntaxKind.NameLiteralExpression,
+            SyntaxFactory.Token(SyntaxKind.NameLiteralToken, "/SomeName", trivia, trivia));
 
-        ArrayElementSyntax @string =
-            SyntaxFactory.ArrayElement(
-                SyntaxFactory.LiteralExpression(
-                    SyntaxKind.StringLiteralExpression,
-                    SyntaxFactory.Token(SyntaxKind.StringLiteralToken, "(Hello World!)", trivia, trivia)));
+        var value = SyntaxFactory.LiteralExpression(
+            SyntaxKind.NumericLiteralExpression,
+            SyntaxFactory.Token(SyntaxKind.NameLiteralToken, "123", 123, trivia, trivia));
 
-        ArrayElementSyntax name =
-            SyntaxFactory.ArrayElement(
-                SyntaxFactory.LiteralExpression(
-                    SyntaxKind.NameLiteralExpression,
-                    SyntaxFactory.Token(SyntaxKind.NameLiteralToken, "/SomeName", trivia, trivia)));
+        CollectionElementSyntax keyValue = SyntaxFactory.DictionaryElement(key, value);
 
-        SyntaxList<CollectionElementSyntax> listBuilder = new SyntaxListBuilder(4)
-            .AddRange(new GreenNode[] { number, @bool, @string, name })
+        SyntaxList<CollectionElementSyntax> listBuilder = new SyntaxListBuilder(2)
+            .AddRange(new GreenNode[] { keyValue, keyValue })
             .ToList<CollectionElementSyntax>();
 
-        this.openBracketToken = SyntaxFactory.Token(SyntaxKind.LeftSquareBracketToken, trivia, trivia);
-        this.closeBracketToken = SyntaxFactory.Token(SyntaxKind.RightSquareBracketToken, trivia, trivia);
+        this.openBracketToken = SyntaxFactory.Token(SyntaxKind.LessThanLessThanToken, trivia, trivia);
+        this.closeBracketToken = SyntaxFactory.Token(SyntaxKind.GreaterThanGreaterThanToken, trivia, trivia);
         this.elements = listBuilder;
     }
 
@@ -179,7 +166,7 @@ public class ArrayExpressionSyntaxTests
         int actualWidth = collectionExpressionSyntax.Width;
 
         // Assert
-        Assert.Equal(40, actualWidth);
+        Assert.Equal(34, actualWidth);
     }
 
     [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.FullWidth)} property must consider all slots.")]
@@ -192,6 +179,6 @@ public class ArrayExpressionSyntaxTests
         int actualFullWidth = collectionExpressionSyntax.FullWidth;
 
         // Assert
-        Assert.Equal(42, actualFullWidth);
+        Assert.Equal(36, actualFullWidth);
     }
 }
