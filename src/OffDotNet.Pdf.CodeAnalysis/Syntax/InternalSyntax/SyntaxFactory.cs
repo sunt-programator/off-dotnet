@@ -44,6 +44,23 @@ internal static class SyntaxFactory
         return result;
     }
 
+    public static XRefSectionExpressionSyntax XRefSection(SyntaxToken xRefKeyword, SyntaxList<XRefSubSectionExpressionSyntax> subSections)
+    {
+        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.XRefSection, xRefKeyword, subSections.Node, out int hash);
+        if (cached != null)
+        {
+            return (XRefSectionExpressionSyntax)cached;
+        }
+
+        XRefSectionExpressionSyntax result = new(SyntaxKind.XRefSection, xRefKeyword, subSections.Node);
+        if (hash > 0)
+        {
+            SyntaxNodeCache.AddNode(result, hash);
+        }
+
+        return result;
+    }
+
     public static IndirectObjectSyntax Object(IndirectObjectHeaderSyntax header, GreenNode content, SyntaxToken endObjectKeyword)
     {
         GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.IndirectObject, header, content, endObjectKeyword, out int hash);
