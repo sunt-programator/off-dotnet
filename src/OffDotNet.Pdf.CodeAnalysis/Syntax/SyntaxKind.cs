@@ -159,4 +159,13 @@ public enum SyntaxKind : ushort
 
     /// <summary>Represents a dictionary element.</summary>
     DictionaryElement = 8805,
+
+    /// <summary>Represents an XRef entry.</summary>
+    XRefEntry = 8806,
+
+    /// <summary>Represents an XRef subsection.</summary>
+    XRefSubSection = 8807,
+
+    /// <summary>Represents an XRef section.</summary>
+    XRefSection = 8808,
 }

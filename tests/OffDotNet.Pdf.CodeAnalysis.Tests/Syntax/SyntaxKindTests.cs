@@ -57,6 +57,9 @@ public class SyntaxKindTests
     [InlineData(SyntaxKind.CollectionExpression, 8803)]
     [InlineData(SyntaxKind.ArrayElement, 8804)]
     [InlineData(SyntaxKind.DictionaryElement, 8805)]
+    [InlineData(SyntaxKind.XRefEntry, 8806)]
+    [InlineData(SyntaxKind.XRefSubSection, 8807)]
+    [InlineData(SyntaxKind.XRefSection, 8808)]
     public void SyntaxKindEnum_MustHavePredefinedValues(SyntaxKind kind, ushort intKind)
     {
         // Arrange

@@ -12,13 +12,30 @@ internal static class SyntaxFactory
 {
     public static XRefEntryExpressionSyntax XRefEntry(LiteralExpressionSyntax offset, LiteralExpressionSyntax generationNumber, SyntaxToken entryType)
     {
-        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.IndirectReference, offset, generationNumber, entryType, out int hash);
+        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.XRefEntry, offset, generationNumber, entryType, out int hash);
         if (cached != null)
         {
             return (XRefEntryExpressionSyntax)cached;
         }
 
-        XRefEntryExpressionSyntax result = new(SyntaxKind.IndirectReference, offset, generationNumber, entryType);
+        XRefEntryExpressionSyntax result = new(SyntaxKind.XRefEntry, offset, generationNumber, entryType);
+        if (hash > 0)
+        {
+            SyntaxNodeCache.AddNode(result, hash);
+        }
+
+        return result;
+    }
+
+    public static XRefSubSectionExpressionSyntax XRefSubSection(LiteralExpressionSyntax objectNumber, LiteralExpressionSyntax numberOfEntries, SyntaxList<XRefEntryExpressionSyntax> entries)
+    {
+        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.XRefSubSection, objectNumber, numberOfEntries, entries.Node, out int hash);
+        if (cached != null)
+        {
+            return (XRefSubSectionExpressionSyntax)cached;
+        }
+
+        XRefSubSectionExpressionSyntax result = new(SyntaxKind.XRefSubSection, objectNumber, numberOfEntries, entries.Node);
         if (hash > 0)
         {
             SyntaxNodeCache.AddNode(result, hash);

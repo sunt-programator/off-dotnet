@@ -27,7 +27,7 @@ public class XRefEntryExpressionSyntaxTests
         this.entryTypeKeyword = SyntaxFactory.Token(SyntaxKind.IndirectReferenceKeyword, trivia, trivia);
     }
 
-    [Fact(DisplayName = $"The {nameof(XRefEntryExpressionSyntax.Kind)} property must be {nameof(SyntaxKind.IndirectReference)}")]
+    [Fact(DisplayName = $"The {nameof(XRefEntryExpressionSyntax.Kind)} property must be {nameof(SyntaxKind.XRefEntry)}")]
     public void KindProperty_MustBeIndirectReferenceExpression()
     {
         // Arrange
@@ -37,7 +37,7 @@ public class XRefEntryExpressionSyntaxTests
         SyntaxKind actualObjectNumber = xRefEntryExpression.Kind;
 
         // Assert
-        Assert.Equal(SyntaxKind.IndirectReference, actualObjectNumber);
+        Assert.Equal(SyntaxKind.XRefEntry, actualObjectNumber);
     }
 
     [Fact(DisplayName = $"The {nameof(XRefEntryExpressionSyntax.Offset)} property must be assigned from constructor.")]
