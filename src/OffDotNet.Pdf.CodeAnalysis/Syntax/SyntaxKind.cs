@@ -148,30 +148,27 @@ public enum SyntaxKind : ushort
     /// <summary>Represents an indirect object expression.</summary>
     IndirectObject = 8801,
 
-    /// <summary>Represents an indirect object header expression.</summary>
-    IndirectObjectHeader = 8802,
-
     /// <summary>Represents an array expression.</summary>
-    ArrayExpression = 8803,
+    ArrayExpression = 8802,
 
     /// <summary>Represents a dictionary expression.</summary>
-    DictionaryExpression = 8804,
+    DictionaryExpression = 8803,
 
     /// <summary>Represents an array element.</summary>
-    ArrayElement = 8805,
+    ArrayElement = 8804,
 
     /// <summary>Represents a dictionary element.</summary>
-    DictionaryElement = 8806,
+    DictionaryElement = 8805,
 
     /// <summary>Represents an XRef entry.</summary>
-    XRefEntry = 8807,
+    XRefEntry = 8806,
 
     /// <summary>Represents an XRef subsection.</summary>
-    XRefSubSection = 8808,
+    XRefSubSection = 8807,
 
     /// <summary>Represents an XRef section.</summary>
-    XRefSection = 8809,
+    XRefSection = 8808,
 
     /// <summary>Represents a file trailer.</summary>
-    FileTrailer = 8810,
+    FileTrailer = 8809,
 }

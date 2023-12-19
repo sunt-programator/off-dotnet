@@ -7,7 +7,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal sealed class FileTrailerSyntax : GreenNode
 {
-    internal FileTrailerSyntax(SyntaxKind kind, SyntaxToken trailerKeyword, CollectionExpressionSyntax trailerDictionary, SyntaxToken startXRefKeyword, LiteralExpressionSyntax byteOffset)
+    internal FileTrailerSyntax(SyntaxKind kind, SyntaxToken trailerKeyword, DictionaryExpressionSyntax trailerDictionary, SyntaxToken startXRefKeyword, LiteralExpressionSyntax byteOffset)
         : base(kind)
     {
         this.TrailerKeyword = trailerKeyword;
@@ -20,7 +20,7 @@ internal sealed class FileTrailerSyntax : GreenNode
 
     public SyntaxToken TrailerKeyword { get; }
 
-    public CollectionExpressionSyntax TrailerDictionary { get; }
+    public DictionaryExpressionSyntax TrailerDictionary { get; }
 
     public SyntaxToken StartXRefKeyword { get; }
 

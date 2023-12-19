@@ -53,15 +53,14 @@ public class SyntaxKindTests
     [InlineData(SyntaxKind.NullLiteralExpression, 8705)]
     [InlineData(SyntaxKind.IndirectReference, 8800)]
     [InlineData(SyntaxKind.IndirectObject, 8801)]
-    [InlineData(SyntaxKind.IndirectObjectHeader, 8802)]
-    [InlineData(SyntaxKind.ArrayExpression, 8803)]
-    [InlineData(SyntaxKind.DictionaryExpression, 8804)]
-    [InlineData(SyntaxKind.ArrayElement, 8805)]
-    [InlineData(SyntaxKind.DictionaryElement, 8806)]
-    [InlineData(SyntaxKind.XRefEntry, 8807)]
-    [InlineData(SyntaxKind.XRefSubSection, 8808)]
-    [InlineData(SyntaxKind.XRefSection, 8809)]
-    [InlineData(SyntaxKind.FileTrailer, 8810)]
+    [InlineData(SyntaxKind.ArrayExpression, 8802)]
+    [InlineData(SyntaxKind.DictionaryExpression, 8803)]
+    [InlineData(SyntaxKind.ArrayElement, 8804)]
+    [InlineData(SyntaxKind.DictionaryElement, 8805)]
+    [InlineData(SyntaxKind.XRefEntry, 8806)]
+    [InlineData(SyntaxKind.XRefSubSection, 8807)]
+    [InlineData(SyntaxKind.XRefSection, 8808)]
+    [InlineData(SyntaxKind.FileTrailer, 8809)]
     public void SyntaxKindEnum_MustHavePredefinedValues(SyntaxKind kind, ushort intKind)
     {
         // Arrange

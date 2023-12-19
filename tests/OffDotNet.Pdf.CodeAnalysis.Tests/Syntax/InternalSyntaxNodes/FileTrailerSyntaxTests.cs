@@ -13,7 +13,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxTests;
 public class FileTrailerSyntaxTests
 {
     private readonly SyntaxToken trailerKeyword;
-    private readonly CollectionExpressionSyntax trailerDictionary;
+    private readonly DictionaryExpressionSyntax trailerDictionary;
     private readonly SyntaxToken startXRefKeyword;
     private readonly LiteralExpressionSyntax byteOffset;
 

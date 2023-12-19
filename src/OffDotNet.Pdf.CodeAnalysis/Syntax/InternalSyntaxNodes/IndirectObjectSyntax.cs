@@ -7,17 +7,29 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal sealed class IndirectObjectSyntax : GreenNode
 {
-    internal IndirectObjectSyntax(SyntaxKind kind, IndirectObjectHeaderSyntax header, GreenNode content, SyntaxToken endObjectKeyword)
+    internal IndirectObjectSyntax(
+        SyntaxKind kind,
+        LiteralExpressionSyntax objectNumber,
+        LiteralExpressionSyntax generationNumber,
+        SyntaxToken startObjectKeyword,
+        GreenNode content,
+        SyntaxToken endObjectKeyword)
         : base(kind)
     {
-        this.Header = header;
+        this.ObjectNumber = objectNumber;
+        this.GenerationNumber = generationNumber;
+        this.StartObjectKeyword = startObjectKeyword;
         this.Content = content;
         this.EndObjectKeyword = endObjectKeyword;
-        this.SlotCount = 3;
-        this.FullWidth = this.Header.FullWidth + this.Content.FullWidth + this.EndObjectKeyword.FullWidth;
+        this.SlotCount = 5;
+        this.FullWidth = this.ObjectNumber.FullWidth + this.GenerationNumber.FullWidth + this.StartObjectKeyword.FullWidth + this.Content.FullWidth + this.EndObjectKeyword.FullWidth;
     }
 
-    public IndirectObjectHeaderSyntax Header { get; }
+    public LiteralExpressionSyntax ObjectNumber { get; }
+
+    public LiteralExpressionSyntax GenerationNumber { get; }
+
+    public SyntaxToken StartObjectKeyword { get; }
 
     public GreenNode Content { get; }
 
@@ -27,9 +39,11 @@ internal sealed class IndirectObjectSyntax : GreenNode
     {
         return index switch
         {
-            0 => this.Header,
-            1 => this.Content,
-            2 => this.EndObjectKeyword,
+            0 => this.ObjectNumber,
+            1 => this.GenerationNumber,
+            2 => this.StartObjectKeyword,
+            3 => this.Content,
+            4 => this.EndObjectKeyword,
             _ => null,
         };
     }
