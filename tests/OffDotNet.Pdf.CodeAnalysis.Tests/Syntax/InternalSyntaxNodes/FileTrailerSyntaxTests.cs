@@ -31,16 +31,16 @@ public class FileTrailerSyntaxTests
 
         CollectionElementSyntax keyValue = SyntaxFactory.DictionaryElement(key, value);
 
-        SyntaxList<CollectionElementSyntax> elements = new SyntaxListBuilder(2)
+        SyntaxList<DictionaryElementSyntax> elements = new SyntaxListBuilder(2)
             .AddRange(new GreenNode[] { keyValue, keyValue })
-            .ToList<CollectionElementSyntax>();
+            .ToList<DictionaryElementSyntax>();
 
         SyntaxToken openBracketToken = SyntaxFactory.Token(SyntaxKind.LessThanLessThanToken, trivia, trivia);
         SyntaxToken closeBracketToken = SyntaxFactory.Token(SyntaxKind.GreaterThanGreaterThanToken, trivia, trivia);
-        CollectionExpressionSyntax collectionExpressionSyntax = SyntaxFactory.CollectionExpression(openBracketToken, elements, closeBracketToken);
+        DictionaryExpressionSyntax dictionaryExpressionSyntax = SyntaxFactory.DictionaryExpression(openBracketToken, elements, closeBracketToken);
 
         this.trailerKeyword = SyntaxFactory.Token(SyntaxKind.TrailerKeyword, trivia, trivia);
-        this.trailerDictionary = collectionExpressionSyntax;
+        this.trailerDictionary = dictionaryExpressionSyntax;
         this.startXRefKeyword = SyntaxFactory.Token(SyntaxKind.StartXRefKeyword, trivia, trivia);
         this.byteOffset = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Token(SyntaxKind.NameLiteralToken, "123", 123, trivia, trivia));
     }

@@ -152,23 +152,26 @@ public enum SyntaxKind : ushort
     IndirectObjectHeader = 8802,
 
     /// <summary>Represents an array expression.</summary>
-    CollectionExpression = 8803,
+    ArrayExpression = 8803,
+
+    /// <summary>Represents a dictionary expression.</summary>
+    DictionaryExpression = 8804,
 
     /// <summary>Represents an array element.</summary>
-    ArrayElement = 8804,
+    ArrayElement = 8805,
 
     /// <summary>Represents a dictionary element.</summary>
-    DictionaryElement = 8805,
+    DictionaryElement = 8806,
 
     /// <summary>Represents an XRef entry.</summary>
-    XRefEntry = 8806,
+    XRefEntry = 8807,
 
     /// <summary>Represents an XRef subsection.</summary>
-    XRefSubSection = 8807,
+    XRefSubSection = 8808,
 
     /// <summary>Represents an XRef section.</summary>
-    XRefSection = 8808,
+    XRefSection = 8809,
 
     /// <summary>Represents a file trailer.</summary>
-    FileTrailer = 8809,
+    FileTrailer = 8810,
 }

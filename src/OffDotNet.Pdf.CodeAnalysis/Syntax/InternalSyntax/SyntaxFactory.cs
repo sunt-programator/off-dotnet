@@ -161,25 +161,50 @@ internal static class SyntaxFactory
         return result;
     }
 
-    public static CollectionExpressionSyntax CollectionExpression(SyntaxToken openToken, SyntaxList<CollectionElementSyntax> elements, SyntaxToken closeToken)
+    public static ArrayExpressionSyntax ArrayExpression(SyntaxToken openToken, SyntaxList<ArrayElementSyntax> elements, SyntaxToken closeToken)
     {
 #if DEBUG
         bool isValidArray = openToken.Kind == SyntaxKind.LeftSquareBracketToken && closeToken.Kind == SyntaxKind.RightSquareBracketToken;
-        bool isValidDictionary = openToken.Kind == SyntaxKind.LessThanLessThanToken && closeToken.Kind == SyntaxKind.GreaterThanGreaterThanToken;
 
-        if (!isValidArray && !isValidDictionary)
+        if (!isValidArray)
         {
-            throw new ArgumentException("The open and close bracket tokens must be valid for array or dictionary.", nameof(openToken));
+            throw new ArgumentException("The open and close bracket tokens must be valid for array.", nameof(openToken));
         }
 #endif
 
-        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.CollectionExpression, openToken, elements.Node, closeToken, out int hash);
+        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.ArrayExpression, openToken, elements.Node, closeToken, out int hash);
         if (cached != null)
         {
-            return (CollectionExpressionSyntax)cached;
+            return (ArrayExpressionSyntax)cached;
         }
 
-        CollectionExpressionSyntax result = new(SyntaxKind.CollectionExpression, openToken, elements.Node, closeToken);
+        ArrayExpressionSyntax result = new(SyntaxKind.ArrayExpression, openToken, elements.Node, closeToken);
+        if (hash > 0)
+        {
+            SyntaxNodeCache.AddNode(result, hash);
+        }
+
+        return result;
+    }
+
+    public static DictionaryExpressionSyntax DictionaryExpression(SyntaxToken openToken, SyntaxList<DictionaryElementSyntax> elements, SyntaxToken closeToken)
+    {
+#if DEBUG
+        bool isValidDictionary = openToken.Kind == SyntaxKind.LessThanLessThanToken && closeToken.Kind == SyntaxKind.GreaterThanGreaterThanToken;
+
+        if (!isValidDictionary)
+        {
+            throw new ArgumentException("The open and close bracket tokens must be valid for dictionary.", nameof(openToken));
+        }
+#endif
+
+        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.DictionaryExpression, openToken, elements.Node, closeToken, out int hash);
+        if (cached != null)
+        {
+            return (DictionaryExpressionSyntax)cached;
+        }
+
+        DictionaryExpressionSyntax result = new(SyntaxKind.DictionaryExpression, openToken, elements.Node, closeToken);
         if (hash > 0)
         {
             SyntaxNodeCache.AddNode(result, hash);

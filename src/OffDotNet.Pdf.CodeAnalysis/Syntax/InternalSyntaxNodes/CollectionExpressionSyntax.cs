@@ -5,9 +5,9 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
-internal sealed class CollectionExpressionSyntax : ExpressionSyntax
+internal abstract class CollectionExpressionSyntax : ExpressionSyntax
 {
-    internal CollectionExpressionSyntax(SyntaxKind kind, SyntaxToken openToken, GreenNode? elements, SyntaxToken closeToken)
+    protected CollectionExpressionSyntax(SyntaxKind kind, SyntaxToken openToken, GreenNode? elements, SyntaxToken closeToken)
         : base(kind)
     {
         this.OpenToken = openToken;

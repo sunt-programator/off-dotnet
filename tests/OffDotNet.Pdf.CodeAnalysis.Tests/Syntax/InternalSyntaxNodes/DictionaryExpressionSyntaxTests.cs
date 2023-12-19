@@ -13,7 +13,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxTests;
 public class DictionaryExpressionSyntaxTests
 {
     private readonly SyntaxToken openBracketToken;
-    private readonly SyntaxList<CollectionElementSyntax> elements;
+    private readonly SyntaxList<DictionaryElementSyntax> elements;
     private readonly SyntaxToken closeBracketToken;
 
     public DictionaryExpressionSyntaxTests()
@@ -30,36 +30,36 @@ public class DictionaryExpressionSyntaxTests
 
         CollectionElementSyntax keyValue = SyntaxFactory.DictionaryElement(key, value);
 
-        SyntaxList<CollectionElementSyntax> listBuilder = new SyntaxListBuilder(2)
+        SyntaxList<DictionaryElementSyntax> listBuilder = new SyntaxListBuilder(2)
             .AddRange(new GreenNode[] { keyValue, keyValue })
-            .ToList<CollectionElementSyntax>();
+            .ToList<DictionaryElementSyntax>();
 
         this.openBracketToken = SyntaxFactory.Token(SyntaxKind.LessThanLessThanToken, trivia, trivia);
         this.closeBracketToken = SyntaxFactory.Token(SyntaxKind.GreaterThanGreaterThanToken, trivia, trivia);
         this.elements = listBuilder;
     }
 
-    [Fact(DisplayName = $"The {nameof(CollectionExpressionSyntax.Kind)} property must be {nameof(SyntaxKind.CollectionExpression)}")]
-    public void KindProperty_MustBeCollectionExpression()
+    [Fact(DisplayName = $"The {nameof(CollectionExpressionSyntax.Kind)} property must be {nameof(SyntaxKind.DictionaryExpression)}")]
+    public void KindProperty_MustBeDictionaryExpression()
     {
         // Arrange
-        CollectionExpressionSyntax collectionExpressionSyntax = SyntaxFactory.CollectionExpression(this.openBracketToken, this.elements, this.closeBracketToken);
+        DictionaryExpressionSyntax dictionaryExpressionSyntax = SyntaxFactory.DictionaryExpression(this.openBracketToken, this.elements, this.closeBracketToken);
 
         // Act
-        SyntaxKind actualKind = collectionExpressionSyntax.Kind;
+        SyntaxKind actualKind = dictionaryExpressionSyntax.Kind;
 
         // Assert
-        Assert.Equal(SyntaxKind.CollectionExpression, actualKind);
+        Assert.Equal(SyntaxKind.DictionaryExpression, actualKind);
     }
 
     [Fact(DisplayName = $"The {nameof(CollectionExpressionSyntax.OpenToken)} property must be assigned from constructor.")]
     public void OpenTokenProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        CollectionExpressionSyntax collectionExpressionSyntax = SyntaxFactory.CollectionExpression(this.openBracketToken, this.elements, this.closeBracketToken);
+        DictionaryExpressionSyntax dictionaryExpressionSyntax = SyntaxFactory.DictionaryExpression(this.openBracketToken, this.elements, this.closeBracketToken);
 
         // Act
-        SyntaxToken actualOpenBracketToken = collectionExpressionSyntax.OpenToken;
+        SyntaxToken actualOpenBracketToken = dictionaryExpressionSyntax.OpenToken;
 
         // Assert
         Assert.Equal(this.openBracketToken, actualOpenBracketToken);
@@ -69,10 +69,10 @@ public class DictionaryExpressionSyntaxTests
     public void ElementsProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        CollectionExpressionSyntax collectionExpressionSyntax = SyntaxFactory.CollectionExpression(this.openBracketToken, this.elements, this.closeBracketToken);
+        DictionaryExpressionSyntax dictionaryExpressionSyntax = SyntaxFactory.DictionaryExpression(this.openBracketToken, this.elements, this.closeBracketToken);
 
         // Act
-        GreenNode? actualElements = collectionExpressionSyntax.Elements;
+        GreenNode? actualElements = dictionaryExpressionSyntax.Elements;
 
         // Assert
         Assert.Equal(this.elements.Node, actualElements);
@@ -82,10 +82,10 @@ public class DictionaryExpressionSyntaxTests
     public void CloseTokenProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        CollectionExpressionSyntax collectionExpressionSyntax = SyntaxFactory.CollectionExpression(this.openBracketToken, this.elements, this.closeBracketToken);
+        DictionaryExpressionSyntax dictionaryExpressionSyntax = SyntaxFactory.DictionaryExpression(this.openBracketToken, this.elements, this.closeBracketToken);
 
         // Act
-        SyntaxToken actualCloseBracketToken = collectionExpressionSyntax.CloseToken;
+        SyntaxToken actualCloseBracketToken = dictionaryExpressionSyntax.CloseToken;
 
         // Assert
         Assert.Equal(this.closeBracketToken, actualCloseBracketToken);
@@ -95,10 +95,10 @@ public class DictionaryExpressionSyntaxTests
     public void SlotCountProperty_MustBeEqualTo3()
     {
         // Arrange
-        CollectionExpressionSyntax collectionExpressionSyntax = SyntaxFactory.CollectionExpression(this.openBracketToken, this.elements, this.closeBracketToken);
+        DictionaryExpressionSyntax dictionaryExpressionSyntax = SyntaxFactory.DictionaryExpression(this.openBracketToken, this.elements, this.closeBracketToken);
 
         // Act
-        int actualSlotCount = collectionExpressionSyntax.SlotCount;
+        int actualSlotCount = dictionaryExpressionSyntax.SlotCount;
 
         // Assert
         Assert.Equal(3, actualSlotCount);
@@ -108,10 +108,10 @@ public class DictionaryExpressionSyntaxTests
     public void GetSlotMethod_Index0_MustReturnOpenBracketToken()
     {
         // Arrange
-        CollectionExpressionSyntax collectionExpressionSyntax = SyntaxFactory.CollectionExpression(this.openBracketToken, this.elements, this.closeBracketToken);
+        DictionaryExpressionSyntax dictionaryExpressionSyntax = SyntaxFactory.DictionaryExpression(this.openBracketToken, this.elements, this.closeBracketToken);
 
         // Act
-        GreenNode? actualSlot = collectionExpressionSyntax.GetSlot(0);
+        GreenNode? actualSlot = dictionaryExpressionSyntax.GetSlot(0);
 
         // Assert
         Assert.Equal(this.openBracketToken, actualSlot);
@@ -121,10 +121,10 @@ public class DictionaryExpressionSyntaxTests
     public void GetSlotMethod_Index1_MustReturnElements()
     {
         // Arrange
-        CollectionExpressionSyntax collectionExpressionSyntax = SyntaxFactory.CollectionExpression(this.openBracketToken, this.elements, this.closeBracketToken);
+        DictionaryExpressionSyntax dictionaryExpressionSyntax = SyntaxFactory.DictionaryExpression(this.openBracketToken, this.elements, this.closeBracketToken);
 
         // Act
-        GreenNode? actualSlot = collectionExpressionSyntax.GetSlot(1);
+        GreenNode? actualSlot = dictionaryExpressionSyntax.GetSlot(1);
 
         // Assert
         Assert.Equal(this.elements.Node, actualSlot);
@@ -134,10 +134,10 @@ public class DictionaryExpressionSyntaxTests
     public void GetSlotMethod_Index2_MustReturnCloseBracketToken()
     {
         // Arrange
-        CollectionExpressionSyntax collectionExpressionSyntax = SyntaxFactory.CollectionExpression(this.openBracketToken, this.elements, this.closeBracketToken);
+        DictionaryExpressionSyntax dictionaryExpressionSyntax = SyntaxFactory.DictionaryExpression(this.openBracketToken, this.elements, this.closeBracketToken);
 
         // Act
-        GreenNode? actualSlot = collectionExpressionSyntax.GetSlot(2);
+        GreenNode? actualSlot = dictionaryExpressionSyntax.GetSlot(2);
 
         // Assert
         Assert.Equal(this.closeBracketToken, actualSlot);
@@ -147,10 +147,10 @@ public class DictionaryExpressionSyntaxTests
     public void GetSlotMethod_Index3_MustReturnNull()
     {
         // Arrange
-        CollectionExpressionSyntax collectionExpressionSyntax = SyntaxFactory.CollectionExpression(this.openBracketToken, this.elements, this.closeBracketToken);
+        DictionaryExpressionSyntax dictionaryExpressionSyntax = SyntaxFactory.DictionaryExpression(this.openBracketToken, this.elements, this.closeBracketToken);
 
         // Act
-        GreenNode? actualSlot = collectionExpressionSyntax.GetSlot(3);
+        GreenNode? actualSlot = dictionaryExpressionSyntax.GetSlot(3);
 
         // Assert
         Assert.Null(actualSlot);
@@ -160,10 +160,10 @@ public class DictionaryExpressionSyntaxTests
     public void WidthProperty_MustIncludeAllSlots()
     {
         // Arrange
-        CollectionExpressionSyntax collectionExpressionSyntax = SyntaxFactory.CollectionExpression(this.openBracketToken, this.elements, this.closeBracketToken);
+        DictionaryExpressionSyntax dictionaryExpressionSyntax = SyntaxFactory.DictionaryExpression(this.openBracketToken, this.elements, this.closeBracketToken);
 
         // Act
-        int actualWidth = collectionExpressionSyntax.Width;
+        int actualWidth = dictionaryExpressionSyntax.Width;
 
         // Assert
         Assert.Equal(34, actualWidth);
@@ -173,10 +173,10 @@ public class DictionaryExpressionSyntaxTests
     public void FullWidthProperty_MustIncludeAllSlots()
     {
         // Arrange
-        CollectionExpressionSyntax collectionExpressionSyntax = SyntaxFactory.CollectionExpression(this.openBracketToken, this.elements, this.closeBracketToken);
+        DictionaryExpressionSyntax dictionaryExpressionSyntax = SyntaxFactory.DictionaryExpression(this.openBracketToken, this.elements, this.closeBracketToken);
 
         // Act
-        int actualFullWidth = collectionExpressionSyntax.FullWidth;
+        int actualFullWidth = dictionaryExpressionSyntax.FullWidth;
 
         // Assert
         Assert.Equal(36, actualFullWidth);
