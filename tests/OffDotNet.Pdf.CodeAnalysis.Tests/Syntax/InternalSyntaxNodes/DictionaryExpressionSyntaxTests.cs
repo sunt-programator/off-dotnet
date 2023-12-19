@@ -46,10 +46,10 @@ public class DictionaryExpressionSyntaxTests
         CollectionExpressionSyntax collectionExpressionSyntax = SyntaxFactory.CollectionExpression(this.openBracketToken, this.elements, this.closeBracketToken);
 
         // Act
-        SyntaxKind actualObjectNumber = collectionExpressionSyntax.Kind;
+        SyntaxKind actualKind = collectionExpressionSyntax.Kind;
 
         // Assert
-        Assert.Equal(SyntaxKind.CollectionExpression, actualObjectNumber);
+        Assert.Equal(SyntaxKind.CollectionExpression, actualKind);
     }
 
     [Fact(DisplayName = $"The {nameof(CollectionExpressionSyntax.OpenToken)} property must be assigned from constructor.")]

@@ -41,16 +41,16 @@ public class XRefSubSectionExpressionSyntaxTests
     }
 
     [Fact(DisplayName = $"The {nameof(XRefSubSectionExpressionSyntax.Kind)} property must be {nameof(SyntaxKind.XRefSubSection)}")]
-    public void KindProperty_MustBeIndirectReferenceExpression()
+    public void KindProperty_MustBeXRefSubSection()
     {
         // Arrange
         XRefSubSectionExpressionSyntax xRefSubSectionExpression = SyntaxFactory.XRefSubSection(this.objectNumber, this.numberOfEntries, this.entries);
 
         // Act
-        SyntaxKind actualObjectNumber = xRefSubSectionExpression.Kind;
+        SyntaxKind actualKind = xRefSubSectionExpression.Kind;
 
         // Assert
-        Assert.Equal(SyntaxKind.XRefSubSection, actualObjectNumber);
+        Assert.Equal(SyntaxKind.XRefSubSection, actualKind);
     }
 
     [Fact(DisplayName = $"The {nameof(XRefSubSectionExpressionSyntax.ObjectNumber)} property must be assigned from constructor.")]

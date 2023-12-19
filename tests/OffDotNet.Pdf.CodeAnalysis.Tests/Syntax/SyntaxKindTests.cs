@@ -35,7 +35,7 @@ public class SyntaxKindTests
     [InlineData(SyntaxKind.StartStreamKeyword, 8306)]
     [InlineData(SyntaxKind.EndStreamKeyword, 8307)]
     [InlineData(SyntaxKind.XRefKeyword, 8308)]
-    [InlineData(SyntaxKind.StartXrefKeyword, 8309)]
+    [InlineData(SyntaxKind.StartXRefKeyword, 8309)]
     [InlineData(SyntaxKind.TrailerKeyword, 8310)]
     [InlineData(SyntaxKind.PdfKeyword, 8311)]
     [InlineData(SyntaxKind.FreeXRefEntryKeyword, 8312)]
@@ -60,6 +60,7 @@ public class SyntaxKindTests
     [InlineData(SyntaxKind.XRefEntry, 8806)]
     [InlineData(SyntaxKind.XRefSubSection, 8807)]
     [InlineData(SyntaxKind.XRefSection, 8808)]
+    [InlineData(SyntaxKind.FileTrailer, 8809)]
     public void SyntaxKindEnum_MustHavePredefinedValues(SyntaxKind kind, ushort intKind)
     {
         // Arrange

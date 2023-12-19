@@ -24,16 +24,16 @@ public class DictionaryElementSyntaxTests
     }
 
     [Fact(DisplayName = $"The {nameof(DictionaryElementSyntax.Kind)} property must be {nameof(SyntaxKind.DictionaryElement)}")]
-    public void KindProperty_MustBeExpressionElement()
+    public void KindProperty_MustBeDictionaryElement()
     {
         // Arrange
         DictionaryElementSyntax dictionaryElement = SyntaxFactory.DictionaryElement(this.key, this.value);
 
         // Act
-        SyntaxKind actualObjectNumber = dictionaryElement.Kind;
+        SyntaxKind actualKind = dictionaryElement.Kind;
 
         // Assert
-        Assert.Equal(SyntaxKind.DictionaryElement, actualObjectNumber);
+        Assert.Equal(SyntaxKind.DictionaryElement, actualKind);
     }
 
     [Fact(DisplayName = $"The {nameof(DictionaryElementSyntax.Key)} property must be assigned from constructor.")]

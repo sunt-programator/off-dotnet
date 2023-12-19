@@ -34,10 +34,10 @@ public class IndirectReferenceSyntaxTests
         IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);
 
         // Act
-        SyntaxKind actualObjectNumber = indirectReference.Kind;
+        SyntaxKind actualKind = indirectReference.Kind;
 
         // Assert
-        Assert.Equal(SyntaxKind.IndirectReference, actualObjectNumber);
+        Assert.Equal(SyntaxKind.IndirectReference, actualKind);
     }
 
     [Fact(DisplayName = $"The {nameof(IndirectReferenceSyntax.ObjectNumber)} property must be assigned from constructor.")]

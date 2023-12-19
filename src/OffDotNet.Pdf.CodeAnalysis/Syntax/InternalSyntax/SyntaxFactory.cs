@@ -112,6 +112,11 @@ internal static class SyntaxFactory
         return result;
     }
 
+    public static FileTrailerSyntax FileTrailer(SyntaxToken trailerKeyword, CollectionExpressionSyntax trailerDictionary, SyntaxToken startXRefKeyword, LiteralExpressionSyntax byteOffset)
+    {
+        return new FileTrailerSyntax(SyntaxKind.FileTrailer, trailerKeyword, trailerDictionary, startXRefKeyword, byteOffset);
+    }
+
     [SuppressMessage("ReSharper", "SwitchStatementHandlesSomeKnownEnumValuesWithDefault", Justification = "The switch statement is used to validate the kind of the literal expression.")]
     public static LiteralExpressionSyntax LiteralExpression(SyntaxKind kind, SyntaxToken token)
     {
@@ -159,16 +164,6 @@ internal static class SyntaxFactory
     public static CollectionExpressionSyntax CollectionExpression(SyntaxToken openToken, SyntaxList<CollectionElementSyntax> elements, SyntaxToken closeToken)
     {
 #if DEBUG
-        if (openToken == null)
-        {
-            throw new ArgumentNullException(nameof(openToken), "The open bracket token must not be null.");
-        }
-
-        if (closeToken == null)
-        {
-            throw new ArgumentNullException(nameof(closeToken), "The close bracket token must not be null.");
-        }
-
         bool isValidArray = openToken.Kind == SyntaxKind.LeftSquareBracketToken && closeToken.Kind == SyntaxKind.RightSquareBracketToken;
         bool isValidDictionary = openToken.Kind == SyntaxKind.LessThanLessThanToken && closeToken.Kind == SyntaxKind.GreaterThanGreaterThanToken;
 
@@ -220,19 +215,9 @@ internal static class SyntaxFactory
     public static DictionaryElementSyntax DictionaryElement(LiteralExpressionSyntax key, ExpressionSyntax value)
     {
 #if DEBUG
-        if (key == null)
-        {
-            throw new ArgumentNullException(nameof(key), "The key must not be null.");
-        }
-
         if (key.Kind != SyntaxKind.NameLiteralExpression)
         {
             throw new ArgumentException("The key must be a name literal expression.", nameof(key));
-        }
-
-        if (value == null)
-        {
-            throw new ArgumentNullException(nameof(value), "The expression must not be null.");
         }
 #endif
 

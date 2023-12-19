@@ -34,10 +34,10 @@ public class IndirectObjectHeaderSyntaxTests
         IndirectObjectHeaderSyntax indirectObjectHeader = SyntaxFactory.IndirectObjectHeader(this.objectNumber, this.generationNumber, this.startObjectKeyword);
 
         // Act
-        SyntaxKind actualObjectNumber = indirectObjectHeader.Kind;
+        SyntaxKind actualKind = indirectObjectHeader.Kind;
 
         // Assert
-        Assert.Equal(SyntaxKind.IndirectObjectHeader, actualObjectNumber);
+        Assert.Equal(SyntaxKind.IndirectObjectHeader, actualKind);
     }
 
     [Fact(DisplayName = $"The {nameof(IndirectObjectHeaderSyntax.ObjectNumber)} property must be assigned from constructor.")]

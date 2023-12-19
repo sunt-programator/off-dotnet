@@ -52,7 +52,7 @@ public class SyntaxTokenTests
     [InlineData(SyntaxKind.EndStreamKeyword, "endstream")]
     [InlineData(SyntaxKind.XRefKeyword, "xref")]
     [InlineData(SyntaxKind.TrailerKeyword, "trailer")]
-    [InlineData(SyntaxKind.StartXrefKeyword, "startxref")]
+    [InlineData(SyntaxKind.StartXRefKeyword, "startxref")]
     public void CreateMethod_MustSetTextProperty(SyntaxKind kind, string text)
     {
         // Arrange

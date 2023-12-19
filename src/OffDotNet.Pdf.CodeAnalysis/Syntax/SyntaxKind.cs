@@ -87,7 +87,7 @@ public enum SyntaxKind : ushort
     XRefKeyword = 8308,
 
     /// <summary>Represents <c>startxref</c> keyword.</summary>
-    StartXrefKeyword = 8309,
+    StartXRefKeyword = 8309,
 
     /// <summary>Represents <c>trailer</c> keyword.</summary>
     TrailerKeyword = 8310,
@@ -168,4 +168,7 @@ public enum SyntaxKind : ushort
 
     /// <summary>Represents an XRef section.</summary>
     XRefSection = 8808,
+
+    /// <summary>Represents a file trailer.</summary>
+    FileTrailer = 8809,
 }

@@ -22,16 +22,16 @@ public class ArrayElementSyntaxTests
     }
 
     [Fact(DisplayName = $"The {nameof(ArrayElementSyntax.Kind)} property must be {nameof(SyntaxKind.ArrayElement)}")]
-    public void KindProperty_MustBeExpressionElement()
+    public void KindProperty_MustBeArrayElement()
     {
         // Arrange
         ArrayElementSyntax arrayElement = SyntaxFactory.ArrayElement(this.expression);
 
         // Act
-        SyntaxKind actualObjectNumber = arrayElement.Kind;
+        SyntaxKind actualKind = arrayElement.Kind;
 
         // Assert
-        Assert.Equal(SyntaxKind.ArrayElement, actualObjectNumber);
+        Assert.Equal(SyntaxKind.ArrayElement, actualKind);
     }
 
     [Fact(DisplayName = $"The {nameof(ArrayElementSyntax.Expression)} property must be assigned from constructor.")]

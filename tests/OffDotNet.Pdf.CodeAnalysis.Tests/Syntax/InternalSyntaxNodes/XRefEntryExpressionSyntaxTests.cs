@@ -28,16 +28,16 @@ public class XRefEntryExpressionSyntaxTests
     }
 
     [Fact(DisplayName = $"The {nameof(XRefEntryExpressionSyntax.Kind)} property must be {nameof(SyntaxKind.XRefEntry)}")]
-    public void KindProperty_MustBeIndirectReferenceExpression()
+    public void KindProperty_MustBeXRefEntry()
     {
         // Arrange
         XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
 
         // Act
-        SyntaxKind actualObjectNumber = xRefEntryExpression.Kind;
+        SyntaxKind actualKind = xRefEntryExpression.Kind;
 
         // Assert
-        Assert.Equal(SyntaxKind.XRefEntry, actualObjectNumber);
+        Assert.Equal(SyntaxKind.XRefEntry, actualKind);
     }
 
     [Fact(DisplayName = $"The {nameof(XRefEntryExpressionSyntax.Offset)} property must be assigned from constructor.")]

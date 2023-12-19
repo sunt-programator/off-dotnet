@@ -37,7 +37,7 @@ internal static class SyntaxKindFacts
             SyntaxKind.EndStreamKeyword => "endstream",
             SyntaxKind.XRefKeyword => "xref",
             SyntaxKind.TrailerKeyword => "trailer",
-            SyntaxKind.StartXrefKeyword => "startxref",
+            SyntaxKind.StartXRefKeyword => "startxref",
             _ => string.Empty,
         };
     }
