@@ -70,4 +70,40 @@ internal static class GreenNodeExtensions
 
         return node;
     }
+
+    /// <summary>Gets the first non null child index.</summary>
+    /// <param name="node">The <see cref="GreenNode"/> to get the first non null child index from.</param>
+    /// <returns>The first non null child index.</returns>
+    internal static int GetFirstNonNullChildIndex(this GreenNode node)
+    {
+        int firstIndex = 0;
+        for (; firstIndex < node.SlotCount; firstIndex++)
+        {
+            var child = node.GetSlot(firstIndex);
+            if (child != null)
+            {
+                break;
+            }
+        }
+
+        return firstIndex;
+    }
+
+    /// <summary>Gets the last non null child index.</summary>
+    /// <param name="node">The <see cref="GreenNode"/> to get the last non null child index from.</param>
+    /// <returns>The last non null child index.</returns>
+    internal static int GetLastNonNullChildIndex(this GreenNode node)
+    {
+        int lastIndex = node.SlotCount - 1;
+        for (; lastIndex >= 0; lastIndex--)
+        {
+            var child = node.GetSlot(lastIndex);
+            if (child != null)
+            {
+                break;
+            }
+        }
+
+        return lastIndex;
+    }
 }

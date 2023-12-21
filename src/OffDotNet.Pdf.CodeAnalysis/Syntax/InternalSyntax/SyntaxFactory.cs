@@ -12,6 +12,16 @@ internal static class SyntaxFactory
 {
     public static XRefEntryExpressionSyntax XRefEntry(LiteralExpressionSyntax offset, LiteralExpressionSyntax generationNumber, SyntaxToken entryType)
     {
+#if DEBUG
+        switch (entryType.Kind)
+        {
+            case SyntaxKind.FreeXRefEntryKeyword:
+            case SyntaxKind.InUseXRefEntryKeyword:
+                break;
+            default: throw new ArgumentException("The entry type must be a valid xref entry type.", nameof(entryType));
+        }
+#endif
+
         GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.XRefEntry, offset, generationNumber, entryType, out int hash);
         if (cached != null)
         {

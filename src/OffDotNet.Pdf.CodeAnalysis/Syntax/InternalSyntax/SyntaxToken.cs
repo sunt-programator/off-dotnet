@@ -60,4 +60,19 @@ internal sealed class SyntaxToken : GreenNode
     {
         throw ExceptionUtilities.Unreachable();
     }
+
+    protected override void WriteTokenTo(TextWriter writer, bool leading, bool trailing)
+    {
+        if (leading)
+        {
+            this.LeadingTrivia?.WriteTo(writer, true, true);
+        }
+
+        writer.Write(this.Text);
+
+        if (trailing)
+        {
+            this.TrailingTrivia?.WriteTo(writer, true, true);
+        }
+    }
 }

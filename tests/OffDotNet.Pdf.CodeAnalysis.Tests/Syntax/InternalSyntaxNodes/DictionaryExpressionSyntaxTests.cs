@@ -181,4 +181,32 @@ public class DictionaryExpressionSyntaxTests
         // Assert
         Assert.Equal(36, actualFullWidth);
     }
+
+    [Fact(DisplayName = "The ToString() method must not include the trivia.")]
+    public void ToStringMethod_MustNotIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = "<<  /SomeName  123  /SomeName  123  >>";
+        DictionaryExpressionSyntax dictionaryExpressionSyntax = SyntaxFactory.DictionaryExpression(this.openBracketToken, this.elements, this.closeBracketToken);
+
+        // Act
+        string actualString = dictionaryExpressionSyntax.ToString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
+
+    [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
+    public void ToFullStringMethod_MustIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = " <<  /SomeName  123  /SomeName  123  >> ";
+        DictionaryExpressionSyntax dictionaryExpressionSyntax = SyntaxFactory.DictionaryExpression(this.openBracketToken, this.elements, this.closeBracketToken);
+
+        // Act
+        string actualString = dictionaryExpressionSyntax.ToFullString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
 }

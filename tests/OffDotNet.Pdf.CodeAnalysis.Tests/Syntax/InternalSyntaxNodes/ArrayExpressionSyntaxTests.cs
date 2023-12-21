@@ -194,4 +194,32 @@ public class ArrayExpressionSyntaxTests
         // Assert
         Assert.Equal(42, actualFullWidth);
     }
+
+    [Fact(DisplayName = "The ToString() method must not include the trivia.")]
+    public void ToStringMethod_MustNotIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = "[  549  false  (Hello World!)  /SomeName  ]";
+        ArrayExpressionSyntax arrayExpressionSyntax = SyntaxFactory.ArrayExpression(this.openBracketToken, this.elements, this.closeBracketToken);
+
+        // Act
+        string actualString = arrayExpressionSyntax.ToString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
+
+    [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
+    public void ToFullStringMethod_MustIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = " [  549  false  (Hello World!)  /SomeName  ] ";
+        ArrayExpressionSyntax arrayExpressionSyntax = SyntaxFactory.ArrayExpression(this.openBracketToken, this.elements, this.closeBracketToken);
+
+        // Act
+        string actualString = arrayExpressionSyntax.ToFullString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
 }

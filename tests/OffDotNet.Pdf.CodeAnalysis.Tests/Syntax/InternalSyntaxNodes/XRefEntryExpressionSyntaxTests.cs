@@ -24,7 +24,7 @@ public class XRefEntryExpressionSyntaxTests
 
         this.offset = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, offsetToken);
         this.generationNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, generationNumberToken);
-        this.entryTypeKeyword = SyntaxFactory.Token(SyntaxKind.IndirectReferenceKeyword, trivia, trivia);
+        this.entryTypeKeyword = SyntaxFactory.Token(SyntaxKind.FreeXRefEntryKeyword, trivia, trivia);
     }
 
     [Fact(DisplayName = $"The {nameof(XRefEntryExpressionSyntax.Kind)} property must be {nameof(SyntaxKind.XRefEntry)}")]
@@ -168,5 +168,33 @@ public class XRefEntryExpressionSyntaxTests
 
         // Assert
         Assert.Equal(22, actualFullWidth);
+    }
+
+    [Fact(DisplayName = "The ToString() method must not include the trivia.")]
+    public void ToStringMethod_MustNotIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = "0000000017  00007  f";
+        XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
+
+        // Act
+        string actualString = xRefEntryExpression.ToString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
+
+    [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
+    public void ToFullStringMethod_MustIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = " 0000000017  00007  f ";
+        XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
+
+        // Act
+        string actualString = xRefEntryExpression.ToFullString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
     }
 }

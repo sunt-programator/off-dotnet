@@ -139,4 +139,32 @@ public class DictionaryElementSyntaxTests
         // Assert
         Assert.Equal(13, actualFullWidth);
     }
+
+    [Fact(DisplayName = "The ToString() method must not include the trivia.")]
+    public void ToStringMethod_MustNotIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = "/Name1  123";
+        DictionaryElementSyntax dictionaryElement = SyntaxFactory.DictionaryElement(this.key, this.value);
+
+        // Act
+        string actualString = dictionaryElement.ToString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
+
+    [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
+    public void ToFullStringMethod_MustIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = " /Name1  123 ";
+        DictionaryElementSyntax dictionaryElement = SyntaxFactory.DictionaryElement(this.key, this.value);
+
+        // Act
+        string actualString = dictionaryElement.ToFullString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
 }

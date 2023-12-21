@@ -225,4 +225,32 @@ public class IndirectObjectSyntaxTests
         // Assert
         Assert.Equal(28, actualFullWidth);
     }
+
+    [Fact(DisplayName = "The ToString() method must not include the trivia.")]
+    public void ToStringMethod_MustNotIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = "123  32  obj  true  endobj";
+        IndirectObjectSyntax indirectObject = SyntaxFactory.Object(this.objectNumber, this.generationNumber, this.startObjectKeyword, this.content, this.endObjKeyword);
+
+        // Act
+        string actualString = indirectObject.ToString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
+
+    [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
+    public void ToFullStringMethod_MustIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = " 123  32  obj  true  endobj ";
+        IndirectObjectSyntax indirectObject = SyntaxFactory.Object(this.objectNumber, this.generationNumber, this.startObjectKeyword, this.content, this.endObjKeyword);
+
+        // Act
+        string actualString = indirectObject.ToFullString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
 }

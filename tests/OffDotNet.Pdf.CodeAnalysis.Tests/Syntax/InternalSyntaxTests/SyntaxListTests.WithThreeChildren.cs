@@ -146,4 +146,40 @@ public class WithThreeChildrenTests
         // Assert
         Assert.Equal(offset, actualOffset);
     }
+
+    [Fact(DisplayName = "The ToString() method must not include the trivia.")]
+    public void ToStringMethod_MustNotIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = "true  false  null";
+        GreenNode trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
+        LiteralExpressionSyntax literalExpression3 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.NullKeyword, trivia, trivia));
+
+        // Act
+        GreenNode syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2, literalExpression3);
+        string actualString = syntaxList.ToString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
+
+    [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
+    public void ToFullStringMethod_MustIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = " true  false  null ";
+        GreenNode trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
+        LiteralExpressionSyntax literalExpression3 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.NullKeyword, trivia, trivia));
+
+        // Act
+        GreenNode syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2, literalExpression3);
+        string actualString = syntaxList.ToFullString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
 }

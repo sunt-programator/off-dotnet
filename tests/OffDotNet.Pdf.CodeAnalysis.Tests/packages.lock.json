@@ -1071,7 +1071,16 @@
         }
       },
       "offdotnet.pdf.codeanalysis": {
-        "type": "Project"
+        "type": "Project",
+        "dependencies": {
+          "Microsoft.Extensions.ObjectPool": "[8.0.0, )"
+        }
+      },
+      "Microsoft.Extensions.ObjectPool": {
+        "type": "CentralTransitive",
+        "requested": "[8.0.0, )",
+        "resolved": "8.0.0",
+        "contentHash": "4pm+XgxSukskwjzDDfSjG4KNUIOdFF2VaqZZDtTzoyQMOVSnlV6ZM8a9aVu5dg9LVZTB//utzSc8fOi0b0Mb2Q=="
       }
     }
   }

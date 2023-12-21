@@ -53,6 +53,8 @@ public class SyntaxTokenTests
     [InlineData(SyntaxKind.XRefKeyword, "xref")]
     [InlineData(SyntaxKind.TrailerKeyword, "trailer")]
     [InlineData(SyntaxKind.StartXRefKeyword, "startxref")]
+    [InlineData(SyntaxKind.FreeXRefEntryKeyword, "f")]
+    [InlineData(SyntaxKind.InUseXRefEntryKeyword, "n")]
     public void CreateMethod_MustSetTextProperty(SyntaxKind kind, string text)
     {
         // Arrange
@@ -339,5 +341,37 @@ public class SyntaxTokenTests
 
         // Assert
         Assert.Equal(2, trailingTriviaWidth);
+    }
+
+    [Fact(DisplayName = "The ToString() method must not include the trivia.")]
+    public void ToStringMethod_MustNotIncludeTrivia()
+    {
+        // Arrange
+        const SyntaxKind kind = SyntaxKind.TrueKeyword;
+        GreenNode leadingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, "   ");
+        GreenNode trailingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, "  ");
+        GreenNode token = SyntaxFactory.Token(kind, leadingTrivia, trailingTrivia);
+
+        // Act
+        string actualString = token.ToString();
+
+        // Assert
+        Assert.Equal("true", actualString);
+    }
+
+    [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
+    public void ToFullStringMethod_MustIncludeTrivia()
+    {
+        // Arrange
+        const SyntaxKind kind = SyntaxKind.TrueKeyword;
+        GreenNode leadingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, "   ");
+        GreenNode trailingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, "  ");
+        GreenNode token = SyntaxFactory.Token(kind, leadingTrivia, trailingTrivia);
+
+        // Act
+        string actualString = token.ToFullString();
+
+        // Assert
+        Assert.Equal("   true  ", actualString);
     }
 }

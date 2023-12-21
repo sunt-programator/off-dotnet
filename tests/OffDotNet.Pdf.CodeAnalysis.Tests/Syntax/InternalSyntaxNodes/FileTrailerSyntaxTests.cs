@@ -213,4 +213,32 @@ public class FileTrailerSyntaxTests
         // Assert
         Assert.Equal(61, actualFullWidth);
     }
+
+    [Fact(DisplayName = "The ToString() method must not include the trivia.")]
+    public void ToStringMethod_MustNotIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = "trailer  <<  /SomeName  123  /SomeName  123  >>  startxref  123";
+        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+
+        // Act
+        string actualString = fileTrailerSyntax.ToString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
+
+    [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
+    public void ToFullStringMethod_MustIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = " trailer  <<  /SomeName  123  /SomeName  123  >>  startxref  123 ";
+        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+
+        // Act
+        string actualString = fileTrailerSyntax.ToFullString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
 }

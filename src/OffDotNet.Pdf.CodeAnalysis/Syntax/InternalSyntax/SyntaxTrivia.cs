@@ -43,6 +43,13 @@ internal sealed class SyntaxTrivia : GreenNode
         return this.Text;
     }
 
+    /// <summary>Returns the <see cref="Text"/> value.</summary>
+    /// <returns>The <see cref="Text"/> value.</returns>
+    public override string ToFullString()
+    {
+        return this.Text;
+    }
+
     internal static SyntaxTrivia Create(SyntaxKind kind, string text)
     {
         return new SyntaxTrivia(kind, text);
@@ -52,5 +59,10 @@ internal sealed class SyntaxTrivia : GreenNode
     internal override GreenNode GetSlot(int index)
     {
         throw ExceptionUtilities.Unreachable();
+    }
+
+    protected override void WriteTriviaTo(TextWriter writer)
+    {
+        writer.Write(this.Text);
     }
 }

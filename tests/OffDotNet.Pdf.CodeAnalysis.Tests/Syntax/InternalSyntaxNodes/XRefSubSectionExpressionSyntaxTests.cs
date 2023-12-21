@@ -27,7 +27,7 @@ public class XRefSubSectionExpressionSyntaxTests
 
         LiteralExpressionSyntax offset = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, offsetToken);
         LiteralExpressionSyntax generationNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, generationNumberToken);
-        SyntaxToken entryTypeKeyword = SyntaxFactory.Token(SyntaxKind.IndirectReferenceKeyword, trivia, trivia);
+        SyntaxToken entryTypeKeyword = SyntaxFactory.Token(SyntaxKind.FreeXRefEntryKeyword, trivia, trivia);
 
         XRefEntryExpressionSyntax xRefEntryExpressionSyntax = SyntaxFactory.XRefEntry(offset, generationNumber, entryTypeKeyword);
 
@@ -181,5 +181,33 @@ public class XRefSubSectionExpressionSyntaxTests
 
         // Assert
         Assert.Equal(51, actualFullWidth);
+    }
+
+    [Fact(DisplayName = "The ToString() method must not include the trivia.")]
+    public void ToStringMethod_MustNotIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = "28  2  0000000017  00007  f  0000000017  00007  f";
+        XRefSubSectionExpressionSyntax xRefSubSectionExpression = SyntaxFactory.XRefSubSection(this.objectNumber, this.numberOfEntries, this.entries);
+
+        // Act
+        string actualString = xRefSubSectionExpression.ToString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
+
+    [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
+    public void ToFullStringMethod_MustIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = " 28  2  0000000017  00007  f  0000000017  00007  f ";
+        XRefSubSectionExpressionSyntax xRefSubSectionExpression = SyntaxFactory.XRefSubSection(this.objectNumber, this.numberOfEntries, this.entries);
+
+        // Act
+        string actualString = xRefSubSectionExpression.ToFullString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
     }
 }

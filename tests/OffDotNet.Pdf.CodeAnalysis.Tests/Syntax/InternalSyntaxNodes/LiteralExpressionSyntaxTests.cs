@@ -6,6 +6,7 @@
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 using SyntaxToken = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxToken;
+using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxTrivia;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxTests;
 
@@ -65,5 +66,37 @@ public class LiteralExpressionSyntaxTests
 
         // Assert
         Assert.Null(actualSlot);
+    }
+
+    [Fact(DisplayName = "The ToString() method must not include the trivia.")]
+    public void ToStringMethod_MustNotIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = "true";
+        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        SyntaxToken keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia);
+        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
+
+        // Act
+        string actualString = literalExpression.ToString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
+
+    [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
+    public void ToFullStringMethod_MustIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = " true ";
+        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        SyntaxToken keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia);
+        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
+
+        // Act
+        string actualString = literalExpression.ToFullString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
     }
 }

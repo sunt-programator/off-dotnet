@@ -111,4 +111,32 @@ public class ArrayElementSyntaxTests
         // Assert
         Assert.Equal(5, actualFullWidth);
     }
+
+    [Fact(DisplayName = "The ToString() method must not include the trivia.")]
+    public void ToStringMethod_MustNotIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = "123";
+        ArrayElementSyntax arrayElement = SyntaxFactory.ArrayElement(this.expression);
+
+        // Act
+        string actualString = arrayElement.ToString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
+
+    [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
+    public void ToFullStringMethod_MustIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = " 123 ";
+        ArrayElementSyntax arrayElement = SyntaxFactory.ArrayElement(this.expression);
+
+        // Act
+        string actualString = arrayElement.ToFullString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
 }

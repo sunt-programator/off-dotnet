@@ -258,4 +258,50 @@ public class WithLotsOfChildrenTests
         // Assert
         Assert.IsType<SyntaxList.WithLotsOfChildren>(syntaxList);
     }
+
+    [Fact(DisplayName = "The ToString() method must not include the trivia.")]
+    public void ToStringMethod_MustNotIncludeTrivia()
+    {
+        // Arrange
+        const int slotCount = 10;
+        const string expectedString = "true  true  true  true  true  true  true  true  true  true";
+        GreenNode trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        LiteralExpressionSyntax literalExpressionSyntax = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[slotCount];
+
+        for (int i = 0; i < slotCount; i++)
+        {
+            children[i].Value = literalExpressionSyntax;
+        }
+
+        // Act
+        GreenNode syntaxList = SyntaxFactory.List(children);
+        string actualString = syntaxList.ToString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
+
+    [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
+    public void ToFullStringMethod_MustIncludeTrivia()
+    {
+        // Arrange
+        const int slotCount = 10;
+        const string expectedString = " true  true  true  true  true  true  true  true  true  true ";
+        GreenNode trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        LiteralExpressionSyntax literalExpressionSyntax = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[slotCount];
+
+        for (int i = 0; i < slotCount; i++)
+        {
+            children[i].Value = literalExpressionSyntax;
+        }
+
+        // Act
+        GreenNode syntaxList = SyntaxFactory.List(children);
+        string actualString = syntaxList.ToFullString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
 }

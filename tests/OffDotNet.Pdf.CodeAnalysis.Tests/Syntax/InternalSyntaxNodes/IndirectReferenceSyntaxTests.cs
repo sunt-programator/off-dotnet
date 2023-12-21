@@ -169,4 +169,32 @@ public class IndirectReferenceSyntaxTests
         // Assert
         Assert.Equal(12, actualFullWidth);
     }
+
+    [Fact(DisplayName = "The ToString() method must not include the trivia.")]
+    public void ToStringMethod_MustNotIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = "123  32  R";
+        IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);
+
+        // Act
+        string actualString = indirectReference.ToString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
+
+    [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
+    public void ToFullStringMethod_MustIncludeTrivia()
+    {
+        // Arrange
+        const string expectedString = " 123  32  R ";
+        IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);
+
+        // Act
+        string actualString = indirectReference.ToFullString();
+
+        // Assert
+        Assert.Equal(expectedString, actualString);
+    }
 }

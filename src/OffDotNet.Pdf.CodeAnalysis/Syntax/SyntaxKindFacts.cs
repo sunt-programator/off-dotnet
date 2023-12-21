@@ -38,6 +38,8 @@ internal static class SyntaxKindFacts
             SyntaxKind.XRefKeyword => "xref",
             SyntaxKind.TrailerKeyword => "trailer",
             SyntaxKind.StartXRefKeyword => "startxref",
+            SyntaxKind.FreeXRefEntryKeyword => "f",
+            SyntaxKind.InUseXRefEntryKeyword => "n",
             _ => string.Empty,
         };
     }
