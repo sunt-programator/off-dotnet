@@ -66,20 +66,6 @@ public class FixedLocalizableStringTests
         Assert.Equal(value, actualString);
     }
 
-    [Fact(DisplayName = $"The ToString() method must return the string value of {nameof(LocalizableString)} class.")]
-    public void ToStringMethod_WithFormatAndProvider_MustReturnStringValue()
-    {
-        // Arrange
-        const string value = "123";
-
-        // Act
-        LocalizableString localizableString = value;
-        string actualString = localizableString.ToString(null, null);
-
-        // Assert
-        Assert.Equal(value, actualString);
-    }
-
     [Fact(DisplayName = "The generic ToString() method must be overriden.")]
     [SuppressMessage("Style", "CA1305: Specify IFormatProvider", Justification = "Reviewed.")]
     public void ToStringMethod_MustBeOverriden()

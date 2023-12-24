@@ -62,7 +62,7 @@ public abstract partial class LocalizableString : IFormattable, IEquatable<Local
         }
     }
 
-    public string ToString(string? format, IFormatProvider? formatProvider)
+    string IFormattable.ToString(string? format, IFormatProvider? formatProvider)
     {
         return this.GetText(formatProvider);
     }
