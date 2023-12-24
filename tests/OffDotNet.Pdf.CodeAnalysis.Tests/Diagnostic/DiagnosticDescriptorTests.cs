@@ -165,7 +165,7 @@ public class DiagnosticDescriptorTests
     }
 
     [Fact(DisplayName = $"The Equals() method must return false if the {nameof(DiagnosticDescriptor.Id)} is different")]
-    public void EqualsMethod_DifferentId_MustReturnTrue()
+    public void EqualsMethod_DifferentId_MustReturnFalse()
     {
         // Arrange
         const string id1 = "PDF0001";
@@ -187,7 +187,7 @@ public class DiagnosticDescriptorTests
     }
 
     [Fact(DisplayName = $"The Equals() method must return false if the {nameof(DiagnosticDescriptor.Title)} is different")]
-    public void EqualsMethod_DifferentTitle_MustReturnTrue()
+    public void EqualsMethod_DifferentTitle_MustReturnFalse()
     {
         // Arrange
         const string oldValue = "x";
@@ -209,7 +209,7 @@ public class DiagnosticDescriptorTests
     }
 
     [Fact(DisplayName = $"The Equals() method must return false if the {nameof(DiagnosticDescriptor.MessageFormat)} is different")]
-    public void EqualsMethod_DifferentMessageFormat_MustReturnTrue()
+    public void EqualsMethod_DifferentMessageFormat_MustReturnFalse()
     {
         // Arrange
         const string oldValue = "x";
@@ -231,7 +231,7 @@ public class DiagnosticDescriptorTests
     }
 
     [Fact(DisplayName = $"The Equals() method must return false if the {nameof(DiagnosticDescriptor.Category)} is different")]
-    public void EqualsMethod_DifferentCategory_MustReturnTrue()
+    public void EqualsMethod_DifferentCategory_MustReturnFalse()
     {
         // Arrange
         const string oldValue = "x";
@@ -253,7 +253,7 @@ public class DiagnosticDescriptorTests
     }
 
     [Fact(DisplayName = $"The Equals() method must return false if the {nameof(DiagnosticDescriptor.DiagnosticSeverity)} is different")]
-    public void EqualsMethod_DifferentDiagnosticSeverity_MustReturnTrue()
+    public void EqualsMethod_DifferentDiagnosticSeverity_MustReturnFalse()
     {
         // Arrange
         const DiagnosticSeverity oldValue = DiagnosticSeverity.Error;
@@ -276,7 +276,7 @@ public class DiagnosticDescriptorTests
     }
 
     [Fact(DisplayName = $"The Equals() method must return false if the {nameof(DiagnosticDescriptor.IsEnabledByDefault)} is different")]
-    public void EqualsMethod_DifferentIsEnabledByDefault_MustReturnTrue()
+    public void EqualsMethod_DifferentIsEnabledByDefault_MustReturnFalse()
     {
         // Arrange
         const bool oldValue = true;
@@ -299,7 +299,7 @@ public class DiagnosticDescriptorTests
     }
 
     [Fact(DisplayName = $"The Equals() method must return false if the {nameof(DiagnosticDescriptor.Description)} is different")]
-    public void EqualsMethod_DifferentDescription_MustReturnTrue()
+    public void EqualsMethod_DifferentDescription_MustReturnFalse()
     {
         // Arrange
         const string oldValue = "x";
@@ -321,7 +321,7 @@ public class DiagnosticDescriptorTests
     }
 
     [Fact(DisplayName = $"The Equals() method must return false if the {nameof(DiagnosticDescriptor.HelpLinkUri)} is different")]
-    public void EqualsMethod_DifferentHelpLinkUri_MustReturnTrue()
+    public void EqualsMethod_DifferentHelpLinkUri_MustReturnFalse()
     {
         // Arrange
         const string oldValue = "x";
