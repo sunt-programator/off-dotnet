@@ -28,7 +28,7 @@ public sealed class DiagnosticDescriptor : IEquatable<DiagnosticDescriptor>
         this.IsEnabledByDefault = isEnabledByDefault;
         this.Description = description ?? string.Empty;
         this.HelpLinkUri = helpLinkUri ?? string.Empty;
-        this.CustomTags = customTags?.ToImmutableArray() ?? ImmutableArray<string>.Empty;
+        this.CustomTags = customTags.ToImmutableArray();
     }
 
     /// <summary> Gets the unique identifier of the diagnostic.</summary>
