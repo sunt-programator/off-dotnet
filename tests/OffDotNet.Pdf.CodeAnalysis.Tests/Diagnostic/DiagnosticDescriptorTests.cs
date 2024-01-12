@@ -70,13 +70,13 @@ public class DiagnosticDescriptorTests
         Assert.Equal(Category, actualCategory);
     }
 
-    [Fact(DisplayName = $"The {nameof(DiagnosticDescriptor.DiagnosticSeverity)} property should return the value passed to the constructor")]
+    [Fact(DisplayName = $"The {nameof(DiagnosticDescriptor.DefaultSeverity)} property should return the value passed to the constructor")]
     public void DiagnosticSeverityProperty_MustBeSetFromConstructor()
     {
         // Arrange
 
         // Act
-        DiagnosticSeverity actualDiagnosticSeverity = this.diagnosticDescriptor.DiagnosticSeverity;
+        DiagnosticSeverity actualDiagnosticSeverity = this.diagnosticDescriptor.DefaultSeverity;
 
         // Assert
         Assert.Equal(DiagnosticSeverity, actualDiagnosticSeverity);
@@ -252,7 +252,7 @@ public class DiagnosticDescriptorTests
         Assert.True(actualEquals4);
     }
 
-    [Fact(DisplayName = $"The Equals() method must return false if the {nameof(DiagnosticDescriptor.DiagnosticSeverity)} is different")]
+    [Fact(DisplayName = $"The Equals() method must return false if the {nameof(DiagnosticDescriptor.DefaultSeverity)} is different")]
     public void EqualsMethod_DifferentDiagnosticSeverity_MustReturnFalse()
     {
         // Arrange

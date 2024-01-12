@@ -11,4 +11,5 @@ namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 public enum DiagnosticCode : ushort
 {
     ERR_InvalidPDF = 1,
+    ERR_InvalidPDFVersion = 2,
 }

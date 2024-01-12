@@ -16,5 +16,9 @@
         <_Parameter1>$(AssemblyName)%(InternalsVisibleToSuffix.Identity)</_Parameter1>
       </AssemblyAttribute>
     </ItemGroup>
+
+    <ItemGroup>
+      <InternalsVisibleTo Include="DynamicProxyGenAssembly2"/>
+    </ItemGroup>
   </Target>
 </Project>

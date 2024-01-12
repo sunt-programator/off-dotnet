@@ -91,17 +91,60 @@ public class MessageProviderTests
         Assert.Equal(helpLink, actualHelpLink);
     }
 
-    [Fact(DisplayName = "The GetCategory() method must return the message from the resource string.")]
-    public void GetCategoryMethod_MustComputeFromDiagnosticCode()
+    [Theory(DisplayName = "The GetCategory() method must return the message from the resource string.")]
+    [InlineData(DiagnosticCode.ERR_InvalidPDF, "Syntax")]
+    public void GetCategoryMethod_MustComputeFromDiagnosticCode(DiagnosticCode code, string category)
     {
         // Arrange
-        const DiagnosticCode code = DiagnosticCode.ERR_InvalidPDF;
-        const string category = "PDF";
 
         // Act
         string actualCategory = MessageProvider.Instance.GetCategory(code);
 
         // Assert
         Assert.Equal(category, actualCategory);
+    }
+
+    [Fact(DisplayName = "The GetIsEnabledByDefault() method must return true.")]
+    public void GetIsEnabledByDefaultMethod_MustReturnTrue()
+    {
+        // Arrange
+        const DiagnosticCode code = DiagnosticCode.ERR_InvalidPDF;
+
+        // Act
+        bool actualIsEnabledByDefault = MessageProvider.Instance.GetIsEnabledByDefault(code);
+
+        // Assert
+        Assert.True(actualIsEnabledByDefault);
+    }
+
+    [Fact(DisplayName = "The LoadMessage() method must return correct message.")]
+    public void LoadMessageMethod_MustReturnCorrectMessage()
+    {
+        // Arrange
+        const DiagnosticCode code = DiagnosticCode.ERR_InvalidPDF;
+        const string message = "The PDF file is invalid";
+
+        // Act
+        string actualMessage = MessageProvider.Instance.LoadMessage(code, CultureInfo.InvariantCulture);
+
+        // Assert
+        Assert.Equal(message, actualMessage);
+    }
+
+    [Theory(DisplayName = "The GetMessagePrefix() method must return correct prefix.")]
+    [InlineData("PDF0001", DiagnosticSeverity.Error, false, "error PDF0001")]
+    [InlineData("PDF0001", DiagnosticSeverity.Warning, false, "warning PDF0001")]
+    [InlineData("PDF0001", DiagnosticSeverity.Warning, true, "error PDF0001")]
+    [InlineData("PDF0001", DiagnosticSeverity.Info, false, "warning PDF0001")]
+    [InlineData("PDF0001", DiagnosticSeverity.Hidden, false, "warning PDF0001")]
+    public void GetMessagePrefixMethod_ErrorSeverity_MustReturnErrorAndCode(string code, DiagnosticSeverity severity, bool isWarningAsError, string prefix)
+    {
+        // Arrange
+
+        // Act
+        string actualPrefix = MessageProvider.Instance.GetMessagePrefix(code, severity, isWarningAsError, CultureInfo.InvariantCulture);
+
+        // Assert
+        Assert.Equal(prefix, actualPrefix);
     }
 }

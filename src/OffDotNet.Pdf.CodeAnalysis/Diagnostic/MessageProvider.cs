@@ -5,7 +5,9 @@
 
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Reflection;
 using System.Resources;
 
@@ -48,13 +50,40 @@ internal sealed class MessageProvider : IMessageProvider
 
     public string GetHelpLink(DiagnosticCode code)
     {
-        string id = ErrorIdCache.GetOrAdd((this.CodePrefix, code), key => $"{key.Prefix}{(int)key.Code:0000}");
-        return $"https://github.com/search?q=repo%3Asunt-programator%2Foff-dotnet%20{id}&type=code";
+        return $"https://github.com/search?q=repo%3Asunt-programator%2Foff-dotnet%20{this.GetIdForErrorCode(code)}&type=code";
+    }
+
+    public string GetIdForErrorCode(DiagnosticCode code)
+    {
+        return ErrorIdCache.GetOrAdd((this.CodePrefix, code), key => $"{key.Prefix}{(int)key.Code:0000}");
     }
 
     public string GetCategory(DiagnosticCode code)
     {
-        return CollectionExtensions.GetValueOrDefault(CategoriesMap.Value, code, "PDF");
+        return CollectionExtensions.GetValueOrDefault(CategoriesMap.Value, code, "Syntax");
+    }
+
+    public bool GetIsEnabledByDefault(DiagnosticCode code)
+    {
+        return true;
+    }
+
+    public string LoadMessage(DiagnosticCode code, CultureInfo culture)
+    {
+        string? message = ResourceManager.Value.GetString(code.ToString(), culture);
+        Debug.Assert(!string.IsNullOrEmpty(message), code.ToString());
+        return message;
+    }
+
+    /// <summary>Given a message identifier (e.g., PDF0001), severity, warning as error and a culture, get the entire prefix (e.g., "error PDF0001:") used on error messages.</summary>
+    /// <param name="id">The message identifier.</param>
+    /// <param name="severity">The severity of the diagnostic.</param>
+    /// <param name="isWarningAsError">True if the diagnostic is treated as an error.</param>
+    /// <param name="culture">The culture used to get the prefix.</param>
+    /// <returns>The entire prefix (e.g., "error PDF0001:") used on error messages.</returns>
+    public string GetMessagePrefix(string id, DiagnosticSeverity severity, bool isWarningAsError, CultureInfo culture)
+    {
+        return string.Format(culture, "{0} {1}", severity == DiagnosticSeverity.Error || isWarningAsError ? "error" : "warning", id);
     }
 
     [SuppressMessage("ReSharper", "CollectionNeverUpdated.Local", Justification = "Reviewed.")]

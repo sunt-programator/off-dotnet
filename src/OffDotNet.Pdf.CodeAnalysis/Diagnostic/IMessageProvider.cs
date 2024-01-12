@@ -3,6 +3,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using System.Globalization;
+
 namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 internal interface IMessageProvider
@@ -20,4 +22,12 @@ internal interface IMessageProvider
     string GetHelpLink(DiagnosticCode code);
 
     string GetCategory(DiagnosticCode code);
+
+    string GetIdForErrorCode(DiagnosticCode code);
+
+    bool GetIsEnabledByDefault(DiagnosticCode code);
+
+    string GetMessagePrefix(string id, DiagnosticSeverity severity, bool isWarningAsError, CultureInfo culture);
+
+    string LoadMessage(DiagnosticCode code, CultureInfo culture);
 }

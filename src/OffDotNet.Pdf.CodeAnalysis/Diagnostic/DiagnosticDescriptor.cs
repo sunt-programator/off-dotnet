@@ -4,6 +4,7 @@
 // </copyright>
 
 using System.Collections.Immutable;
+using System.Diagnostics;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
@@ -14,21 +15,37 @@ public sealed class DiagnosticDescriptor : IEquatable<DiagnosticDescriptor>
         LocalizableString title,
         LocalizableString messageFormat,
         string category,
-        DiagnosticSeverity diagnosticSeverity,
+        DiagnosticSeverity defaultSeverity,
         bool isEnabledByDefault,
         LocalizableString? description = null,
         string? helpLinkUri = null,
         params string[] customTags)
+        : this(id, title, messageFormat, category, defaultSeverity, isEnabledByDefault, description, helpLinkUri, ImmutableArray.Create(customTags))
     {
+    }
+
+    internal DiagnosticDescriptor(
+        string id,
+        LocalizableString title,
+        LocalizableString messageFormat,
+        string category,
+        DiagnosticSeverity defaultSeverity,
+        bool isEnabledByDefault,
+        LocalizableString? description,
+        string? helpLinkUri,
+        ImmutableArray<string> customTags)
+    {
+        Debug.Assert(!customTags.IsDefault, "Expected non-default customTags");
+
         this.Id = id;
         this.Title = title;
         this.MessageFormat = messageFormat;
         this.Category = category;
-        this.DiagnosticSeverity = diagnosticSeverity;
+        this.DefaultSeverity = defaultSeverity;
         this.IsEnabledByDefault = isEnabledByDefault;
         this.Description = description ?? string.Empty;
         this.HelpLinkUri = helpLinkUri ?? string.Empty;
-        this.CustomTags = customTags.ToImmutableArray();
+        this.CustomTags = customTags;
     }
 
     /// <summary> Gets the unique identifier of the diagnostic.</summary>
@@ -47,7 +64,7 @@ public sealed class DiagnosticDescriptor : IEquatable<DiagnosticDescriptor>
     public string Category { get; }
 
     /// <summary>Gets the default severity of the diagnostic.</summary>
-    public DiagnosticSeverity DiagnosticSeverity { get; }
+    public DiagnosticSeverity DefaultSeverity { get; }
 
     /// <summary>Gets a value indicating whether the diagnostic is enabled by default.</summary>
     public bool IsEnabledByDefault { get; }
@@ -87,7 +104,7 @@ public sealed class DiagnosticDescriptor : IEquatable<DiagnosticDescriptor>
                this.Title.Equals(other.Title) &&
                this.MessageFormat.Equals(other.MessageFormat) &&
                this.Category == other.Category &&
-               this.DiagnosticSeverity == other.DiagnosticSeverity &&
+               this.DefaultSeverity == other.DefaultSeverity &&
                this.IsEnabledByDefault == other.IsEnabledByDefault &&
                this.Description.Equals(other.Description) &&
                this.HelpLinkUri == other.HelpLinkUri;
@@ -105,7 +122,7 @@ public sealed class DiagnosticDescriptor : IEquatable<DiagnosticDescriptor>
         hashCode.Add(this.Title);
         hashCode.Add(this.MessageFormat);
         hashCode.Add(this.Category);
-        hashCode.Add((int)this.DiagnosticSeverity);
+        hashCode.Add((int)this.DefaultSeverity);
         hashCode.Add(this.IsEnabledByDefault);
         hashCode.Add(this.Description);
         hashCode.Add(this.HelpLinkUri);
