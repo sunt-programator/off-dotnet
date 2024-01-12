@@ -103,5 +103,14 @@ namespace OffDotNet.Pdf.CodeAnalysis {
                 return ResourceManager.GetString("LinePosition_NegativeLineException", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The &apos;end&apos; ({0}) line position must not be less than &apos;start&apos; ({1})..
+        /// </summary>
+        internal static string LinePositionSpan_EndMustNotBeLessThanStart {
+            get {
+                return ResourceManager.GetString("LinePositionSpan_EndMustNotBeLessThanStart", resourceCulture);
+            }
+        }
     }
 }

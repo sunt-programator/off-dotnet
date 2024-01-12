@@ -33,4 +33,7 @@
   <data name="LinePosition_NegativeCharacterException" xml:space="preserve">
     <value>The character number must be greater than or equal to zero.</value>
   </data>
+  <data name="LinePositionSpan_EndMustNotBeLessThanStart" xml:space="preserve">
+    <value>The 'end' ({0}) line position must not be less than 'start' ({1}).</value>
+  </data>
 </root>

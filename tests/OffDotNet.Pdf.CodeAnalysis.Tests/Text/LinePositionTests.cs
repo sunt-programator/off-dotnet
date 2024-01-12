@@ -13,19 +13,20 @@ public class LinePositionTests
     [Fact(DisplayName = $"The constructor must throw an {nameof(ArgumentOutOfRangeException)} when the {nameof(LinePosition.Line)} is negative.")]
     [SuppressMessage("ReSharper", "UnusedVariable", Justification = "The variable is used in the assertion.")]
     [SuppressMessage("Minor Code Smell", "S1481:Unused local variables should be removed", Justification = "The variable is used in the assertion.")]
+    [SuppressMessage("ReSharper", "MoveLocalFunctionAfterJumpStatement", Justification = "The local function is used in the assertion.")]
     public void Constructor_NegativeLine_MustThrowArgumentOutOfRangeException()
     {
         // Arrange
         const int line = -1;
 
         // Assert
-        Assert.Throws<ArgumentOutOfRangeException>(LinePositionFunc);
-
-        // Act
         static void LinePositionFunc()
         {
             LinePosition linePosition = new(line, 2);
         }
+
+        // Act
+        Assert.Throws<ArgumentOutOfRangeException>(LinePositionFunc);
     }
 
     [Fact(DisplayName = $"The constructor must throw an {nameof(ArgumentOutOfRangeException)} when the {nameof(LinePosition.Character)} is negative.")]
