@@ -85,5 +85,23 @@ namespace OffDotNet.Pdf.CodeAnalysis {
                 return ResourceManager.GetString("ERR_InvalidPDF_Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The character number must be greater than or equal to zero..
+        /// </summary>
+        internal static string LinePosition_NegativeCharacterException {
+            get {
+                return ResourceManager.GetString("LinePosition_NegativeCharacterException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The line number must be greater than or equal to zero..
+        /// </summary>
+        internal static string LinePosition_NegativeLineException {
+            get {
+                return ResourceManager.GetString("LinePosition_NegativeLineException", resourceCulture);
+            }
+        }
     }
 }
