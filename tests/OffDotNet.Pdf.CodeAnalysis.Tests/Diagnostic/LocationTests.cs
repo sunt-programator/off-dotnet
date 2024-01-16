@@ -31,10 +31,10 @@ public class LocationTests
         // Arrange
 
         // Act
-        TextSpan actualKind = this.location.SourceSpan;
+        TextSpan actualSourceSpan = this.location.SourceSpan;
 
         // Assert
-        Assert.Equal(default, actualKind);
+        Assert.Equal(default, actualSourceSpan);
     }
 
     [Fact(DisplayName = $"The {nameof(Location.LineSpan)} property must return the default value.")]
@@ -43,10 +43,10 @@ public class LocationTests
         // Arrange
 
         // Act
-        FileLinePositionSpan actualKind = this.location.LineSpan;
+        FileLinePositionSpan actualFileLinePositionSpan = this.location.LineSpan;
 
         // Assert
-        Assert.Equal(default, actualKind);
+        Assert.Equal(default, actualFileLinePositionSpan);
     }
 
     [Fact(DisplayName = $"The {nameof(Location.None)} field must return the static instance.")]
@@ -55,10 +55,10 @@ public class LocationTests
         // Arrange
 
         // Act
-        Location actualKind = Location.None;
+        Location actualLocation = Location.None;
 
         // Assert
-        Assert.Equal(Location.NoLocation.Instance, actualKind);
+        Assert.Equal(Location.NoLocation.Instance, actualLocation);
     }
 
     [Fact(DisplayName = "The Equals() method must return true.")]
@@ -131,5 +131,17 @@ public class LocationTests
 
         // Assert
         Assert.Equal(expectedLocation, actualString);
+    }
+
+    [Fact(DisplayName = $"The {nameof(LocalizableString)} class must implement the {nameof(IEquatable<Location>)} interface.")]
+    public void Class_MustImplementIEquatableInterface()
+    {
+        // Arrange
+
+        // Act
+        Location actualLocation = Location.None;
+
+        // Assert
+        Assert.IsAssignableFrom<IEquatable<Location>>(actualLocation);
     }
 }

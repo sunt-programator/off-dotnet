@@ -13,4 +13,7 @@ public enum LocationKind : byte
 
     /// <summary>The location represents a position in a source file.</summary>
     SourceFile = 1,
+
+    /// <summary>The location in some external file.</summary>
+    ExternalFile = 2,
 }

@@ -38,6 +38,16 @@ public abstract partial class Location : IEquatable<Location>
         return !(left == right);
     }
 
+    public static Location Create(string filePath, TextSpan textSpan, LinePositionSpan lineSpan)
+    {
+        if (filePath == null)
+        {
+            throw new ArgumentNullException(nameof(filePath));
+        }
+
+        return new ExternalFileLocation(filePath, textSpan, lineSpan);
+    }
+
     public bool Equals(Location? other)
     {
         return this.Equals((object?)other);

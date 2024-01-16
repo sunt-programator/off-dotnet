@@ -25,7 +25,7 @@ public class LocationNoneTests
         Assert.Equal(LocationKind.None, actualKind);
     }
 
-    [Fact(DisplayName = $"The GetHashCode() method must be an arbitrary number.")]
+    [Fact(DisplayName = "The GetHashCode() method must be an arbitrary number.")]
     public void GetHashCodeMethod_MustIncludeLineAndCharacter()
     {
         // Arrange
