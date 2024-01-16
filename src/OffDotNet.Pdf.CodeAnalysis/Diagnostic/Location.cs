@@ -4,6 +4,7 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Text;
@@ -11,6 +12,7 @@ using OffDotNet.Pdf.CodeAnalysis.Text;
 namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 [DebuggerDisplay("{ToString(), nq}")]
+[SuppressMessage("Major Code Smell", "S4035:Classes implementing \"IEquatable<T>\" should be sealed", Justification = "To be reviewed.")]
 public abstract partial class Location : IEquatable<Location>
 {
     public static Location None => NoLocation.Instance;
@@ -46,6 +48,16 @@ public abstract partial class Location : IEquatable<Location>
         }
 
         return new ExternalFileLocation(filePath, textSpan, lineSpan);
+    }
+
+    public static Location Create(SyntaxTree syntaxTree, TextSpan textSpan)
+    {
+        if (syntaxTree == null)
+        {
+            throw new ArgumentNullException(nameof(syntaxTree));
+        }
+
+        return new SourceLocation(syntaxTree, textSpan);
     }
 
     public bool Equals(Location? other)

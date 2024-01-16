@@ -1,21 +1,27 @@
-// <copyright file="ExternalFileLocationTests.cs" company="Sunt Programator">
+// <copyright file="SourceLocationTests.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Text;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Diagnostic;
 
-public class ExternalFileLocationTests
+public class SourceLocationTests
 {
     private const string FilePath = @"C:\test.pdf";
-    private static readonly TextSpan SourceSpan = new(0, 2);
-    private static readonly LinePositionSpan LineSpan = new(new LinePosition(1, 1), new LinePosition(2, 2));
-    private readonly ExternalFileLocation location = (ExternalFileLocation)Location.Create(FilePath, SourceSpan, LineSpan);
+    private static readonly TextSpan Span = new(0, 2);
+    private static readonly SyntaxTree SyntaxTree = Substitute.For<SyntaxTree>();
+    private readonly SourceLocation location = (SourceLocation)Location.Create(SyntaxTree, Span);
 
-    [Fact(DisplayName = $"The {nameof(ExternalFileLocation.Kind)} property must return {nameof(LocationKind.ExternalFile)}.")]
+    public SourceLocationTests()
+    {
+        SyntaxTree.FilePath.Returns(FilePath);
+    }
+
+    [Fact(DisplayName = $"The {nameof(SourceLocation.Kind)} property must return {nameof(LocationKind.SourceFile)}.")]
     public void KindProperty_MustReturnExternalFile()
     {
         // Arrange
@@ -24,7 +30,7 @@ public class ExternalFileLocationTests
         LocationKind actualKind = this.location.Kind;
 
         // Assert
-        Assert.Equal(LocationKind.ExternalFile, actualKind);
+        Assert.Equal(LocationKind.SourceFile, actualKind);
     }
 
     [Fact(DisplayName = $"The {nameof(SourceLocation.SourceSpan)} property must be assigned from constructor.")]
@@ -36,28 +42,27 @@ public class ExternalFileLocationTests
         TextSpan actualSourceSpan = this.location.SourceSpan;
 
         // Assert
-        Assert.Equal(SourceSpan, actualSourceSpan);
+        Assert.Equal(Span, actualSourceSpan);
     }
 
-    [Fact(DisplayName = $"The {nameof(SourceLocation.LineSpan)} property must be assigned from constructor.")]
-    public void LineSpanProperty_MustBeAssignedFromConstructor()
+    [Fact(DisplayName = $"The {nameof(SourceLocation.SyntaxTree)} property must be assigned from constructor.")]
+    public void SyntaxTreeProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        FileLinePositionSpan expectedLineSpan = new(FilePath, LineSpan);
 
         // Act
-        FileLinePositionSpan actualLineSpan = this.location.LineSpan;
+        SyntaxTree? actualSyntaxTree = this.location.SyntaxTree;
 
         // Assert
-        Assert.Equal(expectedLineSpan, actualLineSpan);
+        Assert.Equal(SyntaxTree, actualSyntaxTree);
     }
 
     [Fact(DisplayName = "The Equals() method must return true.")]
     public void EqualsMethod_MustReturnTrue()
     {
         // Arrange
-        ExternalFileLocation location1 = (ExternalFileLocation)Location.Create(FilePath, SourceSpan, LineSpan);
-        ExternalFileLocation location2 = (ExternalFileLocation)Location.Create(FilePath, SourceSpan, LineSpan);
+        SourceLocation location1 = (SourceLocation)Location.Create(SyntaxTree, Span);
+        SourceLocation location2 = (SourceLocation)Location.Create(SyntaxTree, Span);
 
         // Act
         bool actualEquals1 = location1.Equals(location2);
@@ -76,8 +81,8 @@ public class ExternalFileLocationTests
     public void EqualsMethod_SameReference_MustReturnTrue()
     {
         // Arrange
-        ExternalFileLocation location1 = (ExternalFileLocation)Location.Create(FilePath, SourceSpan, LineSpan);
-        ExternalFileLocation location2 = location1;
+        SourceLocation location1 = (SourceLocation)Location.Create(SyntaxTree, Span);
+        SourceLocation location2 = location1;
 
         // Act
         bool actualEquals1 = location1.Equals(location2);
@@ -96,9 +101,9 @@ public class ExternalFileLocationTests
     public void EqualsMethod_MustReturnFalse()
     {
         // Arrange
-        const string filePath2 = @"C:\test2.pdf";
-        ExternalFileLocation location1 = (ExternalFileLocation)Location.Create(FilePath, SourceSpan, LineSpan);
-        ExternalFileLocation location2 = (ExternalFileLocation)Location.Create(filePath2, SourceSpan, LineSpan);
+        TextSpan span2 = new(3, 3);
+        SourceLocation location1 = (SourceLocation)Location.Create(SyntaxTree, Span);
+        SourceLocation location2 = (SourceLocation)Location.Create(SyntaxTree, span2);
 
         // Act
         bool actualEquals1 = location1.Equals(location2);
@@ -113,7 +118,7 @@ public class ExternalFileLocationTests
         Assert.True(actualEquals4);
     }
 
-    [Fact(DisplayName = $"The {nameof(LocalizableString)} class must implement the {nameof(IEquatable<ExternalFileLocation>)} interface.")]
+    [Fact(DisplayName = $"The {nameof(LocalizableString)} class must implement the {nameof(IEquatable<SourceLocation>)} interface.")]
     public void Class_MustImplementIEquatableInterface()
     {
         // Arrange
@@ -121,14 +126,14 @@ public class ExternalFileLocationTests
         // Act
 
         // Assert
-        Assert.IsAssignableFrom<IEquatable<ExternalFileLocation>>(this.location);
+        Assert.IsAssignableFrom<IEquatable<SourceLocation>>(this.location);
     }
 
     [Fact(DisplayName = $"The GetHashCode() method must include the {nameof(SourceLocation.SourceSpan)} and {nameof(SourceLocation.LineSpan)} properties.")]
     public void GetHashCodeMethod_MustIncludeLineAndSourceSpan()
     {
         // Arrange
-        int expectedHashCode = HashCode.Combine(this.location.SourceSpan, this.location.LineSpan);
+        int expectedHashCode = HashCode.Combine(this.location.SyntaxTree, this.location.LineSpan);
 
         // Act
         int actualHashCode = this.location.GetHashCode();
@@ -137,11 +142,11 @@ public class ExternalFileLocationTests
         Assert.Equal(expectedHashCode, actualHashCode);
     }
 
-    [Fact(DisplayName = $"The ToString() method must include the {nameof(SourceLocation.Kind)} and {nameof(FileLinePositionSpan)} properties.")]
+    [Fact(DisplayName = $"The ToString() method must include the {nameof(SourceLocation.Kind)}, {nameof(CodeAnalysis.Syntax.SyntaxTree.FilePath)} and {nameof(SourceLocation.SourceSpan)} properties.")]
     public void ToStringMethod_MustIncludeKindAndFileLinePositionSpan()
     {
         // Arrange
-        const string expectedLocation = @"ExternalFile (C:\test.pdf@2:2)";
+        const string expectedLocation = @"SourceFile (C:\test.pdf[0..2))";
 
         // Act
         string actualString = this.location.ToString();
