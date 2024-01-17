@@ -3,12 +3,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal sealed class ArrayElementSyntax : CollectionElementSyntax
 {
-    internal ArrayElementSyntax(SyntaxKind kind, ExpressionSyntax expression)
-        : base(kind)
+    internal ArrayElementSyntax(SyntaxKind kind, ExpressionSyntax expression, DiagnosticInfo[]? diagnostics = null)
+        : base(kind, diagnostics)
     {
         this.Expression = expression;
         this.SlotCount = 1;
@@ -16,6 +18,12 @@ internal sealed class ArrayElementSyntax : CollectionElementSyntax
     }
 
     public ExpressionSyntax Expression { get; }
+
+    /// <inheritdoc cref="GreenNode.SetDiagnostics"/>
+    internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
+    {
+        return new ArrayElementSyntax(this.Kind, this.Expression, diagnostics);
+    }
 
     internal override GreenNode? GetSlot(int index)
     {

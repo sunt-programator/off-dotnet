@@ -3,6 +3,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 /// <summary>Represents an syntax node in the PDF Syntax tree.</summary>
@@ -11,9 +13,16 @@ internal abstract partial class GreenNode
 {
     /// <summary>Initializes a new instance of the <see cref="GreenNode"/> class.</summary>
     /// <param name="kind">The <see cref="SyntaxKind"/> of the token.</param>
-    protected GreenNode(SyntaxKind kind)
+    /// <param name="diagnostics">The diagnostics associated with this node.</param>
+    protected GreenNode(SyntaxKind kind, DiagnosticInfo[]? diagnostics = null)
     {
         this.Kind = kind;
+
+        if (diagnostics?.Length > 0)
+        {
+            this.SetFlags(NodeFlags.ContainsDiagnostics);
+            DiagnosticsTable.Add(this, diagnostics);
+        }
     }
 
     /// <summary>Gets the <see cref="SyntaxKind"/> of the token.</summary>

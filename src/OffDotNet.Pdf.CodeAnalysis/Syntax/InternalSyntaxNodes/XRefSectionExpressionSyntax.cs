@@ -3,12 +3,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal sealed class XRefSectionExpressionSyntax : GreenNode
 {
-    internal XRefSectionExpressionSyntax(SyntaxKind kind, SyntaxToken xRefKeyword, GreenNode? subSections)
-        : base(kind)
+    internal XRefSectionExpressionSyntax(SyntaxKind kind, SyntaxToken xRefKeyword, GreenNode? subSections, DiagnosticInfo[]? diagnostics = null)
+        : base(kind, diagnostics)
     {
         this.XRefKeyword = xRefKeyword;
         this.SubSections = subSections;
@@ -28,5 +30,11 @@ internal sealed class XRefSectionExpressionSyntax : GreenNode
             1 => this.SubSections,
             _ => null,
         };
+    }
+
+    /// <inheritdoc cref="GreenNode.SetDiagnostics"/>
+    internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
+    {
+        return new XRefSectionExpressionSyntax(this.Kind, this.XRefKeyword, this.SubSections, diagnostics);
     }
 }

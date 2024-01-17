@@ -3,14 +3,15 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.InternalUtilities;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal sealed class SyntaxTrivia : GreenNode
 {
-    internal SyntaxTrivia(SyntaxKind kind, string text)
-        : base(kind)
+    internal SyntaxTrivia(SyntaxKind kind, string text, DiagnosticInfo[]? diagnostics = null)
+        : base(kind, diagnostics)
     {
         this.Text = text;
         this.FullWidth = text.Length;
@@ -59,6 +60,12 @@ internal sealed class SyntaxTrivia : GreenNode
     internal override GreenNode GetSlot(int index)
     {
         throw ExceptionUtilities.Unreachable();
+    }
+
+    /// <inheritdoc cref="GreenNode.SetDiagnostics"/>
+    internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
+    {
+        return new SyntaxTrivia(this.Kind, this.Text, diagnostics);
     }
 
     protected override void WriteTriviaTo(TextWriter writer)

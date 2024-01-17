@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.InternalUtilities;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
@@ -12,8 +13,8 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 /// <example>PDF identifiers, keywords, literals.</example>
 internal sealed class SyntaxToken : GreenNode
 {
-    internal SyntaxToken(SyntaxKind kind, string text, object? value, GreenNode? leading, GreenNode? trailing, int fullWidth)
-        : base(kind)
+    internal SyntaxToken(SyntaxKind kind, string text, object? value, GreenNode? leading, GreenNode? trailing, int fullWidth, DiagnosticInfo[]? diagnostics = null)
+        : base(kind, diagnostics)
     {
         this.Text = text;
         this.Value = value;
@@ -59,6 +60,12 @@ internal sealed class SyntaxToken : GreenNode
     internal override GreenNode GetSlot(int index)
     {
         throw ExceptionUtilities.Unreachable();
+    }
+
+    /// <inheritdoc cref="GreenNode.SetDiagnostics"/>
+    internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
+    {
+        return new SyntaxToken(this.Kind, this.Text, this.Value, this.LeadingTrivia, this.TrailingTrivia, this.FullWidth, diagnostics);
     }
 
     protected override void WriteTokenTo(TextWriter writer, bool leading, bool trailing)

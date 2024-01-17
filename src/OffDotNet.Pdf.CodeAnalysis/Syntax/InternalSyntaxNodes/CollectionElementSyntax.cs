@@ -3,12 +3,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal abstract class CollectionElementSyntax : GreenNode
 {
-    protected CollectionElementSyntax(SyntaxKind kind)
-        : base(kind)
+    protected CollectionElementSyntax(SyntaxKind kind, DiagnosticInfo[]? diagnostics = null)
+        : base(kind, diagnostics)
     {
     }
 }

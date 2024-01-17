@@ -3,12 +3,19 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal sealed class IndirectReferenceSyntax : ExpressionSyntax
 {
-    internal IndirectReferenceSyntax(SyntaxKind kind, LiteralExpressionSyntax objectNumber, LiteralExpressionSyntax generationNumber, SyntaxToken referenceKeyword)
-        : base(kind)
+    internal IndirectReferenceSyntax(
+        SyntaxKind kind,
+        LiteralExpressionSyntax objectNumber,
+        LiteralExpressionSyntax generationNumber,
+        SyntaxToken referenceKeyword,
+        DiagnosticInfo[]? diagnostics = null)
+        : base(kind, diagnostics)
     {
         this.ObjectNumber = objectNumber;
         this.GenerationNumber = generationNumber;
@@ -32,5 +39,11 @@ internal sealed class IndirectReferenceSyntax : ExpressionSyntax
             2 => this.ReferenceKeyword,
             _ => null,
         };
+    }
+
+    /// <inheritdoc cref="GreenNode.SetDiagnostics"/>
+    internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
+    {
+        return new IndirectReferenceSyntax(this.Kind, this.ObjectNumber, this.GenerationNumber, this.ReferenceKeyword, diagnostics);
     }
 }

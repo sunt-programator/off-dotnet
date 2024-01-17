@@ -3,12 +3,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal abstract class CollectionExpressionSyntax : ExpressionSyntax
 {
-    protected CollectionExpressionSyntax(SyntaxKind kind, SyntaxToken openToken, GreenNode? elements, SyntaxToken closeToken)
-        : base(kind)
+    protected CollectionExpressionSyntax(SyntaxKind kind, SyntaxToken openToken, GreenNode? elements, SyntaxToken closeToken, DiagnosticInfo[]? diagnostics = null)
+        : base(kind, diagnostics)
     {
         this.OpenToken = openToken;
         this.Elements = elements;

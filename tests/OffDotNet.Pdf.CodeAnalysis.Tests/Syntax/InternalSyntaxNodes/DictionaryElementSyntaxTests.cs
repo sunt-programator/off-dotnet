@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 using LiteralExpressionSyntax = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.LiteralExpressionSyntax;
@@ -166,5 +167,22 @@ public class DictionaryElementSyntaxTests
 
         // Assert
         Assert.Equal(expectedString, actualString);
+    }
+
+    [Fact(DisplayName = "The SetDiagnostics() method must set the diagnostics and return a new instance.")]
+    public void SetDiagnosticsMethod_MustSetDiagnosticsAndReturnNewInstance()
+    {
+        // Arrange
+        DictionaryElementSyntax dictionaryElement = SyntaxFactory.DictionaryElement(this.key, this.value);
+        DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
+        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+
+        // Act
+        DictionaryElementSyntax actualDictionaryElement = (DictionaryElementSyntax)dictionaryElement.SetDiagnostics(diagnostics);
+
+        // Assert
+        Assert.NotSame(dictionaryElement, actualDictionaryElement);
+        Assert.Equal(diagnostics, actualDictionaryElement.GetDiagnostics());
+        Assert.True(actualDictionaryElement.ContainsFlags(GreenNode.NodeFlags.ContainsDiagnostics));
     }
 }

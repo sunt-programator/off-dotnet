@@ -4,6 +4,7 @@
 // </copyright>
 
 using OffDotNet.Pdf.CodeAnalysis.Collections;
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxTrivia;
@@ -303,5 +304,33 @@ public class WithLotsOfChildrenTests
 
         // Assert
         Assert.Equal(expectedString, actualString);
+    }
+
+    [Fact(DisplayName = "The SetDiagnostics() method must set the diagnostics and return a new instance.")]
+    public void SetDiagnosticsMethod_MustSetDiagnosticsAndReturnNewInstance()
+    {
+        // Arrange
+        const int slotCount = 10;
+        GreenNode trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        LiteralExpressionSyntax literalExpressionSyntax = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[slotCount];
+
+        for (int i = 0; i < slotCount; i++)
+        {
+            children[i].Value = literalExpressionSyntax;
+        }
+
+        GreenNode syntaxList = SyntaxFactory.List(children);
+
+        DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
+        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+
+        // Act
+        GreenNode actualSyntaxList = syntaxList.SetDiagnostics(diagnostics);
+
+        // Assert
+        Assert.NotSame(syntaxList, actualSyntaxList);
+        Assert.Equal(diagnostics, actualSyntaxList.GetDiagnostics());
+        Assert.True(actualSyntaxList.ContainsFlags(GreenNode.NodeFlags.ContainsDiagnostics));
     }
 }

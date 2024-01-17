@@ -3,12 +3,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal sealed class XRefEntryExpressionSyntax : GreenNode
 {
-    internal XRefEntryExpressionSyntax(SyntaxKind kind, LiteralExpressionSyntax offset, LiteralExpressionSyntax generationNumber, SyntaxToken entryType)
-        : base(kind)
+    internal XRefEntryExpressionSyntax(SyntaxKind kind, LiteralExpressionSyntax offset, LiteralExpressionSyntax generationNumber, SyntaxToken entryType, DiagnosticInfo[]? diagnostics = null)
+        : base(kind, diagnostics)
     {
         this.Offset = offset;
         this.GenerationNumber = generationNumber;
@@ -32,5 +34,11 @@ internal sealed class XRefEntryExpressionSyntax : GreenNode
             2 => this.EntryType,
             _ => null,
         };
+    }
+
+    /// <inheritdoc cref="GreenNode.SetDiagnostics"/>
+    internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
+    {
+        return new XRefEntryExpressionSyntax(this.Kind, this.Offset, this.GenerationNumber, this.EntryType, diagnostics);
     }
 }

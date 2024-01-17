@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 using SyntaxToken = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxToken;
@@ -252,5 +253,22 @@ public class IndirectObjectSyntaxTests
 
         // Assert
         Assert.Equal(expectedString, actualString);
+    }
+
+    [Fact(DisplayName = "The SetDiagnostics() method must set the diagnostics and return a new instance.")]
+    public void SetDiagnosticsMethod_MustSetTheDiagnosticsAndReturnNewInstance()
+    {
+        // Arrange
+        IndirectObjectSyntax indirectObject = SyntaxFactory.Object(this.objectNumber, this.generationNumber, this.startObjectKeyword, this.content, this.endObjKeyword);
+        DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
+        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+
+        // Act
+        IndirectObjectSyntax actualIndirectObject = (IndirectObjectSyntax)indirectObject.SetDiagnostics(diagnostics);
+
+        // Assert
+        Assert.NotSame(indirectObject, actualIndirectObject);
+        Assert.Equal(diagnostics, actualIndirectObject.GetDiagnostics());
+        Assert.True(actualIndirectObject.ContainsFlags(GreenNode.NodeFlags.ContainsDiagnostics));
     }
 }

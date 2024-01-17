@@ -3,6 +3,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal sealed class IndirectObjectSyntax : GreenNode
@@ -13,8 +15,9 @@ internal sealed class IndirectObjectSyntax : GreenNode
         LiteralExpressionSyntax generationNumber,
         SyntaxToken startObjectKeyword,
         GreenNode content,
-        SyntaxToken endObjectKeyword)
-        : base(kind)
+        SyntaxToken endObjectKeyword,
+        DiagnosticInfo[]? diagnostics = null)
+        : base(kind, diagnostics)
     {
         this.ObjectNumber = objectNumber;
         this.GenerationNumber = generationNumber;
@@ -46,5 +49,11 @@ internal sealed class IndirectObjectSyntax : GreenNode
             4 => this.EndObjectKeyword,
             _ => null,
         };
+    }
+
+    /// <inheritdoc cref="GreenNode.SetDiagnostics"/>
+    internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
+    {
+        return new IndirectObjectSyntax(this.Kind, this.ObjectNumber, this.GenerationNumber, this.StartObjectKeyword, this.Content, this.EndObjectKeyword, diagnostics);
     }
 }

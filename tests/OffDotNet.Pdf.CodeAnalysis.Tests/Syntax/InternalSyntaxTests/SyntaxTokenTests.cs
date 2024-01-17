@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 using SyntaxToken = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxToken;
@@ -373,5 +374,24 @@ public class SyntaxTokenTests
 
         // Assert
         Assert.Equal("   true  ", actualString);
+    }
+
+    [Fact(DisplayName = "The SetDiagnostics() method must set the diagnostics and return a new instance.")]
+    public void SetDiagnosticsMethod_MustSetDiagnosticsAndReturnNewInstance()
+    {
+        // Arrange
+        const SyntaxKind kind = SyntaxKind.TrueKeyword;
+        GreenNode token = SyntaxFactory.Token(kind);
+
+        DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
+        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+
+        // Act
+        GreenNode actualToken = token.SetDiagnostics(diagnostics);
+
+        // Assert
+        Assert.NotSame(token, actualToken);
+        Assert.Equal(diagnostics, actualToken.GetDiagnostics());
+        Assert.True(actualToken.ContainsFlags(GreenNode.NodeFlags.ContainsDiagnostics));
     }
 }

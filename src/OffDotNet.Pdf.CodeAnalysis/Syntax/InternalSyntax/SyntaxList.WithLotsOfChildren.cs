@@ -4,6 +4,7 @@
 // </copyright>
 
 using OffDotNet.Pdf.CodeAnalysis.Collections;
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
@@ -13,8 +14,8 @@ internal abstract partial class SyntaxList
     {
         private readonly int[] childOffsets;
 
-        public WithLotsOfChildren(ArrayElement<GreenNode>[] children)
-            : base(children)
+        public WithLotsOfChildren(ArrayElement<GreenNode>[] children, DiagnosticInfo[]? diagnostics = null)
+            : base(children, diagnostics)
         {
             this.childOffsets = CalculateOffsets(children);
         }
@@ -24,6 +25,11 @@ internal abstract partial class SyntaxList
             return index < this.childOffsets.Length
                 ? this.childOffsets[index]
                 : this.childOffsets[^1];
+        }
+
+        internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
+        {
+            return new WithLotsOfChildren(this.Children, diagnostics);
         }
 
         private static int[] CalculateOffsets(ArrayElement<GreenNode>[] children)

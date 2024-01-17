@@ -3,6 +3,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
@@ -10,14 +12,16 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxTests;
 
 public class GreenNodeTests
 {
-    [Fact(DisplayName = $"The {nameof(GreenNode.Flags)} must return {nameof(GreenNode.NodeFlags.None)} by default")]
+    [SuppressMessage("Substitute creation", "NS2002:Constructor parameters count mismatch.", Justification = "False positive.")]
+    private readonly GreenNode node = Substitute.For<GreenNode>(SyntaxKind.None, null);
+
+    [Fact(DisplayName = $"The {nameof(GreenNode.Flags)} property must return {nameof(GreenNode.NodeFlags.None)} by default")]
     public void FlagsProperty_MustReturnNoneByDefault()
     {
         // Arrange
-        GreenNode node = Substitute.For<GreenNode>(SyntaxKind.None);
 
         // Act
-        GreenNode.NodeFlags actualFlags = node.Flags;
+        GreenNode.NodeFlags actualFlags = this.node.Flags;
 
         // Assert
         Assert.Equal(GreenNode.NodeFlags.None, actualFlags);
@@ -27,12 +31,11 @@ public class GreenNodeTests
     public void SetFlagsMethod_MustBitwiseSetFlagsProperty()
     {
         // Arrange
-        GreenNode node = Substitute.For<GreenNode>(SyntaxKind.None);
         GreenNode.NodeFlags expectedFlags = GreenNode.NodeFlags.ContainsDiagnostics;
 
         // Act
-        node.SetFlags(expectedFlags);
-        GreenNode.NodeFlags actualFlags = node.Flags;
+        this.node.SetFlags(expectedFlags);
+        GreenNode.NodeFlags actualFlags = this.node.Flags;
 
         // Assert
         Assert.Equal(expectedFlags, actualFlags);
@@ -42,13 +45,12 @@ public class GreenNodeTests
     public void ClearFlagsMethod_MustBitwiseClearFlagsProperty()
     {
         // Arrange
-        GreenNode node = Substitute.For<GreenNode>(SyntaxKind.None);
         GreenNode.NodeFlags expectedFlags = GreenNode.NodeFlags.ContainsDiagnostics;
-        node.SetFlags(expectedFlags);
+        this.node.SetFlags(expectedFlags);
 
         // Act
-        node.ClearFlags(expectedFlags);
-        GreenNode.NodeFlags actualFlags = node.Flags;
+        this.node.ClearFlags(expectedFlags);
+        GreenNode.NodeFlags actualFlags = this.node.Flags;
 
         // Assert
         Assert.Equal(GreenNode.NodeFlags.None, actualFlags);
@@ -58,14 +60,26 @@ public class GreenNodeTests
     public void ContainsFlagsMethod_MustReturnTrueIfFlagsPropertyContainsSpecifiedFlags()
     {
         // Arrange
-        GreenNode node = Substitute.For<GreenNode>(SyntaxKind.None);
         GreenNode.NodeFlags expectedFlags = GreenNode.NodeFlags.ContainsDiagnostics;
-        node.SetFlags(expectedFlags);
+        this.node.SetFlags(expectedFlags);
 
         // Act
-        bool actualResult = node.ContainsFlags(expectedFlags);
+        bool actualResult = this.node.ContainsFlags(expectedFlags);
 
         // Assert
         Assert.True(actualResult);
+    }
+
+    [Fact(DisplayName =
+        $"The GetDiagnostics() method must return an empty array if the {nameof(GreenNode.NodeFlags)} property does not contain {nameof(GreenNode.NodeFlags.ContainsDiagnostics)} flag")]
+    public void GetDiagnosticsMethod_MustReturnEmptyArrayIfFlagsPropertyDoesNotContainContainsDiagnosticsFlag()
+    {
+        // Arrange
+
+        // Act
+        DiagnosticInfo[] actualResult = this.node.GetDiagnostics();
+
+        // Assert
+        Assert.Empty(actualResult);
     }
 }

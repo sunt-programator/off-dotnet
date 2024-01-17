@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 using InternalSyntax = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
@@ -201,5 +202,25 @@ public class SyntaxTriviaTests
 
         // Assert
         Assert.Equal(text, actualString);
+    }
+
+    [Fact(DisplayName = "The SetDiagnostics() method must set the diagnostics and return a new instance.")]
+    public void SetDiagnosticsMethod_MustSetDiagnosticsAndReturnNewInstance()
+    {
+        // Arrange
+        const SyntaxKind kind = SyntaxKind.EndOfLineTrivia;
+        const string text = "    ";
+        DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
+        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+
+        InternalSyntax.SyntaxTrivia trivia = InternalSyntax.SyntaxTrivia.Create(kind, text);
+
+        // Act
+        GreenNode actualNode = trivia.SetDiagnostics(diagnostics);
+
+        // Assert
+        Assert.NotSame(trivia, actualNode);
+        Assert.Equal(diagnostics, actualNode.GetDiagnostics());
+        Assert.True(actualNode.ContainsFlags(GreenNode.NodeFlags.ContainsDiagnostics));
     }
 }

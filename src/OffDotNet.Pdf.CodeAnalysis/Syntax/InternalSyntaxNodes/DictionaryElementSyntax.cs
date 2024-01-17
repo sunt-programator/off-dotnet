@@ -3,12 +3,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal sealed class DictionaryElementSyntax : CollectionElementSyntax
 {
-    internal DictionaryElementSyntax(SyntaxKind kind, LiteralExpressionSyntax key, ExpressionSyntax value)
-        : base(kind)
+    internal DictionaryElementSyntax(SyntaxKind kind, LiteralExpressionSyntax key, ExpressionSyntax value, DiagnosticInfo[]? diagnostics = null)
+        : base(kind, diagnostics)
     {
         this.Key = key;
         this.Value = value;
@@ -28,5 +30,11 @@ internal sealed class DictionaryElementSyntax : CollectionElementSyntax
             1 => this.Value,
             _ => null,
         };
+    }
+
+    /// <inheritdoc cref="GreenNode.SetDiagnostics"/>
+    internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
+    {
+        return new DictionaryElementSyntax(this.Kind, this.Key, this.Value, diagnostics);
     }
 }

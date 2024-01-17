@@ -3,6 +3,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal abstract partial class SyntaxList
@@ -13,7 +15,8 @@ internal abstract partial class SyntaxList
         private readonly GreenNode child1;
         private readonly GreenNode child2;
 
-        internal WithThreeChildren(GreenNode child0, GreenNode child1, GreenNode child2)
+        internal WithThreeChildren(GreenNode child0, GreenNode child1, GreenNode child2, DiagnosticInfo[]? diagnostics = null)
+            : base(diagnostics)
         {
             this.SlotCount = 3;
             this.child0 = child0;
@@ -31,6 +34,12 @@ internal abstract partial class SyntaxList
                 2 => this.child2,
                 _ => null,
             };
+        }
+
+        /// <inheritdoc cref="GreenNode.SetDiagnostics"/>
+        internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
+        {
+            return new WithThreeChildren(this.child0, this.child1, this.child2, diagnostics);
         }
     }
 }

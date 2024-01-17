@@ -4,6 +4,7 @@
 // </copyright>
 
 using OffDotNet.Pdf.CodeAnalysis.Collections;
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
@@ -11,29 +12,30 @@ internal abstract partial class SyntaxList
 {
     internal abstract class WithManyChildrenBase : SyntaxList
     {
-        private readonly ArrayElement<GreenNode>[] children;
-
-        protected WithManyChildrenBase(ArrayElement<GreenNode>[] children)
+        protected WithManyChildrenBase(ArrayElement<GreenNode>[] children, DiagnosticInfo[]? diagnostics = null)
+            : base(diagnostics)
         {
-            this.children = children;
+            this.Children = children;
             this.SlotCount = children.Length > byte.MaxValue ? byte.MaxValue : children.Length;
 
-            for (int i = 0; i < this.children.Length; i++)
+            for (int i = 0; i < this.Children.Length; i++)
             {
-                this.FullWidth += this.children[i].Value.FullWidth;
+                this.FullWidth += this.Children[i].Value.FullWidth;
             }
         }
 
+        protected ArrayElement<GreenNode>[] Children { get; }
+
         internal override GreenNode? GetSlot(int index)
         {
-            return index >= this.children.Length
+            return index >= this.Children.Length
                 ? null
-                : this.children[index].Value;
+                : this.Children[index].Value;
         }
 
         protected override int GetSlotCount()
         {
-            return this.children.Length;
+            return this.Children.Length;
         }
     }
 }

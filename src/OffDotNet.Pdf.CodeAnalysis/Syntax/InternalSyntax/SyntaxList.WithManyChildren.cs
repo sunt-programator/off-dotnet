@@ -4,6 +4,7 @@
 // </copyright>
 
 using OffDotNet.Pdf.CodeAnalysis.Collections;
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
@@ -11,9 +12,14 @@ internal abstract partial class SyntaxList
 {
     internal class WithManyChildren : WithManyChildrenBase
     {
-        public WithManyChildren(ArrayElement<GreenNode>[] children)
-            : base(children)
+        public WithManyChildren(ArrayElement<GreenNode>[] children, DiagnosticInfo[]? diagnostics = null)
+            : base(children, diagnostics)
         {
+        }
+
+        internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
+        {
+            return new WithManyChildren(this.Children, diagnostics);
         }
     }
 }
