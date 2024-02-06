@@ -1,11 +1,11 @@
-// <copyright file="SyntaxList`1.Enumerator.cs" company="Sunt Programator">
+﻿// <copyright file="SyntaxList`1.Enumerator.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System.Collections;
-
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+
+using System.Collections;
 
 internal readonly partial struct SyntaxList<TNode>
     where TNode : GreenNode
@@ -21,13 +21,16 @@ internal readonly partial struct SyntaxList<TNode>
             this.index = -1;
         }
 
+        /// <inheritdoc/>
         public TNode Current => this.list[this.index]!;
 
+        /// <inheritdoc/>
         object IEnumerator.Current => this.Current;
 
+        /// <inheritdoc/>
         public bool MoveNext()
         {
-            int newIndex = this.index + 1;
+            var newIndex = this.index + 1;
             if (newIndex < this.list.Count)
             {
                 this.index = newIndex;
@@ -37,11 +40,13 @@ internal readonly partial struct SyntaxList<TNode>
             return false;
         }
 
+        /// <inheritdoc/>
         public void Reset()
         {
             this.index = -1;
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             this.Reset();

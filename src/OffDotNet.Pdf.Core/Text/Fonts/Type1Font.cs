@@ -1,14 +1,14 @@
-// <copyright file="Type1Font.cs" company="Sunt Programator">
+﻿// <copyright file="Type1Font.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.Core.Text.Fonts;
 
 using System.Collections.ObjectModel;
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Extensions;
 using OffDotNet.Pdf.Core.Primitives;
-
-namespace OffDotNet.Pdf.Core.Text.Fonts;
 
 public sealed class Type1Font : PdfDictionary<IPdfObject>, IType1Font
 {
@@ -32,8 +32,10 @@ public sealed class Type1Font : PdfDictionary<IPdfObject>, IType1Font
         this.FontName = options.FontName;
     }
 
+    /// <inheritdoc/>
     public PdfName? FontName { get; }
 
+    /// <inheritdoc/>
     public PdfName BaseFont { get; }
 
     private static Type1FontOptions GetType1FontOptions(Action<Type1FontOptions> optionsFunc)
@@ -45,7 +47,7 @@ public sealed class Type1Font : PdfDictionary<IPdfObject>, IType1Font
 
     private static IReadOnlyDictionary<PdfName, IPdfObject> GenerateDictionary(Type1FontOptions options)
     {
-        IDictionary<PdfName, IPdfObject> documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(4)
+        var documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(4)
             .WithKeyValue(TypeName, FontValueName)
             .WithKeyValue(SubtypeName, Type1Name)
             .WithKeyValue(FontPdfName, options.FontName)

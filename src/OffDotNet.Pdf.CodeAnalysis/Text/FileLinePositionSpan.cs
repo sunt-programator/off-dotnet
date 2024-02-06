@@ -1,4 +1,4 @@
-// <copyright file="FileLinePositionSpan.cs" company="Sunt Programator">
+﻿// <copyright file="FileLinePositionSpan.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -41,21 +41,25 @@ public readonly struct FileLinePositionSpan : IEquatable<FileLinePositionSpan>
         return !left.Equals(right);
     }
 
+    /// <inheritdoc/>
     public bool Equals(FileLinePositionSpan other)
     {
         return this.Path == other.Path && this.Span.Equals(other.Span);
     }
 
+    /// <inheritdoc/>
     public override bool Equals(object? obj)
     {
         return obj is FileLinePositionSpan other && this.Equals(other);
     }
 
+    /// <inheritdoc/>
     public override int GetHashCode()
     {
         return HashCode.Combine(this.Path, this.Span);
     }
 
+    /// <inheritdoc/>
     public override string ToString()
     {
         return this.Path + ": " + this.Span;

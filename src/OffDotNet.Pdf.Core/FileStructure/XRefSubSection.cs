@@ -1,14 +1,14 @@
-// <copyright file="XRefSubSection.cs" company="Sunt Programator">
+﻿// <copyright file="XRefSubSection.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.Core.FileStructure;
 
 using System.Text;
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Extensions;
 using OffDotNet.Pdf.Core.Properties;
-
-namespace OffDotNet.Pdf.Core.FileStructure;
 
 public sealed class XRefSubSection : PdfObject, IXRefSubSection
 {
@@ -23,14 +23,19 @@ public sealed class XRefSubSection : PdfObject, IXRefSubSection
         this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
 
+    /// <inheritdoc/>
     public int ObjectNumber { get; }
 
+    /// <inheritdoc/>
     public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
+    /// <inheritdoc/>
     public ICollection<IXRefEntry> Value { get; }
 
+    /// <inheritdoc/>
     public override string Content => this.literalValue.Value;
 
+    /// <inheritdoc/>
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return this.ObjectNumber;
@@ -43,13 +48,13 @@ public sealed class XRefSubSection : PdfObject, IXRefSubSection
 
     private string GenerateContent()
     {
-        StringBuilder stringBuilder = new StringBuilder()
+        var stringBuilder = new StringBuilder()
             .Append(this.ObjectNumber)
             .Append(' ')
             .Append(this.Value.Count)
             .Append('\n');
 
-        foreach (IXRefEntry entry in this.Value)
+        foreach (var entry in this.Value)
         {
             stringBuilder.Append(entry.Content);
         }

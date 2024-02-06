@@ -3,13 +3,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax;
+
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 using OffDotNet.Pdf.CodeAnalysis.Text;
 using SyntaxToken = OffDotNet.Pdf.CodeAnalysis.Syntax.SyntaxToken;
 using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.SyntaxTrivia;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax;
 
 public class SyntaxTokenTests
 {

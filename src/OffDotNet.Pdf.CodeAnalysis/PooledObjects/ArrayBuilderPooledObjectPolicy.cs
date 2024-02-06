@@ -1,12 +1,12 @@
-// <copyright file="ArrayBuilderPooledObjectPolicy.cs" company="Sunt Programator">
+﻿// <copyright file="ArrayBuilderPooledObjectPolicy.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.PooledObjects;
+
 using System.Collections.Immutable;
 using Microsoft.Extensions.ObjectPool;
-
-namespace OffDotNet.Pdf.CodeAnalysis.PooledObjects;
 
 internal sealed class ArrayBuilderPooledObjectPolicy<T> : PooledObjectPolicy<ImmutableArray<T>.Builder>
 {
@@ -23,11 +23,13 @@ internal sealed class ArrayBuilderPooledObjectPolicy<T> : PooledObjectPolicy<Imm
     /// <value>Defaults to <c>128</c>.</value>
     public int MaximumRetainedCapacity { get; init; } = 128;
 
+    /// <inheritdoc/>
     public override ImmutableArray<T>.Builder Create()
     {
         return ImmutableArray.CreateBuilder<T>(this.InitialCapacity);
     }
 
+    /// <inheritdoc/>
     public override bool Return(ImmutableArray<T>.Builder obj)
     {
         if (obj.Capacity > this.MaximumRetainedCapacity)

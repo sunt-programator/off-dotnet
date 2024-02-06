@@ -3,9 +3,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+
+using System.Diagnostics.CodeAnalysis;
 
 /// <summary>
 /// Additional class containing flag-related methods and properties for <see cref="GreenNode"/>.

@@ -3,9 +3,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System.Runtime.CompilerServices;
-
 namespace OffDotNet.Pdf.CodeAnalysis.InternalUtilities;
+
+using System.Runtime.CompilerServices;
 
 internal static class ExceptionUtilities
 {

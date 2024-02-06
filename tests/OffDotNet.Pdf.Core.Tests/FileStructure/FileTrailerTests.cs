@@ -3,14 +3,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.Core.Tests.FileStructure;
+
 using System.Diagnostics;
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.DocumentStructure;
 using OffDotNet.Pdf.Core.FileStructure;
 using OffDotNet.Pdf.Core.Primitives;
 using OffDotNet.Pdf.Core.Properties;
-
-namespace OffDotNet.Pdf.Core.Tests.FileStructure;
 
 public class FileTrailerTests
 {

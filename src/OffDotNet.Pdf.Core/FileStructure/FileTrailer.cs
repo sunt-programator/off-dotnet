@@ -1,15 +1,15 @@
-// <copyright file="FileTrailer.cs" company="Sunt Programator">
+﻿// <copyright file="FileTrailer.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.Core.FileStructure;
 
 using System.Text;
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Extensions;
 using OffDotNet.Pdf.Core.Primitives;
 using OffDotNet.Pdf.Core.Properties;
-
-namespace OffDotNet.Pdf.Core.FileStructure;
 
 public sealed class FileTrailer : PdfObject, IFileTrailer
 {
@@ -47,14 +47,19 @@ public sealed class FileTrailer : PdfObject, IFileTrailer
         this.fileTrailerDictionary = new Lazy<IPdfDictionary<IPdfObject>>(this.GenerateFileTrailerDictionary);
     }
 
+    /// <inheritdoc/>
     public long ByteOffset { get; }
 
+    /// <inheritdoc/>
     public IPdfDictionary<IPdfObject> FileTrailerDictionary => this.fileTrailerDictionary.Value;
 
+    /// <inheritdoc/>
     public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
+    /// <inheritdoc/>
     public override string Content => this.literalValue.Value;
 
+    /// <inheritdoc/>
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return this.Content;

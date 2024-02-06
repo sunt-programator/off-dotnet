@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.Core.Tests.Text.Operations.TextPosition;
+
 using OffDotNet.Pdf.Core.Primitives;
 using OffDotNet.Pdf.Core.Text.Operations.TextPosition;
-
-namespace OffDotNet.Pdf.Core.Tests.Text.Operations.TextPosition;
 
 public class MoveTextOperationTests
 {

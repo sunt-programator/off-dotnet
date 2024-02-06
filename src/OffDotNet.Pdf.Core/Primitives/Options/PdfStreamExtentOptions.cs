@@ -3,9 +3,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using OffDotNet.Pdf.Core.Extensions;
-
 namespace OffDotNet.Pdf.Core.Primitives;
+
+using OffDotNet.Pdf.Core.Extensions;
 
 public sealed class PdfStreamExtentOptions
 {

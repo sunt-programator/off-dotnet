@@ -3,9 +3,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using OffDotNet.Pdf.CodeAnalysis.InternalUtilities;
-
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax;
+
+using OffDotNet.Pdf.CodeAnalysis.InternalUtilities;
 
 internal static class SyntaxKindFacts
 {

@@ -3,9 +3,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using OffDotNet.Pdf.Core.Text.Fonts;
-
 namespace OffDotNet.Pdf.Core.Tests.Text.Fonts;
+
+using OffDotNet.Pdf.Core.Text.Fonts;
 
 public class Type1FontTests
 {

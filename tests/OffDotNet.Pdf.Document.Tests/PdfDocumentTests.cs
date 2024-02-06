@@ -3,6 +3,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.Document.Tests;
+
 using System.Collections.Immutable;
 using OffDotNet.Pdf.Core.CommonDataStructures;
 using OffDotNet.Pdf.Core.ContentStreamAndResources;
@@ -10,8 +12,6 @@ using OffDotNet.Pdf.Core.DocumentStructure;
 using OffDotNet.Pdf.Core.FileStructure;
 using OffDotNet.Pdf.Core.Primitives;
 using OffDotNet.Pdf.Core.Text.Fonts;
-
-namespace OffDotNet.Pdf.Document.Tests;
 
 public class PdfDocumentTests
 {
@@ -59,7 +59,7 @@ public class PdfDocumentTests
         await using (pdfDocument.ConfigureAwait(false))
         {
             // Assert
-            Assert.Equal(FileHeader.PdfVersion17, pdfDocument.FileHeader);
+            Assert.Equal(FileHeader.PdfVersion17, PdfDocument.FileHeader);
         }
     }
 

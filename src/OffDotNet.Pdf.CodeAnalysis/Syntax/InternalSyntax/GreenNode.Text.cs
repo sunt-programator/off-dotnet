@@ -1,15 +1,15 @@
-// <copyright file="GreenNode.Text.cs" company="Sunt Programator">
+﻿// <copyright file="GreenNode.Text.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using OffDotNet.Pdf.CodeAnalysis.InternalUtilities;
 using OffDotNet.Pdf.CodeAnalysis.PooledObjects;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 /// <summary>
 /// Additional class containing text-related methods and properties for <see cref="GreenNode"/>.
@@ -21,6 +21,7 @@ internal abstract partial class GreenNode
         return this.ToString(leading: true, trailing: true);
     }
 
+    /// <inheritdoc/>
     public override string ToString()
     {
         return this.ToString(leading: false, trailing: false);
@@ -50,7 +51,7 @@ internal abstract partial class GreenNode
     {
         while (stack.Count > 0)
         {
-            (GreenNode? currentNode, bool currentLeading, bool currentTrailing) = stack.Pop();
+            (var currentNode, var currentLeading, var currentTrailing) = stack.Pop();
 
             if (currentNode.IsToken)
             {
@@ -64,10 +65,10 @@ internal abstract partial class GreenNode
                 continue;
             }
 
-            int firstIndex = currentNode.GetFirstNonNullChildIndex();
-            int lastIndex = currentNode.GetLastNonNullChildIndex();
+            var firstIndex = currentNode.GetFirstNonNullChildIndex();
+            var lastIndex = currentNode.GetLastNonNullChildIndex();
 
-            for (int i = lastIndex; i >= firstIndex; i--)
+            for (var i = lastIndex; i >= firstIndex; i--)
             {
                 var child = currentNode.GetSlot(i);
                 if (child == null)
@@ -75,8 +76,8 @@ internal abstract partial class GreenNode
                     continue;
                 }
 
-                bool first = i == firstIndex;
-                bool last = i == lastIndex;
+                var first = i == firstIndex;
+                var last = i == lastIndex;
                 stack.Push((child, currentLeading | !first, currentTrailing | !last));
             }
         }
@@ -84,10 +85,10 @@ internal abstract partial class GreenNode
 
     private string ToString(bool leading, bool trailing)
     {
-        StringBuilder stringBuilder = StringBuilderPool.Instance.Get();
+        var stringBuilder = StringBuilderPool.Instance.Get();
         TextWriter writer = new StringWriter(stringBuilder, System.Globalization.CultureInfo.InvariantCulture);
         this.WriteTo(writer, leading, trailing);
-        string result = stringBuilder.ToString();
+        var result = stringBuilder.ToString();
         StringBuilderPool.Instance.Return(stringBuilder);
         return result;
     }

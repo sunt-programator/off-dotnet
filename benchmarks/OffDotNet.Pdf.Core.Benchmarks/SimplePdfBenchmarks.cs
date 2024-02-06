@@ -3,6 +3,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.Core.Benchmarks;
+
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using OffDotNet.Pdf.Core.Common;
@@ -16,8 +18,6 @@ using OffDotNet.Pdf.Core.Text.Fonts;
 using OffDotNet.Pdf.Core.Text.Operations.TextPosition;
 using OffDotNet.Pdf.Core.Text.Operations.TextShowing;
 using OffDotNet.Pdf.Core.Text.Operations.TextState;
-
-namespace OffDotNet.Pdf.Core.Benchmarks;
 
 [MemoryDiagnoser]
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]

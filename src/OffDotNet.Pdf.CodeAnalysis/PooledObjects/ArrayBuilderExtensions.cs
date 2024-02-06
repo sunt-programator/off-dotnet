@@ -3,9 +3,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System.Collections.Immutable;
-
 namespace OffDotNet.Pdf.CodeAnalysis.PooledObjects;
+
+using System.Collections.Immutable;
 
 internal static class ArrayBuilderExtensions
 {

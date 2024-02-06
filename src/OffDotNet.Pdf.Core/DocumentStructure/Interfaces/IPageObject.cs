@@ -3,13 +3,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.Core.DocumentStructure;
+
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.CommonDataStructures;
 using OffDotNet.Pdf.Core.ContentStreamAndResources;
 using OffDotNet.Pdf.Core.Extensions;
 using OffDotNet.Pdf.Core.Primitives;
-
-namespace OffDotNet.Pdf.Core.DocumentStructure;
 
 public interface IPageObject : IPdfDictionary<IPdfObject>
 {

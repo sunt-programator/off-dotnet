@@ -1,12 +1,12 @@
-// <copyright file="TextObject.cs" company="Sunt Programator">
+﻿// <copyright file="TextObject.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.Core.Text;
+
 using System.Text;
 using OffDotNet.Pdf.Core.Common;
-
-namespace OffDotNet.Pdf.Core.Text;
 
 public sealed class TextObject : PdfObject, ITextObject
 {
@@ -21,12 +21,16 @@ public sealed class TextObject : PdfObject, ITextObject
         this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
 
+    /// <inheritdoc/>
     public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
+    /// <inheritdoc/>
     public IReadOnlyCollection<IPdfOperation> Value { get; }
 
+    /// <inheritdoc/>
     public override string Content => this.literalValue.Value;
 
+    /// <inheritdoc/>
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return this.Value;
@@ -36,7 +40,7 @@ public sealed class TextObject : PdfObject, ITextObject
     {
         StringBuilder stringBuilder = new();
 
-        foreach (IPdfOperation pdfOperation in this.Value)
+        foreach (var pdfOperation in this.Value)
         {
             stringBuilder.Append(pdfOperation.Content);
         }

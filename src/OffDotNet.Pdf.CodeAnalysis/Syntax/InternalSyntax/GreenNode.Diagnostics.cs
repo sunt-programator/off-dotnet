@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+
 using System.Runtime.CompilerServices;
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 /// <summary>
 /// The additional class containing diagnostics-related methods and properties for <see cref="GreenNode"/>.

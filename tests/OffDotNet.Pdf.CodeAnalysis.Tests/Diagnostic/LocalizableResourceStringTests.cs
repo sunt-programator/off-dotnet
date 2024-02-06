@@ -3,13 +3,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System.Globalization;
-using System.Resources;
-using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
-
 #pragma warning disable CS8765 // Nullability of type of parameter doesn't match overridden member (possibly because of nullability attributes).
 
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Diagnostic;
+
+using System.Globalization;
+using System.Resources;
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 public class LocalizableResourceStringTests
 {

@@ -1,14 +1,14 @@
-// <copyright file="PdfIndirect.cs" company="Sunt Programator">
+﻿// <copyright file="PdfIndirect.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.Core.Primitives;
 
 using System.Text;
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Extensions;
 using OffDotNet.Pdf.Core.Properties;
-
-namespace OffDotNet.Pdf.Core.Primitives;
 
 public sealed class PdfIndirect<T> : PdfObject, IPdfIndirect<T>
     where T : IPdfObject
@@ -30,16 +30,22 @@ public sealed class PdfIndirect<T> : PdfObject, IPdfIndirect<T>
         this.Value = pdfObject;
     }
 
+    /// <inheritdoc/>
     public int GenerationNumber { get; }
 
+    /// <inheritdoc/>
     public int ObjectNumber { get; }
 
+    /// <inheritdoc/>
     public override ReadOnlyMemory<byte> Bytes => Encoding.ASCII.GetBytes(this.Content);
 
+    /// <inheritdoc/>
     public override string Content => this.GenerateContent();
 
+    /// <inheritdoc/>
     public T? Value { get; set; }
 
+    /// <inheritdoc/>
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return this.ObjectNumber;
@@ -48,9 +54,9 @@ public sealed class PdfIndirect<T> : PdfObject, IPdfIndirect<T>
 
     private string GenerateContent()
     {
-        string objectIdentifier = $"{this.ObjectNumber} {this.GenerationNumber} obj\n";
+        var objectIdentifier = $"{this.ObjectNumber} {this.GenerationNumber} obj\n";
 
-        StringBuilder stringBuilder = new StringBuilder()
+        var stringBuilder = new StringBuilder()
             .Append(objectIdentifier);
 
         if (this.Value != null)

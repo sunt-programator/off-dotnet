@@ -1,12 +1,12 @@
-// <copyright file="SyntaxToken.cs" company="Sunt Programator">
+﻿// <copyright file="SyntaxToken.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.InternalUtilities;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 /// <summary>Represents the terminal node in the PDF Syntax tree.</summary>
 /// <remarks>Token is the smallest individual element of a PDF Syntax that has meaning and are not subject to further analysis.</remarks>
@@ -68,6 +68,7 @@ internal sealed class SyntaxToken : GreenNode
         return new SyntaxToken(this.Kind, this.Text, this.Value, this.LeadingTrivia, this.TrailingTrivia, this.FullWidth, diagnostics);
     }
 
+    /// <inheritdoc/>
     protected override void WriteTokenTo(TextWriter writer, bool leading, bool trailing)
     {
         if (leading)

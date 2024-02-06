@@ -1,7 +1,9 @@
-// <copyright file="PageObject.cs" company="Sunt Programator">
+﻿// <copyright file="PageObject.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.Core.DocumentStructure;
 
 using System.Collections.ObjectModel;
 using OffDotNet.Pdf.Core.Common;
@@ -9,8 +11,6 @@ using OffDotNet.Pdf.Core.CommonDataStructures;
 using OffDotNet.Pdf.Core.ContentStreamAndResources;
 using OffDotNet.Pdf.Core.Extensions;
 using OffDotNet.Pdf.Core.Primitives;
-
-namespace OffDotNet.Pdf.Core.DocumentStructure;
 
 public sealed class PageObject : PdfDictionary<IPdfObject>, IPageObject
 {
@@ -35,12 +35,16 @@ public sealed class PageObject : PdfDictionary<IPdfObject>, IPageObject
         this.Contents = options.Contents;
     }
 
+    /// <inheritdoc/>
     public IPdfIndirectIdentifier<IPageTreeNode> Parent { get; }
 
+    /// <inheritdoc/>
     public IResourceDictionary Resources { get; }
 
+    /// <inheritdoc/>
     public IRectangle MediaBox { get; }
 
+    /// <inheritdoc/>
     public AnyOf<IPdfIndirectIdentifier<IPdfStream>, IPdfArray<IPdfIndirectIdentifier<IPdfStream>>>? Contents { get; }
 
     private static PageObjectOptions GetPageObjectOptions(Action<PageObjectOptions> optionsFunc)
@@ -56,7 +60,7 @@ public sealed class PageObject : PdfDictionary<IPdfObject>, IPageObject
         options.NotNull(x => x.Resources);
         options.NotNull(x => x.MediaBox);
 
-        IDictionary<PdfName, IPdfObject> documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(5)
+        var documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(5)
             .WithKeyValue(TypeName, PageName)
             .WithKeyValue(ParentName, options.Parent)
             .WithKeyValue(ResourcesName, options.Resources)

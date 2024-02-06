@@ -3,9 +3,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using OffDotNet.Pdf.CodeAnalysis.Text;
-
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Text;
+
+using OffDotNet.Pdf.CodeAnalysis.Text;
 
 public class TextSpanTests
 {

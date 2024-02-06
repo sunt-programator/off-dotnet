@@ -1,14 +1,14 @@
-// <copyright file="PdfInteger.cs" company="Sunt Programator">
+﻿// <copyright file="PdfInteger.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.Core.Primitives;
 
 using System.Globalization;
 using System.Text;
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Properties;
-
-namespace OffDotNet.Pdf.Core.Primitives;
 
 public struct PdfInteger : IPdfObject, IEquatable<PdfInteger>, IComparable, IComparable<PdfInteger>
 {
@@ -30,8 +30,10 @@ public struct PdfInteger : IPdfObject, IEquatable<PdfInteger>, IComparable, ICom
 
     public int Value { get; }
 
+    /// <inheritdoc/>
     public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
+    /// <inheritdoc/>
     public string Content => this.GenerateContent();
 
     public static implicit operator int(PdfInteger pdfInteger)
@@ -74,21 +76,25 @@ public struct PdfInteger : IPdfObject, IEquatable<PdfInteger>, IComparable, ICom
         return leftOperator.CompareTo(rightOperator) >= 0;
     }
 
+    /// <inheritdoc/>
     public override int GetHashCode()
     {
         return this.hashCode;
     }
 
+    /// <inheritdoc/>
     public bool Equals(PdfInteger other)
     {
         return this.Value == other.Value;
     }
 
+    /// <inheritdoc/>
     public override bool Equals(object? obj)
     {
         return (obj is PdfInteger integerObject) && this.Equals(integerObject);
     }
 
+    /// <inheritdoc/>
     public int CompareTo(object? obj)
     {
         if (obj is not PdfInteger pdfInteger)
@@ -99,6 +105,7 @@ public struct PdfInteger : IPdfObject, IEquatable<PdfInteger>, IComparable, ICom
         return this.CompareTo(pdfInteger);
     }
 
+    /// <inheritdoc/>
     public int CompareTo(PdfInteger other)
     {
         if (this.Value == other.Value)

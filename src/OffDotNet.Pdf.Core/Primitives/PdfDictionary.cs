@@ -1,12 +1,12 @@
-// <copyright file="PdfDictionary.cs" company="Sunt Programator">
+﻿// <copyright file="PdfDictionary.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.Core.Primitives;
+
 using System.Text;
 using OffDotNet.Pdf.Core.Common;
-
-namespace OffDotNet.Pdf.Core.Primitives;
 
 public class PdfDictionary<TValue> : PdfObject, IPdfDictionary<TValue>
     where TValue : IPdfObject
@@ -20,12 +20,16 @@ public class PdfDictionary<TValue> : PdfObject, IPdfDictionary<TValue>
         this.bytes = null;
     }
 
+    /// <inheritdoc/>
     public IReadOnlyDictionary<PdfName, TValue> Value { get; }
 
+    /// <inheritdoc/>
     public override ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
+    /// <inheritdoc/>
     public override string Content => this.GenerateContent();
 
+    /// <inheritdoc/>
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return this.Value;

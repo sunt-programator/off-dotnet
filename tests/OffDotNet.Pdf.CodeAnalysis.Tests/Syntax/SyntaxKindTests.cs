@@ -3,9 +3,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using OffDotNet.Pdf.CodeAnalysis.Syntax;
-
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax;
+
+using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
 public class SyntaxKindTests
 {

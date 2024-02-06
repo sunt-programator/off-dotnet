@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.Core.Tests.Text.Operations.TextShowing;
+
 using OffDotNet.Pdf.Core.Primitives;
 using OffDotNet.Pdf.Core.Text.Operations.TextShowing;
-
-namespace OffDotNet.Pdf.Core.Tests.Text.Operations.TextShowing;
 
 public class ShowTextOperationTests
 {

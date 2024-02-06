@@ -3,11 +3,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.Document;
+
 using System.Collections.Immutable;
 using OffDotNet.Pdf.Core.DocumentStructure;
 using OffDotNet.Pdf.Core.Primitives;
-
-namespace OffDotNet.Pdf.Document;
 
 public sealed class PdfDocumentOptions : IPdfDocumentOptions
 {

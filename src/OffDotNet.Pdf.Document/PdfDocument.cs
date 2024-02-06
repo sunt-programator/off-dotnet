@@ -1,7 +1,9 @@
-// <copyright file="PdfDocument.cs" company="Sunt Programator">
+﻿// <copyright file="PdfDocument.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.Document;
 
 using System.Collections.Immutable;
 using OffDotNet.Pdf.Core.Common;
@@ -16,8 +18,6 @@ using OffDotNet.Pdf.Core.Text.Operations.TextPosition;
 using OffDotNet.Pdf.Core.Text.Operations.TextShowing;
 using OffDotNet.Pdf.Core.Text.Operations.TextState;
 
-namespace OffDotNet.Pdf.Document;
-
 public sealed class PdfDocument : IDisposable, IAsyncDisposable
 {
     private readonly IPdfIndirectIdentifier<IPdfStream> contentStreamIndirect;
@@ -26,7 +26,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
     // ReSharper disable once UnusedParameter.Local
     public PdfDocument(Stream stream, IPdfDocumentOptions options)
     {
-        int objectNumber = 0;
+        var objectNumber = 0;
         this.stream = stream;
         this.DocumentCatalog = new PdfIndirect<IDocumentCatalog>(++objectNumber).ToPdfIndirectIdentifier();
         this.RootPageTree = new PdfIndirect<IPageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
@@ -42,12 +42,12 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
         };
 
         ITextObject textObject = new TextObject(pdfOperations);
-        IPdfDictionary<IPdfIndirectIdentifier<IType1Font>> fontDictionary = new Dictionary<PdfName, IPdfIndirectIdentifier<IType1Font>> { { "F1", this.Fonts[0] } }.ToPdfDictionary();
+        var fontDictionary = new Dictionary<PdfName, IPdfIndirectIdentifier<IType1Font>> { { "F1", this.Fonts[0] } }.ToPdfDictionary();
 
         this.DocumentCatalog.PdfIndirect.Value = new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = this.RootPageTree);
         this.RootPageTree.PdfIndirect.Value = new PageTreeNode(pageTreeNodeOptions => pageTreeNodeOptions.Kids = this.Pages.ToPdfArray());
 
-        foreach (IPdfIndirectIdentifier<IPageObject> pageObjectIndirect in this.Pages)
+        foreach (var pageObjectIndirect in this.Pages)
         {
             pageObjectIndirect.PdfIndirect.Value = new PageObject(pageObjectOptions =>
             {
@@ -62,10 +62,10 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
         this.Fonts[0].PdfIndirect.Value = StandardFonts.Helvetica;
 
         // XTable
-        int byteOffset = 0;
+        var byteOffset = 0;
         List<IXRefEntry> xRefEntries = new(objectNumber) { new XRefEntry(byteOffset, 65535, XRefEntryType.Free) };
 
-        byteOffset += this.FileHeader.Bytes.Length;
+        byteOffset += FileHeader.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
         byteOffset += this.DocumentCatalog.PdfIndirect.Bytes.Length;
@@ -74,7 +74,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
         byteOffset += this.RootPageTree.PdfIndirect.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
-        foreach (IPdfIndirectIdentifier<IPageObject> pageObjectIndirect in this.Pages)
+        foreach (var pageObjectIndirect in this.Pages)
         {
             byteOffset += pageObjectIndirect.PdfIndirect.Bytes.Length;
             xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
@@ -83,9 +83,9 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
         byteOffset += this.contentStreamIndirect.PdfIndirect.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
-        for (int index = 0; index < this.Fonts.Count; index++)
+        for (var index = 0; index < this.Fonts.Count; index++)
         {
-            IPdfIndirectIdentifier<IType1Font> fontIndirect = this.Fonts[index];
+            var fontIndirect = this.Fonts[index];
             byteOffset += fontIndirect.PdfIndirect.Bytes.Length;
 
             if (index == this.Fonts.Count - 1)
@@ -110,7 +110,7 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
     {
     }
 
-    public FileHeader FileHeader => FileHeader.PdfVersion17;
+    public static FileHeader FileHeader => FileHeader.PdfVersion17;
 
     public IPdfIndirectIdentifier<IDocumentCatalog> DocumentCatalog { get; }
 
@@ -126,18 +126,18 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
 
     public async Task GenerateOutputStream(CancellationToken cancellationToken = default)
     {
-        await this.stream.WriteAsync(this.FileHeader.Bytes, cancellationToken).ConfigureAwait(false);
+        await this.stream.WriteAsync(FileHeader.Bytes, cancellationToken).ConfigureAwait(false);
         await this.stream.WriteAsync(this.DocumentCatalog.PdfIndirect.Bytes, cancellationToken).ConfigureAwait(false);
         await this.stream.WriteAsync(this.RootPageTree.PdfIndirect.Bytes, cancellationToken).ConfigureAwait(false);
 
-        foreach (IPdfIndirectIdentifier<IPageObject> pageObjectIndirect in this.Pages)
+        foreach (var pageObjectIndirect in this.Pages)
         {
             await this.stream.WriteAsync(pageObjectIndirect.PdfIndirect.Bytes, cancellationToken).ConfigureAwait(false);
         }
 
         await this.stream.WriteAsync(this.contentStreamIndirect.PdfIndirect.Bytes, cancellationToken).ConfigureAwait(false);
 
-        foreach (IPdfIndirectIdentifier<IType1Font> fontIndirect in this.Fonts)
+        foreach (var fontIndirect in this.Fonts)
         {
             await this.stream.WriteAsync(fontIndirect.PdfIndirect.Bytes, cancellationToken).ConfigureAwait(false);
         }
@@ -146,11 +146,13 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
         await this.stream.WriteAsync(this.FileTrailer.Bytes, cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public void Dispose()
     {
         this.stream.Dispose();
     }
 
+    /// <inheritdoc/>
     public ValueTask DisposeAsync()
     {
         return this.stream.DisposeAsync();

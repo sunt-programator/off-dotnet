@@ -3,11 +3,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal static class SyntaxNodeCache
 {
@@ -39,7 +39,7 @@ internal static class SyntaxNodeCache
         }
 
         Debug.Assert(GetCacheHash(node) == hash, "Hash must match");
-        int index = hash & CacheMask;
+        var index = hash & CacheMask;
         Cache[index] = new Entry(hash, node);
     }
 
@@ -52,7 +52,7 @@ internal static class SyntaxNodeCache
         }
 
         hash = GetCacheHash(kind, child1);
-        int index = hash & CacheMask;
+        var index = hash & CacheMask;
         var cacheEntry = Cache[index];
 
         if (cacheEntry.Hash == hash && cacheEntry.Node != null && IsCacheEquivalent(kind, cacheEntry.Node, child1))
@@ -72,7 +72,7 @@ internal static class SyntaxNodeCache
         }
 
         hash = GetCacheHash(kind, child1, child2);
-        int index = hash & CacheMask;
+        var index = hash & CacheMask;
         var cacheEntry = Cache[index];
 
         if (cacheEntry.Hash == hash && cacheEntry.Node != null && IsCacheEquivalent(kind, cacheEntry.Node, child1, child2))
@@ -92,7 +92,7 @@ internal static class SyntaxNodeCache
         }
 
         hash = GetCacheHash(kind, child1, child2, child3);
-        int index = hash & CacheMask;
+        var index = hash & CacheMask;
         var cacheEntry = Cache[index];
 
         if (cacheEntry.Hash == hash && cacheEntry.Node != null && IsCacheEquivalent(kind, cacheEntry.Node, child1, child2, child3))
@@ -113,7 +113,7 @@ internal static class SyntaxNodeCache
         Debug.Assert(node.SlotCount <= MaxCachedChildNum, "Caller should have checked this already");
 
         int code = (ushort)node.Kind;
-        for (int i = 0; i < node.SlotCount; i++)
+        for (var i = 0; i < node.SlotCount; i++)
         {
             var child = node.GetSlot(i);
             if (child != null)
@@ -150,7 +150,7 @@ internal static class SyntaxNodeCache
     private static bool IsCacheEquivalent(SyntaxKind kind, GreenNode originalNode, GreenNode? child1 = null, GreenNode? child2 = null, GreenNode? child3 = null)
     {
         Debug.Assert(originalNode.SlotCount <= MaxCachedChildNum, "Caller should have checked this already");
-        bool result = originalNode.Kind == kind;
+        var result = originalNode.Kind == kind;
 
         if (child1 != null)
         {
@@ -172,7 +172,7 @@ internal static class SyntaxNodeCache
 
     private static bool AllChildrenInCache(GreenNode node)
     {
-        for (int i = 0; i < node.SlotCount; i++)
+        for (var i = 0; i < node.SlotCount; i++)
         {
             if (!ChildInCache(node.GetSlot(i)))
             {
@@ -190,8 +190,8 @@ internal static class SyntaxNodeCache
             return true; // for the purpose of this function consider that null nodes, tokens and trivia are cached somewhere else.
         }
 
-        int hash = GetCacheHash(child);
-        int index = hash & CacheMask;
+        var hash = GetCacheHash(child);
+        var index = hash & CacheMask;
         return Cache[index].Node == child;
     }
 }

@@ -1,12 +1,12 @@
-// <copyright file="SyntaxTrivia.cs" company="Sunt Programator">
+﻿// <copyright file="SyntaxTrivia.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.InternalUtilities;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal sealed class SyntaxTrivia : GreenNode
 {
@@ -68,6 +68,7 @@ internal sealed class SyntaxTrivia : GreenNode
         return new SyntaxTrivia(this.Kind, this.Text, diagnostics);
     }
 
+    /// <inheritdoc/>
     protected override void WriteTriviaTo(TextWriter writer)
     {
         writer.Write(this.Text);

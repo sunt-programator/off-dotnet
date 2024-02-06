@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.Core.Primitives;
+
 using System.Collections.ObjectModel;
 using OffDotNet.Pdf.Core.Common;
-
-namespace OffDotNet.Pdf.Core.Primitives;
 
 public static class PdfDictionaryExtensions
 {

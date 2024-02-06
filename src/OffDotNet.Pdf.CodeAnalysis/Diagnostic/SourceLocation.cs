@@ -1,13 +1,13 @@
-// <copyright file="SourceLocation.cs" company="Sunt Programator">
+﻿// <copyright file="SourceLocation.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+
 using System.Diagnostics;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Text;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 [DebuggerDisplay("{ToString(), nq}")]
 internal sealed class SourceLocation : Location, IEquatable<SourceLocation>
@@ -18,12 +18,16 @@ internal sealed class SourceLocation : Location, IEquatable<SourceLocation>
         this.SyntaxTree = syntaxTree;
     }
 
+    /// <inheritdoc/>
     public override LocationKind Kind => LocationKind.SourceFile;
 
+    /// <inheritdoc/>
     public override TextSpan SourceSpan { get; }
 
+    /// <inheritdoc/>
     public override SyntaxTree? SyntaxTree { get; }
 
+    /// <inheritdoc/>
     public bool Equals(SourceLocation? other)
     {
         if (ReferenceEquals(this, other))
@@ -34,11 +38,13 @@ internal sealed class SourceLocation : Location, IEquatable<SourceLocation>
         return other != null && this.SyntaxTree == other.SyntaxTree && this.SourceSpan == other.SourceSpan;
     }
 
+    /// <inheritdoc/>
     public override bool Equals(object? obj)
     {
         return this.Equals(obj as SourceLocation);
     }
 
+    /// <inheritdoc/>
     public override int GetHashCode()
     {
         return HashCode.Combine(this.SyntaxTree, this.LineSpan);

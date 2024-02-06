@@ -1,13 +1,13 @@
-// <copyright file="PdfString.cs" company="Sunt Programator">
+﻿// <copyright file="PdfString.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.Core.Primitives;
+
 using System.Text;
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Properties;
-
-namespace OffDotNet.Pdf.Core.Primitives;
 
 public sealed class PdfString : PdfObject
 {
@@ -25,8 +25,10 @@ public sealed class PdfString : PdfObject
 
     public string Value { get; }
 
+    /// <inheritdoc/>
     public override ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
+    /// <inheritdoc/>
     public override string Content => this.GenerateContent();
 
     public static implicit operator string(PdfString pdfName)
@@ -39,6 +41,7 @@ public sealed class PdfString : PdfObject
         return new PdfString(value);
     }
 
+    /// <inheritdoc/>
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return this.Value;
@@ -83,9 +86,9 @@ public sealed class PdfString : PdfObject
 
     private static bool ContainsUnbalancedParentheses(string value)
     {
-        int parenthesesBalance = 0;
+        var parenthesesBalance = 0;
 
-        foreach (char ch in value)
+        foreach (var ch in value)
         {
             if (parenthesesBalance < 0)
             {
@@ -109,14 +112,14 @@ public sealed class PdfString : PdfObject
 
     private static bool ContainsValidSolidusChars(string value)
     {
-        for (int i = 0; i < value.Length; i++)
+        for (var i = 0; i < value.Length; i++)
         {
             if (value[i] != '\\')
             {
                 continue;
             }
 
-            int nextIndex = i + 1;
+            var nextIndex = i + 1;
             if (nextIndex == value.Length)
             {
                 return false;
@@ -143,7 +146,7 @@ public sealed class PdfString : PdfObject
 
     private static bool IsValidHexValue(string value)
     {
-        foreach (char ch in value)
+        foreach (var ch in value)
         {
             if (!IsValidHexChar(ch))
             {
@@ -175,7 +178,7 @@ public sealed class PdfString : PdfObject
 
         StringBuilder stringBuilder = new();
 
-        foreach (char ch in this.Value)
+        foreach (var ch in this.Value)
         {
             stringBuilder.Append(ch);
         }

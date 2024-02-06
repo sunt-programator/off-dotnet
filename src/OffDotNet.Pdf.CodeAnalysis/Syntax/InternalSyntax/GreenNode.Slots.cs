@@ -1,4 +1,4 @@
-// <copyright file="GreenNode.Slots.cs" company="Sunt Programator">
+﻿// <copyright file="GreenNode.Slots.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -30,9 +30,9 @@ internal abstract partial class GreenNode
     /// <returns>The offset of the slot at the specified index within a <see cref="GreenNode"/>.</returns>
     public virtual int GetSlotOffset(int index)
     {
-        int offset = 0;
+        var offset = 0;
 
-        for (int i = 0; i < index; i++)
+        for (var i = 0; i < index; i++)
         {
             var child = this.GetSlot(i);
             if (child is not null)

@@ -1,15 +1,15 @@
-// <copyright file="Location.cs" company="Sunt Programator">
+﻿// <copyright file="Location.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Text;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 [DebuggerDisplay("{ToString(), nq}")]
 [SuppressMessage("Major Code Smell", "S4035:Classes implementing \"IEquatable<T>\" should be sealed", Justification = "To be reviewed.")]
@@ -60,15 +60,19 @@ public abstract partial class Location : IEquatable<Location>
         return new SourceLocation(syntaxTree, textSpan);
     }
 
+    /// <inheritdoc/>
     public bool Equals(Location? other)
     {
         return this.Equals((object?)other);
     }
 
+    /// <inheritdoc/>
     public abstract override bool Equals(object? obj);
 
+    /// <inheritdoc/>
     public abstract override int GetHashCode();
 
+    /// <inheritdoc/>
     public override string ToString()
     {
         StringBuilder result = new(this.Kind.ToString());

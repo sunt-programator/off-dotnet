@@ -1,13 +1,13 @@
-// <copyright file="SyntaxTrivia.cs" company="Sunt Programator">
+﻿// <copyright file="SyntaxTrivia.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax;
+
 using System.Diagnostics;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 using OffDotNet.Pdf.CodeAnalysis.Text;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Syntax;
 
 [DebuggerDisplay("{GetDebuggerDisplay(), nq}")]
 public readonly struct SyntaxTrivia : IEquatable<SyntaxTrivia>
@@ -47,6 +47,7 @@ public readonly struct SyntaxTrivia : IEquatable<SyntaxTrivia>
         return !left.Equals(right);
     }
 
+    /// <inheritdoc/>
     public bool Equals(SyntaxTrivia other)
     {
         return this.SyntaxToken == other.SyntaxToken
@@ -55,16 +56,19 @@ public readonly struct SyntaxTrivia : IEquatable<SyntaxTrivia>
                && this.Index == other.Index;
     }
 
+    /// <inheritdoc/>
     public override bool Equals(object? obj)
     {
         return obj is SyntaxTrivia other && this.Equals(other);
     }
 
+    /// <inheritdoc/>
     public override int GetHashCode()
     {
         return HashCode.Combine(this.SyntaxToken, this.Node, this.Position, this.Index);
     }
 
+    /// <inheritdoc/>
     public override string ToString()
     {
         return this.Node?.ToString() ?? string.Empty;
@@ -72,7 +76,7 @@ public readonly struct SyntaxTrivia : IEquatable<SyntaxTrivia>
 
     private string GetDebuggerDisplay()
     {
-        string kindText = this.Node != null ? this.Node.Kind.ToString() : "None";
+        var kindText = this.Node != null ? this.Node.Kind.ToString() : "None";
         return $"{this.GetType().Name} {kindText} {this.ToString()}";
     }
 }

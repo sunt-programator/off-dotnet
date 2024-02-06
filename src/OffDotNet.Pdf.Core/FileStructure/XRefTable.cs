@@ -1,14 +1,14 @@
-// <copyright file="XRefTable.cs" company="Sunt Programator">
+﻿// <copyright file="XRefTable.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.Core.FileStructure;
 
 using System.Text;
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Extensions;
 using OffDotNet.Pdf.Core.Properties;
-
-namespace OffDotNet.Pdf.Core.FileStructure;
 
 public sealed class XRefTable : PdfObject, IXRefTable
 {
@@ -22,12 +22,16 @@ public sealed class XRefTable : PdfObject, IXRefTable
         this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
 
+    /// <inheritdoc/>
     public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
 
+    /// <inheritdoc/>
     public ICollection<IXRefSection> Value { get; }
 
+    /// <inheritdoc/>
     public override string Content => this.literalValue.Value;
 
+    /// <inheritdoc/>
     protected override IEnumerable<object> GetEqualityComponents()
     {
         return this.Value;
@@ -37,7 +41,7 @@ public sealed class XRefTable : PdfObject, IXRefTable
     {
         StringBuilder stringBuilder = new();
 
-        foreach (IXRefSection section in this.Value)
+        foreach (var section in this.Value)
         {
             stringBuilder.Append(section.Content);
         }

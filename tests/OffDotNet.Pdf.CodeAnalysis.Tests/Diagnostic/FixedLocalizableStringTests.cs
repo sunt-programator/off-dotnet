@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.Tests.Diagnostic;
+
 using System.Diagnostics.CodeAnalysis;
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Tests.Diagnostic;
 
 public class FixedLocalizableStringTests
 {

@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+
 using System.Diagnostics.CodeAnalysis;
 using OffDotNet.Pdf.CodeAnalysis.Collections;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal static class SyntaxFactory
 {
@@ -22,7 +22,7 @@ internal static class SyntaxFactory
         }
 #endif
 
-        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.XRefEntry, offset, generationNumber, entryType, out int hash);
+        var cached = SyntaxNodeCache.TryGetNode(SyntaxKind.XRefEntry, offset, generationNumber, entryType, out var hash);
         if (cached != null)
         {
             return (XRefEntryExpressionSyntax)cached;
@@ -39,7 +39,7 @@ internal static class SyntaxFactory
 
     public static XRefSubSectionExpressionSyntax XRefSubSection(LiteralExpressionSyntax objectNumber, LiteralExpressionSyntax numberOfEntries, SyntaxList<XRefEntryExpressionSyntax> entries)
     {
-        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.XRefSubSection, objectNumber, numberOfEntries, entries.Node, out int hash);
+        var cached = SyntaxNodeCache.TryGetNode(SyntaxKind.XRefSubSection, objectNumber, numberOfEntries, entries.Node, out var hash);
         if (cached != null)
         {
             return (XRefSubSectionExpressionSyntax)cached;
@@ -56,7 +56,7 @@ internal static class SyntaxFactory
 
     public static XRefSectionExpressionSyntax XRefSection(SyntaxToken xRefKeyword, SyntaxList<XRefSubSectionExpressionSyntax> subSections)
     {
-        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.XRefSection, xRefKeyword, subSections.Node, out int hash);
+        var cached = SyntaxNodeCache.TryGetNode(SyntaxKind.XRefSection, xRefKeyword, subSections.Node, out var hash);
         if (cached != null)
         {
             return (XRefSectionExpressionSyntax)cached;
@@ -83,7 +83,7 @@ internal static class SyntaxFactory
 
     public static IndirectReferenceSyntax IndirectReference(LiteralExpressionSyntax objectNumber, LiteralExpressionSyntax generationNumber, SyntaxToken referenceKeyword)
     {
-        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.IndirectReference, objectNumber, generationNumber, referenceKeyword, out int hash);
+        var cached = SyntaxNodeCache.TryGetNode(SyntaxKind.IndirectReference, objectNumber, generationNumber, referenceKeyword, out var hash);
         if (cached != null)
         {
             return (IndirectReferenceSyntax)cached;
@@ -132,7 +132,7 @@ internal static class SyntaxFactory
         }
 #endif
 
-        GreenNode? cached = SyntaxNodeCache.TryGetNode(kind, token, out int hash);
+        var cached = SyntaxNodeCache.TryGetNode(kind, token, out var hash);
         if (cached != null)
         {
             return (LiteralExpressionSyntax)cached;
@@ -150,7 +150,7 @@ internal static class SyntaxFactory
     public static ArrayExpressionSyntax ArrayExpression(SyntaxToken openToken, SyntaxList<ArrayElementSyntax> elements, SyntaxToken closeToken)
     {
 #if DEBUG
-        bool isValidArray = openToken.Kind == SyntaxKind.LeftSquareBracketToken && closeToken.Kind == SyntaxKind.RightSquareBracketToken;
+        var isValidArray = openToken.Kind == SyntaxKind.LeftSquareBracketToken && closeToken.Kind == SyntaxKind.RightSquareBracketToken;
 
         if (!isValidArray)
         {
@@ -158,7 +158,7 @@ internal static class SyntaxFactory
         }
 #endif
 
-        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.ArrayExpression, openToken, elements.Node, closeToken, out int hash);
+        var cached = SyntaxNodeCache.TryGetNode(SyntaxKind.ArrayExpression, openToken, elements.Node, closeToken, out var hash);
         if (cached != null)
         {
             return (ArrayExpressionSyntax)cached;
@@ -176,7 +176,7 @@ internal static class SyntaxFactory
     public static DictionaryExpressionSyntax DictionaryExpression(SyntaxToken openToken, SyntaxList<DictionaryElementSyntax> elements, SyntaxToken closeToken)
     {
 #if DEBUG
-        bool isValidDictionary = openToken.Kind == SyntaxKind.LessThanLessThanToken && closeToken.Kind == SyntaxKind.GreaterThanGreaterThanToken;
+        var isValidDictionary = openToken.Kind == SyntaxKind.LessThanLessThanToken && closeToken.Kind == SyntaxKind.GreaterThanGreaterThanToken;
 
         if (!isValidDictionary)
         {
@@ -184,7 +184,7 @@ internal static class SyntaxFactory
         }
 #endif
 
-        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.DictionaryExpression, openToken, elements.Node, closeToken, out int hash);
+        var cached = SyntaxNodeCache.TryGetNode(SyntaxKind.DictionaryExpression, openToken, elements.Node, closeToken, out var hash);
         if (cached != null)
         {
             return (DictionaryExpressionSyntax)cached;
@@ -201,7 +201,7 @@ internal static class SyntaxFactory
 
     public static ArrayElementSyntax ArrayElement(ExpressionSyntax expression)
     {
-        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.ArrayElement, expression, out int hash);
+        var cached = SyntaxNodeCache.TryGetNode(SyntaxKind.ArrayElement, expression, out var hash);
         if (cached != null)
         {
             return (ArrayElementSyntax)cached;
@@ -225,7 +225,7 @@ internal static class SyntaxFactory
         }
 #endif
 
-        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.DictionaryElement, key, value, out int hash);
+        var cached = SyntaxNodeCache.TryGetNode(SyntaxKind.DictionaryElement, key, value, out var hash);
         if (cached != null)
         {
             return (DictionaryElementSyntax)cached;
@@ -247,7 +247,7 @@ internal static class SyntaxFactory
 
     public static GreenNode List(GreenNode child1, GreenNode child2)
     {
-        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.List, child1, child2, out int hash);
+        var cached = SyntaxNodeCache.TryGetNode(SyntaxKind.List, child1, child2, out var hash);
         if (cached != null)
         {
             return (SyntaxList.WithTwoChildren)cached;
@@ -264,7 +264,7 @@ internal static class SyntaxFactory
 
     public static GreenNode List(GreenNode child1, GreenNode child2, GreenNode child3)
     {
-        GreenNode? cached = SyntaxNodeCache.TryGetNode(SyntaxKind.List, child1, child2, child3, out int hash);
+        var cached = SyntaxNodeCache.TryGetNode(SyntaxKind.List, child1, child2, child3, out var hash);
         if (cached != null)
         {
             return (SyntaxList.WithThreeChildren)cached;
@@ -288,38 +288,38 @@ internal static class SyntaxFactory
 
     public static SyntaxToken Token(SyntaxKind kind)
     {
-        string text = kind.GetText();
-        int fullWidth = text.Length;
-        object? value = kind.GetValue();
+        var text = kind.GetText();
+        var fullWidth = text.Length;
+        var value = kind.GetValue();
         return new SyntaxToken(kind, text, value, null, null, fullWidth);
     }
 
     public static SyntaxToken Token(SyntaxKind kind, GreenNode? leading, GreenNode? trailing)
     {
-        string text = kind.GetText();
-        object? value = kind.GetValue();
+        var text = kind.GetText();
+        var value = kind.GetValue();
 
-        int leadingFullWidth = leading?.FullWidth ?? 0;
-        int trailingFullWidth = trailing?.FullWidth ?? 0;
-        int nodeFullWidth = text.Length + leadingFullWidth + trailingFullWidth;
+        var leadingFullWidth = leading?.FullWidth ?? 0;
+        var trailingFullWidth = trailing?.FullWidth ?? 0;
+        var nodeFullWidth = text.Length + leadingFullWidth + trailingFullWidth;
 
         return new SyntaxToken(kind, text, value, leading, trailing, nodeFullWidth);
     }
 
     public static SyntaxToken Token(SyntaxKind kind, string text, GreenNode? leading, GreenNode? trailing)
     {
-        int leadingFullWidth = leading?.FullWidth ?? 0;
-        int trailingFullWidth = trailing?.FullWidth ?? 0;
-        int nodeFullWidth = text.Length + leadingFullWidth + trailingFullWidth;
+        var leadingFullWidth = leading?.FullWidth ?? 0;
+        var trailingFullWidth = trailing?.FullWidth ?? 0;
+        var nodeFullWidth = text.Length + leadingFullWidth + trailingFullWidth;
 
         return new SyntaxToken(kind, text, text, leading, trailing, nodeFullWidth);
     }
 
     public static SyntaxToken Token<T>(SyntaxKind kind, string text, T? value, GreenNode? leading, GreenNode? trailing)
     {
-        int leadingFullWidth = leading?.FullWidth ?? 0;
-        int trailingFullWidth = trailing?.FullWidth ?? 0;
-        int nodeFullWidth = text.Length + leadingFullWidth + trailingFullWidth;
+        var leadingFullWidth = leading?.FullWidth ?? 0;
+        var trailingFullWidth = trailing?.FullWidth ?? 0;
+        var nodeFullWidth = text.Length + leadingFullWidth + trailingFullWidth;
 
         return new SyntaxToken(kind, text, value, leading, trailing, nodeFullWidth);
     }

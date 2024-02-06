@@ -1,14 +1,14 @@
-// <copyright file="ResourceDictionary.cs" company="Sunt Programator">
+﻿// <copyright file="ResourceDictionary.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.Core.ContentStreamAndResources;
 
 using System.Collections.ObjectModel;
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Primitives;
 using OffDotNet.Pdf.Core.Text.Fonts;
-
-namespace OffDotNet.Pdf.Core.ContentStreamAndResources;
 
 public sealed class ResourceDictionary : PdfDictionary<IPdfObject>, IResourceDictionary
 {
@@ -27,8 +27,10 @@ public sealed class ResourceDictionary : PdfDictionary<IPdfObject>, IResourceDic
         this.ProcSet = options.ProcSet;
     }
 
+    /// <inheritdoc/>
     public IPdfDictionary<IPdfIndirectIdentifier<IType1Font>>? Font { get; }
 
+    /// <inheritdoc/>
     public IPdfArray<PdfName>? ProcSet { get; }
 
     private static ResourceDictionaryOptions GetResourceDictionaryOptions(Action<ResourceDictionaryOptions> optionsFunc)
@@ -40,7 +42,7 @@ public sealed class ResourceDictionary : PdfDictionary<IPdfObject>, IResourceDic
 
     private static IReadOnlyDictionary<PdfName, IPdfObject> GenerateDictionary(ResourceDictionaryOptions options)
     {
-        IDictionary<PdfName, IPdfObject> documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(2)
+        var documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(2)
             .WithKeyValue(FontName, options.Font)
             .WithKeyValue(ProcSetName, options.ProcSet);
 

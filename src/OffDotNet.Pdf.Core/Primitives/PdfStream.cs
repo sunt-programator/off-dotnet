@@ -1,12 +1,12 @@
-// <copyright file="PdfStream.cs" company="Sunt Programator">
+﻿// <copyright file="PdfStream.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.Core.Primitives;
+
 using System.Text;
 using OffDotNet.Pdf.Core.Common;
-
-namespace OffDotNet.Pdf.Core.Primitives;
 
 public sealed class PdfStream : PdfObject, IPdfStream
 {
@@ -29,14 +29,19 @@ public sealed class PdfStream : PdfObject, IPdfStream
         options?.Invoke(this.pdfStreamExtentOptions);
     }
 
+    /// <inheritdoc/>
     public ReadOnlyMemory<char> Value { get; }
 
+    /// <inheritdoc/>
     public override ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
+    /// <inheritdoc/>
     public override string Content => this.GenerateContent();
 
+    /// <inheritdoc/>
     public IPdfDictionary<IPdfObject> StreamExtent => this.GenerateStreamExtendDictionary();
 
+    /// <inheritdoc/>
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return this.Value;
@@ -49,7 +54,7 @@ public sealed class PdfStream : PdfObject, IPdfStream
             return this.literalValue;
         }
 
-        StringBuilder stringBuilder = new StringBuilder()
+        var stringBuilder = new StringBuilder()
             .Insert(0, "\nstream\n")
             .Append(this.Value);
 
@@ -74,7 +79,7 @@ public sealed class PdfStream : PdfObject, IPdfStream
             return this.streamExtentDictionary;
         }
 
-        int length = this.Value.Length;
+        var length = this.Value.Length;
 
         this.streamExtentDictionary = new Dictionary<PdfName, IPdfObject>(6)
             .WithKeyValue(FilterKey, this.pdfStreamExtentOptions.Filter?.PdfObject)

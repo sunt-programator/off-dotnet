@@ -3,11 +3,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax;
+
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Text;
 using InternalSyntax = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax;
 
 public class SyntaxTriviaTests
 {

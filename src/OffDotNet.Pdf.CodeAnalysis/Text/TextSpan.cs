@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.Text;
+
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Text;
 
 /// <summary>Immutable struct representing a span of text, i.e. <c>[150, 153)</c>.</summary>
 [SuppressMessage("Minor Code Smell", "S1210:\"Equals\" and the comparison operators should be overridden when implementing \"IComparable\"", Justification = "Not needed.")]
@@ -100,7 +100,7 @@ public readonly struct TextSpan : IEquatable<TextSpan>, IComparable<TextSpan>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     public int CompareTo(TextSpan other)
     {
-        int diff = this.Start - other.Start;
+        var diff = this.Start - other.Start;
         return diff != 0 ? diff : this.Length - other.Length;
     }
 

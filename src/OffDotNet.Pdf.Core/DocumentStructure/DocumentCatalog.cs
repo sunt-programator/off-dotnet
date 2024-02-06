@@ -1,14 +1,14 @@
-// <copyright file="DocumentCatalog.cs" company="Sunt Programator">
+﻿// <copyright file="DocumentCatalog.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.Core.DocumentStructure;
 
 using System.Collections.ObjectModel;
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Extensions;
 using OffDotNet.Pdf.Core.Primitives;
-
-namespace OffDotNet.Pdf.Core.DocumentStructure;
 
 public sealed class DocumentCatalog : PdfDictionary<IPdfObject>, IDocumentCatalog
 {
@@ -28,6 +28,7 @@ public sealed class DocumentCatalog : PdfDictionary<IPdfObject>, IDocumentCatalo
         this.Pages = options.Pages;
     }
 
+    /// <inheritdoc/>
     public IPdfIndirectIdentifier<IPageTreeNode> Pages { get; }
 
     private static DocumentCatalogOptions GetDocumentCatalogOptions(Action<DocumentCatalogOptions> optionsFunc)
@@ -39,7 +40,7 @@ public sealed class DocumentCatalog : PdfDictionary<IPdfObject>, IDocumentCatalo
 
     private static IReadOnlyDictionary<PdfName, IPdfObject> GenerateDictionary(DocumentCatalogOptions options)
     {
-        IDictionary<PdfName, IPdfObject> documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(2)
+        var documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(2)
             .WithKeyValue(TypeName, CatalogName)
             .WithKeyValue(PagesName, options.Pages);
 

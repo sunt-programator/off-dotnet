@@ -1,12 +1,12 @@
-// <copyright file="DiagnosticDescriptor.cs" company="Sunt Programator">
+﻿// <copyright file="DiagnosticDescriptor.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+
 using System.Collections.Immutable;
 using System.Diagnostics;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 public sealed class DiagnosticDescriptor : IEquatable<DiagnosticDescriptor>
 {
@@ -88,6 +88,7 @@ public sealed class DiagnosticDescriptor : IEquatable<DiagnosticDescriptor>
         return !Equals(left, right);
     }
 
+    /// <inheritdoc/>
     public bool Equals(DiagnosticDescriptor? other)
     {
         if (ReferenceEquals(null, other))
@@ -110,11 +111,13 @@ public sealed class DiagnosticDescriptor : IEquatable<DiagnosticDescriptor>
                this.HelpLinkUri == other.HelpLinkUri;
     }
 
+    /// <inheritdoc/>
     public override bool Equals(object? obj)
     {
         return this.Equals(obj as DiagnosticDescriptor);
     }
 
+    /// <inheritdoc/>
     public override int GetHashCode()
     {
         var hashCode = default(HashCode);

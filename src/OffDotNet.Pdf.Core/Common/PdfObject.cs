@@ -1,4 +1,4 @@
-// <copyright file="PdfObject.cs" company="Sunt Programator">
+﻿// <copyright file="PdfObject.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,8 +7,10 @@ namespace OffDotNet.Pdf.Core.Common;
 
 public abstract class PdfObject : IPdfObject, IEquatable<PdfObject>, IEqualityComparer<PdfObject>
 {
+    /// <inheritdoc/>
     public abstract ReadOnlyMemory<byte> Bytes { get; }
 
+    /// <inheritdoc/>
     public abstract string Content { get; }
 
     public static bool operator ==(PdfObject? leftOperator, PdfObject? rightOperator)
@@ -21,26 +23,31 @@ public abstract class PdfObject : IPdfObject, IEquatable<PdfObject>, IEqualityCo
         return !(leftOperator == rightOperator);
     }
 
+    /// <inheritdoc/>
     public override bool Equals(object? obj)
     {
         return obj is PdfObject pdfObject && this.Equals(pdfObject);
     }
 
+    /// <inheritdoc/>
     public bool Equals(PdfObject? other)
     {
         return this.Equals(this, other);
     }
 
+    /// <inheritdoc/>
     public bool Equals(PdfObject? x, PdfObject? y)
     {
         return Equals(x?.GetEqualityComponents(), y?.GetEqualityComponents());
     }
 
+    /// <inheritdoc/>
     public int GetHashCode(PdfObject obj)
     {
         return obj.GetHashCode();
     }
 
+    /// <inheritdoc/>
     public override int GetHashCode()
     {
         return GetHashCode(this.GetType().Name, this.GetEqualityComponents());
@@ -52,12 +59,12 @@ public abstract class PdfObject : IPdfObject, IEquatable<PdfObject>, IEqualityCo
     {
         var hashCode = default(HashCode);
 
-        int index = typeName.IndexOf('`');
-        string parsedObjectName = typeName.AsSpan()[..(index > 0 ? index : typeName.Length)].ToString();
+        var index = typeName.IndexOf('`');
+        var parsedObjectName = typeName.AsSpan()[..(index > 0 ? index : typeName.Length)].ToString();
 
         hashCode.Add(parsedObjectName);
 
-        foreach (object component in equalityComponents)
+        foreach (var component in equalityComponents)
         {
             hashCode.Add(component);
         }

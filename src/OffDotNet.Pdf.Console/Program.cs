@@ -3,9 +3,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using OffDotNet.Pdf.Document;
-
 namespace OffDotNet.Pdf.Console;
+
+using OffDotNet.Pdf.Document;
 
 internal static class Program
 {
@@ -16,7 +16,7 @@ internal static class Program
 
     private static async Task GeneratePdf()
     {
-        string fileName = Path.Combine(Environment.CurrentDirectory, "off.net.pdf");
+        var fileName = Path.Combine(Environment.CurrentDirectory, "off.net.pdf");
         FileStream fileStream = new(fileName, FileMode.Create, FileAccess.Write);
         PdfDocument pdfDocument = new(fileStream, new PdfDocumentOptions());
 

@@ -1,14 +1,14 @@
-// <copyright file="PdfName.cs" company="Sunt Programator">
+﻿// <copyright file="PdfName.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.Core.Primitives;
 
 using System.Globalization;
 using System.Text;
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Properties;
-
-namespace OffDotNet.Pdf.Core.Primitives;
 
 public sealed class PdfName : PdfObject
 {
@@ -39,8 +39,10 @@ public sealed class PdfName : PdfObject
 
     public string Value { get; }
 
+    /// <inheritdoc/>
     public override ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
+    /// <inheritdoc/>
     public override string Content => this.GenerateContent();
 
     public static implicit operator string(PdfName pdfName)
@@ -53,6 +55,7 @@ public sealed class PdfName : PdfObject
         return new PdfName(value);
     }
 
+    /// <inheritdoc/>
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return this.Value;
@@ -87,7 +90,7 @@ public sealed class PdfName : PdfObject
 
         StringBuilder stringBuilder = new();
 
-        foreach (char ch in this.Value)
+        foreach (var ch in this.Value)
         {
             stringBuilder.Append(ConvertCharToString(ch));
         }

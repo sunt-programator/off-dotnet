@@ -1,7 +1,9 @@
-// <copyright file="MessageProvider.cs" company="Sunt Programator">
+﻿// <copyright file="MessageProvider.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
@@ -10,8 +12,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 internal sealed class MessageProvider : IMessageProvider
 {
@@ -26,51 +26,61 @@ internal sealed class MessageProvider : IMessageProvider
     {
     }
 
+    /// <inheritdoc/>
     public string CodePrefix => "PDF";
 
+    /// <inheritdoc/>
     public LocalizableString GetTitle(DiagnosticCode code)
     {
         return new LocalizableResourceString($"{code}{TitleSuffix}", ResourceManager.Value, typeof(MessageProvider));
     }
 
+    /// <inheritdoc/>
     public LocalizableString GetDescription(DiagnosticCode code)
     {
         return new LocalizableResourceString($"{code}{DescriptionSuffix}", ResourceManager.Value, typeof(MessageProvider));
     }
 
+    /// <inheritdoc/>
     public DiagnosticSeverity GetSeverity(DiagnosticCode code)
     {
         return DiagnosticSeverity.Error;
     }
 
+    /// <inheritdoc/>
     public LocalizableString GetMessage(DiagnosticCode code)
     {
         return new LocalizableResourceString($"{code}", ResourceManager.Value, typeof(MessageProvider));
     }
 
+    /// <inheritdoc/>
     public string GetHelpLink(DiagnosticCode code)
     {
         return $"https://github.com/search?q=repo%3Asunt-programator%2Foff-dotnet%20{this.GetIdForErrorCode(code)}&type=code";
     }
 
+    /// <inheritdoc/>
     public string GetIdForErrorCode(DiagnosticCode code)
     {
         return ErrorIdCache.GetOrAdd((this.CodePrefix, code), key => $"{key.Prefix}{(int)key.Code:0000}");
     }
 
+    /// <inheritdoc/>
     public string GetCategory(DiagnosticCode code)
     {
         return CollectionExtensions.GetValueOrDefault(CategoriesMap.Value, code, "Syntax");
     }
 
+    /// <inheritdoc/>
     public bool GetIsEnabledByDefault(DiagnosticCode code)
     {
         return true;
     }
 
+    /// <inheritdoc/>
     public string LoadMessage(DiagnosticCode code, CultureInfo culture)
     {
-        string? message = ResourceManager.Value.GetString(code.ToString(), culture);
+        var message = ResourceManager.Value.GetString(code.ToString(), culture);
         Debug.Assert(!string.IsNullOrEmpty(message), code.ToString());
         return message;
     }

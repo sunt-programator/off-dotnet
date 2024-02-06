@@ -1,13 +1,13 @@
-// <copyright file="SyntaxList`1.cs" company="Sunt Programator">
+﻿// <copyright file="SyntaxList`1.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+
 using System.Collections;
 using System.Diagnostics;
 using OffDotNet.Pdf.CodeAnalysis.InternalUtilities;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal readonly partial struct SyntaxList<TNode> : IEnumerable<TNode>, IEquatable<SyntaxList<TNode>>
     where TNode : GreenNode
@@ -36,9 +36,9 @@ internal readonly partial struct SyntaxList<TNode> : IEnumerable<TNode>, IEquata
     {
         get
         {
-            TNode[] array = new TNode[this.Count];
+            var array = new TNode[this.Count];
 
-            for (int i = 0; i < this.Count; i++)
+            for (var i = 0; i < this.Count; i++)
             {
                 array[i] = this.GetRequiredItem(i);
             }
@@ -98,26 +98,31 @@ internal readonly partial struct SyntaxList<TNode> : IEnumerable<TNode>, IEquata
         return false;
     }
 
+    /// <inheritdoc/>
     public IEnumerator<TNode> GetEnumerator()
     {
         return new Enumerator(this);
     }
 
+    /// <inheritdoc/>
     IEnumerator IEnumerable.GetEnumerator()
     {
         return this.GetEnumerator();
     }
 
+    /// <inheritdoc/>
     public bool Equals(SyntaxList<TNode> other)
     {
         return Equals(this.Node, other.Node);
     }
 
+    /// <inheritdoc/>
     public override bool Equals(object? obj)
     {
         return obj is SyntaxList<TNode> other && this.Equals(other);
     }
 
+    /// <inheritdoc/>
     public override int GetHashCode()
     {
         return this.Node != null ? this.Node.GetHashCode() : 0;

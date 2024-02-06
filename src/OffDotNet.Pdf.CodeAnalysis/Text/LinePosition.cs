@@ -1,4 +1,4 @@
-// <copyright file="LinePosition.cs" company="Sunt Programator">
+﻿// <copyright file="LinePosition.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -57,27 +57,32 @@ public readonly struct LinePosition : IEquatable<LinePosition>, IComparable<Line
         return left.CompareTo(right) >= 0;
     }
 
+    /// <inheritdoc/>
     public override int GetHashCode()
     {
         return HashCode.Combine(this.Line, this.Character);
     }
 
+    /// <inheritdoc/>
     public bool Equals(LinePosition other)
     {
         return this.Line == other.Line && this.Character == other.Character;
     }
 
+    /// <inheritdoc/>
     public override bool Equals(object? obj)
     {
         return obj is LinePosition other && this.Equals(other);
     }
 
+    /// <inheritdoc/>
     public int CompareTo(LinePosition other)
     {
-        int lineComparison = this.Line.CompareTo(other.Line);
+        var lineComparison = this.Line.CompareTo(other.Line);
         return lineComparison != 0 ? lineComparison : this.Character.CompareTo(other.Character);
     }
 
+    /// <inheritdoc/>
     public override string ToString()
     {
         return this.Line + "," + this.Character;

@@ -1,12 +1,12 @@
-// <copyright file="MoveTextOperation.cs" company="Sunt Programator">
+﻿// <copyright file="MoveTextOperation.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.Core.Text.Operations.TextPosition;
+
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Primitives;
-
-namespace OffDotNet.Pdf.Core.Text.Operations.TextPosition;
 
 public sealed class MoveTextOperation : PdfOperation, IMoveTextOperation
 {
@@ -19,10 +19,13 @@ public sealed class MoveTextOperation : PdfOperation, IMoveTextOperation
         this.Y = y;
     }
 
+    /// <inheritdoc/>
     public PdfReal X { get; }
 
+    /// <inheritdoc/>
     public PdfReal Y { get; }
 
+    /// <inheritdoc/>
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return this.X;
@@ -30,6 +33,7 @@ public sealed class MoveTextOperation : PdfOperation, IMoveTextOperation
         yield return this.PdfOperator;
     }
 
+    /// <inheritdoc/>
     protected override string GenerateContent()
     {
         return $"{this.X.Content} {this.Y.Content} {this.PdfOperator}\n";

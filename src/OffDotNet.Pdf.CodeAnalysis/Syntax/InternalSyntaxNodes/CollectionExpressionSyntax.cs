@@ -1,11 +1,11 @@
-// <copyright file="CollectionExpressionSyntax.cs" company="Sunt Programator">
+﻿// <copyright file="CollectionExpressionSyntax.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
-
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 internal abstract class CollectionExpressionSyntax : ExpressionSyntax
 {
@@ -25,6 +25,7 @@ internal abstract class CollectionExpressionSyntax : ExpressionSyntax
 
     public SyntaxToken CloseToken { get; }
 
+    /// <inheritdoc/>
     internal override GreenNode? GetSlot(int index)
     {
         return index switch

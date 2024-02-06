@@ -1,14 +1,14 @@
-// <copyright file="PdfReal.cs" company="Sunt Programator">
+﻿// <copyright file="PdfReal.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.Core.Primitives;
 
 using System.Globalization;
 using System.Text;
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Properties;
-
-namespace OffDotNet.Pdf.Core.Primitives;
 
 public struct PdfReal : IPdfObject, IEquatable<PdfReal>, IComparable, IComparable<PdfReal>
 {
@@ -37,8 +37,10 @@ public struct PdfReal : IPdfObject, IEquatable<PdfReal>, IComparable, IComparabl
 
     public float Value { get; }
 
+    /// <inheritdoc/>
     public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
+    /// <inheritdoc/>
     public string Content => this.GenerateContent();
 
     public static implicit operator float(PdfReal pdfReal)
@@ -86,21 +88,25 @@ public struct PdfReal : IPdfObject, IEquatable<PdfReal>, IComparable, IComparabl
         return leftOperator.CompareTo(rightOperator) >= 0;
     }
 
+    /// <inheritdoc/>
     public override int GetHashCode()
     {
         return this.hashCode;
     }
 
+    /// <inheritdoc/>
     public bool Equals(PdfReal other)
     {
         return Math.Abs(this.Value - other.Value) < Tolerance;
     }
 
+    /// <inheritdoc/>
     public override bool Equals(object? obj)
     {
         return (obj is PdfReal pdfReal) && this.Equals(pdfReal);
     }
 
+    /// <inheritdoc/>
     public int CompareTo(object? obj)
     {
         if (obj is not PdfReal pdfReal)
@@ -111,6 +117,7 @@ public struct PdfReal : IPdfObject, IEquatable<PdfReal>, IComparable, IComparabl
         return this.CompareTo(pdfReal);
     }
 
+    /// <inheritdoc/>
     public int CompareTo(PdfReal other)
     {
         if (Math.Abs(this.Value - other.Value) < Tolerance)

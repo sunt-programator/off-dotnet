@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.PooledObjects;
+
 using System.Collections.Immutable;
 using Microsoft.Extensions.ObjectPool;
-
-namespace OffDotNet.Pdf.CodeAnalysis.PooledObjects;
 
 internal static class ArrayBuilderObjectPool<T>
 {

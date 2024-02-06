@@ -1,14 +1,14 @@
-// <copyright file="FontOperation.cs" company="Sunt Programator">
+﻿// <copyright file="FontOperation.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.Core.Text.Operations.TextState;
 
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Extensions;
 using OffDotNet.Pdf.Core.Primitives;
 using OffDotNet.Pdf.Core.Properties;
-
-namespace OffDotNet.Pdf.Core.Text.Operations.TextState;
 
 public sealed class FontOperation : PdfOperation, IFontOperation
 {
@@ -21,10 +21,13 @@ public sealed class FontOperation : PdfOperation, IFontOperation
         this.FontSize = fontSize.CheckConstraints(x => x >= 0, Resource.FontOperation_FontSizeMustBePositive);
     }
 
+    /// <inheritdoc/>
     public PdfName FontName { get; }
 
+    /// <inheritdoc/>
     public PdfInteger FontSize { get; }
 
+    /// <inheritdoc/>
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return this.FontName;
@@ -32,6 +35,7 @@ public sealed class FontOperation : PdfOperation, IFontOperation
         yield return this.PdfOperator;
     }
 
+    /// <inheritdoc/>
     protected override string GenerateContent()
     {
         return $"{this.FontName.Content} {this.FontSize.Content} {this.PdfOperator}\n";

@@ -1,4 +1,4 @@
-// <copyright file="GreenNodeExtensions.cs" company="Sunt Programator">
+﻿// <copyright file="GreenNodeExtensions.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -12,7 +12,7 @@ internal static class GreenNodeExtensions
     /// <returns>The first terminal node of a <see cref="GreenNode"/>.</returns>
     internal static GreenNode? GetFirstTerminal(this GreenNode? source)
     {
-        GreenNode? node = source;
+        var node = source;
 
         if (node == null)
         {
@@ -22,7 +22,7 @@ internal static class GreenNodeExtensions
         do
         {
             GreenNode? firstChild = null;
-            for (int i = 0; i < node.SlotCount; i++)
+            for (var i = 0; i < node.SlotCount; i++)
             {
                 var child = node.GetSlot(i);
                 if (child != null)
@@ -44,7 +44,7 @@ internal static class GreenNodeExtensions
     /// <returns>The last terminal node of a <see cref="GreenNode"/>.</returns>
     internal static GreenNode? GetLastTerminal(this GreenNode? source)
     {
-        GreenNode? node = source;
+        var node = source;
 
         if (node == null)
         {
@@ -54,7 +54,7 @@ internal static class GreenNodeExtensions
         do
         {
             GreenNode? lastChild = null;
-            for (int i = node.SlotCount - 1; i >= 0; i--)
+            for (var i = node.SlotCount - 1; i >= 0; i--)
             {
                 var child = node.GetSlot(i);
                 if (child != null)
@@ -76,7 +76,7 @@ internal static class GreenNodeExtensions
     /// <returns>The first non null child index.</returns>
     internal static int GetFirstNonNullChildIndex(this GreenNode node)
     {
-        int firstIndex = 0;
+        var firstIndex = 0;
         for (; firstIndex < node.SlotCount; firstIndex++)
         {
             var child = node.GetSlot(firstIndex);
@@ -94,7 +94,7 @@ internal static class GreenNodeExtensions
     /// <returns>The last non null child index.</returns>
     internal static int GetLastNonNullChildIndex(this GreenNode node)
     {
-        int lastIndex = node.SlotCount - 1;
+        var lastIndex = node.SlotCount - 1;
         for (; lastIndex >= 0; lastIndex--)
         {
             var child = node.GetSlot(lastIndex);

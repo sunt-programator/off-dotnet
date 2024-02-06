@@ -1,14 +1,14 @@
-// <copyright file="FileHeader.cs" company="Sunt Programator">
+﻿// <copyright file="FileHeader.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.Core.FileStructure;
 
 using System.Text;
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Extensions;
 using OffDotNet.Pdf.Core.Properties;
-
-namespace OffDotNet.Pdf.Core.FileStructure;
 
 public readonly struct FileHeader : IPdfObject, IEquatable<FileHeader>
 {
@@ -28,12 +28,14 @@ public readonly struct FileHeader : IPdfObject, IEquatable<FileHeader>
         this.MinorVersion = minorVersion.CheckConstraints(num => num is >= 0 and <= 9, Resource.FileHeader_MinorVersionIsNotValid);
     }
 
+    /// <inheritdoc/>
     public ReadOnlyMemory<byte> Bytes => Encoding.ASCII.GetBytes(this.Content);
 
     public int MajorVersion { get; }
 
     public int MinorVersion { get; }
 
+    /// <inheritdoc/>
     public string Content => $"%PDF-{this.MajorVersion}.{this.MinorVersion}\n";
 
     public static bool operator ==(FileHeader leftOperator, FileHeader rightOperator)
@@ -46,16 +48,19 @@ public readonly struct FileHeader : IPdfObject, IEquatable<FileHeader>
         return !leftOperator.Equals(rightOperator);
     }
 
+    /// <inheritdoc/>
     public override int GetHashCode()
     {
         return HashCode.Combine(nameof(FileHeader), this.MajorVersion, this.MinorVersion);
     }
 
+    /// <inheritdoc/>
     public override bool Equals(object? obj)
     {
         return obj is FileHeader other && this.Equals(other);
     }
 
+    /// <inheritdoc/>
     public bool Equals(FileHeader other)
     {
         return this.MajorVersion == other.MajorVersion &&

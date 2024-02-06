@@ -1,13 +1,13 @@
-// <copyright file="SyntaxToken.cs" company="Sunt Programator">
+﻿// <copyright file="SyntaxToken.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax;
+
 using System.Diagnostics;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 using OffDotNet.Pdf.CodeAnalysis.Text;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Syntax;
 
 [DebuggerDisplay("{GetDebuggerDisplay(), nq}")]
 public readonly struct SyntaxToken : IEquatable<SyntaxToken>
@@ -47,11 +47,13 @@ public readonly struct SyntaxToken : IEquatable<SyntaxToken>
         return !left.Equals(right);
     }
 
+    /// <inheritdoc/>
     public override string ToString()
     {
         return this.Node?.ToString() ?? string.Empty;
     }
 
+    /// <inheritdoc/>
     public bool Equals(SyntaxToken other)
     {
         return this.Parent == other.Parent
@@ -60,11 +62,13 @@ public readonly struct SyntaxToken : IEquatable<SyntaxToken>
                && this.Index == other.Index;
     }
 
+    /// <inheritdoc/>
     public override bool Equals(object? obj)
     {
         return obj is SyntaxToken other && this.Equals(other);
     }
 
+    /// <inheritdoc/>
     public override int GetHashCode()
     {
         return HashCode.Combine(this.Parent, this.Node, this.Position, this.Index);
@@ -72,7 +76,7 @@ public readonly struct SyntaxToken : IEquatable<SyntaxToken>
 
     private string GetDebuggerDisplay()
     {
-        string kindText = this.Node != null ? this.Node.Kind.ToString() : "None";
+        var kindText = this.Node != null ? this.Node.Kind.ToString() : "None";
         return $"{this.GetType().Name} {kindText} {this.ToString()}";
     }
 }

@@ -1,13 +1,13 @@
-// <copyright file="LocalizableResourceString.cs" company="Sunt Programator">
+﻿// <copyright file="LocalizableResourceString.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Resources;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 public sealed class LocalizableResourceString : LocalizableString
 {
@@ -24,11 +24,12 @@ public sealed class LocalizableResourceString : LocalizableString
         this.formatArguments = formatArguments;
     }
 
+    /// <inheritdoc/>
     [SuppressMessage("ReSharper", "CoVariantArrayConversion", Justification = "Reviewed.")]
     protected override string GetText(IFormatProvider? formatProvider)
     {
-        CultureInfo cultureInfo = formatProvider as CultureInfo ?? CultureInfo.CurrentUICulture;
-        string? resourceString = this.resourceManager.GetString(this.nameOfLocalizableResource, cultureInfo);
+        var cultureInfo = formatProvider as CultureInfo ?? CultureInfo.CurrentUICulture;
+        var resourceString = this.resourceManager.GetString(this.nameOfLocalizableResource, cultureInfo);
 
         if (resourceString == null)
         {
@@ -38,11 +39,13 @@ public sealed class LocalizableResourceString : LocalizableString
         return this.formatArguments.Length > 0 ? string.Format(cultureInfo, resourceString, this.formatArguments) : resourceString;
     }
 
+    /// <inheritdoc/>
     protected override int GetHash()
     {
         return HashCode.Combine(this.nameOfLocalizableResource, this.resourceManager, this.resourceSource, this.formatArguments);
     }
 
+    /// <inheritdoc/>
     protected override bool AreEqual(object? other)
     {
         return other is LocalizableResourceString otherResourceString &&

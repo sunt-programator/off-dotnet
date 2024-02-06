@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.Core.Tests.Primitives;
+
 using OffDotNet.Pdf.Core.Common;
 using OffDotNet.Pdf.Core.Primitives;
-
-namespace OffDotNet.Pdf.Core.Tests.Primitives;
 
 public class PdfStreamTests
 {

@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal readonly struct SyntaxListBuilder<TNode>
     where TNode : GreenNode
@@ -32,7 +32,7 @@ internal readonly struct SyntaxListBuilder<TNode>
     {
         get
         {
-            GreenNode? result = this.builder[index];
+            var result = this.builder[index];
             Debug.Assert(result != null, "We only allow assigning non-null nodes into us, and .Add filters null out. So we should never get null here.");
             return (TNode)result;
         }

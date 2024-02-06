@@ -1,14 +1,14 @@
-// <copyright file="DiagnosticInfo.cs" company="Sunt Programator">
+﻿// <copyright file="DiagnosticInfo.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 [DebuggerDisplay("{GetDebuggerDisplay(), nq}")]
 internal class DiagnosticInfo : IFormattable
@@ -73,8 +73,8 @@ internal class DiagnosticInfo : IFormattable
     /// <returns>The text of the message.</returns>
     public virtual string GetMessage(IFormatProvider? formatProvider = null)
     {
-        CultureInfo culture = formatProvider as CultureInfo ?? CultureInfo.InvariantCulture;
-        string message = this.MessageProvider.LoadMessage(this.Code, culture);
+        var culture = formatProvider as CultureInfo ?? CultureInfo.InvariantCulture;
+        var message = this.MessageProvider.LoadMessage(this.Code, culture);
 
         if (string.IsNullOrEmpty(message))
         {
@@ -84,6 +84,7 @@ internal class DiagnosticInfo : IFormattable
         return this.Arguments.Length == 0 ? message : string.Format(formatProvider, message, this.GetArgumentsToUse(formatProvider));
     }
 
+    /// <inheritdoc/>
     public override string ToString()
     {
         return this.ToString(null);
@@ -94,20 +95,22 @@ internal class DiagnosticInfo : IFormattable
         return ((IFormattable)this).ToString(null, formatProvider);
     }
 
+    /// <inheritdoc/>
     string IFormattable.ToString(string? format, IFormatProvider? formatProvider)
     {
-        CultureInfo culture = formatProvider as CultureInfo ?? CultureInfo.InvariantCulture;
-        string messagePrefix = this.MessageProvider.GetMessagePrefix(this.MessageIdentifier, this.EffectiveSeverity, this.IsWarningAsError, culture);
-        string message = this.GetMessage(formatProvider);
+        var culture = formatProvider as CultureInfo ?? CultureInfo.InvariantCulture;
+        var messagePrefix = this.MessageProvider.GetMessagePrefix(this.MessageIdentifier, this.EffectiveSeverity, this.IsWarningAsError, culture);
+        var message = this.GetMessage(formatProvider);
         return string.Format(formatProvider, "{0}: {1}", messagePrefix, message);
     }
 
+    /// <inheritdoc/>
     public sealed override int GetHashCode()
     {
         var hashCode = default(HashCode);
         hashCode.Add(this.Code);
 
-        for (int i = 0; i < this.Arguments.Length; i++)
+        for (var i = 0; i < this.Arguments.Length; i++)
         {
             hashCode.Add(this.Arguments[i]);
         }
@@ -115,6 +118,7 @@ internal class DiagnosticInfo : IFormattable
         return hashCode.ToHashCode();
     }
 
+    /// <inheritdoc/>
     public override bool Equals(object? obj)
     {
         if (obj is not DiagnosticInfo other)
@@ -141,21 +145,21 @@ internal class DiagnosticInfo : IFormattable
 
     private static DiagnosticDescriptor CreateDescriptor(DiagnosticCode errorCode, DiagnosticSeverity defaultSeverity, IMessageProvider messageProvider)
     {
-        string id = messageProvider.GetIdForErrorCode(errorCode);
-        LocalizableString title = messageProvider.GetTitle(errorCode);
-        LocalizableString description = messageProvider.GetDescription(errorCode);
-        LocalizableString messageFormat = messageProvider.GetMessage(errorCode);
-        string helpLink = messageProvider.GetHelpLink(errorCode);
-        string category = messageProvider.GetCategory(errorCode);
-        ImmutableArray<string> customTags = defaultSeverity == DiagnosticSeverity.Error ? CompilerErrorCustomTags : CompilerNonErrorCustomTags;
-        bool isEnabledByDefault = messageProvider.GetIsEnabledByDefault(errorCode);
+        var id = messageProvider.GetIdForErrorCode(errorCode);
+        var title = messageProvider.GetTitle(errorCode);
+        var description = messageProvider.GetDescription(errorCode);
+        var messageFormat = messageProvider.GetMessage(errorCode);
+        var helpLink = messageProvider.GetHelpLink(errorCode);
+        var category = messageProvider.GetCategory(errorCode);
+        var customTags = defaultSeverity == DiagnosticSeverity.Error ? CompilerErrorCustomTags : CompilerNonErrorCustomTags;
+        var isEnabledByDefault = messageProvider.GetIsEnabledByDefault(errorCode);
         return new DiagnosticDescriptor(id, title, messageFormat, category, defaultSeverity, isEnabledByDefault, description, helpLink, customTags);
     }
 
     private object[] GetArgumentsToUse(IFormatProvider? formatProvider)
     {
         object[]? argumentsToUse = null;
-        for (int i = 0; i < this.Arguments.Length; i++)
+        for (var i = 0; i < this.Arguments.Length; i++)
         {
             if (this.Arguments[i] is DiagnosticInfo embedded)
             {
@@ -174,7 +178,7 @@ internal class DiagnosticInfo : IFormattable
             return argumentsToUse;
         }
 
-        object[] newArguments = new object[this.Arguments.Length];
+        var newArguments = new object[this.Arguments.Length];
         Array.Copy(this.Arguments, newArguments, newArguments.Length);
         return newArguments;
     }

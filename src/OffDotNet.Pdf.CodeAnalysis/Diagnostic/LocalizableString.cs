@@ -1,11 +1,11 @@
-// <copyright file="LocalizableString.cs" company="Sunt Programator">
+﻿// <copyright file="LocalizableString.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+
+using System.Diagnostics.CodeAnalysis;
 
 [SuppressMessage("Sonar", "S4035:Classes implementing IComparable<T> should be sealed", Justification = "Reviewed.")]
 public abstract partial class LocalizableString : IFormattable, IEquatable<LocalizableString>
@@ -62,16 +62,19 @@ public abstract partial class LocalizableString : IFormattable, IEquatable<Local
         }
     }
 
+    /// <inheritdoc/>
     string IFormattable.ToString(string? format, IFormatProvider? formatProvider)
     {
         return this.GetText(formatProvider);
     }
 
+    /// <inheritdoc/>
     public bool Equals(LocalizableString? other)
     {
         return this.Equals((object?)other);
     }
 
+    /// <inheritdoc/>
     public override bool Equals(object? obj)
     {
         try

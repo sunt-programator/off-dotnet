@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.Core.ContentStreamAndResources;
+
 using OffDotNet.Pdf.Core.Primitives;
 using OffDotNet.Pdf.Core.Text.Fonts;
-
-namespace OffDotNet.Pdf.Core.ContentStreamAndResources;
 
 public sealed class ResourceDictionaryOptions
 {

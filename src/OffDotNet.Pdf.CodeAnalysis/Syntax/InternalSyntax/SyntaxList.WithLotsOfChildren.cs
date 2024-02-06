@@ -1,12 +1,12 @@
-// <copyright file="SyntaxList.WithLotsOfChildren.cs" company="Sunt Programator">
+﻿// <copyright file="SyntaxList.WithLotsOfChildren.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+
 using OffDotNet.Pdf.CodeAnalysis.Collections;
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
-
-namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal abstract partial class SyntaxList
 {
@@ -20,6 +20,7 @@ internal abstract partial class SyntaxList
             this.childOffsets = CalculateOffsets(children);
         }
 
+        /// <inheritdoc/>
         public override int GetSlotOffset(int index)
         {
             return index < this.childOffsets.Length
@@ -27,6 +28,7 @@ internal abstract partial class SyntaxList
                 : this.childOffsets[^1];
         }
 
+        /// <inheritdoc/>
         internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
         {
             return new WithLotsOfChildren(this.Children, diagnostics);
@@ -34,9 +36,9 @@ internal abstract partial class SyntaxList
 
         private static int[] CalculateOffsets(ArrayElement<GreenNode>[] children)
         {
-            int[] offsets = new int[children.Length];
-            int offset = 0;
-            for (int i = 0; i < children.Length; i++)
+            var offsets = new int[children.Length];
+            var offset = 0;
+            for (var i = 0; i < children.Length; i++)
             {
                 offsets[i] = offset;
                 offset += children[i].Value.FullWidth;
