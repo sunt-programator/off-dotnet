@@ -41,8 +41,8 @@ jobs:
         run: dotnet build --no-restore
       - name: Test
         run: dotnet test --no-build --verbosity normal
-  sonar:
-    name: Sonar Scan
+  security:
+    name: Security Scan
     runs-on: ubuntu-latest
     timeout-minutes: 10
     if: ${{ !contains(github.event.head_commit.author.email, 'dependabot') || github.event_name != 'pull_request' }}
@@ -67,6 +67,17 @@ jobs:
           java-version: '17'
       - name: Restore dependencies
         run: dotnet restore
+      - name: Snyk scan
+        uses: snyk/actions/dotnet@master
+        continue-on-error: true # To make sure that SARIF upload gets called
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --sarif-file-output=snyk.sarif
+      - name: Upload Snyk scan results to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
       - name: Sonarqube Begin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -88,33 +99,3 @@ jobs:
         run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  mutation-testing:
-    if: true == false # Temp skipping of mutation testing due to https://github.com/stryker-mutator/stryker-net/issues/2005
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: build
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Cache NuGet modules
-        uses: actions/cache@v4
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 6.0.x
-      - name: Restore dependencies
-        run: dotnet restore
-      - name: Build
-        run: dotnet build --no-restore
-      - name: Restore tools
-        run: dotnet tool restore
-      - name: Run Mutation testing
-        run: dotnet tool run dotnet-stryker
-          --config-file "./stryker-config.json"
-          --dashboard-api-key ${{ secrets.STRYKER_DASHBOARD_APIKEY }}
-          --version ${{ github.head_ref || github.ref_name }}
