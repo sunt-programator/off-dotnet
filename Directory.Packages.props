@@ -1,37 +1,38 @@
 <Project>
-    <!-- Analyzers -->
-    <ItemGroup>
-        <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.16"/>
-        <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.12.0.78982">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageVersion>
-        <PackageVersion Include="Roslynator.Analyzers" Version="4.6.0">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageVersion>
-        <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.507">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageVersion>
-    </ItemGroup>
-    <!-- Test packages -->
-    <ItemGroup>
-        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.2"/>
-        <PackageVersion Include="xunit" Version="2.5.3"/>
-        <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.3">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageVersion>
-        <PackageVersion Include="coverlet.collector" Version="6.0.0">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageVersion>
-        <PackageVersion Include="NSubstitute" Version="5.1.0"/>
-    </ItemGroup>
-    <!-- Benchmarking packages -->
-    <ItemGroup>
-        <PackageVersion Include="BenchmarkDotNet" Version="0.13.9"/>
-        <PackageVersion Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.9"/>
-    </ItemGroup>
+  <!-- Analyzers -->
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.Extensions.ObjectPool" Version="8.0.1" />
+    <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.16" />
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.19.0.84025">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageVersion>
+    <PackageVersion Include="Roslynator.Analyzers" Version="4.10.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageVersion>
+    <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageVersion>
+  </ItemGroup>
+  <!-- Test packages -->
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageVersion Include="xunit" Version="2.6.6" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.6">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageVersion>
+    <PackageVersion Include="coverlet.collector" Version="6.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageVersion>
+    <PackageVersion Include="NSubstitute" Version="5.1.0" />
+  </ItemGroup>
+  <!-- Benchmarking packages -->
+  <ItemGroup>
+    <PackageVersion Include="BenchmarkDotNet" Version="0.13.12" />
+    <PackageVersion Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.12" />
+  </ItemGroup>
 </Project>
