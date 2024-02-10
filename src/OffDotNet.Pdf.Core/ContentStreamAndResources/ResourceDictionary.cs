@@ -6,9 +6,9 @@
 namespace OffDotNet.Pdf.Core.ContentStreamAndResources;
 
 using System.Collections.ObjectModel;
-using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.Primitives;
-using OffDotNet.Pdf.Core.Text.Fonts;
+using Common;
+using Primitives;
+using Text.Fonts;
 
 public sealed class ResourceDictionary : PdfDictionary<IPdfObject>, IResourceDictionary
 {

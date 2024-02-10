@@ -5,9 +5,9 @@
 
 namespace OffDotNet.Pdf.Core.CommonDataStructures;
 
-using OffDotNet.Pdf.Core.Extensions;
-using OffDotNet.Pdf.Core.Primitives;
-using OffDotNet.Pdf.Core.Properties;
+using Extensions;
+using Primitives;
+using Properties;
 
 public sealed class Rectangle : PdfArray<PdfReal>, IRectangle
 {

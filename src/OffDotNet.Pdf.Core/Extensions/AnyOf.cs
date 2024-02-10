@@ -5,8 +5,8 @@
 
 namespace OffDotNet.Pdf.Core.Extensions;
 
-using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.Primitives;
+using Common;
+using Primitives;
 
 public class AnyOf<T1, T2>
     where T1 : IPdfObject

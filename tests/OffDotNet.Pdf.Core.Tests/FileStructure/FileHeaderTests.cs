@@ -6,7 +6,7 @@
 namespace OffDotNet.Pdf.Core.Tests.FileStructure;
 
 using OffDotNet.Pdf.Core.FileStructure;
-using OffDotNet.Pdf.Core.Properties;
+using Properties;
 
 public class FileHeaderTests
 {

@@ -6,9 +6,9 @@
 namespace OffDotNet.Pdf.Core.DocumentStructure;
 
 using System.Collections.ObjectModel;
-using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.Extensions;
-using OffDotNet.Pdf.Core.Primitives;
+using Common;
+using Extensions;
+using Primitives;
 
 public sealed class PageTreeNode : PdfDictionary<IPdfObject>, IPageTreeNode
 {

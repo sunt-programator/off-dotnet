@@ -5,7 +5,7 @@
 
 namespace OffDotNet.Pdf.Core.Tests.Text;
 
-using OffDotNet.Pdf.Core.Common;
+using Common;
 using OffDotNet.Pdf.Core.Text;
 using OffDotNet.Pdf.Core.Text.Operations.TextPosition;
 using OffDotNet.Pdf.Core.Text.Operations.TextShowing;

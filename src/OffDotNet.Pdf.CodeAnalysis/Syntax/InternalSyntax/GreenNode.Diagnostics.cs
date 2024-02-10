@@ -6,7 +6,7 @@
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 using System.Runtime.CompilerServices;
-using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+using Diagnostic;
 
 /// <summary>
 /// The additional class containing diagnostics-related methods and properties for <see cref="GreenNode"/>.

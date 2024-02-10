@@ -5,10 +5,10 @@
 
 namespace OffDotNet.Pdf.Core.Text.Operations.TextState;
 
-using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.Extensions;
-using OffDotNet.Pdf.Core.Primitives;
-using OffDotNet.Pdf.Core.Properties;
+using Common;
+using Extensions;
+using Primitives;
+using Properties;
 
 public sealed class FontOperation : PdfOperation, IFontOperation
 {

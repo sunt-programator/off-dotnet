@@ -6,8 +6,8 @@
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax;
 
 using System.Diagnostics;
-using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
-using OffDotNet.Pdf.CodeAnalysis.Text;
+using InternalSyntax;
+using Text;
 
 [DebuggerDisplay("{GetDebuggerDisplay(), nq}")]
 public readonly struct SyntaxToken : IEquatable<SyntaxToken>

@@ -6,7 +6,7 @@
 namespace OffDotNet.Pdf.Core.Primitives;
 
 using System.Text;
-using OffDotNet.Pdf.Core.Common;
+using Common;
 
 public class PdfArray<TValue> : PdfObject, IPdfArray<TValue>
     where TValue : IPdfObject

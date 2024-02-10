@@ -6,12 +6,12 @@
 namespace OffDotNet.Pdf.Document.Tests;
 
 using System.Collections.Immutable;
-using OffDotNet.Pdf.Core.CommonDataStructures;
-using OffDotNet.Pdf.Core.ContentStreamAndResources;
-using OffDotNet.Pdf.Core.DocumentStructure;
-using OffDotNet.Pdf.Core.FileStructure;
-using OffDotNet.Pdf.Core.Primitives;
-using OffDotNet.Pdf.Core.Text.Fonts;
+using Core.CommonDataStructures;
+using Core.ContentStreamAndResources;
+using Core.DocumentStructure;
+using Core.FileStructure;
+using Core.Primitives;
+using Core.Text.Fonts;
 
 public class PdfDocumentTests
 {

@@ -6,17 +6,17 @@
 namespace OffDotNet.Pdf.Document;
 
 using System.Collections.Immutable;
-using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.CommonDataStructures;
-using OffDotNet.Pdf.Core.ContentStreamAndResources;
-using OffDotNet.Pdf.Core.DocumentStructure;
-using OffDotNet.Pdf.Core.FileStructure;
-using OffDotNet.Pdf.Core.Primitives;
-using OffDotNet.Pdf.Core.Text;
-using OffDotNet.Pdf.Core.Text.Fonts;
-using OffDotNet.Pdf.Core.Text.Operations.TextPosition;
-using OffDotNet.Pdf.Core.Text.Operations.TextShowing;
-using OffDotNet.Pdf.Core.Text.Operations.TextState;
+using Core.Common;
+using Core.CommonDataStructures;
+using Core.ContentStreamAndResources;
+using Core.DocumentStructure;
+using Core.FileStructure;
+using Core.Primitives;
+using Core.Text;
+using Core.Text.Fonts;
+using Core.Text.Operations.TextPosition;
+using Core.Text.Operations.TextShowing;
+using Core.Text.Operations.TextState;
 
 public sealed class PdfDocument : IDisposable, IAsyncDisposable
 {

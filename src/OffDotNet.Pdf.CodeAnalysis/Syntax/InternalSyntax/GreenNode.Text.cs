@@ -7,9 +7,8 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
-using OffDotNet.Pdf.CodeAnalysis.InternalUtilities;
-using OffDotNet.Pdf.CodeAnalysis.PooledObjects;
+using InternalUtilities;
+using PooledObjects;
 
 /// <summary>
 /// Additional class containing text-related methods and properties for <see cref="GreenNode"/>.

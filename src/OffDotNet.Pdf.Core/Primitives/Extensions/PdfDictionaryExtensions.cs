@@ -6,7 +6,7 @@
 namespace OffDotNet.Pdf.Core.Primitives;
 
 using System.Collections.ObjectModel;
-using OffDotNet.Pdf.Core.Common;
+using Common;
 
 public static class PdfDictionaryExtensions
 {

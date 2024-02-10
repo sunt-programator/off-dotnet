@@ -5,7 +5,7 @@
 
 namespace OffDotNet.Pdf.Console;
 
-using OffDotNet.Pdf.Document;
+using Document;
 
 internal static class Program
 {

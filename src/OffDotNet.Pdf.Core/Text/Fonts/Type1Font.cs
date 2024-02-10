@@ -6,9 +6,9 @@
 namespace OffDotNet.Pdf.Core.Text.Fonts;
 
 using System.Collections.ObjectModel;
-using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.Extensions;
-using OffDotNet.Pdf.Core.Primitives;
+using Common;
+using Extensions;
+using Primitives;
 
 public sealed class Type1Font : PdfDictionary<IPdfObject>, IType1Font
 {

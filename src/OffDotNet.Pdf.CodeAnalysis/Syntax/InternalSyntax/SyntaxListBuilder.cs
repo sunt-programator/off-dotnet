@@ -6,7 +6,7 @@
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 using System.Diagnostics;
-using OffDotNet.Pdf.CodeAnalysis.Collections;
+using Collections;
 
 internal sealed class SyntaxListBuilder
 {

@@ -6,7 +6,7 @@
 namespace OffDotNet.Pdf.Core.Tests.CommonDataStructures;
 
 using OffDotNet.Pdf.Core.CommonDataStructures;
-using OffDotNet.Pdf.Core.Properties;
+using Properties;
 
 public sealed class RectangleTests
 {

@@ -5,7 +5,7 @@
 
 namespace OffDotNet.Pdf.Core.DocumentStructure;
 
-using OffDotNet.Pdf.Core.Primitives;
+using Primitives;
 
 public sealed class PageTreeNodeOptions
 {

@@ -5,7 +5,7 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
-using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+using Diagnostic;
 
 internal abstract class CollectionElementSyntax : GreenNode
 {

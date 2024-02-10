@@ -5,8 +5,8 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
-using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
-using OffDotNet.Pdf.CodeAnalysis.InternalUtilities;
+using Diagnostic;
+using InternalUtilities;
 
 internal sealed class SyntaxTrivia : GreenNode
 {

@@ -5,7 +5,7 @@
 
 namespace OffDotNet.Pdf.Core.Text;
 
-using OffDotNet.Pdf.Core.Common;
+using Common;
 
 public interface ITextObject : IPdfObject
 {

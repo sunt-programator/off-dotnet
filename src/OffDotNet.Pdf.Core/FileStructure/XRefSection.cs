@@ -6,9 +6,9 @@
 namespace OffDotNet.Pdf.Core.FileStructure;
 
 using System.Text;
-using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.Extensions;
-using OffDotNet.Pdf.Core.Properties;
+using Common;
+using Extensions;
+using Properties;
 
 public sealed class XRefSection : PdfObject, IXRefSection
 {

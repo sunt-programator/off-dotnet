@@ -5,8 +5,8 @@
 
 namespace OffDotNet.Pdf.Core.DocumentStructure;
 
-using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.Primitives;
+using Common;
+using Primitives;
 
 public interface IDocumentCatalog : IPdfDictionary<IPdfObject>
 {

@@ -7,8 +7,8 @@ namespace OffDotNet.Pdf.Core.Primitives;
 
 using System.Globalization;
 using System.Text;
-using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.Properties;
+using Common;
+using Properties;
 
 public struct PdfInteger : IPdfObject, IEquatable<PdfInteger>, IComparable, IComparable<PdfInteger>
 {

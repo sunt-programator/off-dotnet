@@ -6,8 +6,8 @@
 namespace OffDotNet.Pdf.Document;
 
 using System.Collections.Immutable;
-using OffDotNet.Pdf.Core.DocumentStructure;
-using OffDotNet.Pdf.Core.Primitives;
+using Core.DocumentStructure;
+using Core.Primitives;
 
 public sealed class PdfDocumentOptions : IPdfDocumentOptions
 {

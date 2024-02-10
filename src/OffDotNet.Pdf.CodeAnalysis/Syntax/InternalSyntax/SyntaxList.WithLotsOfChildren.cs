@@ -5,8 +5,8 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
-using OffDotNet.Pdf.CodeAnalysis.Collections;
-using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+using Collections;
+using Diagnostic;
 
 internal abstract partial class SyntaxList
 {

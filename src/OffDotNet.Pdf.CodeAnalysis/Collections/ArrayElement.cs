@@ -6,7 +6,7 @@
 namespace OffDotNet.Pdf.CodeAnalysis.Collections;
 
 using System.Diagnostics;
-using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using Syntax.InternalSyntax;
 
 [DebuggerDisplay("{Value,nq}")]
 internal struct ArrayElement<TNode>

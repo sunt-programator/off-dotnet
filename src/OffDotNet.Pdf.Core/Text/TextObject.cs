@@ -6,7 +6,7 @@
 namespace OffDotNet.Pdf.Core.Text;
 
 using System.Text;
-using OffDotNet.Pdf.Core.Common;
+using Common;
 
 public sealed class TextObject : PdfObject, ITextObject
 {

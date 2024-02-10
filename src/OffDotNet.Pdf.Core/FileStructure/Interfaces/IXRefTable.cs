@@ -5,7 +5,7 @@
 
 namespace OffDotNet.Pdf.Core.FileStructure;
 
-using OffDotNet.Pdf.Core.Common;
+using Common;
 
 public interface IXRefTable : IPdfObject
 {

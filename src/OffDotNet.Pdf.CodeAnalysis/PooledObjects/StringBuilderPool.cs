@@ -5,7 +5,6 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.PooledObjects;
 
-using System.Collections.Immutable;
 using System.Text;
 using Microsoft.Extensions.ObjectPool;
 

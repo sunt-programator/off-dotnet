@@ -7,7 +7,7 @@ namespace OffDotNet.Pdf.Core.Primitives;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using OffDotNet.Pdf.Core.Common;
+using Common;
 
 [SuppressMessage("Usage", "CA2231:Implement the equality operators and make their behavior identical to that of the Equals method.", Justification = "Not needed.")]
 public readonly struct PdfNull : IPdfObject

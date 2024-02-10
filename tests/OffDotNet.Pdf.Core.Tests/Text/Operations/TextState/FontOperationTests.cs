@@ -6,7 +6,7 @@
 namespace OffDotNet.Pdf.Core.Tests.Text.Operations.TextState;
 
 using OffDotNet.Pdf.Core.Primitives;
-using OffDotNet.Pdf.Core.Properties;
+using Properties;
 using OffDotNet.Pdf.Core.Text.Operations.TextState;
 
 public class FontOperationTests

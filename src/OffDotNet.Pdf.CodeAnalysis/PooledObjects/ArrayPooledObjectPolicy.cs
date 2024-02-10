@@ -5,7 +5,6 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.PooledObjects;
 
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.ObjectPool;
 
 internal sealed class ArrayPooledObjectPolicy<T> : PooledObjectPolicy<T[]>

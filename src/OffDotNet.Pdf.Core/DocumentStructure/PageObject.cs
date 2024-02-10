@@ -6,11 +6,11 @@
 namespace OffDotNet.Pdf.Core.DocumentStructure;
 
 using System.Collections.ObjectModel;
-using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.CommonDataStructures;
-using OffDotNet.Pdf.Core.ContentStreamAndResources;
-using OffDotNet.Pdf.Core.Extensions;
-using OffDotNet.Pdf.Core.Primitives;
+using Common;
+using CommonDataStructures;
+using ContentStreamAndResources;
+using Extensions;
+using Primitives;
 
 public sealed class PageObject : PdfDictionary<IPdfObject>, IPageObject
 {

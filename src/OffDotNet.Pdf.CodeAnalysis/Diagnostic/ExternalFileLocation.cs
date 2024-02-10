@@ -6,7 +6,7 @@
 namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 using System.Diagnostics;
-using OffDotNet.Pdf.CodeAnalysis.Text;
+using Text;
 
 [DebuggerDisplay("{ToString(), nq}")]
 internal sealed class ExternalFileLocation : Location, IEquatable<ExternalFileLocation>

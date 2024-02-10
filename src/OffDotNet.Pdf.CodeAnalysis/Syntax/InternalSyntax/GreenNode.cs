@@ -5,7 +5,7 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
-using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+using Diagnostic;
 
 /// <summary>Represents an syntax node in the PDF Syntax tree.</summary>
 /// <remarks>The <see href="https://ericlippert.com/2012/06/08/red-green-trees/">green node</see> has no parent reference, it tracks only its relative width, but not its absolute position.</remarks>

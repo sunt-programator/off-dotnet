@@ -5,9 +5,9 @@
 
 namespace OffDotNet.Pdf.Core.FileStructure;
 
-using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.DocumentStructure;
-using OffDotNet.Pdf.Core.Primitives;
+using Common;
+using DocumentStructure;
+using Primitives;
 
 public sealed class FileTrailerOptions
 {

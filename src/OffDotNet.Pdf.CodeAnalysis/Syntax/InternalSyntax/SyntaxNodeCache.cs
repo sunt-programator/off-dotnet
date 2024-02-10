@@ -3,13 +3,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using OffDotNet.Pdf.CodeAnalysis.Caching;
-
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using InternalUtilities;
+using Caching;
 
 internal static class SyntaxNodeCache
 {

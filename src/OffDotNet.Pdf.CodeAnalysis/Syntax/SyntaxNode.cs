@@ -5,7 +5,7 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax;
 
-using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using InternalSyntax;
 
 public class SyntaxNode
 {

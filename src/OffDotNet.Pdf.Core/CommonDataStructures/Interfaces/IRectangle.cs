@@ -5,7 +5,7 @@
 
 namespace OffDotNet.Pdf.Core.CommonDataStructures;
 
-using OffDotNet.Pdf.Core.Primitives;
+using Primitives;
 
 public interface IRectangle : IPdfArray<PdfReal>
 {

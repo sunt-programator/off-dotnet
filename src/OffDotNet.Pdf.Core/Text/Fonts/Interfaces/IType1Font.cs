@@ -5,8 +5,8 @@
 
 namespace OffDotNet.Pdf.Core.Text.Fonts;
 
-using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.Primitives;
+using Common;
+using Primitives;
 
 public interface IType1Font : IPdfDictionary<IPdfObject>
 {

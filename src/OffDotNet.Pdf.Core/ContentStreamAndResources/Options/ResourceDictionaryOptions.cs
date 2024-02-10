@@ -5,8 +5,8 @@
 
 namespace OffDotNet.Pdf.Core.ContentStreamAndResources;
 
-using OffDotNet.Pdf.Core.Primitives;
-using OffDotNet.Pdf.Core.Text.Fonts;
+using Primitives;
+using Text.Fonts;
 
 public sealed class ResourceDictionaryOptions
 {

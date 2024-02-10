@@ -6,7 +6,7 @@
 namespace OffDotNet.Pdf.Core.Primitives;
 
 using System.Text;
-using OffDotNet.Pdf.Core.Common;
+using Common;
 
 public sealed class PdfIndirectIdentifier<T> : PdfObject, IPdfIndirectIdentifier<T>
     where T : IPdfObject

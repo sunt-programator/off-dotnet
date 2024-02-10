@@ -5,7 +5,7 @@
 
 namespace OffDotNet.Pdf.Core.Text.Fonts;
 
-using OffDotNet.Pdf.Core.Primitives;
+using Primitives;
 
 public sealed class Type1FontOptions
 {

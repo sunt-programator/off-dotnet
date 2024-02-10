@@ -6,10 +6,10 @@
 namespace OffDotNet.Pdf.Core.FileStructure;
 
 using System.Text;
-using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.Extensions;
-using OffDotNet.Pdf.Core.Primitives;
-using OffDotNet.Pdf.Core.Properties;
+using Common;
+using Extensions;
+using Primitives;
+using Properties;
 
 public sealed class FileTrailer : PdfObject, IFileTrailer
 {

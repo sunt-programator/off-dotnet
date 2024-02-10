@@ -5,7 +5,7 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax;
 
-using OffDotNet.Pdf.CodeAnalysis.InternalUtilities;
+using InternalUtilities;
 
 internal static class SyntaxKindFacts
 {

@@ -7,17 +7,17 @@ namespace OffDotNet.Pdf.Core.Benchmarks;
 
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
-using OffDotNet.Pdf.Core.Common;
-using OffDotNet.Pdf.Core.CommonDataStructures;
-using OffDotNet.Pdf.Core.ContentStreamAndResources;
-using OffDotNet.Pdf.Core.DocumentStructure;
-using OffDotNet.Pdf.Core.FileStructure;
-using OffDotNet.Pdf.Core.Primitives;
-using OffDotNet.Pdf.Core.Text;
-using OffDotNet.Pdf.Core.Text.Fonts;
-using OffDotNet.Pdf.Core.Text.Operations.TextPosition;
-using OffDotNet.Pdf.Core.Text.Operations.TextShowing;
-using OffDotNet.Pdf.Core.Text.Operations.TextState;
+using Common;
+using CommonDataStructures;
+using ContentStreamAndResources;
+using DocumentStructure;
+using FileStructure;
+using Primitives;
+using Text;
+using Text.Fonts;
+using Text.Operations.TextPosition;
+using Text.Operations.TextShowing;
+using Text.Operations.TextState;
 
 [MemoryDiagnoser]
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]

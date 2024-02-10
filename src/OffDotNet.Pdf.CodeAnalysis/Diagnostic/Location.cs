@@ -8,8 +8,8 @@ namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using OffDotNet.Pdf.CodeAnalysis.Syntax;
-using OffDotNet.Pdf.CodeAnalysis.Text;
+using Syntax;
+using Text;
 
 [DebuggerDisplay("{ToString(), nq}")]
 [SuppressMessage("Major Code Smell", "S4035:Classes implementing \"IEquatable<T>\" should be sealed", Justification = "To be reviewed.")]

@@ -6,11 +6,11 @@
 namespace OffDotNet.Pdf.Core.Tests.FileStructure;
 
 using System.Diagnostics;
-using OffDotNet.Pdf.Core.Common;
+using Common;
 using OffDotNet.Pdf.Core.DocumentStructure;
 using OffDotNet.Pdf.Core.FileStructure;
 using OffDotNet.Pdf.Core.Primitives;
-using OffDotNet.Pdf.Core.Properties;
+using Properties;
 
 public class FileTrailerTests
 {

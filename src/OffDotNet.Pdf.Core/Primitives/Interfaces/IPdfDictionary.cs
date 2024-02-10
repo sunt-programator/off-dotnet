@@ -5,7 +5,7 @@
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-using OffDotNet.Pdf.Core.Common;
+using Common;
 
 public interface IPdfDictionary<TValue> : IPdfObject
     where TValue : IPdfObject

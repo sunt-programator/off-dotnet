@@ -5,7 +5,7 @@
 
 namespace OffDotNet.Pdf.Core.Tests.Primitives;
 
-using OffDotNet.Pdf.Core.Common;
+using Common;
 using OffDotNet.Pdf.Core.Primitives;
 
 public class PdfDictionaryTests

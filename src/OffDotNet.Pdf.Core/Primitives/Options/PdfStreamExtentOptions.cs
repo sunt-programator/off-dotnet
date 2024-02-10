@@ -5,7 +5,7 @@
 
 namespace OffDotNet.Pdf.Core.Primitives;
 
-using OffDotNet.Pdf.Core.Extensions;
+using Extensions;
 
 public sealed class PdfStreamExtentOptions
 {

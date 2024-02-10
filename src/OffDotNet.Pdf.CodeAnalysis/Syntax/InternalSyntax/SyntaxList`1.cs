@@ -7,7 +7,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 using System.Collections;
 using System.Diagnostics;
-using OffDotNet.Pdf.CodeAnalysis.InternalUtilities;
+using InternalUtilities;
 
 internal readonly partial struct SyntaxList<TNode> : IEnumerable<TNode>, IEquatable<SyntaxList<TNode>>
     where TNode : GreenNode

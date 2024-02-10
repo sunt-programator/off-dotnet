@@ -6,8 +6,8 @@
 namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 using System.Diagnostics;
-using OffDotNet.Pdf.CodeAnalysis.Syntax;
-using OffDotNet.Pdf.CodeAnalysis.Text;
+using Syntax;
+using Text;
 
 [DebuggerDisplay("{ToString(), nq}")]
 internal sealed class SourceLocation : Location, IEquatable<SourceLocation>
