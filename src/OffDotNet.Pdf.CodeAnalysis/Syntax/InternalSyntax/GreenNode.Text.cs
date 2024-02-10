@@ -29,10 +29,10 @@ internal abstract partial class GreenNode
 
     protected internal void WriteTo(TextWriter writer, bool leading, bool trailing)
     {
-        var stack = ArrayBuilderObjectPool<(GreenNode Node, bool Leading, bool Trailing)>.Instance.Get();
+        var stack = ImmutableArrayBuilderObjectPool<(GreenNode Node, bool Leading, bool Trailing)>.Instance.Get();
         stack.Push((this, leading, trailing));
         ProcessStack(writer, stack);
-        ArrayBuilderObjectPool<(GreenNode Node, bool Leading, bool Trailing)>.Instance.Return(stack);
+        ImmutableArrayBuilderObjectPool<(GreenNode Node, bool Leading, bool Trailing)>.Instance.Return(stack);
     }
 
     protected virtual void WriteTriviaTo(TextWriter writer)

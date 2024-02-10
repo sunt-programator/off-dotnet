@@ -151,6 +151,25 @@ dotnet_public_api_analyzer.require_api_files = true
 # Workaround for https://github.com/dotnet/roslyn/issues/70570
 dotnet_diagnostic.IDE0055.severity = warning
 
+##
+## StyleCop.Analyzers
+##
+
+# SA1309: Field names should not begin with underscore
+dotnet_diagnostic.SA1309.severity = none
+
+# SA1101: Prefix local calls with this
+dotnet_diagnostic.SA1101.severity = None
+
+# SA1135: Using directive for namespace should be qualified
+dotnet_diagnostic.SA1135.severity = none
+
+# SA1308: Variable names should not be prefixed
+dotnet_diagnostic.SA1308.severity = none
+
+# SA1311: Static readonly fields should begin with upper-case letter
+dotnet_diagnostic.SA1311.severity = none
+
 # CSharp code style settings:
 [*.cs]
 # Newline settings
@@ -232,50 +251,7 @@ csharp_preserve_single_line_statements = true
 # IDE0060: Remove unused parameter
 dotnet_diagnostic.IDE0060.severity = warning
 
-[src/{Compilers,ExpressionEvaluator,Scripting}/**Test**/*.{cs,vb}]
+[tests/**/*.{cs,vb}]
 
-# IDE0060: Remove unused parameter
-dotnet_diagnostic.IDE0060.severity = none
-
-[src/**/*.{cs,vb}]
-
-# IDE0011: Add braces
-csharp_prefer_braces = when_multiline:warning
-# NOTE: We need the below severity entry for Add Braces due to https://github.com/dotnet/roslyn/issues/44201
-dotnet_diagnostic.IDE0011.severity = warning
-
-# IDE0040: Add accessibility modifiers
-dotnet_diagnostic.IDE0040.severity = warning
-
-# IDE0052: Remove unread private member
-dotnet_diagnostic.IDE0052.severity = warning
-
-# IDE0059: Unnecessary assignment to a value
-dotnet_diagnostic.IDE0059.severity = warning
-
-# CA1012: Abstract types should not have public constructors
-dotnet_diagnostic.CA1012.severity = warning
-
-# CA1822: Make member static
-dotnet_diagnostic.CA1822.severity = warning
-
-# Prefer "var" everywhere
-dotnet_diagnostic.IDE0007.severity = warning
-csharp_style_var_for_built_in_types = true:warning
-csharp_style_var_when_type_is_apparent = true:warning
-csharp_style_var_elsewhere = true:warning
-
-# csharp_style_allow_embedded_statements_on_same_line_experimental
-dotnet_diagnostic.IDE2001.severity = warning
-
-# csharp_style_allow_blank_lines_between_consecutive_braces_experimental
-dotnet_diagnostic.IDE2002.severity = warning
-
-# csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental
-dotnet_diagnostic.IDE2004.severity = warning
-
-# csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental
-dotnet_diagnostic.IDE2005.severity = warning
-
-# csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental
-dotnet_diagnostic.IDE2006.severity = warning
+# SA1600: Elements should be documented
+dotnet_diagnostic.SA1600.severity = none

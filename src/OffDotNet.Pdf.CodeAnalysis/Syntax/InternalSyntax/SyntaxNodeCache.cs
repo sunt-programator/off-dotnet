@@ -3,11 +3,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.Pdf.CodeAnalysis.Caching;
+
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using InternalUtilities;
 
 internal static class SyntaxNodeCache
 {
@@ -16,21 +18,8 @@ internal static class SyntaxNodeCache
     private const int CacheSize = 1 << CacheSizeBits;
     private const int CacheMask = CacheSize - 1;
 
-    private static readonly Entry[] Cache = new Entry[CacheSize];
+    private static readonly CacheEntry<GreenNode?>[] Cache = new CacheEntry<GreenNode?>[CacheSize];
 
-    private readonly struct Entry
-    {
-        public readonly int Hash;
-        public readonly GreenNode? Node;
-
-        internal Entry(int hash, GreenNode node)
-        {
-            this.Hash = hash;
-            this.Node = node;
-        }
-    }
-
-    [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:Elements should appear in the correct order", Justification = "Reviewed.")]
     public static void AddNode(GreenNode node, int hash)
     {
         if (!AllChildrenInCache(node))
@@ -40,7 +29,7 @@ internal static class SyntaxNodeCache
 
         Debug.Assert(GetCacheHash(node) == hash, "Hash must match");
         var index = hash & CacheMask;
-        Cache[index] = new Entry(hash, node);
+        Cache[index] = new CacheEntry<GreenNode?>(hash, node);
     }
 
     internal static GreenNode? TryGetNode(SyntaxKind kind, GreenNode? child1, out int hash)
@@ -55,9 +44,9 @@ internal static class SyntaxNodeCache
         var index = hash & CacheMask;
         var cacheEntry = Cache[index];
 
-        if (cacheEntry.Hash == hash && cacheEntry.Node != null && IsCacheEquivalent(kind, cacheEntry.Node, child1))
+        if (cacheEntry.Key == hash && cacheEntry.Value != null && IsCacheEquivalent(kind, cacheEntry.Value, child1))
         {
-            return cacheEntry.Node;
+            return cacheEntry.Value;
         }
 
         return null;
@@ -75,9 +64,9 @@ internal static class SyntaxNodeCache
         var index = hash & CacheMask;
         var cacheEntry = Cache[index];
 
-        if (cacheEntry.Hash == hash && cacheEntry.Node != null && IsCacheEquivalent(kind, cacheEntry.Node, child1, child2))
+        if (cacheEntry.Key == hash && cacheEntry.Value != null && IsCacheEquivalent(kind, cacheEntry.Value, child1, child2))
         {
-            return cacheEntry.Node;
+            return cacheEntry.Value;
         }
 
         return null;
@@ -95,9 +84,9 @@ internal static class SyntaxNodeCache
         var index = hash & CacheMask;
         var cacheEntry = Cache[index];
 
-        if (cacheEntry.Hash == hash && cacheEntry.Node != null && IsCacheEquivalent(kind, cacheEntry.Node, child1, child2, child3))
+        if (cacheEntry.Key == hash && cacheEntry.Value != null && IsCacheEquivalent(kind, cacheEntry.Value, child1, child2, child3))
         {
-            return cacheEntry.Node;
+            return cacheEntry.Value;
         }
 
         return null;
@@ -192,6 +181,6 @@ internal static class SyntaxNodeCache
 
         var hash = GetCacheHash(child);
         var index = hash & CacheMask;
-        return Cache[index].Node == child;
+        return Cache[index].Value == child;
     }
 }
