@@ -16,7 +16,7 @@ internal static class SyntaxNodeCache
     private const int CacheSize = 1 << CacheSizeBits;
     private const int CacheMask = CacheSize - 1;
 
-    private static readonly CacheEntry<GreenNode?>[] Cache = new CacheEntry<GreenNode?>[CacheSize];
+    private static readonly CacheEntry<int, GreenNode?>[] Cache = new CacheEntry<int, GreenNode?>[CacheSize];
 
     public static void AddNode(GreenNode node, int hash)
     {
@@ -27,7 +27,7 @@ internal static class SyntaxNodeCache
 
         Debug.Assert(GetCacheHash(node) == hash, "Hash must match");
         var index = hash & CacheMask;
-        Cache[index] = new CacheEntry<GreenNode?>(hash, node);
+        Cache[index] = new CacheEntry<int, GreenNode?>(hash, node);
     }
 
     internal static GreenNode? TryGetNode(SyntaxKind kind, GreenNode? child1, out int hash)

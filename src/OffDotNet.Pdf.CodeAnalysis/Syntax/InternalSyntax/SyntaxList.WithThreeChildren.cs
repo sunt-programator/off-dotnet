@@ -11,18 +11,18 @@ internal abstract partial class SyntaxList
 {
     internal class WithThreeChildren : SyntaxList
     {
-        private readonly GreenNode child0;
-        private readonly GreenNode child1;
-        private readonly GreenNode child2;
+        private readonly GreenNode _child1;
+        private readonly GreenNode _child2;
+        private readonly GreenNode _child3;
 
-        internal WithThreeChildren(GreenNode child0, GreenNode child1, GreenNode child2, DiagnosticInfo[]? diagnostics = null)
+        internal WithThreeChildren(GreenNode child1, GreenNode child2, GreenNode child3, DiagnosticInfo[]? diagnostics = null)
             : base(diagnostics)
         {
             this.SlotCount = 3;
-            this.child0 = child0;
-            this.child1 = child1;
-            this.child2 = child2;
-            this.FullWidth = child0.FullWidth + child1.FullWidth + child2.FullWidth;
+            this._child1 = child1;
+            this._child2 = child2;
+            this._child3 = child3;
+            this.FullWidth = child1.FullWidth + child2.FullWidth + child3.FullWidth;
         }
 
         /// <inheritdoc/>
@@ -30,9 +30,9 @@ internal abstract partial class SyntaxList
         {
             return index switch
             {
-                0 => this.child0,
-                1 => this.child1,
-                2 => this.child2,
+                0 => this._child1,
+                1 => this._child2,
+                2 => this._child3,
                 _ => null,
             };
         }
@@ -40,7 +40,7 @@ internal abstract partial class SyntaxList
         /// <inheritdoc cref="GreenNode.SetDiagnostics"/>
         internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
         {
-            return new WithThreeChildren(this.child0, this.child1, this.child2, diagnostics);
+            return new WithThreeChildren(this._child1, this._child2, this._child3, diagnostics);
         }
     }
 }

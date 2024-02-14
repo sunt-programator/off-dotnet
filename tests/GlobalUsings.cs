@@ -3,10 +3,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-#pragma warning disable SA1512
-// ReSharper disable RedundantUsingDirective.Global
-#pragma warning restore SA1512
-
+#pragma warning disable SA1200
 global using System.Text;
 global using NSubstitute;
 global using Xunit;
+#pragma warning restore SA1200
