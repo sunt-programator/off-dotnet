@@ -7,7 +7,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Parser;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using Microsoft.Extensions.ObjectPool;
+using Caching;
 using PooledObjects;
 using Text;
 
@@ -39,27 +39,16 @@ using Text;
 /// </example>
 internal sealed class SlidingTextWindow : IDisposable
 {
-    /// <summary>The default window length.</summary>
-    internal const int DefaultWindowLength = 2048;
+    private readonly ThreadSafeCacheFactory<int, string> _stringTable = SharedObjectPools.StringTable.Get();
 
-    private static readonly ArrayPooledObjectPolicy<byte> s_arrayPooledObject = new(1, DefaultWindowLength);
-
-#if DEBUG
-    private static readonly ObjectPool<byte[]> s_windowPool =
-#pragma warning disable CS0618 // Type or member is obsolete
-        new LeakTrackingObjectPoolProvider(new DefaultObjectPoolProvider()).Create(s_arrayPooledObject);
-#pragma warning restore CS0618 // Type or member is obsolete
-#else
-    private static readonly ObjectPool<byte[]> s_windowPool =
-        new DefaultObjectPoolProvider().Create(s_arrayPooledObject);
-#endif
+    private byte[] _characterWindow;
 
     /// <summary>Initializes a new instance of the <see cref="SlidingTextWindow"/> class.</summary>
     /// <param name="text">The <see cref="SourceText"/> instance to slide over.</param>
     public SlidingTextWindow(SourceText text)
     {
         Text = text;
-        CharacterWindow = s_windowPool.Get();
+        _characterWindow = SharedObjectPools.WindowPool.Get();
     }
 
     /// <summary>Gets the <see cref="SourceText"/> instance that the window is sliding over.</summary>
@@ -82,9 +71,6 @@ internal sealed class SlidingTextWindow : IDisposable
 
     /// <summary>Gets the width of the lexeme.</summary>
     public int LexemeWidth => Offset - LexemeBasis;
-
-    /// <summary>Gets the movable window of bytes from the <see cref="SourceText"/>.</summary>
-    public byte[] CharacterWindow { get; private set; }
 
     /// <summary>Gets the number of characters in the window.</summary>
     public int CharacterWindowCount { get; private set; }
@@ -128,7 +114,7 @@ internal sealed class SlidingTextWindow : IDisposable
             return null;
         }
 
-        return CharacterWindow[Offset];
+        return _characterWindow[Offset];
     }
 
     /// <summary>Gets the byte at the specified position in the window.</summary>
@@ -138,7 +124,7 @@ internal sealed class SlidingTextWindow : IDisposable
     {
         var position = this.Position;
         this.AdvanceByte(delta);
-        byte? b = Offset >= CharacterWindowCount && !HasMoreBytes() ? null : CharacterWindow[Offset];
+        byte? b = Offset >= CharacterWindowCount && !HasMoreBytes() ? null : _characterWindow[Offset];
         this.Reset(position);
         return b;
     }
@@ -177,12 +163,12 @@ internal sealed class SlidingTextWindow : IDisposable
         }
 
         // otherwise, we need to reread text buffer
-        var amountToRead = Math.Min(Text.Length, position + CharacterWindow.Length) - position;
+        var amountToRead = Math.Min(Text.Length, position + _characterWindow.Length) - position;
         amountToRead = Math.Max(0, amountToRead);
 
         if (amountToRead > 0)
         {
-            Text.CopyTo(position, CharacterWindow, 0, amountToRead);
+            Text.CopyTo(position, _characterWindow, 0, amountToRead);
         }
 
         Basis = position;
@@ -194,9 +180,8 @@ internal sealed class SlidingTextWindow : IDisposable
     /// <summary>Gets a byte array from the window.</summary>
     /// <param name="position">The position to start reading from.</param>
     /// <param name="length">The number of bytes to read.</param>
-    /// <param name="shouldIntern">Whether to intern the byte array.</param>
     /// <returns>The byte array from the window.</returns>
-    public byte[] GetBytes(int position, int length, bool shouldIntern)
+    public ReadOnlySpan<byte> GetBytes(int position, int length)
     {
         var offset = position - Basis;
 
@@ -205,14 +190,7 @@ internal sealed class SlidingTextWindow : IDisposable
             return result;
         }
 
-        if (shouldIntern)
-        {
-            // TODO: Intern the string
-        }
-
-        var newWindow = new byte[length];
-        Array.Copy(CharacterWindow, offset, newWindow, 0, length);
-        return newWindow;
+        return _characterWindow.AsSpan(offset, length);
     }
 
     /// <summary>Gets a string from the window.</summary>
@@ -222,7 +200,9 @@ internal sealed class SlidingTextWindow : IDisposable
     /// <returns>The string from the window.</returns>
     public string GetText(int position, int length, bool shouldIntern)
     {
-        return Encoding.ASCII.GetString(GetBytes(position, length, shouldIntern));
+        var bytes = GetBytes(position, length).ToArray();
+        var str = Encoding.ASCII.GetString(bytes);
+        return shouldIntern ? _stringTable.GetOrAdd(str.GetHashCode(), str) : str;
     }
 
     /// <summary>Gets the lexeme text from the window.</summary>
@@ -233,6 +213,10 @@ internal sealed class SlidingTextWindow : IDisposable
         return GetText(LexemeBasis, LexemeWidth, shouldIntern);
     }
 
+    /// <summary>Checks whether the window is at the end of the <see cref="SourceText"/>.</summary>
+    /// <returns>
+    /// <see langword="true"/> if the window is at the end of the <see cref="SourceText"/>; otherwise, <see langword="false"/>.
+    /// </returns>
     public bool IsAtEnd()
     {
         return Offset >= CharacterWindowCount && Position >= Text.Length;
@@ -241,7 +225,8 @@ internal sealed class SlidingTextWindow : IDisposable
     /// <summary>Disposes the window and return the underlying buffer to the pool.</summary>
     public void Dispose()
     {
-        s_windowPool.Return(CharacterWindow);
+        SharedObjectPools.StringTable.Return(_stringTable);
+        SharedObjectPools.WindowPool.Return(_characterWindow);
     }
 
     private bool TryGetTextFast(int offset, int length, [NotNullWhen(true)] out byte[]? result)
@@ -251,14 +236,14 @@ internal sealed class SlidingTextWindow : IDisposable
         result = length switch
         {
             0 => Array.Empty<byte>(),
-            1 => CharacterWindow[offset] switch
+            1 => _characterWindow[offset] switch
             {
                 (byte)AsciiCharacters.Space => new[] { (byte)AsciiCharacters.Space },
                 (byte)AsciiCharacters.LineFeed => new[] { (byte)AsciiCharacters.LineFeed },
                 _ => null,
             },
-            2 when CharacterWindow[offset] == (byte)AsciiCharacters.CarriageReturn =>
-                CharacterWindow[offset + 1] == (byte)AsciiCharacters.LineFeed
+            2 when _characterWindow[offset] == (byte)AsciiCharacters.CarriageReturn =>
+                _characterWindow[offset + 1] == (byte)AsciiCharacters.LineFeed
                     ? new[] { (byte)AsciiCharacters.CarriageReturn, (byte)AsciiCharacters.LineFeed }
                     : null,
             _ => null,
@@ -284,9 +269,9 @@ internal sealed class SlidingTextWindow : IDisposable
         if (LexemeBasis > (CharacterWindowCount / 4))
         {
             Array.Copy(
-                CharacterWindow,
+                _characterWindow,
                 LexemeBasis,
-                CharacterWindow,
+                _characterWindow,
                 0,
                 CharacterWindowCount - LexemeBasis);
 
@@ -296,20 +281,20 @@ internal sealed class SlidingTextWindow : IDisposable
             LexemeBasis = 0;
         }
 
-        if (CharacterWindowCount >= CharacterWindow.Length)
+        if (CharacterWindowCount >= _characterWindow.Length)
         {
             // grow char array, since we need more contiguous space
-            var oldWindow = CharacterWindow;
-            var newWindow = new byte[CharacterWindow.Length * 2];
+            var oldWindow = _characterWindow;
+            var newWindow = new byte[_characterWindow.Length * 2];
             Array.Copy(oldWindow, 0, newWindow, 0, CharacterWindowCount);
-            CharacterWindow = newWindow;
+            _characterWindow = newWindow;
         }
 
         var amountToRead = Math.Min(
             Text.Length - (Basis + CharacterWindowCount),
-            CharacterWindow.Length - CharacterWindowCount);
+            _characterWindow.Length - CharacterWindowCount);
 
-        Text.CopyTo(Basis + CharacterWindowCount, CharacterWindow, CharacterWindowCount, amountToRead);
+        Text.CopyTo(Basis + CharacterWindowCount, _characterWindow, CharacterWindowCount, amountToRead);
         CharacterWindowCount += amountToRead;
         return amountToRead > 0;
     }

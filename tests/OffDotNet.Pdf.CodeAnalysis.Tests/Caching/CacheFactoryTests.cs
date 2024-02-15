@@ -81,6 +81,25 @@ public class CacheFactoryTests
         Assert.Same(actualValue, value);
     }
 
+    [Fact(DisplayName = "The GetOrAdd(TKey,TValue) method must add the key-value pair " +
+                        "to the cache if the key is not found.")]
+    public void GetOrAddMethod_MustAddKeyValuePairToCache_WhenKeyIsNotFound2()
+    {
+        // Arrange
+        const string Key = "key";
+        const string Value = "value";
+
+        // Act
+        var actualValue = _cache.GetOrAdd(Key, Value);
+        var containsKey = _cache.TryGetValue(Key, out var value);
+
+        // Assert
+        Assert.Equal(Value, actualValue);
+        Assert.True(containsKey);
+        Assert.Equal(Value, value);
+        Assert.Same(actualValue, value);
+    }
+
     [Fact(DisplayName = "The GetOrAdd(TKey, Func<TKey, TValue>) method must return the value " +
                         "associated with the specified key from the cache if the key exists.")]
     public void GetOrAddMethod_MustReturnTheValueAssociatedWithTheKey_WhenKeyExists()

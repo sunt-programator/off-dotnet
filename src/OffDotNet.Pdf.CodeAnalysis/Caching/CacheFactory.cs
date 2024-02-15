@@ -95,6 +95,24 @@ internal class CacheFactory<TKey, TValue> : AbstractCache<CacheEntry<TKey, TValu
         return newValue;
     }
 
+    /// <summary>
+    /// Gets the value associated with the specified key from the cache.
+    /// If the key is not found, adds the key and value to the cache.
+    /// </summary>
+    /// <param name="key">The key of the cache entry.</param>
+    /// <param name="value">The function used to generate a value based on the key.</param>
+    /// <returns>The value associated with the specified key.</returns>
+    public virtual TValue GetOrAdd(TKey key, TValue value)
+    {
+        if (TryGetValue(key, out var existingValue))
+        {
+            return existingValue;
+        }
+
+        Add(key, value);
+        return value;
+    }
+
     /// <summary>Calculates the index of the cache entry based on the key.</summary>
     /// <param name="key">The key of the cache entry.</param>
     /// <returns>The index of the cache entry.</returns>

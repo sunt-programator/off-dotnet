@@ -252,20 +252,6 @@ public class SlidingTextWindowTests : IDisposable
     }
 
     [Fact(DisplayName =
-        $"The {nameof(SlidingTextWindow.CharacterWindow)} property must return the default window length")]
-    public void CharacterWindowProperty_MustReturnTheDefaultWindowLength()
-    {
-        // Arrange
-        const int Expected = SlidingTextWindow.DefaultWindowLength;
-
-        // Act
-        var result = _sut.CharacterWindow;
-
-        // Assert
-        Assert.Equal(Expected, result.Length);
-    }
-
-    [Fact(DisplayName =
         $"The StartParsingLexeme() method must set the {nameof(SlidingTextWindow.LexemeBasis)} property " +
         $"to the current {nameof(SlidingTextWindow.Offset)} value")]
     public void StartParsingLexeme_MustSetLexemeBasisToOffset()
@@ -296,20 +282,19 @@ public class SlidingTextWindowTests : IDisposable
     }
 
     [Theory(DisplayName = "The GetBytes(int, int, bool) method must return the text from the window")]
-    [InlineData(2, 3, true, new byte[] { 0x43, 0x44, 0x45 })]
-    [InlineData(2, 3, false, new byte[] { 0x43, 0x44, 0x45 })]
-    [InlineData(2, 0, false, new byte[] { })]
-    [InlineData(8, 1, false, new byte[] { 0x20 })]
-    [InlineData(9, 1, false, new byte[] { 0x0D })]
-    [InlineData(13, 1, false, new byte[] { 0x0A })]
-    [InlineData(18, 2, false, new byte[] { 0x0D, 0x0A })]
-    public void GetBytes_MustReturnTheTextFromTheWindow(int offset, int length, bool shouldIntern, byte[] expected)
+    [InlineData(2, 3, new byte[] { 0x43, 0x44, 0x45 })]
+    [InlineData(2, 0, new byte[] { })]
+    [InlineData(8, 1, new byte[] { 0x20 })]
+    [InlineData(9, 1, new byte[] { 0x0D })]
+    [InlineData(13, 1, new byte[] { 0x0A })]
+    [InlineData(18, 2, new byte[] { 0x0D, 0x0A })]
+    public void GetBytes_MustReturnTheTextFromTheWindow(int offset, int length, byte[] expected)
     {
         // Arrange
 
         // Act
         _ = _sut.PeekByte(offset);
-        var result = _sut.GetBytes(offset, length, shouldIntern);
+        var result = _sut.GetBytes(offset, length);
 
         // Assert
         Assert.Equal(expected, result);
@@ -412,6 +397,27 @@ public class SlidingTextWindowTests : IDisposable
 
         // Assert
         Assert.Equal(expected, result);
+    }
+
+    [Fact(DisplayName =
+        "The GetText(int, int, bool) method must intern the text when the shouldIntern parameter is true")]
+    public void GetText_MustInternTheText_WhenTheShouldInternParameterIsTrue()
+    {
+        // Arrange
+        const int Offset = 2;
+        const int Length = 3;
+        const bool ShouldIntern = true;
+        const string ExpectedText = "CDE";
+
+        // Act
+        _ = _sut.PeekByte(Offset);
+        var text1 = _sut.GetText(Offset, Length, ShouldIntern);
+        var text2 = _sut.GetText(Offset, Length, ShouldIntern);
+
+        // Assert
+        Assert.Same(text1, text2);
+        Assert.Equal(ExpectedText, text1);
+        Assert.Equal(ExpectedText, text2);
     }
 
     public void Dispose()

@@ -5,6 +5,7 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Caching;
 
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 /// <summary>The thread-safe cache factory.</summary>
@@ -42,6 +43,8 @@ internal sealed class ThreadSafeCacheFactory<TKey, TValue> : CacheFactory<TKey, 
         var bucketAdjustedSize = AdjustSize(bucketSize);
         _sharedEntriesMask = sharedCacheAdjustedSize - 1;
         _sharedBucketMask = bucketAdjustedSize - 1;
+
+        Debug.Assert(bucketAdjustedSize < sharedCacheAdjustedSize, "Bucket size must be less than shared cache size.");
         _sharedEntries = new CacheEntry<TKey, TValue>[sharedCacheAdjustedSize];
     }
 
@@ -101,8 +104,7 @@ internal sealed class ThreadSafeCacheFactory<TKey, TValue> : CacheFactory<TKey, 
         {
             var entry = _sharedEntries[currentIndex];
 
-            if (EqualityComparer<TKey>.Default.Equals(entry.Key, key) &&
-                KeyValueEquality(key, entry.Value))
+            if (EqualityComparer<TKey>.Default.Equals(entry.Key, default))
             {
                 _sharedEntries[currentIndex] = new CacheEntry<TKey, TValue>(key, value);
                 return;

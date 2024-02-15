@@ -35,7 +35,7 @@ internal sealed class ArrayPooledObjectPolicy<T> : PooledObjectPolicy<T[]>
     /// <inheritdoc/>
     public override T[] Create()
     {
-        return new T[MaximumRetainedCapacity];
+        return new T[InitialCapacity];
     }
 
     /// <inheritdoc/>
