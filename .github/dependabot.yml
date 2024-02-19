@@ -8,7 +8,7 @@ updates:
   - package-ecosystem: "nuget" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "weekly"
+      interval: "daily"
     groups:
       analyzers-packages:
         patterns:
@@ -32,48 +32,3 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-
-  - package-ecosystem: nuget
-    directory: /benchmarks/OffDotNet.Pdf.Core.Benchmarks
-    schedule:
-      interval: daily
-
-  - package-ecosystem: nuget
-    directory: /src/OffDotNet.Pdf.CodeAnalysis
-    schedule:
-      interval: daily
-
-  - package-ecosystem: nuget
-    directory: /src/OffDotNet.Pdf.Console
-    schedule:
-      interval: daily
-
-  - package-ecosystem: nuget
-    directory: /src/OffDotNet.Pdf.Core
-    schedule:
-      interval: daily
-
-  - package-ecosystem: nuget
-    directory: /src/OffDotNet.Pdf.Document
-    schedule:
-      interval: daily
-
-  - package-ecosystem: nuget
-    directory: /tests/OffDotNet.Pdf.CodeAnalysis.Old.Tests
-    schedule:
-      interval: daily
-
-  - package-ecosystem: nuget
-    directory: /tests/OffDotNet.Pdf.CodeAnalysis.Tests
-    schedule:
-      interval: daily
-
-  - package-ecosystem: nuget
-    directory: /tests/OffDotNet.Pdf.Core.Tests
-    schedule:
-      interval: daily
-
-  - package-ecosystem: nuget
-    directory: /tests/OffDotNet.Pdf.Document.Tests
-    schedule:
-      interval: daily
