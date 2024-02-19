@@ -282,25 +282,6 @@ public class SlidingTextWindowTests : IDisposable
     }
 
     [Theory(DisplayName = "The GetBytes(int, int, bool) method must return the text from the window")]
-    [InlineData(2, 3, new byte[] { 0x43, 0x44, 0x45 })]
-    [InlineData(2, 0, new byte[] { })]
-    [InlineData(8, 1, new byte[] { 0x20 })]
-    [InlineData(9, 1, new byte[] { 0x0D })]
-    [InlineData(13, 1, new byte[] { 0x0A })]
-    [InlineData(18, 2, new byte[] { 0x0D, 0x0A })]
-    public void GetBytes_MustReturnTheTextFromTheWindow(int offset, int length, byte[] expected)
-    {
-        // Arrange
-
-        // Act
-        _ = _sut.PeekByte(offset);
-        var result = _sut.GetBytes(offset, length);
-
-        // Assert
-        Assert.Equal(expected, result);
-    }
-
-    [Theory(DisplayName = "The GetText(int, int, bool) method must return the text from the window")]
     [InlineData(2, 3, true, "CDE")]
     [InlineData(2, 3, false, "CDE")]
     [InlineData(2, 0, false, "")]
@@ -308,19 +289,19 @@ public class SlidingTextWindowTests : IDisposable
     [InlineData(9, 1, false, "\r")]
     [InlineData(13, 1, false, "\n")]
     [InlineData(18, 2, false, "\r\n")]
-    public void GetText_MustReturnTheTextFromTheWindow(int offset, int length, bool shouldIntern, string expected)
+    public void GetBytes_MustReturnTheTextFromTheWindow(int offset, int length, bool shouldIntern, string expected)
     {
         // Arrange
 
         // Act
         _ = _sut.PeekByte(offset);
-        var result = _sut.GetText(offset, length, shouldIntern);
+        var result = _sut.GetBytes(offset, length, shouldIntern);
 
         // Assert
-        Assert.Equal(expected, result);
+        Assert.Equal(expected, Encoding.UTF8.GetString(result));
     }
 
-    [Theory(DisplayName = "The GetLexemeText() method must return the lexeme text from the window")]
+    [Theory(DisplayName = "The GetLexemeBytes() method must return the lexeme bytes from the window")]
     [InlineData(2, 3, true, "CDE")]
     [InlineData(2, 3, false, "CDE")]
     [InlineData(2, 0, false, "")]
@@ -328,7 +309,7 @@ public class SlidingTextWindowTests : IDisposable
     [InlineData(9, 1, false, "\r")]
     [InlineData(13, 1, false, "\n")]
     [InlineData(18, 2, false, "\r\n")]
-    public void GetLexemeText_MustReturnTheLexemeTextFromTheWindow(
+    public void GetLexemeBytes_MustReturnTheLexemeTextFromTheWindow(
         int offset,
         int length,
         bool shouldIntern,
@@ -341,10 +322,10 @@ public class SlidingTextWindowTests : IDisposable
         _sut.AdvanceByte(length);
 
         // Act
-        var result = _sut.GetLexemeText(shouldIntern);
+        var result = _sut.GetLexemeBytes(shouldIntern);
 
         // Assert
-        Assert.Equal(expected, result);
+        Assert.Equal(expected, Encoding.UTF8.GetString(result));
     }
 
     [Fact(DisplayName =
@@ -400,8 +381,8 @@ public class SlidingTextWindowTests : IDisposable
     }
 
     [Fact(DisplayName =
-        "The GetText(int, int, bool) method must intern the text when the shouldIntern parameter is true")]
-    public void GetText_MustInternTheText_WhenTheShouldInternParameterIsTrue()
+        "The GetBytes(int, int, bool) method must intern the text when the shouldIntern parameter is true")]
+    public void GetBytes_MustInternTheText_WhenTheShouldInternParameterIsTrue()
     {
         // Arrange
         const int Offset = 2;
@@ -411,13 +392,13 @@ public class SlidingTextWindowTests : IDisposable
 
         // Act
         _ = _sut.PeekByte(Offset);
-        var text1 = _sut.GetText(Offset, Length, ShouldIntern);
-        var text2 = _sut.GetText(Offset, Length, ShouldIntern);
+        var text1 = _sut.GetBytes(Offset, Length, ShouldIntern);
+        var text2 = _sut.GetBytes(Offset, Length, ShouldIntern);
 
         // Assert
-        Assert.Same(text1, text2);
-        Assert.Equal(ExpectedText, text1);
-        Assert.Equal(ExpectedText, text2);
+        Assert.True(text1.Overlaps(text2));
+        Assert.Equal(ExpectedText, Encoding.UTF8.GetString(text1));
+        Assert.Equal(ExpectedText, Encoding.UTF8.GetString(text2));
     }
 
     public void Dispose()

@@ -26,7 +26,7 @@ internal static class SharedObjectPools
     internal static readonly ObjectPool<byte[]> WindowPool;
 
     /// <summary>The string intern cache.</summary>
-    internal static readonly ObjectPool<ThreadSafeCacheFactory<int, string>> StringTable;
+    internal static readonly ObjectPool<ThreadSafeCacheFactory<int, byte[]>> StringTable;
 
     /// <summary>The syntax token cache.</summary>
     internal static readonly ObjectPool<ThreadSafeCacheFactory<string, SyntaxToken>> SyntaxTokenCache;
@@ -42,7 +42,7 @@ internal static class SharedObjectPools
         var objectPoolProvider = new DefaultObjectPoolProvider();
 #endif
         var arrayPooledObject = new ArrayPooledObjectPolicy<byte>(DefaultWindowLength, DefaultWindowLength);
-        var stringTablePolicy = new ThreadSafeCachePooledObjectPolicy<int, string>();
+        var stringTablePolicy = new ThreadSafeCachePooledObjectPolicy<int, byte[]>();
         var syntaxTokenCache = new ThreadSafeCachePooledObjectPolicy<string, SyntaxToken>();
         var syntaxTriviaCache = new ThreadSafeCachePooledObjectPolicy<string, SyntaxTrivia>();
 

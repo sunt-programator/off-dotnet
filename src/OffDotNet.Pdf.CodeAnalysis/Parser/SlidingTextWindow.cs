@@ -6,8 +6,8 @@
 namespace OffDotNet.Pdf.CodeAnalysis.Parser;
 
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using Caching;
+using InternalUtilities;
 using PooledObjects;
 using Text;
 
@@ -39,7 +39,7 @@ using Text;
 /// </example>
 internal sealed class SlidingTextWindow : IDisposable
 {
-    private readonly ThreadSafeCacheFactory<int, string> _stringTable = SharedObjectPools.StringTable.Get();
+    private readonly ThreadSafeCacheFactory<int, byte[]> _stringTable = SharedObjectPools.StringTable.Get();
 
     private byte[] _characterWindow;
 
@@ -180,37 +180,33 @@ internal sealed class SlidingTextWindow : IDisposable
     /// <summary>Gets a byte array from the window.</summary>
     /// <param name="position">The position to start reading from.</param>
     /// <param name="length">The number of bytes to read.</param>
+    /// <param name="shouldIntern">Whether to intern the string.</param>
     /// <returns>The byte array from the window.</returns>
-    public ReadOnlySpan<byte> GetBytes(int position, int length)
+    public ReadOnlySpan<byte> GetBytes(int position, int length, bool shouldIntern)
     {
         var offset = position - Basis;
 
-        if (TryGetTextFast(offset, length, out var result))
+        if (TryGetBytesFast(offset, length, out var result))
         {
             return result;
         }
 
-        return _characterWindow.AsSpan(offset, length);
+        if (!shouldIntern)
+        {
+            return _characterWindow.AsSpan(offset, length);
+        }
+
+        ReadOnlySpan<byte> bytes = _characterWindow.AsSpan(offset, length);
+        var hashCode = HashCodeUtilities.ComputeHashCode(bytes);
+        return _stringTable.GetOrAdd(hashCode, bytes.ToArray());
     }
 
-    /// <summary>Gets a string from the window.</summary>
-    /// <param name="position">The position to start reading from.</param>
-    /// <param name="length">The number of bytes to read.</param>
-    /// <param name="shouldIntern">Whether to intern the string.</param>
-    /// <returns>The string from the window.</returns>
-    public string GetText(int position, int length, bool shouldIntern)
-    {
-        var bytes = GetBytes(position, length).ToArray();
-        var str = Encoding.ASCII.GetString(bytes);
-        return shouldIntern ? _stringTable.GetOrAdd(str.GetHashCode(), str) : str;
-    }
-
-    /// <summary>Gets the lexeme text from the window.</summary>
+    /// <summary>Gets the lexeme bytes from the window.</summary>
     /// <param name="shouldIntern">Whether to intern the lexeme as byte array.</param>
     /// <returns>The lexeme text from the window.</returns>
-    public string GetLexemeText(bool shouldIntern)
+    public ReadOnlySpan<byte> GetLexemeBytes(bool shouldIntern)
     {
-        return GetText(LexemeBasis, LexemeWidth, shouldIntern);
+        return GetBytes(LexemeBasis, LexemeWidth, shouldIntern);
     }
 
     /// <summary>Checks whether the window is at the end of the <see cref="SourceText"/>.</summary>
@@ -229,23 +225,17 @@ internal sealed class SlidingTextWindow : IDisposable
         SharedObjectPools.WindowPool.Return(_characterWindow);
     }
 
-    private bool TryGetTextFast(int offset, int length, [NotNullWhen(true)] out byte[]? result)
+    private bool TryGetBytesFast(int offset, int length, [NotNullWhen(true)] out byte[]? result)
     {
         // PERF: Whether interning or not, there are some frequently occurring
         // easy cases we can pick off easily.
         result = length switch
         {
             0 => Array.Empty<byte>(),
-            1 => _characterWindow[offset] switch
-            {
-                (byte)AsciiCharacters.Space => new[] { (byte)AsciiCharacters.Space },
-                (byte)AsciiCharacters.LineFeed => new[] { (byte)AsciiCharacters.LineFeed },
-                _ => null,
-            },
-            2 when _characterWindow[offset] == (byte)AsciiCharacters.CarriageReturn =>
-                _characterWindow[offset + 1] == (byte)AsciiCharacters.LineFeed
-                    ? new[] { (byte)AsciiCharacters.CarriageReturn, (byte)AsciiCharacters.LineFeed }
-                    : null,
+            1 when _characterWindow[offset] == (byte)' ' => new[] { (byte)' ' },
+            1 when _characterWindow[offset] == (byte)'\n' => new[] { (byte)'\n' },
+            2 when _characterWindow[offset] == (byte)'\r' && _characterWindow[offset + 1] == (byte)'\n' =>
+                new[] { (byte)'\r', (byte)'\n' },
             _ => null,
         };
 
