@@ -8,25 +8,16 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Parser;
 using OffDotNet.Pdf.CodeAnalysis.Parser;
 using OffDotNet.Pdf.CodeAnalysis.Text;
 
-public class SlidingTextWindowTests : IDisposable
+public sealed class SlidingTextWindowTests : IDisposable
 {
-    private const string Text = "ABCDEFGH \rIJK\nLMNO\r\nPQRS\nTUVW\r\nXYZ\n";
-    private readonly SourceText _sourceText = Substitute.For<SourceText>();
+    private readonly byte[] _text;
+    private readonly SourceText _sourceText;
     private readonly SlidingTextWindow _sut;
 
     public SlidingTextWindowTests()
     {
-        _sourceText.Length.Returns(Text.Length);
-        _sourceText
-            .When(x => x.CopyTo(0, Arg.Any<byte[]>(), 0, Text.Length))
-            .Do(x =>
-            {
-                var destination = x.ArgAt<byte[]>(1);
-                for (var i = 0; i < Text.Length; i++)
-                {
-                    destination[i] = (byte)Text[i];
-                }
-            });
+        _text = "ABCDEFGH \rIJK\nLMNO\r\nPQRS\nTUVW\r\nXYZ\n"u8.ToArray();
+        _sourceText = SourceText.From(_text);
         _sut = new SlidingTextWindow(_sourceText);
     }
 
@@ -193,7 +184,7 @@ public class SlidingTextWindowTests : IDisposable
     public void PeekByte_MustReturnNull_WhenTheWindowHasNoMoreBytes()
     {
         // Arrange
-        _sut.AdvanceByte(Text.Length);
+        _sut.AdvanceByte(_text.Length);
 
         // Act
         var result = _sut.PeekByte();
@@ -225,7 +216,7 @@ public class SlidingTextWindowTests : IDisposable
     public void PeekByte_WithDelta_MustReturnNull_WhenTheWindowHasNoMoreBytes()
     {
         // Arrange
-        _sut.AdvanceByte(Text.Length);
+        _sut.AdvanceByte(_text.Length);
 
         // Act
         var result = _sut.PeekByte(1);
@@ -353,14 +344,14 @@ public class SlidingTextWindowTests : IDisposable
     public void PickAndAdvanceByte_MustReturnNull_WhenTheWindowHasNoMoreBytes()
     {
         // Arrange
-        _sut.AdvanceByte(Text.Length);
+        _sut.AdvanceByte(_text.Length);
 
         // Act
         var result = _sut.PickAndAdvanceByte();
 
         // Assert
         Assert.Null(result);
-        Assert.Equal(Text.Length, _sut.Offset);
+        Assert.Equal(_text.Length, _sut.Offset);
     }
 
     [Theory(DisplayName = "The IsAtEnd() method must return true when the window has no more bytes")]
@@ -403,15 +394,6 @@ public class SlidingTextWindowTests : IDisposable
 
     public void Dispose()
     {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            _sut.Dispose();
-        }
+        _sut.Dispose();
     }
 }
