@@ -175,7 +175,7 @@ public class DictionaryElementSyntaxTests
         // Arrange
         DictionaryElementSyntax dictionaryElement = SyntaxFactory.DictionaryElement(this.key, this.value);
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
-        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+        DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
         DictionaryElementSyntax actualDictionaryElement = (DictionaryElementSyntax)dictionaryElement.SetDiagnostics(diagnostics);

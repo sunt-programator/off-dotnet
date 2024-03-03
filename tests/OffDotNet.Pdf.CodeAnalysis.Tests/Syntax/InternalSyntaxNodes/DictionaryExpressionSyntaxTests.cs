@@ -217,7 +217,7 @@ public class DictionaryExpressionSyntaxTests
         // Arrange
         DictionaryExpressionSyntax dictionaryExpressionSyntax = SyntaxFactory.DictionaryExpression(this.openBracketToken, this.elements, this.closeBracketToken);
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
-        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+        DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
         DictionaryExpressionSyntax actualDictionaryExpressionSyntax = (DictionaryExpressionSyntax)dictionaryExpressionSyntax.SetDiagnostics(diagnostics);

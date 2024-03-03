@@ -205,7 +205,7 @@ public class XRefEntryExpressionSyntaxTests
         // Arrange
         XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
-        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+        DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
         XRefEntryExpressionSyntax actualXRefEntryExpression = (XRefEntryExpressionSyntax)xRefEntryExpression.SetDiagnostics(diagnostics);

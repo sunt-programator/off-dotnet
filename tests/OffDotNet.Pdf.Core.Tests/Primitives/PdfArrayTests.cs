@@ -92,10 +92,42 @@ public class PdfArrayTests
     {
         // Arrange
         byte[] expectedBytes =
-        {
-            0x5B, 0x35, 0x34, 0x39, 0x20, 0x33, 0x2E, 0x31, 0x34, 0x20, 0x66, 0x61, 0x6C, 0x73, 0x65, 0x20, 0x28, 0x52, 0x61, 0x6C, 0x70, 0x68, 0x29, 0x20, 0x2F, 0x53, 0x6F, 0x6D, 0x65, 0x4E, 0x61,
-            0x6D, 0x65, 0x5D,
-        };
+        [
+            0x5B,
+            0x35,
+            0x34,
+            0x39,
+            0x20,
+            0x33,
+            0x2E,
+            0x31,
+            0x34,
+            0x20,
+            0x66,
+            0x61,
+            0x6C,
+            0x73,
+            0x65,
+            0x20,
+            0x28,
+            0x52,
+            0x61,
+            0x6C,
+            0x70,
+            0x68,
+            0x29,
+            0x20,
+            0x2F,
+            0x53,
+            0x6F,
+            0x6D,
+            0x65,
+            0x4E,
+            0x61,
+            0x6D,
+            0x65,
+            0x5D
+        ];
 
         IReadOnlyCollection<IPdfObject> items = new List<IPdfObject>
         {
@@ -119,14 +151,14 @@ public class PdfArrayTests
     public void PdfArray_GetHashCode_CompareHashes_ShouldBeEqual()
     {
         // Arrange
-        List<IPdfObject> value1 = new()
-        {
+        List<IPdfObject> value1 =
+        [
             new PdfInteger(549),
             new PdfReal(3.14f),
             new PdfBoolean(),
             new PdfString("Ralph"),
-            new PdfName("SomeName"),
-        };
+            new PdfName("SomeName")
+        ];
         IPdfArray<IPdfObject> pdfArray1 = new PdfArray<IPdfObject>(value1);
         IPdfArray<IPdfObject> pdfArray2 = new PdfArray<IPdfObject>(value1);
         int expectedHashCode = HashCode.Combine(nameof(PdfArray<IPdfObject>), value1);
@@ -146,22 +178,22 @@ public class PdfArrayTests
     public void PdfArray_GetHashCode_CompareHashes_ShouldNotBeEqual()
     {
         // Arrange
-        List<IPdfObject> value1 = new()
-        {
+        List<IPdfObject> value1 =
+        [
             new PdfInteger(549),
             new PdfReal(3.14f),
             new PdfBoolean(),
             new PdfString("Ralph"),
-            new PdfName("SomeName"),
-        };
-        List<IPdfObject> value2 = new()
-        {
+            new PdfName("SomeName")
+        ];
+        List<IPdfObject> value2 =
+        [
             new PdfInteger(549),
             new PdfReal(3.14f),
             new PdfBoolean(),
             new PdfString("Ralph"),
-            new PdfName("SomeName"),
-        };
+            new PdfName("SomeName")
+        ];
         IPdfArray<IPdfObject> pdfArray1 = new PdfArray<IPdfObject>(value1);
         IPdfArray<IPdfObject> pdfArray2 = new PdfArray<IPdfObject>(value2);
 

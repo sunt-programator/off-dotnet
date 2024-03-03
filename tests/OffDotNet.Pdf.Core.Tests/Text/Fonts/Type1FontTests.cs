@@ -50,21 +50,43 @@ internal static class Type1FontTestsDataGenerator
 
     public static IEnumerable<object[]> Type1Font_Content_TestCases()
     {
-        yield return new object[] { StandardFonts.TimesRoman, "<</Type /Font /Subtype /Type1 /Name /Times-Roman /BaseFont /Times-Roman>>" };
-        yield return new object[] { StandardFonts.TimesBold, "<</Type /Font /Subtype /Type1 /Name /Times-Bold /BaseFont /Times-Bold>>" };
-        yield return new object[] { StandardFonts.TimesItalic, "<</Type /Font /Subtype /Type1 /Name /Times-Italic /BaseFont /Times-Italic>>" };
-        yield return new object[] { StandardFonts.TimesBoldItalic, "<</Type /Font /Subtype /Type1 /Name /Times-BoldItalic /BaseFont /Times-BoldItalic>>" };
-        yield return new object[] { StandardFonts.Helvetica, "<</Type /Font /Subtype /Type1 /Name /Helvetica /BaseFont /Helvetica>>" };
-        yield return new object[] { StandardFonts.HelveticaBold, "<</Type /Font /Subtype /Type1 /Name /Helvetica-Bold /BaseFont /Helvetica-Bold>>" };
-        yield return new object[] { StandardFonts.HelveticaOblique, "<</Type /Font /Subtype /Type1 /Name /Helvetica-Oblique /BaseFont /Helvetica-Oblique>>" };
-        yield return new object[] { StandardFonts.HelveticaBoldOblique, "<</Type /Font /Subtype /Type1 /Name /Helvetica-BoldOblique /BaseFont /Helvetica-BoldOblique>>" };
-        yield return new object[] { StandardFonts.Courier, "<</Type /Font /Subtype /Type1 /Name /Courier /BaseFont /Courier>>" };
-        yield return new object[] { StandardFonts.CourierBold, "<</Type /Font /Subtype /Type1 /Name /Courier-Bold /BaseFont /Courier-Bold>>" };
-        yield return new object[] { StandardFonts.CourierOblique, "<</Type /Font /Subtype /Type1 /Name /Courier-Oblique /BaseFont /Courier-Oblique>>" };
-        yield return new object[] { StandardFonts.CourierBoldOblique, "<</Type /Font /Subtype /Type1 /Name /Courier-BoldOblique /BaseFont /Courier-BoldOblique>>" };
-        yield return new object[] { StandardFonts.Symbol, "<</Type /Font /Subtype /Type1 /Name /Symbol /BaseFont /Symbol>>" };
-        yield return new object[] { StandardFonts.ZapfDingbats, "<</Type /Font /Subtype /Type1 /Name /ZapfDingbats /BaseFont /ZapfDingbats>>" };
-        yield return new object[] { CustomType1Font, "<</Type /Font /Subtype /Type1 /Name /Custom-Font /BaseFont /Helvetica>>" };
-        yield return new object[] { CustomType1FontWithoutName, "<</Type /Font /Subtype /Type1 /BaseFont /Helvetica>>" };
+        yield return [StandardFonts.TimesRoman,
+            "<</Type /Font /Subtype /Type1 /Name /Times-Roman /BaseFont /Times-Roman>>"
+        ];
+        yield return [StandardFonts.TimesBold,
+            "<</Type /Font /Subtype /Type1 /Name /Times-Bold /BaseFont /Times-Bold>>"
+        ];
+        yield return [StandardFonts.TimesItalic,
+            "<</Type /Font /Subtype /Type1 /Name /Times-Italic /BaseFont /Times-Italic>>"
+        ];
+        yield return [StandardFonts.TimesBoldItalic,
+            "<</Type /Font /Subtype /Type1 /Name /Times-BoldItalic /BaseFont /Times-BoldItalic>>"
+        ];
+        yield return [StandardFonts.Helvetica, "<</Type /Font /Subtype /Type1 /Name /Helvetica /BaseFont /Helvetica>>"];
+        yield return [StandardFonts.HelveticaBold,
+            "<</Type /Font /Subtype /Type1 /Name /Helvetica-Bold /BaseFont /Helvetica-Bold>>"
+        ];
+        yield return [StandardFonts.HelveticaOblique,
+            "<</Type /Font /Subtype /Type1 /Name /Helvetica-Oblique /BaseFont /Helvetica-Oblique>>"
+        ];
+        yield return [StandardFonts.HelveticaBoldOblique,
+            "<</Type /Font /Subtype /Type1 /Name /Helvetica-BoldOblique /BaseFont /Helvetica-BoldOblique>>"
+        ];
+        yield return [StandardFonts.Courier, "<</Type /Font /Subtype /Type1 /Name /Courier /BaseFont /Courier>>"];
+        yield return [StandardFonts.CourierBold,
+            "<</Type /Font /Subtype /Type1 /Name /Courier-Bold /BaseFont /Courier-Bold>>"
+        ];
+        yield return [StandardFonts.CourierOblique,
+            "<</Type /Font /Subtype /Type1 /Name /Courier-Oblique /BaseFont /Courier-Oblique>>"
+        ];
+        yield return [StandardFonts.CourierBoldOblique,
+            "<</Type /Font /Subtype /Type1 /Name /Courier-BoldOblique /BaseFont /Courier-BoldOblique>>"
+        ];
+        yield return [StandardFonts.Symbol, "<</Type /Font /Subtype /Type1 /Name /Symbol /BaseFont /Symbol>>"];
+        yield return [StandardFonts.ZapfDingbats,
+            "<</Type /Font /Subtype /Type1 /Name /ZapfDingbats /BaseFont /ZapfDingbats>>"
+        ];
+        yield return [CustomType1Font, "<</Type /Font /Subtype /Type1 /Name /Custom-Font /BaseFont /Helvetica>>"];
+        yield return [CustomType1FontWithoutName, "<</Type /Font /Subtype /Type1 /BaseFont /Helvetica>>"];
     }
 }

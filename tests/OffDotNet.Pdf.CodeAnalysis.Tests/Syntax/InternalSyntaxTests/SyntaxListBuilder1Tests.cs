@@ -148,7 +148,7 @@ public class SyntaxListBuilder1Tests
         SyntaxToken trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         SyntaxToken falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
 
-        GreenNode[] items = { trueKeyword, falseKeyword };
+        GreenNode[] items = [trueKeyword, falseKeyword];
         const int offset = 0;
         const int length = 2;
 

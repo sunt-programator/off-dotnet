@@ -384,7 +384,7 @@ public class SyntaxTokenTests
         GreenNode token = SyntaxFactory.Token(kind);
 
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
-        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+        DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
         GreenNode actualToken = token.SetDiagnostics(diagnostics);

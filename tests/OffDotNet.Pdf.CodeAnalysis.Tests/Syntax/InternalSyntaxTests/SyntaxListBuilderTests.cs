@@ -155,7 +155,7 @@ public class SyntaxListBuilderTests
         SyntaxToken trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         SyntaxToken falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
 
-        GreenNode[] items = { trueKeyword, falseKeyword };
+        GreenNode[] items = [trueKeyword, falseKeyword];
         const int offset = 0;
         const int length = 2;
 
@@ -196,7 +196,7 @@ public class SyntaxListBuilderTests
         SyntaxToken trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         SyntaxToken falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
 
-        GreenNode[] items = { trueKeyword, falseKeyword };
+        GreenNode[] items = [trueKeyword, falseKeyword];
         const int offset = 0;
         const int length = 1;
 
@@ -237,7 +237,7 @@ public class SyntaxListBuilderTests
         SyntaxToken trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         SyntaxToken falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
 
-        GreenNode[] items = { trueKeyword, falseKeyword };
+        GreenNode[] items = [trueKeyword, falseKeyword];
         const int offset = 1;
         const int length = 1;
 
@@ -278,7 +278,7 @@ public class SyntaxListBuilderTests
         SyntaxToken trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         SyntaxToken falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
 
-        GreenNode[] items = { trueKeyword, falseKeyword };
+        GreenNode[] items = [trueKeyword, falseKeyword];
 
         // Act
         SyntaxListBuilder syntaxListBuilder = SyntaxListBuilder.Create().AddRange(items);
@@ -330,7 +330,7 @@ public class SyntaxListBuilderTests
         SyntaxToken trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         SyntaxToken falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
 
-        GreenNode[] items = { trueKeyword, falseKeyword };
+        GreenNode[] items = [trueKeyword, falseKeyword];
         const int offset = -1;
         const int length = 2;
 
@@ -382,7 +382,7 @@ public class SyntaxListBuilderTests
         SyntaxToken trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         SyntaxToken falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
 
-        GreenNode[] items = { trueKeyword, falseKeyword };
+        GreenNode[] items = [trueKeyword, falseKeyword];
         const int offset = 3;
         const int length = 2;
 
@@ -434,7 +434,7 @@ public class SyntaxListBuilderTests
         SyntaxToken trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         SyntaxToken falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
 
-        GreenNode[] items = { trueKeyword, falseKeyword };
+        GreenNode[] items = [trueKeyword, falseKeyword];
         const int offset = 1;
         const int length = -1;
 
@@ -486,7 +486,7 @@ public class SyntaxListBuilderTests
         SyntaxToken trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         SyntaxToken falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
 
-        GreenNode[] items = { trueKeyword, falseKeyword };
+        GreenNode[] items = [trueKeyword, falseKeyword];
         const int offset = 0;
         const int length = 3;
 
@@ -538,7 +538,7 @@ public class SyntaxListBuilderTests
         SyntaxToken trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         SyntaxToken falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
 
-        GreenNode[] items = { trueKeyword, falseKeyword };
+        GreenNode[] items = [trueKeyword, falseKeyword];
         const int offset = 1;
         const int length = 2;
 
@@ -684,7 +684,7 @@ public class SyntaxListBuilderTests
         SyntaxToken trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         SyntaxToken falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
 
-        GreenNode[] items = { trueKeyword, falseKeyword };
+        GreenNode[] items = [trueKeyword, falseKeyword];
         SyntaxListBuilder syntaxListBuilder = SyntaxListBuilder.Create().AddRange(items);
 
         // Act
@@ -701,7 +701,7 @@ public class SyntaxListBuilderTests
         SyntaxToken trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         SyntaxToken falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
 
-        GreenNode[] items = { trueKeyword, falseKeyword };
+        GreenNode[] items = [trueKeyword, falseKeyword];
         SyntaxListBuilder syntaxListBuilder = SyntaxListBuilder.Create().AddRange(items);
 
         // Act
@@ -717,7 +717,7 @@ public class SyntaxListBuilderTests
         // Arrange
         SyntaxToken trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         SyntaxToken falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
-        GreenNode[] items = { trueKeyword, falseKeyword };
+        GreenNode[] items = [trueKeyword, falseKeyword];
 
         SyntaxListBuilder syntaxListBuilder = SyntaxListBuilder.Create().AddRange(items);
 

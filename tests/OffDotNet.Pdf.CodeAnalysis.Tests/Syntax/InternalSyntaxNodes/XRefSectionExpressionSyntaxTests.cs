@@ -196,7 +196,7 @@ public class XRefSectionExpressionSyntaxTests
         // Arrange
         XRefSectionExpressionSyntax xRefSectionExpression = SyntaxFactory.XRefSection(this.xRefKeyword, this.subSections);
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
-        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+        DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
         XRefSectionExpressionSyntax actualXRefSectionExpression = (XRefSectionExpressionSyntax)xRefSectionExpression.SetDiagnostics(diagnostics);

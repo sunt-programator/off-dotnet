@@ -35,11 +35,11 @@ public sealed class PdfDocument : IDisposable, IAsyncDisposable
         this.Fonts = new List<IPdfIndirectIdentifier<IType1Font>>(1) { new PdfIndirect<IType1Font>(++objectNumber).ToPdfIndirectIdentifier() }.ToImmutableList();
 
         IPdfOperation[] pdfOperations =
-        {
+        [
             new FontOperation("F1", 24),
             new MoveTextOperation(100, 100),
-            new ShowTextOperation("Hello World"),
-        };
+            new ShowTextOperation("Hello World")
+        ];
 
         ITextObject textObject = new TextObject(pdfOperations);
         var fontDictionary = new Dictionary<PdfName, IPdfIndirectIdentifier<IType1Font>> { { "F1", this.Fonts[0] } }.ToPdfDictionary();

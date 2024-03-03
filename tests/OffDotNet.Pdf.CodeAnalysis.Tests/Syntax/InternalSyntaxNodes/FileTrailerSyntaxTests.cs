@@ -249,7 +249,7 @@ public class FileTrailerSyntaxTests
         // Arrange
         FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
-        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+        DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
         FileTrailerSyntax actualFileTrailerSyntax = (FileTrailerSyntax)fileTrailerSyntax.SetDiagnostics(diagnostics);

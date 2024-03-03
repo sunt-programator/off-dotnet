@@ -230,7 +230,7 @@ public class ArrayExpressionSyntaxTests
         // Arrange
         ArrayExpressionSyntax arrayExpressionSyntax = SyntaxFactory.ArrayExpression(this.openBracketToken, this.elements, this.closeBracketToken);
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
-        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+        DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
         ArrayExpressionSyntax newArrayExpressionSyntax = (ArrayExpressionSyntax)arrayExpressionSyntax.SetDiagnostics(diagnostics);

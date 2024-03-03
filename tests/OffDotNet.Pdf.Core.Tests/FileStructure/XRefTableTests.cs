@@ -36,8 +36,10 @@ public class XRefTableTests
         IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
         IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
         IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
-        List<IXRefEntry> multipleEntries = new() { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) };
-        List<IXRefSubSection> subSections = new() { xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23) };
+        List<IXRefEntry> multipleEntries =
+            [new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse)];
+        List<IXRefSubSection> subSections =
+            [xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23)];
 
         IXRefTable xRefTable = subSections.ToXRefTable();
 
@@ -53,17 +55,138 @@ public class XRefTableTests
     {
         // Arrange
         byte[] expectedBytes =
-        {
-            0x78, 0x72, 0x65, 0x66, 0x0A, 0x30, 0x20, 0x31, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x36, 0x35, 0x35, 0x33, 0x35, 0x20, 0x66, 0x20, 0x0A, 0x33, 0x20,
-            0x31, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x33, 0x32, 0x35, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A, 0x33, 0x30, 0x20, 0x31, 0x0A, 0x30, 0x30, 0x30, 0x30,
-            0x30, 0x32, 0x35, 0x37, 0x37, 0x37, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A, 0x32, 0x33, 0x20, 0x32, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x35, 0x31, 0x38,
-            0x20, 0x30, 0x30, 0x30, 0x30, 0x32, 0x20, 0x6E, 0x20, 0x0A, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x35, 0x36, 0x33, 0x35, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30, 0x20, 0x6E, 0x20, 0x0A,
-        };
+        [
+            0x78,
+            0x72,
+            0x65,
+            0x66,
+            0x0A,
+            0x30,
+            0x20,
+            0x31,
+            0x0A,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x20,
+            0x36,
+            0x35,
+            0x35,
+            0x33,
+            0x35,
+            0x20,
+            0x66,
+            0x20,
+            0x0A,
+            0x33,
+            0x20,
+            0x31,
+            0x0A,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x32,
+            0x35,
+            0x33,
+            0x32,
+            0x35,
+            0x20,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x20,
+            0x6E,
+            0x20,
+            0x0A,
+            0x33,
+            0x30,
+            0x20,
+            0x31,
+            0x0A,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x32,
+            0x35,
+            0x37,
+            0x37,
+            0x37,
+            0x20,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x20,
+            0x6E,
+            0x20,
+            0x0A,
+            0x32,
+            0x33,
+            0x20,
+            0x32,
+            0x0A,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x32,
+            0x35,
+            0x35,
+            0x31,
+            0x38,
+            0x20,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x32,
+            0x20,
+            0x6E,
+            0x20,
+            0x0A,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x32,
+            0x35,
+            0x36,
+            0x33,
+            0x35,
+            0x20,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x30,
+            0x20,
+            0x6E,
+            0x20,
+            0x0A
+        ];
         IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
         IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
         IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
-        List<IXRefEntry> multipleEntries = new() { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) };
-        List<IXRefSubSection> subSections = new() { xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23) };
+        List<IXRefEntry> multipleEntries =
+            [new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse)];
+        List<IXRefSubSection> subSections =
+            [xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23)];
 
         IXRefTable xRefTable = subSections.ToXRefTable();
 
@@ -81,8 +204,10 @@ public class XRefTableTests
         IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
         IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
         IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
-        List<IXRefEntry> multipleEntries = new() { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) };
-        List<IXRefSubSection> subSections = new() { xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23) };
+        List<IXRefEntry> multipleEntries =
+            [new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse)];
+        List<IXRefSubSection> subSections =
+            [xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23)];
 
         IXRefTable xRefTable = subSections.ToXRefTable();
 
@@ -101,9 +226,11 @@ public class XRefTableTests
         IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
         IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
         IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
-        List<IXRefEntry> multipleEntries = new() { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) };
-        List<IXRefSubSection> subSections1 = new() { xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23) };
-        List<IXRefSubSection> subSections2 = new() { xRefSubSection1, xRefSubSection2, xRefSubSection3 };
+        List<IXRefEntry> multipleEntries =
+            [new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse)];
+        List<IXRefSubSection> subSections1 =
+            [xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23)];
+        List<IXRefSubSection> subSections2 = [xRefSubSection1, xRefSubSection2, xRefSubSection3];
 
         IXRefTable xRefTable1 = subSections1.ToXRefTable();
         IXRefTable xRefTable2 = subSections2.ToXRefTable();
@@ -122,9 +249,12 @@ public class XRefTableTests
         IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
         IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
         IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
-        List<IXRefEntry> multipleEntries = new() { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) };
-        List<IXRefSubSection> subSections1 = new() { xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23) };
-        List<IXRefSubSection> subSections2 = new() { xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23) };
+        List<IXRefEntry> multipleEntries =
+            [new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse)];
+        List<IXRefSubSection> subSections1 =
+            [xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23)];
+        List<IXRefSubSection> subSections2 =
+            [xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23)];
 
         IXRefTable xRefTable1 = subSections1.ToXRefTable();
         IXRefTable xRefTable2 = subSections2.ToXRefTable();
@@ -143,8 +273,10 @@ public class XRefTableTests
         IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
         IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
         IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
-        List<IXRefEntry> multipleEntries = new() { new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse) };
-        List<IXRefSubSection> subSections = new() { xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23) };
+        List<IXRefEntry> multipleEntries =
+            [new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse)];
+        List<IXRefSubSection> subSections =
+            [xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23)];
 
         IXRefTable xRefTable = subSections.ToXRefTable();
 

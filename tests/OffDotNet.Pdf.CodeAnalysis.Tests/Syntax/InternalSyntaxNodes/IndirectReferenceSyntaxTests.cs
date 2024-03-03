@@ -205,7 +205,7 @@ public class IndirectReferenceSyntaxTests
         // Arrange
         IndirectReferenceSyntax indirectReference = SyntaxFactory.IndirectReference(this.objectNumber, this.generationNumber, this.referenceKeyword);
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
-        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+        DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
         IndirectReferenceSyntax indirectReferenceWithDiagnostics = (IndirectReferenceSyntax)indirectReference.SetDiagnostics(diagnostics);

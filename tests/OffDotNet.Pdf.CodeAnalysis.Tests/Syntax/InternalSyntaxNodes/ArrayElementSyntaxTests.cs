@@ -147,7 +147,7 @@ public class ArrayElementSyntaxTests
         // Arrange
         ArrayElementSyntax arrayElement = SyntaxFactory.ArrayElement(this.expression);
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
-        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+        DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
         GreenNode actualNode = arrayElement.SetDiagnostics(diagnostics);

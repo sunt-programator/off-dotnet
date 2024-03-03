@@ -261,7 +261,7 @@ public class IndirectObjectSyntaxTests
         // Arrange
         IndirectObjectSyntax indirectObject = SyntaxFactory.Object(this.objectNumber, this.generationNumber, this.startObjectKeyword, this.content, this.endObjKeyword);
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
-        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+        DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
         IndirectObjectSyntax actualIndirectObject = (IndirectObjectSyntax)indirectObject.SetDiagnostics(diagnostics);

@@ -261,7 +261,7 @@ public class WithManyChildrenTests
         GreenNode syntaxList = SyntaxFactory.List(children);
 
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
-        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+        DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
         GreenNode actualSyntaxList = syntaxList.SetDiagnostics(diagnostics);

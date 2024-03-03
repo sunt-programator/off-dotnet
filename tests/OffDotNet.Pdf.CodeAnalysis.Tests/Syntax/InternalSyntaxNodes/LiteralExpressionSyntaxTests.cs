@@ -108,7 +108,7 @@ public class LiteralExpressionSyntaxTests
         SyntaxToken keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
-        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+        DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
         LiteralExpressionSyntax actualNode = (LiteralExpressionSyntax)literalExpression.SetDiagnostics(diagnostics);

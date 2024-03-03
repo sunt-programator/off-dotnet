@@ -41,7 +41,7 @@ public class PdfNullTests
     public void PdfNull_Bytes_CheckValidity()
     {
         // Arrange
-        byte[] expectedBytes = { 110, 117, 108, 108 };
+        byte[] expectedBytes = [110, 117, 108, 108];
         PdfNull pdfNull1 = default(PdfNull);
 
         // Act

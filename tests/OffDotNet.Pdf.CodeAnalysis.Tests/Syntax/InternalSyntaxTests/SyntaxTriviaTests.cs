@@ -211,7 +211,7 @@ public class SyntaxTriviaTests
         const SyntaxKind kind = SyntaxKind.EndOfLineTrivia;
         const string text = "    ";
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
-        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+        DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         InternalSyntax.SyntaxTrivia trivia = InternalSyntax.SyntaxTrivia.Create(kind, text);
 

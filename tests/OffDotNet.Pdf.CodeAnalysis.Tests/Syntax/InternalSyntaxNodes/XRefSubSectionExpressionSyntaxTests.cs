@@ -218,7 +218,7 @@ public class XRefSubSectionExpressionSyntaxTests
         // Arrange
         XRefSubSectionExpressionSyntax xRefSubSectionExpression = SyntaxFactory.XRefSubSection(this.objectNumber, this.numberOfEntries, this.entries);
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
-        DiagnosticInfo[] diagnostics = { expectedDiagnostic };
+        DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
         XRefSubSectionExpressionSyntax actualXRefSubSectionExpression = (XRefSubSectionExpressionSyntax)xRefSubSectionExpression.SetDiagnostics(diagnostics);

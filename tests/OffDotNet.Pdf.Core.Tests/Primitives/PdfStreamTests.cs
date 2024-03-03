@@ -92,10 +92,10 @@ public class PdfStreamTests
     }
 
     [Theory(DisplayName = $"Constructor with array filter option should return a valid {nameof(PdfStream.StreamExtent)} dictionary")]
-    [InlineData(new object[] { new[] { "ASCIIHexDecode", "ASCII85Decode", "LZWDecode" } })]
-    [InlineData(new object[] { new[] { "FlateDecode", "RunLengthDecode", "CCITTFaxDecode" } })]
-    [InlineData(new object[] { new[] { "JBIG2Decode", "DCTDecode", "JPXDecode" } })]
-    [InlineData(new object[] { new[] { "Crypt" } })]
+    [InlineData([new[] { "ASCIIHexDecode", "ASCII85Decode", "LZWDecode" }])]
+    [InlineData([new[] { "FlateDecode", "RunLengthDecode", "CCITTFaxDecode" }])]
+    [InlineData([new[] { "JBIG2Decode", "DCTDecode", "JPXDecode" }])]
+    [InlineData([new[] { "Crypt" }])]
     public void PdfStream_ConstructorWithArrayFilter_ShouldReturnValidStreamExtend(string[] filterNames)
     {
         // Arrange
@@ -121,10 +121,10 @@ public class PdfStreamTests
     }
 
     [Theory(DisplayName = $"Constructor with array file filter option should return a valid {nameof(PdfStream.StreamExtent)} dictionary")]
-    [InlineData(new object[] { new[] { "ASCIIHexDecode", "ASCII85Decode", "LZWDecode" } })]
-    [InlineData(new object[] { new[] { "FlateDecode", "RunLengthDecode", "CCITTFaxDecode" } })]
-    [InlineData(new object[] { new[] { "JBIG2Decode", "DCTDecode", "JPXDecode" } })]
-    [InlineData(new object[] { new[] { "Crypt" } })]
+    [InlineData([new[] { "ASCIIHexDecode", "ASCII85Decode", "LZWDecode" }])]
+    [InlineData([new[] { "FlateDecode", "RunLengthDecode", "CCITTFaxDecode" }])]
+    [InlineData([new[] { "JBIG2Decode", "DCTDecode", "JPXDecode" }])]
+    [InlineData([new[] { "Crypt" }])]
     public void PdfStream_ConstructorWithArrayFileFilter_ShouldReturnValidStreamExtend(string[] fileFilterNames)
     {
         // Arrange
@@ -150,8 +150,8 @@ public class PdfStreamTests
     }
 
     [Theory(DisplayName = $"Constructor with decode parameter array option should return a valid {nameof(PdfStream.StreamExtent)} dictionary")]
-    [InlineData(new object[] { new[] { "Predictor", "Colors" } })]
-    [InlineData(new object[] { new[] { "Columns", "EarlyChange" } })]
+    [InlineData([new[] { "Predictor", "Colors" }])]
+    [InlineData([new[] { "Columns", "EarlyChange" }])]
     public void PdfStream_ConstructorWithDecodeParameters_ShouldReturnValidStreamExtend(string[] decodeParameters)
     {
         // Arrange
@@ -177,8 +177,8 @@ public class PdfStreamTests
     }
 
     [Theory(DisplayName = $"Constructor with file decode parameter array option should return a valid {nameof(PdfStream.StreamExtent)} dictionary")]
-    [InlineData(new object[] { new[] { "Predictor", "Colors" } })]
-    [InlineData(new object[] { new[] { "Columns", "EarlyChange" } })]
+    [InlineData([new[] { "Predictor", "Colors" }])]
+    [InlineData([new[] { "Columns", "EarlyChange" }])]
     public void PdfStream_ConstructorWithFileDecodeParameters_ShouldReturnValidStreamExtend(string[] decodeParameters)
     {
         // Arrange
@@ -332,11 +332,89 @@ public class PdfStreamTests
         // Arrange
         const string pdfStringValue = "This is a PDF String wrapped in a Stream object";
         byte[] expectedBytes =
-        {
-            0x3C, 0x3C, 0x2F, 0x4C, 0x65, 0x6E, 0x67, 0x74, 0x68, 0x20, 0x34, 0x39, 0x3E, 0x3E, 0x0A, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 0x0A, 0x28, 0x54, 0x68, 0x69, 0x73, 0x20, 0x69, 0x73,
-            0x20, 0x61, 0x20, 0x50, 0x44, 0x46, 0x20, 0x53, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x20, 0x77, 0x72, 0x61, 0x70, 0x70, 0x65, 0x64, 0x20, 0x69, 0x6E, 0x20, 0x61, 0x20, 0x53, 0x74, 0x72,
-            0x65, 0x61, 0x6D, 0x20, 0x6F, 0x62, 0x6A, 0x65, 0x63, 0x74, 0x29, 0x0A, 0x65, 0x6E, 0x64, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D,
-        };
+        [
+            0x3C,
+            0x3C,
+            0x2F,
+            0x4C,
+            0x65,
+            0x6E,
+            0x67,
+            0x74,
+            0x68,
+            0x20,
+            0x34,
+            0x39,
+            0x3E,
+            0x3E,
+            0x0A,
+            0x73,
+            0x74,
+            0x72,
+            0x65,
+            0x61,
+            0x6D,
+            0x0A,
+            0x28,
+            0x54,
+            0x68,
+            0x69,
+            0x73,
+            0x20,
+            0x69,
+            0x73,
+            0x20,
+            0x61,
+            0x20,
+            0x50,
+            0x44,
+            0x46,
+            0x20,
+            0x53,
+            0x74,
+            0x72,
+            0x69,
+            0x6E,
+            0x67,
+            0x20,
+            0x77,
+            0x72,
+            0x61,
+            0x70,
+            0x70,
+            0x65,
+            0x64,
+            0x20,
+            0x69,
+            0x6E,
+            0x20,
+            0x61,
+            0x20,
+            0x53,
+            0x74,
+            0x72,
+            0x65,
+            0x61,
+            0x6D,
+            0x20,
+            0x6F,
+            0x62,
+            0x6A,
+            0x65,
+            0x63,
+            0x74,
+            0x29,
+            0x0A,
+            0x65,
+            0x6E,
+            0x64,
+            0x73,
+            0x74,
+            0x72,
+            0x65,
+            0x61,
+            0x6D
+        ];
 
         IPdfStream pdfStream = new PdfString(pdfStringValue).ToPdfStream();
 
