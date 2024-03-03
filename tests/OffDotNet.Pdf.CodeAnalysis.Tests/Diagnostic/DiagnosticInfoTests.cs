@@ -416,7 +416,7 @@ public class DiagnosticInfoTests
         // Arrange
         const string arg1 = "arg1";
         const string arg2 = "arg2";
-        object[] expectedArguments = { arg1, arg2 };
+        object[] expectedArguments = [arg1, arg2];
         IMessageProvider messageProvider = Substitute.For<IMessageProvider>();
 
         // Act

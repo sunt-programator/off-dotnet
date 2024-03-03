@@ -12,4 +12,5 @@ public enum DiagnosticCode : ushort
 {
     ERR_InvalidPDF = 1,
     ERR_InvalidPDFVersion = 2,
+    ERR_RealOverflow = 3,
 }

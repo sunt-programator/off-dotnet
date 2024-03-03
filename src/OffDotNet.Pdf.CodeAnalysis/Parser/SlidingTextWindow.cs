@@ -66,6 +66,9 @@ internal sealed class SlidingTextWindow : IDisposable
     /// <summary>Gets the lexeme start offset relative to the <see cref="Basis">window start</see>.</summary>
     public int LexemeBasis { get; private set; }
 
+    /// <summary>Gets a value indicating whether the window is in parsing lexeme mode.</summary>
+    public bool IsLexemeMode { get; private set; }
+
     /// <summary>Gets the absolute position of the lexeme in the <see cref="SourceText"/>.</summary>
     public int LexemePosition => Basis + LexemeBasis;
 
@@ -88,14 +91,28 @@ internal sealed class SlidingTextWindow : IDisposable
         Offset += delta;
     }
 
+    /// <summary>Advances the offset if the next byte matches the specified value.</summary>
+    /// <param name="expected">The value to match.</param>
+    /// <returns><see langword="true"/> if the next byte matches the specified value; otherwise, <see langword="false"/>.</returns>
+    public bool TryAdvanceIfMatches(byte expected)
+    {
+        if (PeekByte() == expected)
+        {
+            AdvanceByte();
+            return true;
+        }
+
+        return false;
+    }
+
     /// <summary>Advances the offset if the next bytes matches the specified string.</summary>
     /// <param name="expected">The string to match.</param>
     /// <returns><see langword="true"/> if the next bytes match the specified string; otherwise, <see langword="false"/>.</returns>
-    public bool TryAdvanceIfMatches(string expected)
+    public bool TryAdvanceIfMatches(ReadOnlySpan<byte> expected)
     {
         for (var i = 0; i < expected.Length; i++)
         {
-            if (PeekByte(i) != (byte)expected[i])
+            if (PeekByte(i) != expected[i])
             {
                 return false;
             }
@@ -103,6 +120,16 @@ internal sealed class SlidingTextWindow : IDisposable
 
         AdvanceByte(expected.Length);
         return true;
+    }
+
+    /// <summary>Advances the offset if the next byte matches the specified predicate.</summary>
+    /// <param name="predicate">The predicate to match.</param>
+    public void AdvanceIfMatches(Func<byte?, bool> predicate)
+    {
+        while (predicate(PeekByte()))
+        {
+            AdvanceByte();
+        }
     }
 
     /// <summary>Gets the byte at the current position in the window.</summary>
@@ -147,7 +174,15 @@ internal sealed class SlidingTextWindow : IDisposable
     /// <summary>Starts parsing a lexeme and sets the <see cref="LexemeBasis"/> to the current <see cref="Offset"/> value.</summary>
     public void StartParsingLexeme()
     {
+        IsLexemeMode = true;
         LexemeBasis = Offset;
+    }
+
+    /// <summary>Stops parsing a lexeme.</summary>
+    public void StopParsingLexeme()
+    {
+        IsLexemeMode = false;
+        LexemeBasis = 0;
     }
 
     /// <summary>Resets the window to the specified position.</summary>
@@ -174,7 +209,7 @@ internal sealed class SlidingTextWindow : IDisposable
         Basis = position;
         Offset = 0;
         CharacterWindowCount = amountToRead;
-        LexemeBasis = 0;
+        StopParsingLexeme();
     }
 
     /// <summary>Gets a byte array from the window.</summary>
@@ -231,11 +266,11 @@ internal sealed class SlidingTextWindow : IDisposable
         // easy cases we can pick off easily.
         result = length switch
         {
-            0 => Array.Empty<byte>(),
-            1 when _characterWindow[offset] == (byte)' ' => new[] { (byte)' ' },
-            1 when _characterWindow[offset] == (byte)'\n' => new[] { (byte)'\n' },
+            0 => [],
+            1 when _characterWindow[offset] == (byte)' ' => [(byte)' '],
+            1 when _characterWindow[offset] == (byte)'\n' => [(byte)'\n'],
             2 when _characterWindow[offset] == (byte)'\r' && _characterWindow[offset + 1] == (byte)'\n' =>
-                new[] { (byte)'\r', (byte)'\n' },
+                [(byte)'\r', (byte)'\n'],
             _ => null,
         };
 
@@ -268,7 +303,7 @@ internal sealed class SlidingTextWindow : IDisposable
             CharacterWindowCount -= LexemeBasis;
             Offset -= LexemeBasis;
             Basis += LexemeBasis;
-            LexemeBasis = 0;
+            StopParsingLexeme();
         }
 
         if (CharacterWindowCount >= _characterWindow.Length)

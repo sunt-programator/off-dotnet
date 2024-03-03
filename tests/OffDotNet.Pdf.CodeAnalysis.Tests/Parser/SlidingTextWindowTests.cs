@@ -223,10 +223,11 @@ public sealed class SlidingTextWindowTests : IDisposable
 
         // Assert
         Assert.Null(result);
+        Assert.False(_sut.IsLexemeMode);
     }
 
     [Theory(DisplayName =
-        "The TryAdvanceIfMatches(string) method must advance the window by the length of the specified string when the window contains the specified string")]
+        "The TryAdvanceIfMatches(ReadOnlySpan<byte>) method must advance the window by the length of the specified string when the window contains the specified string")]
     [InlineData("ABCD", true)]
     [InlineData("BCD", false)]
     public void TryAdvanceIfMatches_MustReturnTrue_WhenTheWindowContainsTheSpecifiedString(
@@ -234,12 +235,28 @@ public sealed class SlidingTextWindowTests : IDisposable
         bool expected)
     {
         // Arrange
+        var patternBytes = Encoding.UTF8.GetBytes(pattern);
 
         // Act
-        var result = _sut.TryAdvanceIfMatches(pattern);
+        var result = _sut.TryAdvanceIfMatches(patternBytes);
 
         // Assert
         Assert.Equal(expected, result);
+    }
+
+    [Fact(DisplayName =
+        "The TryAdvanceIfMatches(byte) method must advance the window by the length of the specified string when the window contains the specified string")]
+    public void TryAdvanceIfMatches_MustReturnTrue_WhenTheWindowContainsTheSpecifiedByte()
+    {
+        // Arrange
+        const byte Pattern = (byte)'A';
+
+        // Act
+        var result = _sut.TryAdvanceIfMatches(Pattern);
+
+        // Assert
+        Assert.True(result);
+        Assert.Equal(1, _sut.Offset);
     }
 
     [Fact(DisplayName =
@@ -256,6 +273,25 @@ public sealed class SlidingTextWindowTests : IDisposable
 
         // Assert
         Assert.Equal(Offset, _sut.LexemeBasis);
+        Assert.True(_sut.IsLexemeMode);
+    }
+
+    [Fact(DisplayName =
+        $"The StopParsingLexeme() method must set the {nameof(SlidingTextWindow.LexemeBasis)} property to 0 " +
+        $"and the {nameof(SlidingTextWindow.IsLexemeMode)} property to true")]
+    public void StopParsingLexeme_MustResetLexemeBasisAndIsLexemeMode()
+    {
+        // Arrange
+        const int Offset = 3;
+
+        // Act
+        _sut.AdvanceByte(Offset);
+        _sut.StartParsingLexeme();
+        _sut.StopParsingLexeme();
+
+        // Assert
+        Assert.Equal(0, _sut.LexemeBasis);
+        Assert.False(_sut.IsLexemeMode);
     }
 
     [Fact(DisplayName = "The Reset(int) method must set the Offset property to the specified value")]
@@ -317,6 +353,7 @@ public sealed class SlidingTextWindowTests : IDisposable
 
         // Assert
         Assert.Equal(expected, Encoding.UTF8.GetString(result));
+        Assert.True(_sut.IsLexemeMode);
     }
 
     [Fact(DisplayName =
@@ -390,6 +427,31 @@ public sealed class SlidingTextWindowTests : IDisposable
         Assert.True(text1.Overlaps(text2));
         Assert.Equal(ExpectedText, Encoding.UTF8.GetString(text1));
         Assert.Equal(ExpectedText, Encoding.UTF8.GetString(text2));
+    }
+
+    [Fact(DisplayName =
+        "The TryAdvanceIfMatches(Func<byte, bool>) method must advance the window by the length of the matching sequence")]
+    public void AdvanceIfMatches_MustReturnTrue_WhenTheWindowContainsTheSpecifiedSequence()
+    {
+        // Arrange
+
+        // Act
+        _sut.AdvanceIfMatches(b => b >= 'A' && b <= 'H');
+
+        // Assert
+        Assert.Equal(8, _sut.Offset);
+    }
+
+    [Fact(DisplayName = $"The {nameof(SlidingTextWindow.IsLexemeMode)} property must be set to false by default")]
+    public void IsLexemeMode_MustBeSetToFalseByDefault()
+    {
+        // Arrange
+
+        // Act
+        var result = _sut.IsLexemeMode;
+
+        // Assert
+        Assert.False(result);
     }
 
     public void Dispose()
