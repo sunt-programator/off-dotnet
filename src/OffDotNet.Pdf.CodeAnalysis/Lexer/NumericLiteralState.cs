@@ -7,6 +7,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Lexer;
 
 using System.Diagnostics;
 using System.Globalization;
+using System.Text;
 using Diagnostic;
 using Syntax;
 
@@ -24,6 +25,10 @@ internal sealed class NumericLiteralState : LexerState
             context.TextWindow.IsLexemeMode,
             "NumericLiteralState should be called only when the lexer is in lexeme scanning mode.");
 
+        Debug.Assert(
+            context.TextWindow.PeekByte().IsDecDigit() || context.TextWindow.PeekByte() == (byte)'.',
+            "The numeric literal state should be called only when the next byte is a digit or a dot.");
+
         context.TextWindow.AdvanceIfMatches(CharacterExtensions.IsDecDigit); // handle integer numbers
         var isRealNumber = context.TextWindow.TryAdvanceIfMatches((byte)'.'); // handle real numbers
         context.TextWindow.AdvanceIfMatches(CharacterExtensions.IsDecDigit); // handle integer numbers after the dot
@@ -32,26 +37,20 @@ internal sealed class NumericLiteralState : LexerState
 
         ref var tokenInfo = ref context.GetTokenInfo();
         tokenInfo._kind = SyntaxKind.NumericLiteralToken;
-        tokenInfo._text = context.TextWindow.GetLexemeBytes(shouldIntern: true).ToArray();
-
-        Span<char> text = stackalloc char[tokenInfo._text.Length];
-        for (var i = 0; i < tokenInfo._text.Length; i++)
-        {
-            text[i] = (char)tokenInfo._text[i];
-        }
+        tokenInfo._text = Encoding.UTF8.GetString(context.TextWindow.GetLexemeBytes(shouldIntern: true));
 
         if (!isRealNumber)
         {
-            ParseIntNumber(text, ref tokenInfo, context.Errors);
+            ParseIntNumber(ref tokenInfo, tokenInfo._text, context.Errors);
             return;
         }
 
-        ParseRealNumber(text, ref tokenInfo, context.Errors);
+        ParseRealNumber(ref tokenInfo, tokenInfo._text, context.Errors);
     }
 
     private static void ParseIntNumber(
-        Span<char> text,
         ref LexerContext.TokenInfo tokenInfo,
+        ReadOnlySpan<char> text,
         ICollection<DiagnosticInfo> errors)
     {
         try
@@ -62,13 +61,13 @@ internal sealed class NumericLiteralState : LexerState
         {
             // ISO 32000-2:2020 - 7.3.3 Numeric Objects
             // Real numbers can be represented as integers, so we can parse large integers as real numbers.
-            ParseRealNumber(text, ref tokenInfo, errors);
+            ParseRealNumber(ref tokenInfo, text, errors);
         }
     }
 
     private static void ParseRealNumber(
-        Span<char> text,
         ref LexerContext.TokenInfo tokenInfo,
+        ReadOnlySpan<char> text,
         ICollection<DiagnosticInfo> errors)
     {
         var realValue = double.Parse(text, NumberStyles.Float, CultureInfo.InvariantCulture);

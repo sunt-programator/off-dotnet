@@ -5,6 +5,7 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax;
 
+/// <summary>Represents the kind of syntax node.</summary>
 public enum SyntaxKind : ushort
 {
     /// <summary>Represents an unknown token.</summary>
@@ -101,16 +102,19 @@ public enum SyntaxKind : ushort
     /// <summary>Represents <c>n</c> keyword.</summary>
     InUseXRefEntryKeyword = 8313,
 
+    /// <summary>Represents an unknown token.</summary>
+    UnknownKeyword = 8501,
+
     // Tokens with text
 
     /// <summary>Represents a numeric literal token.</summary>
-    NumericLiteralToken = 8501,
+    NumericLiteralToken = 8502,
 
     /// <summary>Represents a string literal token.</summary>
-    StringLiteralToken = 8502,
+    StringLiteralToken = 8503,
 
     /// <summary>Represents a name literal token.</summary>
-    NameLiteralToken = 8503,
+    NameLiteralToken = 8504,
 
     // Trivia
 

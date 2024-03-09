@@ -9,6 +9,11 @@ using InternalUtilities;
 
 internal static class SyntaxKindFacts
 {
+    internal static readonly Dictionary<string, SyntaxKind> SyntaxKindDictionary = new()
+    {
+        { "true", SyntaxKind.TrueKeyword }, { "false", SyntaxKind.FalseKeyword },
+    };
+
     public static string GetText(this SyntaxKind kind)
     {
         return kind switch

@@ -35,9 +35,9 @@
       },
       "Roslynator.Analyzers": {
         "type": "Direct",
-        "requested": "[4.10.0, )",
-        "resolved": "4.10.0",
-        "contentHash": "lWq7Y2hoHZ7rmRutvG4okAatBVLQNR9BzvBp3WmQzaj9AEblEyujl6MIRwwi/x6NEurIdcAoGPn80v4JwGCXrg=="
+        "requested": "[4.11.0, )",
+        "resolved": "4.11.0",
+        "contentHash": "gb8OEqxIlqaT2r/RjMltheNZJJ/f2jfjJXyI+5JwNZvXBgSNPEQa8JeMW4lXgDtOOSdzpGNpMSuPikYLzmEvCw=="
       },
       "SonarAnalyzer.CSharp": {
         "type": "Direct",

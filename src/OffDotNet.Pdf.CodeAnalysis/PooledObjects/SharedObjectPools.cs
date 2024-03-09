@@ -11,6 +11,7 @@ using System.Diagnostics.CodeAnalysis;
 using Caching;
 using Microsoft.Extensions.ObjectPool;
 using Syntax.InternalSyntax;
+using SyntaxKind = Syntax.SyntaxKind;
 
 /// <summary>The shared object pools.</summary>
 [SuppressMessage(
@@ -19,9 +20,6 @@ using Syntax.InternalSyntax;
     Justification = "Reviewed.")]
 internal static class SharedObjectPools
 {
-    /// <summary>The default window length.</summary>
-    internal const int DefaultWindowLength = 2048;
-
     /// <summary>The sliding window pool.</summary>
     internal static readonly ObjectPool<byte[]> WindowPool;
 
@@ -34,6 +32,12 @@ internal static class SharedObjectPools
     /// <summary>The syntax trivia cache.</summary>
     internal static readonly ObjectPool<ThreadSafeCacheFactory<string, SyntaxTrivia>> SyntaxTriviaCache;
 
+    /// <summary>The keyword kind cache.</summary>
+    internal static readonly ObjectPool<ThreadSafeCacheFactory<string, SyntaxKind>> KeywordKindCache;
+
+    /// <summary>The default window length.</summary>
+    private const int DefaultWindowLength = 2048;
+
     static SharedObjectPools()
     {
 #if DEBUG
@@ -45,10 +49,12 @@ internal static class SharedObjectPools
         var stringTablePolicy = new ThreadSafeCachePooledObjectPolicy<int, byte[]>();
         var syntaxTokenCache = new ThreadSafeCachePooledObjectPolicy<string, SyntaxToken>();
         var syntaxTriviaCache = new ThreadSafeCachePooledObjectPolicy<string, SyntaxTrivia>();
+        var keywordKindCache = new ThreadSafeCachePooledObjectPolicy<string, SyntaxKind>();
 
         WindowPool = objectPoolProvider.Create(arrayPooledObject);
         StringTable = objectPoolProvider.Create(stringTablePolicy);
         SyntaxTokenCache = objectPoolProvider.Create(syntaxTokenCache);
         SyntaxTriviaCache = objectPoolProvider.Create(syntaxTriviaCache);
+        KeywordKindCache = objectPoolProvider.Create(keywordKindCache);
     }
 }

@@ -6,12 +6,14 @@
 namespace OffDotNet.Pdf.CodeAnalysis.Lexer;
 
 using System.Diagnostics.CodeAnalysis;
+using Caching;
 using Diagnostic;
 using Parser;
+using PooledObjects;
 using Syntax;
 
 /// <summary>The context of the lexer.</summary>
-internal sealed class LexerContext
+internal sealed class LexerContext : IDisposable
 {
     private readonly Lazy<ICollection<DiagnosticInfo>> _errors;
 
@@ -29,12 +31,16 @@ internal sealed class LexerContext
     public LexerContext(SlidingTextWindow textWindow)
     {
         TextWindow = textWindow;
+        KeywordKindCache = SharedObjectPools.KeywordKindCache.Get();
         _state = DefaultState.Instance;
         _errors = new Lazy<ICollection<DiagnosticInfo>>(() => new List<DiagnosticInfo>(8));
     }
 
     /// <summary>Gets the text window.</summary>
     public SlidingTextWindow TextWindow { get; }
+
+    /// <summary>Gets the keyword kind cache.</summary>
+    public ThreadSafeCacheFactory<string, SyntaxKind> KeywordKindCache { get; }
 
     /// <summary>Gets the errors.</summary>
     public ICollection<DiagnosticInfo> Errors => _errors.Value;
@@ -54,6 +60,13 @@ internal sealed class LexerContext
         _state.Handle(this);
     }
 
+    /// <summary>Disposes the resources used by the <see cref="LexerContext"/> class.</summary>
+    public void Dispose()
+    {
+        TextWindow.Dispose();
+        SharedObjectPools.KeywordKindCache.Return(KeywordKindCache);
+    }
+
     /// <summary>Represents the token info.</summary>
     internal struct TokenInfo
     {
@@ -61,7 +74,7 @@ internal sealed class LexerContext
         internal SyntaxKind _kind;
 
         /// <summary>The text of the token.</summary>
-        internal byte[] _text;
+        internal string _text;
 
         /// <summary>The integer value of the token.</summary>
         internal int _intValue;

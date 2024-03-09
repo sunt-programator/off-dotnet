@@ -12,4 +12,9 @@ internal static class CharacterExtensions
     /// <param name="b">The byte to check.</param>
     /// <returns><see langword="true" /> if the specified byte is a decimal digit; otherwise, <see langword="false" />.</returns>
     public static bool IsDecDigit(this byte? b) => b is >= (byte)'0' and <= (byte)'9';
+
+    /// <summary>Determines whether the specified byte is an alpha character.</summary>
+    /// <param name="b">The byte to check.</param>
+    /// <returns><see langword="true" /> if the specified byte is an alpha character; otherwise, <see langword="false" />.</returns>
+    public static bool IsAlpha(this byte? b) => b is >= (byte)'a' and <= (byte)'z' or >= (byte)'A' and <= (byte)'Z';
 }

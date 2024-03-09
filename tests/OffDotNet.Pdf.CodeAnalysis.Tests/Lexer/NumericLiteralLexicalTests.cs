@@ -82,7 +82,7 @@ public class NumericLiteralLexicalTests
         // Arrange
         ReadOnlySpan<byte> text = Encoding.UTF8.GetBytes(input);
         var textWindow = text.ToTextWindow();
-        var context = new LexerContext(textWindow);
+        using var context = new LexerContext(textWindow);
 
         // Act
         textWindow.StartParsingLexeme();
@@ -92,7 +92,7 @@ public class NumericLiteralLexicalTests
         ref var tokenInfo = ref context.GetTokenInfo();
         Assert.NotEqual(default, tokenInfo);
         Assert.Equal(expectedKind, tokenInfo._kind);
-        Assert.Equal(Encoding.UTF8.GetBytes(expectedText), tokenInfo._text);
+        Assert.Equal(expectedText, tokenInfo._text);
         Assert.Equal(expectedValue, getValue(tokenInfo));
         Assert.False(textWindow.IsLexemeMode);
         Assert.Equivalent(expectedErrors, context.Errors.Select(x => x.Code));
