@@ -8,6 +8,7 @@
 namespace OffDotNet.Pdf.CodeAnalysis.PooledObjects;
 
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using Caching;
 using Microsoft.Extensions.ObjectPool;
 using Syntax.InternalSyntax;
@@ -35,15 +36,26 @@ internal static class SharedObjectPools
     /// <summary>The keyword kind cache.</summary>
     internal static readonly ObjectPool<ThreadSafeCacheFactory<string, SyntaxKind>> KeywordKindCache;
 
+    /// <summary>The string builder pool.</summary>
+    internal static readonly ObjectPool<StringBuilder> StringBuilderPool;
+
     /// <summary>The default window length.</summary>
     private const int DefaultWindowLength = 2048;
 
     static SharedObjectPools()
     {
+        var defaultObjectPoolProvider = new DefaultObjectPoolProvider();
+        var defaultStringBuilderPoolProvider = new DefaultObjectPoolProvider
+        {
+            MaximumRetained = 32,
+        };
+
 #if DEBUG
-        var objectPoolProvider = new LeakTrackingObjectPoolProvider(new DefaultObjectPoolProvider());
+        var objectPoolProvider = new LeakTrackingObjectPoolProvider(defaultObjectPoolProvider);
+        var stringBuilderPoolProvider = new LeakTrackingObjectPoolProvider(defaultStringBuilderPoolProvider);
 #else
-        var objectPoolProvider = new DefaultObjectPoolProvider();
+        var objectPoolProvider = defaultObjectPoolProvider;
+        var stringBuilderPoolProvider = defaultStringBuilderPoolProvider;
 #endif
         var arrayPooledObject = new ArrayPooledObjectPolicy<byte>(DefaultWindowLength, DefaultWindowLength);
         var stringTablePolicy = new ThreadSafeCachePooledObjectPolicy<int, byte[]>();
@@ -56,5 +68,6 @@ internal static class SharedObjectPools
         SyntaxTokenCache = objectPoolProvider.Create(syntaxTokenCache);
         SyntaxTriviaCache = objectPoolProvider.Create(syntaxTriviaCache);
         KeywordKindCache = objectPoolProvider.Create(keywordKindCache);
+        StringBuilderPool = stringBuilderPoolProvider.CreateStringBuilderPool();
     }
 }

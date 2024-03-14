@@ -7,7 +7,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 public abstract partial class Location
 {
-    internal class NoLocation : Location
+    internal sealed class NoLocation : Location
     {
         internal static readonly Location Instance = new NoLocation();
 

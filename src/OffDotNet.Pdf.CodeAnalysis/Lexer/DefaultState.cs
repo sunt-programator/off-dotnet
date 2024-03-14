@@ -29,6 +29,12 @@ internal sealed class DefaultState : LexerState
         if (b.IsAlpha())
         {
             context.TransitionTo(KeywordState.Instance);
+            return;
+        }
+
+        if (b == (byte)'(')
+        {
+            context.TransitionTo(StringLiteralState.Instance);
         }
     }
 }

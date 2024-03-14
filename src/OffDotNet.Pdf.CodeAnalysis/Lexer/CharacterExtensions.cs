@@ -17,4 +17,14 @@ internal static class CharacterExtensions
     /// <param name="b">The byte to check.</param>
     /// <returns><see langword="true" /> if the specified byte is an alpha character; otherwise, <see langword="false" />.</returns>
     public static bool IsAlpha(this byte? b) => b is >= (byte)'a' and <= (byte)'z' or >= (byte)'A' and <= (byte)'Z';
+
+    /// <summary>Determines whether the specified byte is an octal digit.</summary>
+    /// <param name="b">The byte to check.</param>
+    /// <returns><see langword="true" /> if the specified byte is an octal digit; otherwise, <see langword="false" />.</returns>
+    public static bool IsOctDigit(this byte? b) => b is >= (byte)'0' and <= (byte)'7';
+
+    /// <summary>Determines whether the specified byte is a whitespace character.</summary>
+    /// <param name="b">The byte to check.</param>
+    /// <returns><see langword="true" /> if the specified byte is a whitespace character; otherwise, <see langword="false" />.</returns>
+    public static bool IsEndOfLine(this byte? b) => b is (byte)'\r' or (byte)'\n';
 }

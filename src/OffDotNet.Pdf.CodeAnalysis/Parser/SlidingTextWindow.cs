@@ -158,7 +158,7 @@ internal sealed class SlidingTextWindow : IDisposable
 
     /// <summary>Picks the byte at the current position and advances the window by one byte.</summary>
     /// <returns>The byte at the current position in the window if exists. Otherwise, <see langword="null"/>.</returns>
-    public byte? PickAndAdvanceByte()
+    public byte? PeekAndAdvanceByte()
     {
         var b = PeekByte();
 
