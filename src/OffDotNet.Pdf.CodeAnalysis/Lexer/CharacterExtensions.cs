@@ -23,8 +23,25 @@ internal static class CharacterExtensions
     /// <returns><see langword="true" /> if the specified byte is an octal digit; otherwise, <see langword="false" />.</returns>
     public static bool IsOctDigit(this byte? b) => b is >= (byte)'0' and <= (byte)'7';
 
+    /// <summary>Determines whether the specified byte is a hexadecimal digit.</summary>
+    /// <param name="b">The byte to check.</param>
+    /// <returns><see langword="true" /> if the specified byte is a hexadecimal digit; otherwise, <see langword="false" />.</returns>
+    public static bool IsHexDigit(this byte? b) => b is >= (byte)'0' and <= (byte)'9'
+        or >= (byte)'A' and <= (byte)'F'
+        or >= (byte)'a' and <= (byte)'f';
+
     /// <summary>Determines whether the specified byte is a whitespace character.</summary>
     /// <param name="b">The byte to check.</param>
     /// <returns><see langword="true" /> if the specified byte is a whitespace character; otherwise, <see langword="false" />.</returns>
     public static bool IsEndOfLine(this byte? b) => b is (byte)'\r' or (byte)'\n';
+
+    /// <summary>Determines whether the specified byte is a whitespace character.</summary>
+    /// <param name="b">The byte to check.</param>
+    /// <returns><see langword="true" /> if the specified byte is a whitespace character; otherwise, <see langword="false" />.</returns>
+    public static bool IsWhiteSpace(this byte? b) => b is (byte)'\0'
+        or (byte)'\t'
+        or (byte)'\f'
+        or (byte)'\r'
+        or (byte)'\n'
+        or (byte)' ';
 }

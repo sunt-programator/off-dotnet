@@ -5,7 +5,6 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Lexer;
 
-using System.Buffers;
 using System.Diagnostics;
 using System.Text;
 using Diagnostic;
@@ -17,7 +16,7 @@ internal sealed class StringLiteralState : LexerState
     /// <summary>The singleton instance of the <see cref="StringLiteralState"/> class.</summary>
     internal static readonly StringLiteralState Instance = new();
 
-    /// <summary>Handles the keyword token.</summary>
+    /// <summary>Handles the string literal state.</summary>
     /// <param name="context">The lexer context.</param>
     public override void Handle(LexerContext context)
     {
@@ -137,8 +136,7 @@ internal sealed class StringLiteralState : LexerState
         var b = context.TextWindow.PeekByte();
         Debug.Assert(b.IsOctDigit(), "The escape sequence should start with a digit.");
 
-        var arrayPool = ArrayPool<byte>.Shared;
-        var bytes = arrayPool.Rent(maxDigits);
+        Span<byte> bytes = stackalloc byte[maxDigits];
 
         int i;
         for (i = 0; i < maxDigits; i++)
@@ -153,9 +151,8 @@ internal sealed class StringLiteralState : LexerState
             bytes[i] = b.Value;
         }
 
-        var octStringValue = Encoding.ASCII.GetString(bytes.AsSpan(..i));
+        var octStringValue = Encoding.ASCII.GetString(bytes[..i]);
         var decValue = Convert.ToInt16(octStringValue, 8);
-        arrayPool.Return(bytes);
 
         if (decValue > 255)
         {

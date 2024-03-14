@@ -15,4 +15,5 @@ public enum DiagnosticCode : ushort
     ERR_RealOverflow,
     ERR_InvalidKeyword,
     ERR_UnbalancedStringLiteral,
+    ERR_InvalidHexStringLiteral,
 }

@@ -113,8 +113,11 @@ public enum SyntaxKind : ushort
     /// <summary>Represents a string literal token.</summary>
     StringLiteralToken = 8503,
 
+    /// <summary>Represents a hexadecimal string literal token.</summary>
+    HexStringLiteralToken = 8504,
+
     /// <summary>Represents a name literal token.</summary>
-    NameLiteralToken = 8504,
+    NameLiteralToken = 8505,
 
     // Trivia
 
