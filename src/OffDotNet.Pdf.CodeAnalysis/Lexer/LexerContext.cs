@@ -6,6 +6,7 @@
 namespace OffDotNet.Pdf.CodeAnalysis.Lexer;
 
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using Caching;
 using Diagnostic;
 using Parser;
@@ -32,6 +33,7 @@ internal sealed class LexerContext : IDisposable
     {
         TextWindow = textWindow;
         KeywordKindCache = SharedObjectPools.KeywordKindCache.Get();
+        StringBuilderCache = SharedObjectPools.StringBuilderPool.Get();
         _state = DefaultState.Instance;
         _errors = new Lazy<ICollection<DiagnosticInfo>>(() => new List<DiagnosticInfo>(8));
     }
@@ -41,6 +43,9 @@ internal sealed class LexerContext : IDisposable
 
     /// <summary>Gets the keyword kind cache.</summary>
     public ThreadSafeCacheFactory<string, SyntaxKind> KeywordKindCache { get; }
+
+    /// <summary>Gets the string builder cache.</summary>
+    public StringBuilder StringBuilderCache { get; }
 
     /// <summary>Gets the errors.</summary>
     public ICollection<DiagnosticInfo> Errors => _errors.Value;
@@ -65,6 +70,7 @@ internal sealed class LexerContext : IDisposable
     {
         TextWindow.Dispose();
         SharedObjectPools.KeywordKindCache.Return(KeywordKindCache);
+        SharedObjectPools.StringBuilderPool.Return(StringBuilderCache);
     }
 
     /// <summary>Represents the token info.</summary>
@@ -81,5 +87,8 @@ internal sealed class LexerContext : IDisposable
 
         /// <summary>The real value of the token.</summary>
         internal double _realValue;
+
+        /// <summary>The string value of the token.</summary>
+        internal string _stringValue;
     }
 }

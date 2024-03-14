@@ -22,17 +22,13 @@ internal sealed class NumericLiteralState : LexerState
     public override void Handle(LexerContext context)
     {
         Debug.Assert(
-            context.TextWindow.IsLexemeMode,
-            "NumericLiteralState should be called only when the lexer is in lexeme scanning mode.");
-
-        Debug.Assert(
             context.TextWindow.PeekByte().IsDecDigit() || context.TextWindow.PeekByte() == (byte)'.',
             "The numeric literal state should be called only when the next byte is a digit or a dot.");
 
+        context.TextWindow.StartParsingLexeme();
         context.TextWindow.AdvanceIfMatches(CharacterExtensions.IsDecDigit); // handle integer numbers
         var isRealNumber = context.TextWindow.TryAdvanceIfMatches((byte)'.'); // handle real numbers
         context.TextWindow.AdvanceIfMatches(CharacterExtensions.IsDecDigit); // handle integer numbers after the dot
-
         context.TextWindow.StopParsingLexeme();
 
         ref var tokenInfo = ref context.GetTokenInfo();

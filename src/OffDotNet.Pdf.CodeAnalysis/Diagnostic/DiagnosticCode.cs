@@ -10,8 +10,9 @@ using System.Diagnostics.CodeAnalysis;
 [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "The names of the enum members must be the same as the resource strings.")]
 public enum DiagnosticCode : ushort
 {
-    ERR_InvalidPDF = 1,
-    ERR_InvalidPDFVersion = 2,
-    ERR_RealOverflow = 3,
-    ERR_InvalidKeyword = 4,
+    ERR_InvalidPDF,
+    ERR_InvalidPDFVersion,
+    ERR_RealOverflow,
+    ERR_InvalidKeyword,
+    ERR_UnbalancedStringLiteral,
 }

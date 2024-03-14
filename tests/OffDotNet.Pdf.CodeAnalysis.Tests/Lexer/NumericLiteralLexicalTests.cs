@@ -6,10 +6,9 @@
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Lexer;
 
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
-using OffDotNet.Pdf.CodeAnalysis.Lexer;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
-public class NumericLiteralLexicalTests
+public class NumericLiteralLexicalTests : BaseTests
 {
     [Fact(DisplayName = "The integer value must be parsed.")]
     public void NumericLiteral_MustParseIntegerValue()
@@ -59,42 +58,5 @@ public class NumericLiteralLexicalTests
             getValue: tokenInfo => tokenInfo._realValue,
             expectedValue: 0,
             expectedErrors: [DiagnosticCode.ERR_RealOverflow]);
-    }
-
-    private static void Test<T>(
-        string input,
-        SyntaxKind expectedKind,
-        string expectedText,
-        Func<LexerContext.TokenInfo, T> getValue,
-        T expectedValue)
-    {
-        Test(input, expectedKind, expectedText, getValue, expectedValue, []);
-    }
-
-    private static void Test<T>(
-        string input,
-        SyntaxKind expectedKind,
-        string expectedText,
-        Func<LexerContext.TokenInfo, T> getValue,
-        T expectedValue,
-        IEnumerable<DiagnosticCode> expectedErrors)
-    {
-        // Arrange
-        ReadOnlySpan<byte> text = Encoding.UTF8.GetBytes(input);
-        var textWindow = text.ToTextWindow();
-        using var context = new LexerContext(textWindow);
-
-        // Act
-        textWindow.StartParsingLexeme();
-        context.TransitionTo(DefaultState.Instance);
-
-        // Assert
-        ref var tokenInfo = ref context.GetTokenInfo();
-        Assert.NotEqual(default, tokenInfo);
-        Assert.Equal(expectedKind, tokenInfo._kind);
-        Assert.Equal(expectedText, tokenInfo._text);
-        Assert.Equal(expectedValue, getValue(tokenInfo));
-        Assert.False(textWindow.IsLexemeMode);
-        Assert.Equivalent(expectedErrors, context.Errors.Select(x => x.Code));
     }
 }

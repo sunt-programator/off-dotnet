@@ -23,15 +23,11 @@ internal sealed class KeywordState : LexerState
     public override void Handle(LexerContext context)
     {
         Debug.Assert(
-            context.TextWindow.IsLexemeMode,
-            "NumericLiteralState should be called only when the lexer is in lexeme scanning mode.");
-
-        Debug.Assert(
             context.TextWindow.PeekByte().IsAlpha(),
             "The keyword state should be called only when the next byte is an alpha character.");
 
+        context.TextWindow.StartParsingLexeme();
         context.TextWindow.AdvanceIfMatches(CharacterExtensions.IsAlpha); // handle the keyword token
-
         context.TextWindow.StopParsingLexeme();
 
         ref var tokenInfo = ref context.GetTokenInfo();

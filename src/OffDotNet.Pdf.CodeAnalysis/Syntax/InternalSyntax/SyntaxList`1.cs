@@ -125,7 +125,7 @@ internal readonly partial struct SyntaxList<TNode> : IEnumerable<TNode>, IEquata
     /// <inheritdoc/>
     public override int GetHashCode()
     {
-        return this.Node != null ? this.Node.GetHashCode() : 0;
+        return this.Node?.GetHashCode() ?? 0;
     }
 
     private TNode GetRequiredItem(int index)
