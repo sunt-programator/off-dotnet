@@ -6,10 +6,9 @@
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Lexer;
 
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
-using OffDotNet.Pdf.CodeAnalysis.Lexer;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
-public class KeywordStateLexicalTests
+public class KeywordStateLexicalTests : BaseTests
 {
     [Theory(DisplayName = "The keyword state must parse the PDF keyword token.")]
     [InlineData("true", SyntaxKind.TrueKeyword)]
@@ -29,37 +28,5 @@ public class KeywordStateLexicalTests
             expectedKind: SyntaxKind.UnknownKeyword,
             expectedText: input,
             expectedErrors: [DiagnosticCode.ERR_InvalidKeyword]);
-    }
-
-    private static void Test(
-        string input,
-        SyntaxKind expectedKind,
-        string expectedText)
-    {
-        Test(input, expectedKind, expectedText, []);
-    }
-
-    private static void Test(
-        string input,
-        SyntaxKind expectedKind,
-        string expectedText,
-        IEnumerable<DiagnosticCode> expectedErrors)
-    {
-        // Arrange
-        ReadOnlySpan<byte> text = Encoding.UTF8.GetBytes(input);
-        var textWindow = text.ToTextWindow();
-        using var context = new LexerContext(textWindow);
-
-        // Act
-        textWindow.StartParsingLexeme();
-        context.TransitionTo(DefaultState.Instance);
-
-        // Assert
-        ref var tokenInfo = ref context.GetTokenInfo();
-        Assert.NotEqual(default, tokenInfo);
-        Assert.Equal(expectedKind, tokenInfo._kind);
-        Assert.Equal(expectedText, tokenInfo._text);
-        Assert.False(textWindow.IsLexemeMode);
-        Assert.Equivalent(expectedErrors, context.Errors.Select(x => x.Code));
     }
 }

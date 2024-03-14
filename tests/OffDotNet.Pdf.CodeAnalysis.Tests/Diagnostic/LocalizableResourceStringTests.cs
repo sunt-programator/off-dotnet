@@ -193,7 +193,7 @@ public class LocalizableResourceStringTests
         int actualHashCode = localizableResourceString.GetHashCode();
 
         // Assert
-        Assert.True(actualHashCode != 0);
+        Assert.NotEqual(0, actualHashCode);
     }
 
     private static CustomResourceManager GetTestResourceManagerInstance()

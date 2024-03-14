@@ -59,9 +59,9 @@ public sealed class PdfIndirect<T> : PdfObject, IPdfIndirect<T>
         var stringBuilder = new StringBuilder()
             .Append(objectIdentifier);
 
-        if (this.Value != null)
+        if (this.Value is { } value)
         {
-            stringBuilder.Append(this.Value.Content);
+            stringBuilder.Append(value.Content);
         }
 
         return stringBuilder

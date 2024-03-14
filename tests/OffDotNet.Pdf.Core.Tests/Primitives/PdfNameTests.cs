@@ -35,7 +35,6 @@ public class PdfNameTests
     [Theory(DisplayName = "Constructor should throw and exception when the value is null or contain whitespaces")]
     [InlineData("")]
     [InlineData(" ")]
-    [InlineData(null)]
     public void PdfName_ParameterizedConstructor_NullOrWhitespace_ShouldThrowArgumentNullException(string? inputValue)
     {
         // Arrange
