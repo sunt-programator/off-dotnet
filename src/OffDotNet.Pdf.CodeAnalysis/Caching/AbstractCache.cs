@@ -55,7 +55,7 @@ internal abstract class AbstractCache<TEntry>
     /// <summary>Gets the number of bits required to represent the specified size.</summary>
     /// <param name="size">The size.</param>
     /// <returns>The number of bits required to represent the specified size.</returns>
-    protected int GetNumberOfBits(int size)
+    protected static int GetNumberOfBits(int size)
     {
         var bits = 0;
         while (size > 0)

@@ -29,13 +29,13 @@ public class LocationNoneTests
     public void GetHashCodeMethod_MustIncludeLineAndCharacter()
     {
         // Arrange
-        int expectedHashCode = 0x16487756;
+        const int ExpectedHashCode = 0x16487756;
 
         // Act
         int actualHashCode = this.location.GetHashCode();
 
         // Assert
-        Assert.Equal(expectedHashCode, actualHashCode);
+        Assert.Equal(ExpectedHashCode, actualHashCode);
     }
 
     [Fact(DisplayName = "The Equals() method must return true.")]

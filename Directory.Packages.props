@@ -1,7 +1,9 @@
 <Project>
-  <!-- Analyzers -->
   <ItemGroup>
     <PackageVersion Include="Microsoft.Extensions.ObjectPool" Version="8.0.2" />
+  </ItemGroup>
+  <!-- Analyzers -->
+  <ItemGroup>
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

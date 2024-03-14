@@ -366,9 +366,9 @@ public sealed class SlidingTextWindowTests : IDisposable
         const byte Expected3 = 0x43;
 
         // Act
-        var result1 = _sut.PickAndAdvanceByte();
-        var result2 = _sut.PickAndAdvanceByte();
-        var result3 = _sut.PickAndAdvanceByte();
+        var result1 = _sut.PeekAndAdvanceByte();
+        var result2 = _sut.PeekAndAdvanceByte();
+        var result3 = _sut.PeekAndAdvanceByte();
 
         // Assert
         Assert.Equal(Expected1, result1);
@@ -384,7 +384,7 @@ public sealed class SlidingTextWindowTests : IDisposable
         _sut.AdvanceByte(_text.Length);
 
         // Act
-        var result = _sut.PickAndAdvanceByte();
+        var result = _sut.PeekAndAdvanceByte();
 
         // Assert
         Assert.Null(result);

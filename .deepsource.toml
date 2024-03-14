@@ -11,3 +11,7 @@ name = "csharp"
 
 [[transformers]]
 name = "dotnet-format"
+
+test_patterns = [
+"tests/**",
+]

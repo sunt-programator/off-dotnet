@@ -351,6 +351,6 @@ public class DiagnosticDescriptorTests
         int actualHashCode = this.diagnosticDescriptor.GetHashCode();
 
         // Assert
-        Assert.True(actualHashCode != 0);
+        Assert.NotEqual(0, actualHashCode);
     }
 }

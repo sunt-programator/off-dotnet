@@ -5,10 +5,11 @@
 
 namespace OffDotNet.Pdf.Core.Extensions;
 
+using System.Diagnostics.CodeAnalysis;
 using Common;
 using Primitives;
 
-public class AnyOf<T1, T2>
+public readonly struct AnyOf<T1, T2>
     where T1 : IPdfObject
     where T2 : IPdfObject
 {
@@ -25,23 +26,14 @@ public class AnyOf<T1, T2>
         this.secondType = type;
     }
 
-    public IPdfObject PdfObject
-    {
-        get
-        {
-            if (this.firstType != null)
-            {
-                return this.firstType;
-            }
-
-            if (this.secondType != null)
-            {
-                return this.secondType;
-            }
-
-            return default(PdfNull);
-        }
-    }
+    [SuppressMessage(
+        "ReSharper",
+        "ReplaceConditionalExpressionWithNullCoalescing",
+        Justification = "Thi fixer leads to compiler error")]
+    public IPdfObject PdfObject =>
+        this.firstType is { } t1
+            ? t1
+            : this.secondType!;
 
     public static implicit operator AnyOf<T1, T2>(T1 type1)
     {

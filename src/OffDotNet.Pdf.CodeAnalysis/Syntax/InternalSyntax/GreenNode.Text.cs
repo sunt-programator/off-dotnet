@@ -84,11 +84,11 @@ internal abstract partial class GreenNode
 
     private string ToString(bool leading, bool trailing)
     {
-        var stringBuilder = StringBuilderPool.Instance.Get();
+        var stringBuilder = SharedObjectPools.StringBuilderPool.Get();
         TextWriter writer = new StringWriter(stringBuilder, System.Globalization.CultureInfo.InvariantCulture);
         this.WriteTo(writer, leading, trailing);
         var result = stringBuilder.ToString();
-        StringBuilderPool.Instance.Return(stringBuilder);
+        SharedObjectPools.StringBuilderPool.Return(stringBuilder);
         return result;
     }
 }
