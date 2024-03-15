@@ -64,7 +64,7 @@ internal sealed class StringLiteralState : LexerState
 
         if (parentheses != 0)
         {
-            var error = new DiagnosticInfo(MessageProvider.Instance, DiagnosticCode.ERR_UnbalancedStringLiteral);
+            var error = new DiagnosticInfo(MessageProvider.Instance, DiagnosticCode.ERR_InvalidStringLiteral);
             context.Errors.Add(error);
         }
 

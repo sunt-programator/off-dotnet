@@ -11,7 +11,9 @@ name = "shell"
 name = "secrets"
 
 [[analyzers]]
+enabled = false
 name = "csharp"
 
 [[transformers]]
+enabled = false
 name = "dotnet-format"

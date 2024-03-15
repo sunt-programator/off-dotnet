@@ -35,11 +35,18 @@ internal sealed class DefaultState : LexerState
         if (b == (byte)'(')
         {
             context.TransitionTo(StringLiteralState.Instance);
+            return;
         }
 
         if (b == (byte)'<')
         {
             context.TransitionTo(HexStringLiteralState.Instance);
+            return;
+        }
+
+        if (b == (byte)'/')
+        {
+            context.TransitionTo(NameLiteralState.Instance);
         }
     }
 }

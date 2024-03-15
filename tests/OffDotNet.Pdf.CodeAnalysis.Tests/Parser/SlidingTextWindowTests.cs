@@ -454,6 +454,21 @@ public sealed class SlidingTextWindowTests : IDisposable
         Assert.False(result);
     }
 
+    [Fact(DisplayName =
+        $"The {nameof(SlidingTextWindow.IsLexemeMode)} property must be set to false if the window is reset")]
+    public void IsLexemeModeProperty_MustBeSetToFalse_IfTheWindowIsReset()
+    {
+        // Arrange
+        _sut.StartParsingLexeme();
+
+        // Act
+        _ = _sut.PeekByte(_text.Length);
+
+        // Assert
+        Assert.Equal(0, _sut.LexemeWidth);
+        Assert.False(_sut.IsLexemeMode);
+    }
+
     public void Dispose()
     {
         _sut.Dispose();

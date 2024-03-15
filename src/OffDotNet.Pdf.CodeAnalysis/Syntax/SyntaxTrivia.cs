@@ -12,7 +12,7 @@ using Text;
 [DebuggerDisplay("{GetDebuggerDisplay(), nq}")]
 public readonly struct SyntaxTrivia : IEquatable<SyntaxTrivia>
 {
-    internal SyntaxTrivia(in SyntaxToken token, GreenNode? triviaNode, int position, int index)
+    internal SyntaxTrivia(in SyntaxToken token, GreenNode? triviaNode, int position, int index) // skipcq: CS-R1138
     {
         Debug.Assert(triviaNode?.IsTrivia != false, "Invalid trivia node.");
         this.Node = triviaNode;

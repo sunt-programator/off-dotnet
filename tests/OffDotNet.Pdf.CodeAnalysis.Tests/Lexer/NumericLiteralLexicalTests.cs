@@ -10,17 +10,17 @@ using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
 public class NumericLiteralLexicalTests : BaseTests
 {
-    [Fact(DisplayName = "The integer value must be parsed.")]
-    public void NumericLiteral_MustParseIntegerValue()
+    [Fact(DisplayName = "The integer value must be lexed.")]
+    public void NumericLiteral_MustLexIntegerValue()
     {
         Test("123", SyntaxKind.NumericLiteralToken, "123", tokenInfo => tokenInfo._intValue, 123);
     }
 
-    [Theory(DisplayName = "The real value must be parsed.")]
+    [Theory(DisplayName = "The real value must be lexed.")]
     [InlineData("34.5", 34.5)]
     [InlineData("4.", 4)]
     [InlineData(".002", 0.002)]
-    public void NumericLiteral_MustParseRealValue(string input, double expected)
+    public void NumericLiteral_MustLexRealValue(string input, double expected)
     {
         Test(input, SyntaxKind.NumericLiteralToken, input, tokenInfo => tokenInfo._realValue, expected);
     }

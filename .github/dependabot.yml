@@ -10,6 +10,9 @@ updates:
     schedule:
       interval: "daily"
     groups:
+      main-packages:
+        patterns:
+          - "Microsoft.*"
       analyzers-packages:
         patterns:
           - "SonarAnalyzer.CSharp"
@@ -32,3 +35,9 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      main-actions:
+        patterns:
+          - "actions/setup-java"
+          - "actions/checkout"
+          - "github/codeql-action"

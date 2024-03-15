@@ -37,17 +37,17 @@ internal sealed class NumericLiteralState : LexerState
 
         if (!isRealNumber)
         {
-            ParseIntNumber(ref tokenInfo, tokenInfo._text, context.Errors);
+            ParseIntNumber(tokenInfo._text, context.Errors, ref tokenInfo);
             return;
         }
 
-        ParseRealNumber(ref tokenInfo, tokenInfo._text, context.Errors);
+        ParseRealNumber(tokenInfo._text, context.Errors, ref tokenInfo);
     }
 
     private static void ParseIntNumber(
-        ref LexerContext.TokenInfo tokenInfo,
         ReadOnlySpan<char> text,
-        ICollection<DiagnosticInfo> errors)
+        ICollection<DiagnosticInfo> errors,
+        ref LexerContext.TokenInfo tokenInfo)
     {
         try
         {
@@ -57,14 +57,14 @@ internal sealed class NumericLiteralState : LexerState
         {
             // ISO 32000-2:2020 - 7.3.3 Numeric Objects
             // Real numbers can be represented as integers, so we can parse large integers as real numbers.
-            ParseRealNumber(ref tokenInfo, text, errors);
+            ParseRealNumber(text, errors, ref tokenInfo);
         }
     }
 
     private static void ParseRealNumber(
-        ref LexerContext.TokenInfo tokenInfo,
         ReadOnlySpan<char> text,
-        ICollection<DiagnosticInfo> errors)
+        ICollection<DiagnosticInfo> errors,
+        ref LexerContext.TokenInfo tokenInfo)
     {
         var realValue = double.Parse(text, NumberStyles.Float, CultureInfo.InvariantCulture);
 

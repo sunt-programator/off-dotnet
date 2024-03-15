@@ -10,7 +10,7 @@ using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
 public class HexStringLiteralLexicalTests : BaseTests
 {
-    [Theory(DisplayName = "The hex string literal must be parsed.")]
+    [Theory(DisplayName = "The hex string literal must be lexed.")]
     [InlineData(
         "<>",
         "")]
@@ -26,7 +26,7 @@ public class HexStringLiteralLexicalTests : BaseTests
     [InlineData(
         "<546\0 5787420\t 77697468\f 2077686974657370\r 61636573207368\n 6F756C642062652069676\r\n E6F726564>",
         "Text with whitespaces should be ignored")]
-    public void HexStringLiteral_MustParse(string input, string expectedValue)
+    public void HexStringLiteral_MustLex(string input, string expectedValue)
     {
         Test(
             input: input,

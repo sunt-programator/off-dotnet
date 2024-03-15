@@ -34,7 +34,7 @@ internal readonly partial struct SyntaxList<TNode> : IEnumerable<TNode>, IEquata
 
     public TNode[] Nodes
     {
-        get
+        get // skipcq: CS-W1096
         {
             var array = new TNode[this.Count];
 
