@@ -64,7 +64,7 @@ internal class DiagnosticInfo : IFormattable
     /// <remarks>True implies <see cref="EffectiveSeverity"/> = <see cref="DiagnosticSeverity.Error"/> and <see cref="DefaultSeverity"/> = <see cref="DiagnosticSeverity.Warning"/>.</remarks>
     public bool IsWarningAsError => this.DefaultSeverity == DiagnosticSeverity.Warning && this.EffectiveSeverity == DiagnosticSeverity.Error;
 
-    internal object[] Arguments { get; }
+    internal object[] Arguments { get; } // skipcq: CS-W1096
 
     internal IMessageProvider MessageProvider { get; }
 

@@ -10,6 +10,9 @@ updates:
     schedule:
       interval: "daily"
     groups:
+      main-packages:
+        patterns:
+          - "Microsoft.*"
       analyzers-packages:
         patterns:
           - "SonarAnalyzer.CSharp"

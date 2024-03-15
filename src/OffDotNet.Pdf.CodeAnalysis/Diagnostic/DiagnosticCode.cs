@@ -14,6 +14,7 @@ public enum DiagnosticCode : ushort
     ERR_InvalidPDFVersion,
     ERR_RealOverflow,
     ERR_InvalidKeyword,
-    ERR_UnbalancedStringLiteral,
+    ERR_InvalidStringLiteral,
     ERR_InvalidHexStringLiteral,
+    ERR_InvalidNameLiteral,
 }

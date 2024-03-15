@@ -179,10 +179,10 @@ public class LinePositionTests
         // Arrange
 
         // Act
-        bool compare1 = new LinePosition(1, 1) > new LinePosition(1, 1);
-        bool compare2 = new LinePosition(1, 1) < new LinePosition(1, 1);
-        bool compare3 = new LinePosition(1, 1) >= new LinePosition(1, 1);
-        bool compare4 = new LinePosition(1, 1) <= new LinePosition(1, 1);
+        bool compare1 = new LinePosition(1, 1) > new LinePosition(1, 1); // skipcq: CS-W1026
+        bool compare2 = new LinePosition(1, 1) < new LinePosition(1, 1); // skipcq: CS-W1026
+        bool compare3 = new LinePosition(1, 1) >= new LinePosition(1, 1); // skipcq: CS-W1026
+        bool compare4 = new LinePosition(1, 1) <= new LinePosition(1, 1); // skipcq: CS-W1026
         bool compare5 = new LinePosition(1, 1) > new LinePosition(2, 1);
         bool compare6 = new LinePosition(1, 1) < new LinePosition(2, 1);
         bool compare7 = new LinePosition(1, 1) >= new LinePosition(2, 1);

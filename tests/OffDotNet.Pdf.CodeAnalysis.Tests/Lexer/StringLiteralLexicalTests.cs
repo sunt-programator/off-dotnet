@@ -10,7 +10,7 @@ using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
 public class StringLiteralLexicalTests : BaseTests
 {
-    [Theory(DisplayName = "The general string literal must be parsed.")]
+    [Theory(DisplayName = "The general string literal must be lexed.")]
     [InlineData(
         "(The following is an empty string.)",
         "The following is an empty string.")]
@@ -86,7 +86,7 @@ public class StringLiteralLexicalTests : BaseTests
     [InlineData(
         "(\\53 should be treated as + sign)",
         "+ should be treated as + sign")]
-    public void StringLiteral_MustParseGeneralStringLiteral(string input, string expectedValue)
+    public void StringLiteral_MustLexGeneralStringLiteral(string input, string expectedValue)
     {
         Test(
             input: input,
@@ -111,15 +111,15 @@ public class StringLiteralLexicalTests : BaseTests
     [InlineData(
         "(non-terminated string",
         "non-terminated string",
-        DiagnosticCode.ERR_UnbalancedStringLiteral)]
+        DiagnosticCode.ERR_InvalidStringLiteral)]
     [InlineData(
         "(()",
         "()",
-        DiagnosticCode.ERR_UnbalancedStringLiteral)]
+        DiagnosticCode.ERR_InvalidStringLiteral)]
     [InlineData(
         "(()skip after the closing parenthesis",
         "()skip after the closing parenthesis",
-        DiagnosticCode.ERR_UnbalancedStringLiteral)]
+        DiagnosticCode.ERR_InvalidStringLiteral)]
     public void StringLiteral_MustGetError(string input, string expectedValue, DiagnosticCode expectedCode)
     {
         Test(

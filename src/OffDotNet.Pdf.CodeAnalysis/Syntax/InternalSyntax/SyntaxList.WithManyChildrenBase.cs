@@ -24,7 +24,7 @@ internal abstract partial class SyntaxList
             }
         }
 
-        protected ArrayElement<GreenNode>[] Children { get; }
+        protected ArrayElement<GreenNode>[] Children { get; } // skipcq: CS-W1096
 
         /// <inheritdoc/>
         internal override GreenNode? GetSlot(int index)

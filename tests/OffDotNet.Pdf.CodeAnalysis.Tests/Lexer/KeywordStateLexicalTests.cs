@@ -13,15 +13,15 @@ public class KeywordStateLexicalTests : BaseTests
     [Theory(DisplayName = "The keyword state must parse the PDF keyword token.")]
     [InlineData("true", SyntaxKind.TrueKeyword)]
     [InlineData("false", SyntaxKind.FalseKeyword)]
-    public void KeywordState_MustParseKeywordToken(string input, SyntaxKind expectedKind)
+    public void KeywordState_MustLexKeywordToken(string input, SyntaxKind expectedKind)
     {
         Test(input: input, expectedKind: expectedKind, expectedText: input);
     }
 
-    [Theory(DisplayName = $"The keyword that cannot be recognized must be parsed as {nameof(SyntaxKind.UnknownKeyword)}.")]
+    [Theory(DisplayName = $"The keyword that cannot be recognized must be lexed as {nameof(SyntaxKind.UnknownKeyword)}.")]
     [InlineData("xyztoken")]
     [InlineData("startxreflongname")]
-    public void KeywordState_NotRecognized_MustParseAsUnknownKeyword(string input)
+    public void KeywordState_NotRecognized_MustLexAsUnknownKeyword(string input)
     {
         Test(
             input: input,
