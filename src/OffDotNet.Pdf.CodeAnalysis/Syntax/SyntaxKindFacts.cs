@@ -11,23 +11,30 @@ internal static class SyntaxKindFacts
 {
     internal static readonly Dictionary<string, SyntaxKind> SyntaxKindDictionary = new()
     {
-        { "true", SyntaxKind.TrueKeyword }, { "false", SyntaxKind.FalseKeyword },
+        { "true", SyntaxKind.TrueKeyword },
+        { "false", SyntaxKind.FalseKeyword },
+        { "null", SyntaxKind.NullKeyword },
+        { "obj", SyntaxKind.StartObjectKeyword },
+        { "endobj", SyntaxKind.EndObjectKeyword },
+        { "R", SyntaxKind.IndirectReferenceKeyword },
+        { "stream", SyntaxKind.StartStreamKeyword },
+        { "endstream", SyntaxKind.EndStreamKeyword },
+        { "xref", SyntaxKind.XRefKeyword },
+        { "trailer", SyntaxKind.TrailerKeyword },
+        { "startxref", SyntaxKind.StartXRefKeyword },
+        { "PDF", SyntaxKind.PdfKeyword },
+        { "f", SyntaxKind.FreeXRefEntryKeyword },
+        { "n", SyntaxKind.InUseXRefEntryKeyword },
     };
 
     public static string GetText(this SyntaxKind kind)
     {
         return kind switch
         {
-            SyntaxKind.LeftParenthesisToken => "(",
-            SyntaxKind.RightParenthesisToken => ")",
-            SyntaxKind.LessThanToken => "<",
-            SyntaxKind.GreaterThanToken => ">",
             SyntaxKind.LeftSquareBracketToken => "[",
             SyntaxKind.RightSquareBracketToken => "]",
             SyntaxKind.LeftCurlyBracketToken => "{",
             SyntaxKind.RightCurlyBracketToken => "}",
-            SyntaxKind.SolidusToken => "/",
-            SyntaxKind.PercentSignToken => "%",
             SyntaxKind.LessThanLessThanToken => "<<",
             SyntaxKind.GreaterThanGreaterThanToken => ">>",
             SyntaxKind.PlusToken => "+",

@@ -16,47 +16,29 @@ public enum SyntaxKind : ushort
 
     // Punctuations
 
-    /// <summary>Represents <c>(</c> token.</summary>
-    LeftParenthesisToken = 8100,
-
-    /// <summary>Represents <c>)</c> token.</summary>
-    RightParenthesisToken = 8101,
-
-    /// <summary>Represents <c>&lt;</c> token.</summary>
-    LessThanToken = 8102,
-
-    /// <summary>Represents <c>&gt;</c> token.</summary>
-    GreaterThanToken = 8103,
-
     /// <summary>Represents <c>[</c> token.</summary>
-    LeftSquareBracketToken = 8104,
+    LeftSquareBracketToken = 8100,
 
     /// <summary>Represents <c>]</c> token.</summary>
-    RightSquareBracketToken = 8105,
+    RightSquareBracketToken = 8101,
 
     /// <summary>Represents <c>{</c> token.</summary>
-    LeftCurlyBracketToken = 8106,
+    LeftCurlyBracketToken = 8102,
 
     /// <summary>Represents <c>}</c> token.</summary>
-    RightCurlyBracketToken = 8107,
+    RightCurlyBracketToken = 8103,
 
     /// <summary>Represents <c>&lt;&lt;</c> token.</summary>
-    LessThanLessThanToken = 8108,
+    LessThanLessThanToken = 8104,
 
     /// <summary>Represents <c>&gt;&gt;</c> token.</summary>
-    GreaterThanGreaterThanToken = 8109,
-
-    /// <summary>Represents <c>/</c> token.</summary>
-    SolidusToken = 8110,
-
-    /// <summary>Represents <c>%</c> token.</summary>
-    PercentSignToken = 8111,
+    GreaterThanGreaterThanToken = 8105,
 
     /// <summary>Represents <c>+</c> token.</summary>
-    PlusToken = 8112,
+    PlusToken = 8106,
 
     /// <summary>Represents <c>-</c> token.</summary>
-    MinusToken = 8113,
+    MinusToken = 8107,
 
     // Keywords
 

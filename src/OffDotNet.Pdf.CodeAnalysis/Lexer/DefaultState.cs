@@ -38,7 +38,7 @@ internal sealed class DefaultState : LexerState
             return;
         }
 
-        if (b == (byte)'<')
+        if (b == (byte)'<' && context.TextWindow.PeekByte(1) != (byte)'<')
         {
             context.TransitionTo(HexStringLiteralState.Instance);
             return;
@@ -47,6 +47,9 @@ internal sealed class DefaultState : LexerState
         if (b == (byte)'/')
         {
             context.TransitionTo(NameLiteralState.Instance);
+            return;
         }
+
+        context.TransitionTo(SimpleTokenState.Instance);
     }
 }
