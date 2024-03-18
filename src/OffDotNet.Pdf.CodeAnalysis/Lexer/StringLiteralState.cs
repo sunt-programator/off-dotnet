@@ -28,9 +28,9 @@ internal sealed class StringLiteralState : LexerState
         ScanStringLiteral(context);
 
         ref var tokenInfo = ref context.GetTokenInfo();
-        tokenInfo._kind = SyntaxKind.StringLiteralToken;
-        tokenInfo._text = Encoding.UTF8.GetString(context.TextWindow.GetLexemeBytes(shouldIntern: false));
-        tokenInfo._stringValue = context.StringBuilderCache.ToString();
+        tokenInfo.Kind = SyntaxKind.StringLiteralToken;
+        tokenInfo.Text = Encoding.UTF8.GetString(context.TextWindow.GetLexemeBytes(shouldIntern: false));
+        tokenInfo.StringValue = context.StringBuilderCache.ToString();
 
         context.StringBuilderCache.Clear();
     }

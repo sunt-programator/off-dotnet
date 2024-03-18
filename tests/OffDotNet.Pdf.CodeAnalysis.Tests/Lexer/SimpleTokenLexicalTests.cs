@@ -8,7 +8,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Lexer;
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
-public class SimpleTokenLexicalTests : BaseTests
+public class SimpleTokenLexicalTests
 {
     [Theory(DisplayName = "The simple token must be lexed.")]
     [InlineData("[", SyntaxKind.LeftSquareBracketToken)]
@@ -21,6 +21,8 @@ public class SimpleTokenLexicalTests : BaseTests
     [InlineData("-", SyntaxKind.MinusToken)]
     public void SimpleTokenState_MustBeLexed(string input, SyntaxKind expectedKind)
     {
-        Test(input: input, expectedKind: expectedKind, expectedText: input);
+        input.Lex()
+            .WithKind(expectedKind)
+            .WithText(input);
     }
 }

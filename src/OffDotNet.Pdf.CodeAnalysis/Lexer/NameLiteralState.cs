@@ -31,9 +31,9 @@ internal sealed class NameLiteralState : LexerState
         ScanNameLiteral(context);
 
         ref var tokenInfo = ref context.GetTokenInfo();
-        tokenInfo._kind = SyntaxKind.NameLiteralToken;
-        tokenInfo._text = Encoding.UTF8.GetString(context.TextWindow.GetLexemeBytes(shouldIntern: false));
-        tokenInfo._stringValue = context.StringBuilderCache.ToString();
+        tokenInfo.Kind = SyntaxKind.NameLiteralToken;
+        tokenInfo.Text = Encoding.UTF8.GetString(context.TextWindow.GetLexemeBytes(shouldIntern: false));
+        tokenInfo.StringValue = context.StringBuilderCache.ToString();
 
         context.StringBuilderCache.Clear();
     }

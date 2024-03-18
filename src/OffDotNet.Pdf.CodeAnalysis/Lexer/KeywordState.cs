@@ -31,17 +31,16 @@ internal sealed class KeywordState : LexerState
         context.TextWindow.StopParsingLexeme();
 
         ref var tokenInfo = ref context.GetTokenInfo();
-        tokenInfo._text = Encoding.UTF8.GetString(context.TextWindow.GetLexemeBytes(shouldIntern: true));
+        tokenInfo.Text = Encoding.UTF8.GetString(context.TextWindow.GetLexemeBytes(shouldIntern: true));
 
-        tokenInfo._kind = tokenInfo._text.Length > MaxKeywordLength
+        tokenInfo.Kind = tokenInfo.Text.Length > MaxKeywordLength
             ? SyntaxKind.None
             : context.KeywordKindCache.GetOrAdd(
-                tokenInfo._text,
+                tokenInfo.Text,
                 static text => SyntaxKindFacts.SyntaxKindDictionary.GetValueOrDefault(text, SyntaxKind.None));
 
-        if (tokenInfo._kind == SyntaxKind.None)
+        if (tokenInfo.Kind == SyntaxKind.None)
         {
-            tokenInfo._kind = SyntaxKind.UnknownKeyword;
             context.Errors.Add(new DiagnosticInfo(MessageProvider.Instance, DiagnosticCode.ERR_InvalidKeyword));
         }
     }

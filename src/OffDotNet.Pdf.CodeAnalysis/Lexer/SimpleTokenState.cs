@@ -21,8 +21,8 @@ internal sealed class SimpleTokenState : LexerState
     public override void Handle(LexerContext context)
     {
         ref var tokenInfo = ref context.GetTokenInfo();
-        tokenInfo._kind = ScanSimpleToken(context);
-        tokenInfo._text = tokenInfo._kind.GetText();
+        tokenInfo.Kind = ScanSimpleToken(context);
+        tokenInfo.Text = tokenInfo.Kind.GetText();
     }
 
     private static SyntaxKind ScanSimpleToken(LexerContext context)

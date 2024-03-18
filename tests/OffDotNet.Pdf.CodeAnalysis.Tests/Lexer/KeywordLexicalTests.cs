@@ -8,7 +8,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Lexer;
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
-public class KeywordLexicalTests : BaseTests
+public class KeywordLexicalTests
 {
     [Theory(DisplayName = "The keyword state must parse the PDF keyword token.")]
     [InlineData("true", SyntaxKind.TrueKeyword)]
@@ -27,18 +27,19 @@ public class KeywordLexicalTests : BaseTests
     [InlineData("n", SyntaxKind.InUseXRefEntryKeyword)]
     public void KeywordState_MustLexKeywordToken(string input, SyntaxKind expectedKind)
     {
-        Test(input: input, expectedKind: expectedKind, expectedText: input);
+        input.Lex()
+            .WithKind(expectedKind)
+            .WithText(input);
     }
 
-    [Theory(DisplayName = $"The keyword that cannot be recognized must be lexed as {nameof(SyntaxKind.UnknownKeyword)}.")]
+    [Theory(DisplayName = $"The keyword that cannot be recognized must be lexed as {nameof(SyntaxKind.BadToken)}.")]
     [InlineData("xyztoken")]
     [InlineData("startxreflongname")]
     public void KeywordState_NotRecognized_MustLexAsUnknownKeyword(string input)
     {
-        Test(
-            input: input,
-            expectedKind: SyntaxKind.UnknownKeyword,
-            expectedText: input,
-            expectedErrors: [DiagnosticCode.ERR_InvalidKeyword]);
+        input.Lex()
+            .WithKind(SyntaxKind.BadToken)
+            .WithText(input)
+            .WithErrors([DiagnosticCode.ERR_InvalidKeyword]);
     }
 }

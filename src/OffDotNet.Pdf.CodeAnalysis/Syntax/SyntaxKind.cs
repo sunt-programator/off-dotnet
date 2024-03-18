@@ -84,22 +84,22 @@ public enum SyntaxKind : ushort
     /// <summary>Represents <c>n</c> keyword.</summary>
     InUseXRefEntryKeyword = 8313,
 
-    /// <summary>Represents an unknown token.</summary>
-    UnknownKeyword = 8501,
-
     // Tokens with text
 
+    /// <summary>Represents an unknown token.</summary>
+    BadToken = 8500,
+
     /// <summary>Represents a numeric literal token.</summary>
-    NumericLiteralToken = 8502,
+    NumericLiteralToken = 8501,
 
     /// <summary>Represents a string literal token.</summary>
-    StringLiteralToken = 8503,
+    StringLiteralToken = 8502,
 
     /// <summary>Represents a hexadecimal string literal token.</summary>
-    HexStringLiteralToken = 8504,
+    HexStringLiteralToken = 8503,
 
     /// <summary>Represents a name literal token.</summary>
-    NameLiteralToken = 8505,
+    NameLiteralToken = 8504,
 
     // Trivia
 

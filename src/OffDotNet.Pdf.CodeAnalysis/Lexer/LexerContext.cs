@@ -5,6 +5,7 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Lexer;
 
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Caching;
@@ -12,11 +13,16 @@ using Diagnostic;
 using Parser;
 using PooledObjects;
 using Syntax;
+using Syntax.InternalSyntax;
+using SyntaxToken = Syntax.InternalSyntax.SyntaxToken;
 
 /// <summary>The context of the lexer.</summary>
 internal sealed class LexerContext : IDisposable
 {
     private readonly Lazy<ICollection<DiagnosticInfo>> _errors;
+
+    private readonly SyntaxListBuilder _leadingTriviaCache = new(10);
+    private readonly SyntaxListBuilder _trailingTriviaCache = new(10);
 
     [SuppressMessage(
         "Minor Code Smell",
@@ -57,12 +63,22 @@ internal sealed class LexerContext : IDisposable
         return ref _info;
     }
 
-    /// <summary>Transitions to the specified state.</summary>
-    /// <param name="state">The state to transition to.</param>
-    public void TransitionTo(LexerState state)
+    /// <summary>Creates a new <see cref="SyntaxToken"/> instance.</summary>
+    /// <returns>The new <see cref="SyntaxToken"/> instance.</returns>
+    public SyntaxToken LexSyntaxToken()
     {
-        _state = state;
-        _state.Handle(this);
+        ref var tokenInfo = ref GetTokenInfo();
+        tokenInfo = default;
+
+        this.TransitionTo(DefaultState.Instance);
+        var token = CreateSyntaxToken();
+
+        if (Errors.Count > 0)
+        {
+            token = (SyntaxToken)token.SetDiagnostics(Errors.ToArray());
+        }
+
+        return token;
     }
 
     /// <summary>Disposes the resources used by the <see cref="LexerContext"/> class.</summary>
@@ -73,22 +89,39 @@ internal sealed class LexerContext : IDisposable
         SharedObjectPools.StringBuilderPool.Return(StringBuilderCache);
     }
 
-    /// <summary>Represents the token info.</summary>
-    internal struct TokenInfo
+    /// <summary>Transitions to the specified state.</summary>
+    /// <param name="state">The state to transition to.</param>
+    internal void TransitionTo(LexerState state)
     {
-        /// <summary>The kind of the token.</summary>
-        internal SyntaxKind _kind;
+        _state = state;
+        _state.Handle(this);
+    }
 
-        /// <summary>The text of the token.</summary>
-        internal string _text;
+    private SyntaxToken CreateSyntaxToken()
+    {
+        ref var tokenInfo = ref GetTokenInfo();
 
-        /// <summary>The integer value of the token.</summary>
-        internal int _intValue;
+        var leadingNode = _leadingTriviaCache.ToListNode();
+        var trailingNode = _trailingTriviaCache.ToListNode();
 
-        /// <summary>The real value of the token.</summary>
-        internal double _realValue;
+        switch (tokenInfo.Kind)
+        {
+            case SyntaxKind.HexStringLiteralToken:
+            case SyntaxKind.StringLiteralToken:
+            case SyntaxKind.NameLiteralToken:
+                return SyntaxFactory.Token(tokenInfo.Kind, tokenInfo.Text, tokenInfo.StringValue, leadingNode, trailingNode);
+            case SyntaxKind.NumericLiteralToken when tokenInfo.ValueKind == TokenInfoSpecialType.SystemInt32:
+                return SyntaxFactory.Token(tokenInfo.Kind, tokenInfo.Text, tokenInfo.IntValue, leadingNode, trailingNode);
+            case SyntaxKind.NumericLiteralToken when tokenInfo.ValueKind == TokenInfoSpecialType.SystemDouble:
+                return SyntaxFactory.Token(tokenInfo.Kind, tokenInfo.Text, tokenInfo.RealValue, leadingNode, trailingNode);
+            case SyntaxKind.None:
+                return SyntaxFactory.Token(SyntaxKind.BadToken, tokenInfo.Text, leadingNode, trailingNode);
+            default:
+                Debug.Assert(
+                    tokenInfo.Kind is >= SyntaxKind.LeftSquareBracketToken and < SyntaxKind.BadToken,
+                    "The default case must handle only punctuations and keywords");
 
-        /// <summary>The string value of the token.</summary>
-        internal string _stringValue;
+                return SyntaxFactory.Token(tokenInfo.Kind, tokenInfo.Text, leadingNode, trailingNode);
+        }
     }
 }

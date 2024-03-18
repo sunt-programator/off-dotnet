@@ -8,7 +8,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Lexer;
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
-public class StringLiteralLexicalTests : BaseTests
+public class StringLiteralLexicalTests
 {
     [Theory(DisplayName = "The general string literal must be lexed.")]
     [InlineData(
@@ -88,23 +88,23 @@ public class StringLiteralLexicalTests : BaseTests
         "+ should be treated as + sign")]
     public void StringLiteral_MustLexGeneralStringLiteral(string input, string expectedValue)
     {
-        Test(
-            input: input,
-            expectedKind: SyntaxKind.StringLiteralToken,
-            expectedText: input,
-            getValue: tokenInfo => tokenInfo._stringValue,
-            expectedValue: expectedValue);
+        input.Lex()
+            .WithKind(SyntaxKind.StringLiteralToken)
+            .WithText(input)
+            .WithValue(expectedValue);
     }
 
     [Fact(DisplayName = "String literal must ignore everything after the closing parenthesis.")]
     public void StringLiteral_MustIgnoreEverythingAfterClosingParenthesis()
     {
-        Test(
-            input: "(This is a string with a comment after the closing parenthesis.) % This is a comment",
-            expectedKind: SyntaxKind.StringLiteralToken,
-            expectedText: "(This is a string with a comment after the closing parenthesis.)",
-            getValue: tokenInfo => tokenInfo._stringValue,
-            expectedValue: "This is a string with a comment after the closing parenthesis.");
+        const string Input = "(This is a string with a comment after the closing parenthesis.) % This is a comment";
+        const string Text = "(This is a string with a comment after the closing parenthesis.)";
+        const string Value = "This is a string with a comment after the closing parenthesis.";
+
+        Input.Lex()
+            .WithKind(SyntaxKind.StringLiteralToken)
+            .WithText(Text)
+            .WithValue(Value);
     }
 
     [Theory(DisplayName = "Test string literal errors.")]
@@ -122,12 +122,10 @@ public class StringLiteralLexicalTests : BaseTests
         DiagnosticCode.ERR_InvalidStringLiteral)]
     public void StringLiteral_MustGetError(string input, string expectedValue, DiagnosticCode expectedCode)
     {
-        Test(
-            input: input,
-            expectedKind: SyntaxKind.StringLiteralToken,
-            expectedText: input,
-            getValue: tokenInfo => tokenInfo._stringValue,
-            expectedValue: expectedValue,
-            [expectedCode]);
+        input.Lex()
+            .WithKind(SyntaxKind.StringLiteralToken)
+            .WithText(input)
+            .WithValue(expectedValue)
+            .WithErrors([expectedCode]);
     }
 }

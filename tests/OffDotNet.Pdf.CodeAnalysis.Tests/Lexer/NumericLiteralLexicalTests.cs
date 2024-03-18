@@ -8,12 +8,15 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Lexer;
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
-public class NumericLiteralLexicalTests : BaseTests
+public class NumericLiteralLexicalTests
 {
     [Fact(DisplayName = "The integer value must be lexed.")]
     public void NumericLiteral_MustLexIntegerValue()
     {
-        Test("123", SyntaxKind.NumericLiteralToken, "123", tokenInfo => tokenInfo._intValue, 123);
+        "123".Lex()
+            .WithKind(SyntaxKind.NumericLiteralToken)
+            .WithText("123")
+            .WithValue(123);
     }
 
     [Theory(DisplayName = "The real value must be lexed.")]
@@ -22,7 +25,10 @@ public class NumericLiteralLexicalTests : BaseTests
     [InlineData(".002", 0.002)]
     public void NumericLiteral_MustLexRealValue(string input, double expected)
     {
-        Test(input, SyntaxKind.NumericLiteralToken, input, tokenInfo => tokenInfo._realValue, expected);
+        input.Lex()
+            .WithKind(SyntaxKind.NumericLiteralToken)
+            .WithText(input)
+            .WithValue(expected);
     }
 
     [Fact(DisplayName = "The out of range integer value must be treated as real number.")]
@@ -31,19 +37,10 @@ public class NumericLiteralLexicalTests : BaseTests
         const string Input = "2147483648";
         const double Expected = 2147483648;
 
-        Test(
-            input: Input,
-            expectedKind: SyntaxKind.NumericLiteralToken,
-            expectedText: Input,
-            getValue: tokenInfo => tokenInfo._intValue,
-            expectedValue: 0);
-
-        Test(
-            input: Input,
-            expectedKind: SyntaxKind.NumericLiteralToken,
-            expectedText: Input,
-            getValue: tokenInfo => tokenInfo._realValue,
-            expectedValue: Expected);
+        Input.Lex()
+            .WithKind(SyntaxKind.NumericLiteralToken)
+            .WithText(Input)
+            .WithValue(Expected);
     }
 
     [Fact(DisplayName = "The out of range real value must be reported as an error.")]
@@ -51,12 +48,10 @@ public class NumericLiteralLexicalTests : BaseTests
     {
         var input = double.MaxValue.ToString("F0") + "0";
 
-        Test(
-            input: input,
-            expectedKind: SyntaxKind.NumericLiteralToken,
-            expectedText: input,
-            getValue: tokenInfo => tokenInfo._realValue,
-            expectedValue: 0,
-            expectedErrors: [DiagnosticCode.ERR_RealOverflow]);
+        input.Lex()
+            .WithKind(SyntaxKind.NumericLiteralToken)
+            .WithText(input)
+            .WithValue(0)
+            .WithErrors([DiagnosticCode.ERR_RealOverflow]);
     }
 }

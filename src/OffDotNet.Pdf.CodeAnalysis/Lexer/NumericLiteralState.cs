@@ -32,26 +32,27 @@ internal sealed class NumericLiteralState : LexerState
         context.TextWindow.StopParsingLexeme();
 
         ref var tokenInfo = ref context.GetTokenInfo();
-        tokenInfo._kind = SyntaxKind.NumericLiteralToken;
-        tokenInfo._text = Encoding.UTF8.GetString(context.TextWindow.GetLexemeBytes(shouldIntern: true));
+        tokenInfo.Kind = SyntaxKind.NumericLiteralToken;
+        tokenInfo.Text = Encoding.UTF8.GetString(context.TextWindow.GetLexemeBytes(shouldIntern: true));
 
         if (!isRealNumber)
         {
-            ParseIntNumber(tokenInfo._text, context.Errors, ref tokenInfo);
+            ParseIntNumber(tokenInfo.Text, context.Errors, ref tokenInfo);
             return;
         }
 
-        ParseRealNumber(tokenInfo._text, context.Errors, ref tokenInfo);
+        ParseRealNumber(tokenInfo.Text, context.Errors, ref tokenInfo);
     }
 
     private static void ParseIntNumber(
         ReadOnlySpan<char> text,
         ICollection<DiagnosticInfo> errors,
-        ref LexerContext.TokenInfo tokenInfo)
+        ref TokenInfo tokenInfo)
     {
         try
         {
-            tokenInfo._intValue = int.Parse(text, NumberStyles.Integer, CultureInfo.InvariantCulture);
+            tokenInfo.IntValue = int.Parse(text, NumberStyles.Integer, CultureInfo.InvariantCulture);
+            tokenInfo.ValueKind = TokenInfoSpecialType.SystemInt32;
         }
         catch (OverflowException)
         {
@@ -64,7 +65,7 @@ internal sealed class NumericLiteralState : LexerState
     private static void ParseRealNumber(
         ReadOnlySpan<char> text,
         ICollection<DiagnosticInfo> errors,
-        ref LexerContext.TokenInfo tokenInfo)
+        ref TokenInfo tokenInfo)
     {
         var realValue = double.Parse(text, NumberStyles.Float, CultureInfo.InvariantCulture);
 
@@ -74,6 +75,7 @@ internal sealed class NumericLiteralState : LexerState
             return;
         }
 
-        tokenInfo._realValue = realValue;
+        tokenInfo.RealValue = realValue;
+        tokenInfo.ValueKind = TokenInfoSpecialType.SystemDouble;
     }
 }

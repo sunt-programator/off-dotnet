@@ -8,7 +8,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Lexer;
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
-public class HexStringLiteralLexicalTests : BaseTests
+public class HexStringLiteralLexicalTests
 {
     [Theory(DisplayName = "The hex string literal must be lexed.")]
     [InlineData(
@@ -28,12 +28,10 @@ public class HexStringLiteralLexicalTests : BaseTests
         "Text with whitespaces should be ignored")]
     public void HexStringLiteral_MustLex(string input, string expectedValue)
     {
-        Test(
-            input: input,
-            expectedKind: SyntaxKind.HexStringLiteralToken,
-            expectedText: input,
-            getValue: tokenInfo => tokenInfo._stringValue,
-            expectedValue: expectedValue);
+        input.Lex()
+            .WithKind(SyntaxKind.HexStringLiteralToken)
+            .WithText(input)
+            .WithValue(expectedValue);
     }
 
     [Theory(DisplayName = "Test string literal errors.")]
@@ -47,12 +45,10 @@ public class HexStringLiteralLexicalTests : BaseTests
         DiagnosticCode.ERR_InvalidHexStringLiteral)]
     public void HexStringLiteral_MustGetError(string input, string expectedValue, DiagnosticCode expectedCode)
     {
-        Test(
-            input: input,
-            expectedKind: SyntaxKind.HexStringLiteralToken,
-            expectedText: input,
-            getValue: tokenInfo => tokenInfo._stringValue,
-            expectedValue: expectedValue,
-            [expectedCode]);
+        input.Lex()
+            .WithKind(SyntaxKind.HexStringLiteralToken)
+            .WithText(input)
+            .WithValue(expectedValue)
+            .WithErrors([expectedCode]);
     }
 }

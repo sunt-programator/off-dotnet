@@ -8,7 +8,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Lexer;
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
-public class NameLiteralLexicalTests : BaseTests
+public class NameLiteralLexicalTests
 {
     [Theory(DisplayName = "The name literal must be lexed.")]
     [InlineData("/Name1", "Name1")]
@@ -24,12 +24,10 @@ public class NameLiteralLexicalTests : BaseTests
     [InlineData("/A#42", "AB")]
     public void NameLiteral_MustLex(string input, string expectedValue)
     {
-        Test(
-            input: input,
-            expectedKind: SyntaxKind.NameLiteralToken,
-            expectedText: input,
-            getValue: tokenInfo => tokenInfo._stringValue,
-            expectedValue: expectedValue);
+        input.Lex()
+            .WithKind(SyntaxKind.NameLiteralToken)
+            .WithText(input)
+            .WithValue(expectedValue);
     }
 
     [Theory(DisplayName = "Test string literal errors.")]
@@ -62,13 +60,11 @@ public class NameLiteralLexicalTests : BaseTests
         string expectedValue,
         DiagnosticCode expectedCode)
     {
-        Test(
-            input: input,
-            expectedKind: SyntaxKind.NameLiteralToken,
-            expectedText: expectedText,
-            getValue: tokenInfo => tokenInfo._stringValue,
-            expectedValue: expectedValue,
-            [expectedCode]);
+        input.Lex()
+            .WithKind(SyntaxKind.NameLiteralToken)
+            .WithText(expectedText)
+            .WithValue(expectedValue)
+            .WithErrors([expectedCode]);
     }
 
     [Theory(DisplayName = "The second name literal must not be parsed.")]
@@ -81,11 +77,9 @@ public class NameLiteralLexicalTests : BaseTests
     [InlineData("/Delimit /Ignore", "/Delimit", "Delimit")]
     public void TwoNameLiterals_MustLexOnlyFirstToken(string input, string expectedText, string expectedValue)
     {
-        Test(
-            input: input,
-            expectedKind: SyntaxKind.NameLiteralToken,
-            expectedText: expectedText,
-            getValue: tokenInfo => tokenInfo._stringValue,
-            expectedValue: expectedValue);
+        input.Lex()
+            .WithKind(SyntaxKind.NameLiteralToken)
+            .WithText(expectedText)
+            .WithValue(expectedValue);
     }
 }
