@@ -10,6 +10,11 @@ using Collections;
 
 internal static class SyntaxFactory
 {
+    internal static readonly SyntaxTrivia Space = Trivia(SyntaxKind.WhitespaceTrivia, " ");
+    internal static readonly SyntaxTrivia CarriageReturnLineFeed = Trivia(SyntaxKind.EndOfLineTrivia, "\r\n");
+    internal static readonly SyntaxTrivia CarriageReturn = Trivia(SyntaxKind.EndOfLineTrivia, "\r");
+    internal static readonly SyntaxTrivia LineFeed = Trivia(SyntaxKind.EndOfLineTrivia, "\n");
+
     public static XRefEntryExpressionSyntax XRefEntry(LiteralExpressionSyntax offset, LiteralExpressionSyntax generationNumber, SyntaxToken entryType)
     {
 #if DEBUG

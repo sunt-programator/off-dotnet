@@ -19,7 +19,7 @@ internal sealed class NumericLiteralState : LexerState
 
     /// <summary>Handles the numeric literal token.</summary>
     /// <param name="context">The lexer context.</param>
-    public override void Handle(LexerContext context)
+    public override void Handle(Lexer context)
     {
         Debug.Assert(
             context.TextWindow.PeekByte().IsDecDigit() || context.TextWindow.PeekByte() == (byte)'.',
@@ -29,11 +29,11 @@ internal sealed class NumericLiteralState : LexerState
         context.TextWindow.AdvanceIfMatches(CharacterExtensions.IsDecDigit); // handle integer numbers
         var isRealNumber = context.TextWindow.TryAdvanceIfMatches((byte)'.'); // handle real numbers
         context.TextWindow.AdvanceIfMatches(CharacterExtensions.IsDecDigit); // handle integer numbers after the dot
-        context.TextWindow.StopParsingLexeme();
 
         ref var tokenInfo = ref context.GetTokenInfo();
         tokenInfo.Kind = SyntaxKind.NumericLiteralToken;
         tokenInfo.Text = Encoding.UTF8.GetString(context.TextWindow.GetLexemeBytes(shouldIntern: true));
+        context.TextWindow.StopParsingLexeme();
 
         if (!isRealNumber)
         {

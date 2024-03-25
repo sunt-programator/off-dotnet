@@ -5,9 +5,6 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Lexer;
 
-using System.Diagnostics;
-using System.Text;
-using Diagnostic;
 using Syntax;
 
 /// <summary>The state of the lexer for the simple token.</summary>
@@ -18,14 +15,14 @@ internal sealed class SimpleTokenState : LexerState
 
     /// <summary>Handles the simple token.</summary>
     /// <param name="context">The lexer context.</param>
-    public override void Handle(LexerContext context)
+    public override void Handle(Lexer context)
     {
         ref var tokenInfo = ref context.GetTokenInfo();
         tokenInfo.Kind = ScanSimpleToken(context);
         tokenInfo.Text = tokenInfo.Kind.GetText();
     }
 
-    private static SyntaxKind ScanSimpleToken(LexerContext context)
+    private static SyntaxKind ScanSimpleToken(Lexer context)
     {
         switch (context.TextWindow.PeekByte())
         {

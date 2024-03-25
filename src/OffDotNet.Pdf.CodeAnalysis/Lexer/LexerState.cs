@@ -10,5 +10,5 @@ internal abstract class LexerState
 {
     /// <summary>Handles the lexer state.</summary>
     /// <param name="context">The lexer context.</param>
-    public abstract void Handle(LexerContext context);
+    public abstract void Handle(Lexer context);
 }

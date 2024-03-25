@@ -5,7 +5,6 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Lexer;
 
-using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 
 public class SimpleTokenLexicalTests

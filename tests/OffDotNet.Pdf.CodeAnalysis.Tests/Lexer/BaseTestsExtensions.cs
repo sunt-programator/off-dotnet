@@ -19,7 +19,7 @@ internal static class BaseTestsExtensions
         // Arrange
         ReadOnlySpan<byte> text = Encoding.UTF8.GetBytes(input);
         var textWindow = text.ToTextWindow();
-        using var context = new LexerContext(textWindow);
+        using var context = new Lexer(textWindow);
 
         // Act
         var token = context.LexSyntaxToken();
@@ -45,6 +45,42 @@ internal static class BaseTestsExtensions
     internal static SyntaxToken WithValue<T>(this SyntaxToken token, T? expectedValue)
     {
         Assert.Equal(expectedValue, token.Value);
+        return token;
+    }
+
+    internal static SyntaxToken WithLeadingTrivia(
+        this SyntaxToken token,
+        string expectedLeadingTrivia,
+        bool skipIfNull = false)
+    {
+        if (skipIfNull && string.IsNullOrWhiteSpace(expectedLeadingTrivia))
+        {
+            return token;
+        }
+
+        Assert.NotNull(token.LeadingTrivia);
+        Assert.Equal(expectedLeadingTrivia, token.LeadingTrivia.ToFullString());
+        return token;
+    }
+
+    internal static SyntaxToken WithTrailingTrivia(
+        this SyntaxToken token,
+        string expectedTrailingTrivia,
+        bool skipIfNull = false)
+    {
+        if (skipIfNull && string.IsNullOrWhiteSpace(expectedTrailingTrivia))
+        {
+            return token;
+        }
+
+        Assert.NotNull(token.TrailingTrivia);
+        Assert.Equal(expectedTrailingTrivia, token.TrailingTrivia.ToFullString());
+        return token;
+    }
+
+    internal static SyntaxToken WithFullText(this SyntaxToken token, string expectedFullText)
+    {
+        Assert.Equal(expectedFullText, token.ToFullString());
         return token;
     }
 

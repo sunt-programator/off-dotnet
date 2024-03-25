@@ -20,7 +20,7 @@ internal sealed class KeywordState : LexerState
 
     /// <summary>Handles the keyword token.</summary>
     /// <param name="context">The lexer context.</param>
-    public override void Handle(LexerContext context)
+    public override void Handle(Lexer context)
     {
         Debug.Assert(
             context.TextWindow.PeekByte().IsAlpha(),
@@ -28,7 +28,6 @@ internal sealed class KeywordState : LexerState
 
         context.TextWindow.StartParsingLexeme();
         context.TextWindow.AdvanceIfMatches(CharacterExtensions.IsAlpha); // handle the keyword token
-        context.TextWindow.StopParsingLexeme();
 
         ref var tokenInfo = ref context.GetTokenInfo();
         tokenInfo.Text = Encoding.UTF8.GetString(context.TextWindow.GetLexemeBytes(shouldIntern: true));
@@ -43,5 +42,7 @@ internal sealed class KeywordState : LexerState
         {
             context.Errors.Add(new DiagnosticInfo(MessageProvider.Instance, DiagnosticCode.ERR_InvalidKeyword));
         }
+
+        context.TextWindow.StopParsingLexeme();
     }
 }

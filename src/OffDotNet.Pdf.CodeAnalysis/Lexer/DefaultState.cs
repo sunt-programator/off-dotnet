@@ -15,7 +15,18 @@ internal sealed class DefaultState : LexerState
 
     /// <summary>Handles the initial state of the lexer.</summary>
     /// <param name="context">The lexer context.</param>
-    public override void Handle(LexerContext context)
+    public override void Handle(Lexer context)
+    {
+        context.IsLeadingTriviaMode = true;
+        context.TransitionTo(TriviaState.Instance);
+
+        HandleToken(context);
+
+        context.IsLeadingTriviaMode = false;
+        context.TransitionTo(TriviaState.Instance);
+    }
+
+    private static void HandleToken(Lexer context)
     {
         var b = context.TextWindow.PeekByte();
         Debug.Assert(b != null, "The byte cannot be null.");

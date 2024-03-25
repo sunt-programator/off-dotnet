@@ -41,12 +41,23 @@ internal static class CharacterExtensions
 
     /// <summary>Determines whether the specified byte is a whitespace character.</summary>
     /// <param name="b">The byte to check.</param>
-    /// <param name="ignoreNullByte">Whether to ignore the null byte.</param>
     /// <returns><see langword="true" /> if the specified byte is a whitespace character; otherwise, <see langword="false" />.</returns>
-    public static bool IsWhiteSpace([NotNullWhen(true)] this byte? b, bool ignoreNullByte = false) =>
-        (!ignoreNullByte && b is (byte)'\0') ||
+    public static bool IsWhiteSpace([NotNullWhen(true)] this byte? b) =>
+        b.IsWhiteSpaceExceptEndOfLine() ||
+        b.IsEndOfLine();
+
+    /// <summary>Determines whether the specified byte is a whitespace character except for the null byte.</summary>
+    /// <param name="b">The byte to check.</param>
+    /// <returns><see langword="true" /> if the specified byte is a whitespace character except for the null byte; otherwise, <see langword="false" />.</returns>
+    public static bool IsWhiteSpaceExceptNull([NotNullWhen(true)] this byte? b) =>
         b is (byte)'\t' or (byte)'\f' or (byte)' ' ||
         b.IsEndOfLine();
+
+    /// <summary>Determines whether the specified byte is a whitespace character except for the end of line.</summary>
+    /// <param name="b">The byte to check.</param>
+    /// <returns><see langword="true" /> if the specified byte is a whitespace character except for the end of line; otherwise, <see langword="false" />.</returns>
+    public static bool IsWhiteSpaceExceptEndOfLine([NotNullWhen(true)] this byte? b) =>
+        b is (byte)'\0' or (byte)'\t' or (byte)'\f' or (byte)' ';
 
     /// <summary>Builds a character from a pair of bytes.</summary>
     /// <example>
@@ -58,7 +69,7 @@ internal static class CharacterExtensions
     /// <param name="i">The index of the byte in the pair.</param>
     /// <param name="bytes">The pair of bytes.</param>
     public static void BuildCharFromStringHex(
-        this LexerContext context,
+        this Lexer context,
         bool addTrailingZero,
         ref int i,
         ref Span<char> bytes)

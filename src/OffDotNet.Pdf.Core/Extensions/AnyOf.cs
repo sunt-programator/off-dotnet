@@ -7,7 +7,6 @@ namespace OffDotNet.Pdf.Core.Extensions;
 
 using System.Diagnostics.CodeAnalysis;
 using Common;
-using Primitives;
 
 public readonly struct AnyOf<T1, T2>
     where T1 : IPdfObject

@@ -1,4 +1,4 @@
-﻿// <copyright file="LexerContext.cs" company="Sunt Programator">
+﻿// <copyright file="Lexer.cs" company="Sunt Programator">
 // Copyright (c) Sunt Programator. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -15,14 +15,12 @@ using PooledObjects;
 using Syntax;
 using Syntax.InternalSyntax;
 using SyntaxToken = Syntax.InternalSyntax.SyntaxToken;
+using SyntaxTrivia = Syntax.InternalSyntax.SyntaxTrivia;
 
 /// <summary>The context of the lexer.</summary>
-internal sealed class LexerContext : IDisposable
+internal sealed class Lexer : IDisposable
 {
     private readonly Lazy<ICollection<DiagnosticInfo>> _errors;
-
-    private readonly SyntaxListBuilder _leadingTriviaCache = new(10);
-    private readonly SyntaxListBuilder _trailingTriviaCache = new(10);
 
     [SuppressMessage(
         "Minor Code Smell",
@@ -33,28 +31,45 @@ internal sealed class LexerContext : IDisposable
     [SuppressMessage("ReSharper", "RedundantDefaultMemberInitializer", Justification = "False positive.`")]
     private TokenInfo _info = default;
 
-    /// <summary>Initializes a new instance of the <see cref="LexerContext"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="Lexer"/> class.</summary>
     /// <param name="textWindow">The text window.</param>
-    public LexerContext(SlidingTextWindow textWindow)
+    internal Lexer(SlidingTextWindow textWindow)
     {
         TextWindow = textWindow;
         KeywordKindCache = SharedObjectPools.KeywordKindCache.Get();
         StringBuilderCache = SharedObjectPools.StringBuilderPool.Get();
+        SyntaxTriviaCache = SharedObjectPools.SyntaxTriviaCache.Get();
+        LeadingTriviaBuilder = new SyntaxListBuilder(10);
+        TrailingTriviaBuilder = new SyntaxListBuilder(10);
         _state = DefaultState.Instance;
         _errors = new Lazy<ICollection<DiagnosticInfo>>(() => new List<DiagnosticInfo>(8));
     }
 
     /// <summary>Gets the text window.</summary>
-    public SlidingTextWindow TextWindow { get; }
+    internal SlidingTextWindow TextWindow { get; }
 
     /// <summary>Gets the keyword kind cache.</summary>
-    public ThreadSafeCacheFactory<string, SyntaxKind> KeywordKindCache { get; }
+    internal ThreadSafeCacheFactory<string, SyntaxKind> KeywordKindCache { get; }
+
+    /// <summary>Gets the syntax token cache.</summary>
+    internal ThreadSafeCacheFactory<string, SyntaxTrivia> SyntaxTriviaCache { get; }
 
     /// <summary>Gets the string builder cache.</summary>
-    public StringBuilder StringBuilderCache { get; }
+    internal StringBuilder StringBuilderCache { get; }
 
     /// <summary>Gets the errors.</summary>
-    public ICollection<DiagnosticInfo> Errors => _errors.Value;
+    internal ICollection<DiagnosticInfo> Errors => _errors.Value;
+
+    /// <summary>Gets the leading trivia builder.</summary>
+    internal SyntaxListBuilder LeadingTriviaBuilder { get; }
+
+    /// <summary>Gets the trailing trivia builder.</summary>
+    internal SyntaxListBuilder TrailingTriviaBuilder { get; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the leading trivia mode is active. Otherwise, the trailing trivia mode is active.
+    /// </summary>
+    internal bool IsLeadingTriviaMode { get; set; } = true;
 
     /// <summary>Gets the token info.</summary>
     /// <returns>The token info.</returns>
@@ -81,12 +96,13 @@ internal sealed class LexerContext : IDisposable
         return token;
     }
 
-    /// <summary>Disposes the resources used by the <see cref="LexerContext"/> class.</summary>
+    /// <summary>Disposes the resources used by the <see cref="Lexer"/> class.</summary>
     public void Dispose()
     {
         TextWindow.Dispose();
         SharedObjectPools.KeywordKindCache.Return(KeywordKindCache);
         SharedObjectPools.StringBuilderPool.Return(StringBuilderCache);
+        SharedObjectPools.SyntaxTriviaCache.Return(SyntaxTriviaCache);
     }
 
     /// <summary>Transitions to the specified state.</summary>
@@ -101,19 +117,34 @@ internal sealed class LexerContext : IDisposable
     {
         ref var tokenInfo = ref GetTokenInfo();
 
-        var leadingNode = _leadingTriviaCache.ToListNode();
-        var trailingNode = _trailingTriviaCache.ToListNode();
+        var leadingNode = LeadingTriviaBuilder.ToListNode();
+        var trailingNode = TrailingTriviaBuilder.ToListNode();
 
         switch (tokenInfo.Kind)
         {
             case SyntaxKind.HexStringLiteralToken:
             case SyntaxKind.StringLiteralToken:
             case SyntaxKind.NameLiteralToken:
-                return SyntaxFactory.Token(tokenInfo.Kind, tokenInfo.Text, tokenInfo.StringValue, leadingNode, trailingNode);
+                return SyntaxFactory.Token(
+                    tokenInfo.Kind,
+                    tokenInfo.Text,
+                    tokenInfo.StringValue,
+                    leadingNode,
+                    trailingNode);
             case SyntaxKind.NumericLiteralToken when tokenInfo.ValueKind == TokenInfoSpecialType.SystemInt32:
-                return SyntaxFactory.Token(tokenInfo.Kind, tokenInfo.Text, tokenInfo.IntValue, leadingNode, trailingNode);
+                return SyntaxFactory.Token(
+                    tokenInfo.Kind,
+                    tokenInfo.Text,
+                    tokenInfo.IntValue,
+                    leadingNode,
+                    trailingNode);
             case SyntaxKind.NumericLiteralToken when tokenInfo.ValueKind == TokenInfoSpecialType.SystemDouble:
-                return SyntaxFactory.Token(tokenInfo.Kind, tokenInfo.Text, tokenInfo.RealValue, leadingNode, trailingNode);
+                return SyntaxFactory.Token(
+                    tokenInfo.Kind,
+                    tokenInfo.Text,
+                    tokenInfo.RealValue,
+                    leadingNode,
+                    trailingNode);
             case SyntaxKind.None:
                 return SyntaxFactory.Token(SyntaxKind.BadToken, tokenInfo.Text, leadingNode, trailingNode);
             default:

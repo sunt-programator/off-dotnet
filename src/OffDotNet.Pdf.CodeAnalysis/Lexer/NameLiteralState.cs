@@ -21,13 +21,14 @@ internal sealed class NameLiteralState : LexerState
 
     /// <summary>Handles the name literal state.</summary>
     /// <param name="context">The lexer context.</param>
-    public override void Handle(LexerContext context)
+    public override void Handle(Lexer context)
     {
         Debug.Assert(
             context.TextWindow.PeekByte() == (byte)'/',
             "The name literal state should be called only when the next byte is a forward slash.");
 
         context.StringBuilderCache.Clear();
+        context.TextWindow.StartParsingLexeme();
         ScanNameLiteral(context);
 
         ref var tokenInfo = ref context.GetTokenInfo();
@@ -35,22 +36,18 @@ internal sealed class NameLiteralState : LexerState
         tokenInfo.Text = Encoding.UTF8.GetString(context.TextWindow.GetLexemeBytes(shouldIntern: false));
         tokenInfo.StringValue = context.StringBuilderCache.ToString();
 
+        context.TextWindow.StopParsingLexeme();
         context.StringBuilderCache.Clear();
     }
 
-    private static void ScanNameLiteral(LexerContext context)
+    private static void ScanNameLiteral(Lexer context)
     {
         Span<char> bytes = stackalloc char[2];
+        context.TextWindow.AdvanceByte();
 
         while (context.TextWindow.PeekAndAdvanceByte() is { } b)
         {
-            if (b == (byte)'/' && !context.TextWindow.IsLexemeMode)
-            {
-                context.TextWindow.StartParsingLexeme();
-                continue;
-            }
-
-            if (b == (byte)'/' || CharacterExtensions.IsWhiteSpace(b, ignoreNullByte: true))
+            if (b == (byte)'/' || CharacterExtensions.IsWhiteSpaceExceptNull(b))
             {
                 // The name literals are delimited by a forward slash or any whitespace character.
                 context.TextWindow.AdvanceByte(-1);
@@ -73,10 +70,9 @@ internal sealed class NameLiteralState : LexerState
         }
 
         AddErrorIfNameIsTooLong(context);
-        context.TextWindow.StopParsingLexeme();
     }
 
-    private static void AddErrorIfNameIsTooLong(LexerContext context)
+    private static void AddErrorIfNameIsTooLong(Lexer context)
     {
         if (context.StringBuilderCache.Length > 127)
         {
@@ -84,7 +80,7 @@ internal sealed class NameLiteralState : LexerState
         }
     }
 
-    private static void ScanHexCode(LexerContext context, ref Span<char> bytes)
+    private static void ScanHexCode(Lexer context, ref Span<char> bytes)
     {
         var b1 = context.TextWindow.PeekByte();
 

@@ -22,13 +22,14 @@ internal sealed class HexStringLiteralState : LexerState
 
     /// <summary>Handles the hex string literal state.</summary>
     /// <param name="context">The lexer context.</param>
-    public override void Handle(LexerContext context)
+    public override void Handle(Lexer context)
     {
         Debug.Assert(
             context.TextWindow.PeekByte() == (byte)'<',
             "The hex string literal state should be called only when the next byte is a less than sign.");
 
         context.StringBuilderCache.Clear();
+        context.TextWindow.StartParsingLexeme();
         ScanHexStringLiteral(context);
 
         ref var tokenInfo = ref context.GetTokenInfo();
@@ -36,10 +37,11 @@ internal sealed class HexStringLiteralState : LexerState
         tokenInfo.Text = Encoding.UTF8.GetString(context.TextWindow.GetLexemeBytes(shouldIntern: false));
         tokenInfo.StringValue = context.StringBuilderCache.ToString();
 
+        context.TextWindow.StopParsingLexeme();
         context.StringBuilderCache.Clear();
     }
 
-    private static void ScanHexStringLiteral(LexerContext context)
+    private static void ScanHexStringLiteral(Lexer context)
     {
         Span<char> bytes = stackalloc char[2];
         var i = 0;
@@ -48,14 +50,12 @@ internal sealed class HexStringLiteralState : LexerState
         {
             if (b == (byte)'<')
             {
-                context.TextWindow.StartParsingLexeme();
                 continue;
             }
 
             if (b == (byte)'>')
             {
-                context.TextWindow.StopParsingLexeme();
-                continue;
+                break;
             }
 
             if (CharacterExtensions.IsWhiteSpace(b))
@@ -80,7 +80,5 @@ internal sealed class HexStringLiteralState : LexerState
         {
             context.Errors.Add(s_code);
         }
-
-        context.TextWindow.StopParsingLexeme();
     }
 }

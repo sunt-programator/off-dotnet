@@ -109,6 +109,9 @@ public enum SyntaxKind : ushort
     /// <summary>Represents a whitespace trivia.</summary>
     WhitespaceTrivia = 8601,
 
+    /// <summary>Represents a single-line comment trivia.</summary>
+    SingleLineCommentTrivia = 8602,
+
     // Expressions
 
     /// <summary>Represents a <c>true</c> literal expression.</summary>

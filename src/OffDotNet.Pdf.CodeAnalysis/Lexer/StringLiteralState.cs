@@ -18,13 +18,15 @@ internal sealed class StringLiteralState : LexerState
 
     /// <summary>Handles the string literal state.</summary>
     /// <param name="context">The lexer context.</param>
-    public override void Handle(LexerContext context)
+    public override void Handle(Lexer context)
     {
         Debug.Assert(
             context.TextWindow.PeekByte() == (byte)'(',
             "The string literal state should be called only when the next byte is an opening parenthesis.");
 
         context.StringBuilderCache.Clear();
+        context.TextWindow.StartParsingLexeme();
+
         ScanStringLiteral(context);
 
         ref var tokenInfo = ref context.GetTokenInfo();
@@ -32,15 +34,15 @@ internal sealed class StringLiteralState : LexerState
         tokenInfo.Text = Encoding.UTF8.GetString(context.TextWindow.GetLexemeBytes(shouldIntern: false));
         tokenInfo.StringValue = context.StringBuilderCache.ToString();
 
+        context.TextWindow.StopParsingLexeme();
         context.StringBuilderCache.Clear();
     }
 
-    private static void ScanStringLiteral(LexerContext context)
+    private static void ScanStringLiteral(Lexer context)
     {
         // Skip the opening parenthesis.
         var parentheses = 1;
         context.TextWindow.AdvanceByte();
-        context.TextWindow.StartParsingLexeme();
 
         while (context.TextWindow.PeekAndAdvanceByte() is { } b)
         {
@@ -67,11 +69,9 @@ internal sealed class StringLiteralState : LexerState
             var error = new DiagnosticInfo(MessageProvider.Instance, DiagnosticCode.ERR_InvalidStringLiteral);
             context.Errors.Add(error);
         }
-
-        context.TextWindow.StopParsingLexeme();
     }
 
-    private static void ScanEscapeSequencesAndNewLineMarkers(LexerContext context, ref byte b)
+    private static void ScanEscapeSequencesAndNewLineMarkers(Lexer context, ref byte b)
     {
         switch (b)
         {
@@ -91,7 +91,7 @@ internal sealed class StringLiteralState : LexerState
         }
     }
 
-    private static void ScanEscapeSequence(LexerContext context)
+    private static void ScanEscapeSequence(Lexer context)
     {
         var b = context.TextWindow.PeekByte();
 
@@ -131,7 +131,7 @@ internal sealed class StringLiteralState : LexerState
         context.TextWindow.AdvanceByte();
     }
 
-    private static byte? ScanOctalEscapeSequence(LexerContext context, int maxDigits = 3)
+    private static byte? ScanOctalEscapeSequence(Lexer context, int maxDigits = 3)
     {
         var b = context.TextWindow.PeekByte();
         Debug.Assert(b.IsOctDigit(), "The escape sequence should start with a digit.");
