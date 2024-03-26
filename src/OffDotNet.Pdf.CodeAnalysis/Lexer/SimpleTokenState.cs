@@ -52,6 +52,11 @@ internal sealed class SimpleTokenState : LexerState
                 return SyntaxKind.MinusToken;
         }
 
+        if (context.TextWindow.IsAtEnd())
+        {
+            return SyntaxKind.EndOfFileToken;
+        }
+
         return SyntaxKind.None;
     }
 }

@@ -29,8 +29,6 @@ internal sealed class DefaultState : LexerState
     private static void HandleToken(Lexer context)
     {
         var b = context.TextWindow.PeekByte();
-        Debug.Assert(b != null, "The byte cannot be null.");
-
         if (b.IsDecDigit() || (b == (byte)'.' && context.TextWindow.PeekByte(1).IsDecDigit()))
         {
             context.TransitionTo(NumericLiteralState.Instance);

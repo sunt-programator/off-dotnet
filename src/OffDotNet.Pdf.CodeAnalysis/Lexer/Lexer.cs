@@ -90,6 +90,7 @@ internal sealed class Lexer : IDisposable
 
         if (Errors.Count > 0)
         {
+            // TODO: error offset from leading trivia
             token = (SyntaxToken)token.SetDiagnostics(Errors.ToArray());
         }
 

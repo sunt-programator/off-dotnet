@@ -113,6 +113,18 @@ public class TriviaLexicalTests
         "% leading comment \n",
         "%trailing comment (/%) blah\r\n",
         "% leading comment \n(characters after new line are ignored)%trailing comment (/%) blah\r\n")]
+    [InlineData(
+        "%PDF–2.0",
+        "",
+        "%PDF–2.0",
+        "",
+        "%PDF–2.0")]
+    [InlineData(
+        "%%EOF",
+        "",
+        "%%EOF",
+        "",
+        "%%EOF")]
     public void TestSyntaxTrivia(
         string input,
         string expectedText,

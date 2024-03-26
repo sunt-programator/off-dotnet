@@ -18,6 +18,7 @@ public class SimpleTokenLexicalTests
     [InlineData(">>", SyntaxKind.GreaterThanGreaterThanToken)]
     [InlineData("+", SyntaxKind.PlusToken)]
     [InlineData("-", SyntaxKind.MinusToken)]
+    [InlineData("", SyntaxKind.EndOfFileToken)]
     public void SimpleTokenState_MustBeLexed(string input, SyntaxKind expectedKind)
     {
         input.Lex()

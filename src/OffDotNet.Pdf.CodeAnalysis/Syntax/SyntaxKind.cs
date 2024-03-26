@@ -84,6 +84,9 @@ public enum SyntaxKind : ushort
     /// <summary>Represents <c>n</c> keyword.</summary>
     InUseXRefEntryKeyword = 8313,
 
+    /// <summary>Represents the <c>end of file</c> token.</summary>
+    EndOfFileToken = 8400,
+
     // Tokens with text
 
     /// <summary>Represents an unknown token.</summary>
