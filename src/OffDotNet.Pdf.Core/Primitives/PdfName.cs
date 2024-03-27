@@ -23,8 +23,8 @@ public sealed class PdfName : PdfObject
     private const string RightSquareBracketChar = "#5D"; // ']'
     private const string LeftCurlyBracketChar = "#7B"; // '{'
     private const string RightCurlyBracketChar = "#7D"; // '}'
-    private string literalValue = string.Empty;
-    private byte[]? bytes;
+    private string _literalValue = string.Empty;
+    private byte[]? _bytes;
 
     public PdfName(string value)
     {
@@ -34,13 +34,13 @@ public sealed class PdfName : PdfObject
         }
 
         this.Value = value;
-        this.bytes = null;
+        _bytes = null;
     }
 
     public string Value { get; }
 
     /// <inheritdoc/>
-    public override ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
+    public override ReadOnlyMemory<byte> Bytes => _bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
     /// <inheritdoc/>
     public override string Content => this.GenerateContent();
@@ -83,9 +83,9 @@ public sealed class PdfName : PdfObject
 
     private string GenerateContent()
     {
-        if (this.literalValue.Length != 0)
+        if (_literalValue.Length != 0)
         {
-            return this.literalValue;
+            return _literalValue;
         }
 
         StringBuilder stringBuilder = new();
@@ -95,10 +95,10 @@ public sealed class PdfName : PdfObject
             stringBuilder.Append(ConvertCharToString(ch));
         }
 
-        this.literalValue = stringBuilder
+        _literalValue = stringBuilder
             .Insert(0, '/')
             .ToString();
 
-        return this.literalValue;
+        return _literalValue;
     }
 }

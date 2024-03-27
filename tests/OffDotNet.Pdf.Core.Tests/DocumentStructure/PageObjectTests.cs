@@ -113,8 +113,8 @@ public class PageObjectTests
         }); // Options as a delegate
 
         // Act
-        string actualContent1 = pageObject1.Content;
-        string actualContent2 = pageObject2.Content;
+        var actualContent1 = pageObject1.Content;
+        var actualContent2 = pageObject2.Content;
 
         // Assert
         Assert.Equal(expectedContent, actualContent1);

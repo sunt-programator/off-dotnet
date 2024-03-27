@@ -13,10 +13,10 @@ using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxTriv
 
 public class FileTrailerSyntaxTests
 {
-    private readonly SyntaxToken trailerKeyword;
-    private readonly DictionaryExpressionSyntax trailerDictionary;
-    private readonly SyntaxToken startXRefKeyword;
-    private readonly LiteralExpressionSyntax byteOffset;
+    private readonly SyntaxToken _trailerKeyword;
+    private readonly DictionaryExpressionSyntax _trailerDictionary;
+    private readonly SyntaxToken _startXRefKeyword;
+    private readonly LiteralExpressionSyntax _byteOffset;
 
     public FileTrailerSyntaxTests()
     {
@@ -36,24 +36,24 @@ public class FileTrailerSyntaxTests
             .AddRange(new GreenNode[] { keyValue, keyValue })
             .ToList<DictionaryElementSyntax>();
 
-        SyntaxToken openBracketToken = SyntaxFactory.Token(SyntaxKind.LessThanLessThanToken, trivia, trivia);
-        SyntaxToken closeBracketToken = SyntaxFactory.Token(SyntaxKind.GreaterThanGreaterThanToken, trivia, trivia);
-        DictionaryExpressionSyntax dictionaryExpressionSyntax = SyntaxFactory.DictionaryExpression(openBracketToken, elements, closeBracketToken);
+        var openBracketToken = SyntaxFactory.Token(SyntaxKind.LessThanLessThanToken, trivia, trivia);
+        var closeBracketToken = SyntaxFactory.Token(SyntaxKind.GreaterThanGreaterThanToken, trivia, trivia);
+        var dictionaryExpressionSyntax = SyntaxFactory.DictionaryExpression(openBracketToken, elements, closeBracketToken);
 
-        this.trailerKeyword = SyntaxFactory.Token(SyntaxKind.TrailerKeyword, trivia, trivia);
-        this.trailerDictionary = dictionaryExpressionSyntax;
-        this.startXRefKeyword = SyntaxFactory.Token(SyntaxKind.StartXRefKeyword, trivia, trivia);
-        this.byteOffset = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Token(SyntaxKind.NameLiteralToken, "123", 123, trivia, trivia));
+        _trailerKeyword = SyntaxFactory.Token(SyntaxKind.TrailerKeyword, trivia, trivia);
+        _trailerDictionary = dictionaryExpressionSyntax;
+        _startXRefKeyword = SyntaxFactory.Token(SyntaxKind.StartXRefKeyword, trivia, trivia);
+        _byteOffset = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Token(SyntaxKind.NameLiteralToken, "123", 123, trivia, trivia));
     }
 
     [Fact(DisplayName = $"The {nameof(FileTrailerSyntax.Kind)} property must be {nameof(SyntaxKind.FileTrailer)}")]
     public void KindProperty_MustBeFileTrailer()
     {
         // Arrange
-        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+        var fileTrailerSyntax = SyntaxFactory.FileTrailer(_trailerKeyword, _trailerDictionary, _startXRefKeyword, _byteOffset);
 
         // Act
-        SyntaxKind actualKind = fileTrailerSyntax.Kind;
+        var actualKind = fileTrailerSyntax.Kind;
 
         // Assert
         Assert.Equal(SyntaxKind.FileTrailer, actualKind);
@@ -63,62 +63,62 @@ public class FileTrailerSyntaxTests
     public void TrailerKeywordProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+        var fileTrailerSyntax = SyntaxFactory.FileTrailer(_trailerKeyword, _trailerDictionary, _startXRefKeyword, _byteOffset);
 
         // Act
-        SyntaxToken actualTrailerKeyword = fileTrailerSyntax.TrailerKeyword;
+        var actualTrailerKeyword = fileTrailerSyntax.TrailerKeyword;
 
         // Assert
-        Assert.Equal(this.trailerKeyword, actualTrailerKeyword);
+        Assert.Equal(_trailerKeyword, actualTrailerKeyword);
     }
 
     [Fact(DisplayName = $"The {nameof(FileTrailerSyntax.TrailerDictionary)} property must be assigned from constructor.")]
     public void TrailerDictionaryProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+        var fileTrailerSyntax = SyntaxFactory.FileTrailer(_trailerKeyword, _trailerDictionary, _startXRefKeyword, _byteOffset);
 
         // Act
         CollectionExpressionSyntax actualTrailerDictionary = fileTrailerSyntax.TrailerDictionary;
 
         // Assert
-        Assert.Equal(this.trailerDictionary, actualTrailerDictionary);
+        Assert.Equal(_trailerDictionary, actualTrailerDictionary);
     }
 
     [Fact(DisplayName = $"The {nameof(FileTrailerSyntax.StartXRefKeyword)} property must be assigned from constructor.")]
     public void StartXRefKeywordProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+        var fileTrailerSyntax = SyntaxFactory.FileTrailer(_trailerKeyword, _trailerDictionary, _startXRefKeyword, _byteOffset);
 
         // Act
-        SyntaxToken actualStartXRefKeyword = fileTrailerSyntax.StartXRefKeyword;
+        var actualStartXRefKeyword = fileTrailerSyntax.StartXRefKeyword;
 
         // Assert
-        Assert.Equal(this.startXRefKeyword, actualStartXRefKeyword);
+        Assert.Equal(_startXRefKeyword, actualStartXRefKeyword);
     }
 
     [Fact(DisplayName = $"The {nameof(FileTrailerSyntax.ByteOffset)} property must be assigned from constructor.")]
     public void ByteOffsetProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+        var fileTrailerSyntax = SyntaxFactory.FileTrailer(_trailerKeyword, _trailerDictionary, _startXRefKeyword, _byteOffset);
 
         // Act
-        LiteralExpressionSyntax actualByteOffset = fileTrailerSyntax.ByteOffset;
+        var actualByteOffset = fileTrailerSyntax.ByteOffset;
 
         // Assert
-        Assert.Equal(this.byteOffset, actualByteOffset);
+        Assert.Equal(_byteOffset, actualByteOffset);
     }
 
     [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.SlotCount)} property must be equal to 5.")]
     public void SlotCountProperty_MustBeEqualTo4()
     {
         // Arrange
-        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+        var fileTrailerSyntax = SyntaxFactory.FileTrailer(_trailerKeyword, _trailerDictionary, _startXRefKeyword, _byteOffset);
 
         // Act
-        int actualSlotCount = fileTrailerSyntax.SlotCount;
+        var actualSlotCount = fileTrailerSyntax.SlotCount;
 
         // Assert
         Assert.Equal(4, actualSlotCount);
@@ -128,62 +128,62 @@ public class FileTrailerSyntaxTests
     public void GetSlotMethod_Index0_MustReturnFirstObject()
     {
         // Arrange
-        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+        var fileTrailerSyntax = SyntaxFactory.FileTrailer(_trailerKeyword, _trailerDictionary, _startXRefKeyword, _byteOffset);
 
         // Act
-        GreenNode? actualSlot = fileTrailerSyntax.GetSlot(0);
+        var actualSlot = fileTrailerSyntax.GetSlot(0);
 
         // Assert
-        Assert.Equal(this.trailerKeyword, actualSlot);
+        Assert.Equal(_trailerKeyword, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 1 must return {nameof(FileTrailerSyntax.TrailerDictionary)} property.")]
     public void GetSlotMethod_Index1_MustReturnSecondObject()
     {
         // Arrange
-        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+        var fileTrailerSyntax = SyntaxFactory.FileTrailer(_trailerKeyword, _trailerDictionary, _startXRefKeyword, _byteOffset);
 
         // Act
-        GreenNode? actualSlot = fileTrailerSyntax.GetSlot(1);
+        var actualSlot = fileTrailerSyntax.GetSlot(1);
 
         // Assert
-        Assert.Equal(this.trailerDictionary, actualSlot);
+        Assert.Equal(_trailerDictionary, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 2 must return {nameof(FileTrailerSyntax.StartXRefKeyword)} property.")]
     public void GetSlotMethod_Index2_MustReturnThirdObject()
     {
         // Arrange
-        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+        var fileTrailerSyntax = SyntaxFactory.FileTrailer(_trailerKeyword, _trailerDictionary, _startXRefKeyword, _byteOffset);
 
         // Act
-        GreenNode? actualSlot = fileTrailerSyntax.GetSlot(2);
+        var actualSlot = fileTrailerSyntax.GetSlot(2);
 
         // Assert
-        Assert.Equal(this.startXRefKeyword, actualSlot);
+        Assert.Equal(_startXRefKeyword, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 3 must return {nameof(FileTrailerSyntax.ByteOffset)} property.")]
     public void GetSlotMethod_Index3_MustReturnFourthObject()
     {
         // Arrange
-        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+        var fileTrailerSyntax = SyntaxFactory.FileTrailer(_trailerKeyword, _trailerDictionary, _startXRefKeyword, _byteOffset);
 
         // Act
-        GreenNode? actualSlot = fileTrailerSyntax.GetSlot(3);
+        var actualSlot = fileTrailerSyntax.GetSlot(3);
 
         // Assert
-        Assert.Equal(this.byteOffset, actualSlot);
+        Assert.Equal(_byteOffset, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 4 must return null.")]
     public void GetSlotMethod_Index4_MustReturnNull()
     {
         // Arrange
-        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+        var fileTrailerSyntax = SyntaxFactory.FileTrailer(_trailerKeyword, _trailerDictionary, _startXRefKeyword, _byteOffset);
 
         // Act
-        GreenNode? actualSlot = fileTrailerSyntax.GetSlot(4);
+        var actualSlot = fileTrailerSyntax.GetSlot(4);
 
         // Assert
         Assert.Null(actualSlot);
@@ -193,10 +193,10 @@ public class FileTrailerSyntaxTests
     public void WidthProperty_MustIncludeAllSlots()
     {
         // Arrange
-        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+        var fileTrailerSyntax = SyntaxFactory.FileTrailer(_trailerKeyword, _trailerDictionary, _startXRefKeyword, _byteOffset);
 
         // Act
-        int actualWidth = fileTrailerSyntax.Width;
+        var actualWidth = fileTrailerSyntax.Width;
 
         // Assert
         Assert.Equal(59, actualWidth);
@@ -206,10 +206,10 @@ public class FileTrailerSyntaxTests
     public void FullWidthProperty_MustIncludeAllSlots()
     {
         // Arrange
-        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+        var fileTrailerSyntax = SyntaxFactory.FileTrailer(_trailerKeyword, _trailerDictionary, _startXRefKeyword, _byteOffset);
 
         // Act
-        int actualFullWidth = fileTrailerSyntax.FullWidth;
+        var actualFullWidth = fileTrailerSyntax.FullWidth;
 
         // Assert
         Assert.Equal(61, actualFullWidth);
@@ -219,40 +219,40 @@ public class FileTrailerSyntaxTests
     public void ToStringMethod_MustNotIncludeTrivia()
     {
         // Arrange
-        const string expectedString = "trailer  <<  /SomeName  123  /SomeName  123  >>  startxref  123";
-        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+        const string ExpectedString = "trailer  <<  /SomeName  123  /SomeName  123  >>  startxref  123";
+        var fileTrailerSyntax = SyntaxFactory.FileTrailer(_trailerKeyword, _trailerDictionary, _startXRefKeyword, _byteOffset);
 
         // Act
-        string actualString = fileTrailerSyntax.ToString();
+        var actualString = fileTrailerSyntax.ToString();
 
         // Assert
-        Assert.Equal(expectedString, actualString);
+        Assert.Equal(ExpectedString, actualString);
     }
 
     [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
     public void ToFullStringMethod_MustIncludeTrivia()
     {
         // Arrange
-        const string expectedString = " trailer  <<  /SomeName  123  /SomeName  123  >>  startxref  123 ";
-        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+        const string ExpectedString = " trailer  <<  /SomeName  123  /SomeName  123  >>  startxref  123 ";
+        var fileTrailerSyntax = SyntaxFactory.FileTrailer(_trailerKeyword, _trailerDictionary, _startXRefKeyword, _byteOffset);
 
         // Act
-        string actualString = fileTrailerSyntax.ToFullString();
+        var actualString = fileTrailerSyntax.ToFullString();
 
         // Assert
-        Assert.Equal(expectedString, actualString);
+        Assert.Equal(ExpectedString, actualString);
     }
 
     [Fact(DisplayName = "The SetDiagnostics() method must set the diagnostics and return a new instance.")]
     public void SetDiagnosticsMethod_MustSetTheDiagnosticsAndReturnNewInstance()
     {
         // Arrange
-        FileTrailerSyntax fileTrailerSyntax = SyntaxFactory.FileTrailer(this.trailerKeyword, this.trailerDictionary, this.startXRefKeyword, this.byteOffset);
+        var fileTrailerSyntax = SyntaxFactory.FileTrailer(_trailerKeyword, _trailerDictionary, _startXRefKeyword, _byteOffset);
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
         DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
-        FileTrailerSyntax actualFileTrailerSyntax = (FileTrailerSyntax)fileTrailerSyntax.SetDiagnostics(diagnostics);
+        var actualFileTrailerSyntax = (FileTrailerSyntax)fileTrailerSyntax.SetDiagnostics(diagnostics);
 
         // Assert
         Assert.NotSame(fileTrailerSyntax, actualFileTrailerSyntax);

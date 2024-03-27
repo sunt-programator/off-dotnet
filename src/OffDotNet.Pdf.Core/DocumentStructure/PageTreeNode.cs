@@ -12,11 +12,11 @@ using Primitives;
 
 public sealed class PageTreeNode : PdfDictionary<IPdfObject>, IPageTreeNode
 {
-    private static readonly PdfName TypeName = "Type";
-    private static readonly PdfName PagesName = "Pages";
-    private static readonly PdfName ParentName = "Parent";
-    private static readonly PdfName KidsName = "Kids";
-    private static readonly PdfName CountName = "Count";
+    private static readonly PdfName s_typeName = "Type";
+    private static readonly PdfName s_pagesName = "Pages";
+    private static readonly PdfName s_parentName = "Parent";
+    private static readonly PdfName s_kidsName = "Kids";
+    private static readonly PdfName s_countName = "Count";
 
     public PageTreeNode(Action<PageTreeNodeOptions> optionsFunc)
         : this(GetPageTreeNodeOptions(optionsFunc))
@@ -48,10 +48,10 @@ public sealed class PageTreeNode : PdfDictionary<IPdfObject>, IPageTreeNode
         options.NotNull(x => x.Kids);
 
         var documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(4)
-            .WithKeyValue(TypeName, PagesName)
-            .WithKeyValue(ParentName, options.Parent)
-            .WithKeyValue(KidsName, options.Kids)
-            .WithKeyValue(CountName, (PdfInteger)options.Kids.Value.Count);
+            .WithKeyValue(s_typeName, s_pagesName)
+            .WithKeyValue(s_parentName, options.Parent)
+            .WithKeyValue(s_kidsName, options.Kids)
+            .WithKeyValue(s_countName, (PdfInteger)options.Kids.Value.Count);
 
         return new ReadOnlyDictionary<PdfName, IPdfObject>(documentCatalogDictionary);
     }

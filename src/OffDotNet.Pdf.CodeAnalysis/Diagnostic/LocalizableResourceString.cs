@@ -11,17 +11,17 @@ using System.Resources;
 
 public sealed class LocalizableResourceString : LocalizableString
 {
-    private readonly string nameOfLocalizableResource;
-    private readonly ResourceManager resourceManager;
-    private readonly Type resourceSource;
-    private readonly string[] formatArguments;
+    private readonly string _nameOfLocalizableResource;
+    private readonly ResourceManager _resourceManager;
+    private readonly Type _resourceSource;
+    private readonly string[] _formatArguments;
 
     public LocalizableResourceString(string nameOfLocalizableResource, ResourceManager resourceManager, Type resourceSource, params string[] formatArguments)
     {
-        this.nameOfLocalizableResource = nameOfLocalizableResource;
-        this.resourceManager = resourceManager;
-        this.resourceSource = resourceSource;
-        this.formatArguments = formatArguments;
+        _nameOfLocalizableResource = nameOfLocalizableResource;
+        _resourceManager = resourceManager;
+        _resourceSource = resourceSource;
+        _formatArguments = formatArguments;
     }
 
     /// <inheritdoc/>
@@ -29,29 +29,29 @@ public sealed class LocalizableResourceString : LocalizableString
     protected override string GetText(IFormatProvider? formatProvider)
     {
         var cultureInfo = formatProvider as CultureInfo ?? CultureInfo.CurrentUICulture;
-        var resourceString = this.resourceManager.GetString(this.nameOfLocalizableResource, cultureInfo);
+        var resourceString = _resourceManager.GetString(_nameOfLocalizableResource, cultureInfo);
 
         if (resourceString == null)
         {
             return string.Empty;
         }
 
-        return this.formatArguments.Length > 0 ? string.Format(cultureInfo, resourceString, this.formatArguments) : resourceString;
+        return _formatArguments.Length > 0 ? string.Format(cultureInfo, resourceString, _formatArguments) : resourceString;
     }
 
     /// <inheritdoc/>
     protected override int GetHash()
     {
-        return HashCode.Combine(this.nameOfLocalizableResource, this.resourceManager, this.resourceSource, this.formatArguments);
+        return HashCode.Combine(_nameOfLocalizableResource, _resourceManager, _resourceSource, _formatArguments);
     }
 
     /// <inheritdoc/>
     protected override bool AreEqual(object? other)
     {
         return other is LocalizableResourceString otherResourceString &&
-               this.nameOfLocalizableResource == otherResourceString.nameOfLocalizableResource &&
-               this.resourceManager == otherResourceString.resourceManager &&
-               this.resourceSource == otherResourceString.resourceSource &&
-               this.formatArguments.SequenceEqual(otherResourceString.formatArguments);
+               _nameOfLocalizableResource == otherResourceString._nameOfLocalizableResource &&
+               _resourceManager == otherResourceString._resourceManager &&
+               _resourceSource == otherResourceString._resourceSource &&
+               _formatArguments.SequenceEqual(otherResourceString._formatArguments);
     }
 }

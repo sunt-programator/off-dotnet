@@ -18,9 +18,9 @@ internal sealed class MessageProvider : IMessageProvider
     public static readonly MessageProvider Instance = new();
     private const string TitleSuffix = "_Title";
     private const string DescriptionSuffix = "_Description";
-    private static readonly Lazy<ResourceManager> ResourceManager = new(() => new ResourceManager(typeof(PDFResources).FullName!, typeof(MessageProvider).GetTypeInfo().Assembly));
-    private static readonly Lazy<ImmutableDictionary<DiagnosticCode, string>> CategoriesMap = new(CreateCategoriesMap);
-    private static readonly ConcurrentDictionary<(string Prefix, DiagnosticCode Code), string> ErrorIdCache = new();
+    private static readonly Lazy<ResourceManager> s_resourceManager = new(() => new ResourceManager(typeof(PDFResources).FullName!, typeof(MessageProvider).GetTypeInfo().Assembly));
+    private static readonly Lazy<ImmutableDictionary<DiagnosticCode, string>> s_categoriesMap = new(CreateCategoriesMap);
+    private static readonly ConcurrentDictionary<(string Prefix, DiagnosticCode Code), string> s_errorIdCache = new();
 
     private MessageProvider()
     {
@@ -32,13 +32,13 @@ internal sealed class MessageProvider : IMessageProvider
     /// <inheritdoc/>
     public LocalizableString GetTitle(DiagnosticCode code)
     {
-        return new LocalizableResourceString($"{code}{TitleSuffix}", ResourceManager.Value, typeof(MessageProvider));
+        return new LocalizableResourceString($"{code}{TitleSuffix}", s_resourceManager.Value, typeof(MessageProvider));
     }
 
     /// <inheritdoc/>
     public LocalizableString GetDescription(DiagnosticCode code)
     {
-        return new LocalizableResourceString($"{code}{DescriptionSuffix}", ResourceManager.Value, typeof(MessageProvider));
+        return new LocalizableResourceString($"{code}{DescriptionSuffix}", s_resourceManager.Value, typeof(MessageProvider));
     }
 
     /// <inheritdoc/>
@@ -50,7 +50,7 @@ internal sealed class MessageProvider : IMessageProvider
     /// <inheritdoc/>
     public LocalizableString GetMessage(DiagnosticCode code)
     {
-        return new LocalizableResourceString($"{code}", ResourceManager.Value, typeof(MessageProvider));
+        return new LocalizableResourceString($"{code}", s_resourceManager.Value, typeof(MessageProvider));
     }
 
     /// <inheritdoc/>
@@ -62,13 +62,13 @@ internal sealed class MessageProvider : IMessageProvider
     /// <inheritdoc/>
     public string GetIdForErrorCode(DiagnosticCode code)
     {
-        return ErrorIdCache.GetOrAdd((this.CodePrefix, code), key => $"{key.Prefix}{(int)key.Code:0000}");
+        return s_errorIdCache.GetOrAdd((this.CodePrefix, code), key => $"{key.Prefix}{(int)key.Code:0000}");
     }
 
     /// <inheritdoc/>
     public string GetCategory(DiagnosticCode code)
     {
-        return CollectionExtensions.GetValueOrDefault(CategoriesMap.Value, code, "Syntax");
+        return CollectionExtensions.GetValueOrDefault(s_categoriesMap.Value, code, "Syntax");
     }
 
     /// <inheritdoc/>
@@ -80,7 +80,7 @@ internal sealed class MessageProvider : IMessageProvider
     /// <inheritdoc/>
     public string LoadMessage(DiagnosticCode code, CultureInfo culture)
     {
-        var message = ResourceManager.Value.GetString(code.ToString(), culture);
+        var message = s_resourceManager.Value.GetString(code.ToString(), culture);
         Debug.Assert(!string.IsNullOrEmpty(message), code.ToString());
         return message;
     }

@@ -39,10 +39,10 @@ public sealed class RectangleTests
         IRectangle rectangle = new Rectangle(lowerLeftX, lowerLeftY, upperRightX, upperRightY);
 
         // Act
-        float actualLowerLeftX = rectangle.LowerLeftX;
-        float actualLowerLeftY = rectangle.LowerLeftY;
-        float actualUpperRightX = rectangle.UpperRightX;
-        float actualUpperRightY = rectangle.UpperRightY;
+        var actualLowerLeftX = rectangle.LowerLeftX;
+        var actualLowerLeftY = rectangle.LowerLeftY;
+        var actualUpperRightX = rectangle.UpperRightX;
+        var actualUpperRightY = rectangle.UpperRightY;
 
         // Assert
         Assert.Equal(actualLowerLeftX, lowerLeftX);
@@ -60,7 +60,7 @@ public sealed class RectangleTests
         IRectangle rectangle = new Rectangle(lowerLeftX, lowerLeftY, upperRightX, upperRightY);
 
         // Act
-        string actualContent = rectangle.Content;
+        var actualContent = rectangle.Content;
 
         // Assert
         Assert.Equal(expectedContent, actualContent);

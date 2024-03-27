@@ -9,7 +9,6 @@ using OffDotNet.Pdf.CodeAnalysis.Collections;
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
-using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxTrivia;
 
 public class WithManyChildrenTests
 {
@@ -17,23 +16,23 @@ public class WithManyChildrenTests
     public void SlotCountProperty_MustBeEqualTo256()
     {
         // Arrange
-        const int slotCount = 3;
+        const int SlotCount = 3;
 
-        LiteralExpressionSyntax literalExpressionSyntax = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[slotCount];
+        var literalExpressionSyntax = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[SlotCount];
 
-        for (int i = 0; i < slotCount; i++)
+        for (var i = 0; i < SlotCount; i++)
         {
-            children[i].Value = literalExpressionSyntax;
+            children[i]._value = literalExpressionSyntax;
         }
 
-        GreenNode syntaxList = SyntaxFactory.List(children);
+        var syntaxList = SyntaxFactory.List(children);
 
         // Act
-        int actualSlotCount = syntaxList.SlotCount;
+        var actualSlotCount = syntaxList.SlotCount;
 
         // Assert
-        Assert.Equal(slotCount, actualSlotCount);
+        Assert.Equal(SlotCount, actualSlotCount);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 0 must return the first child.")]
@@ -42,17 +41,17 @@ public class WithManyChildrenTests
         // Arrange
         ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[3];
 
-        children[0].Value = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        children[1].Value = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        children[2].Value = SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression, SyntaxFactory.Token(SyntaxKind.NullKeyword));
+        children[0]._value = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        children[1]._value = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        children[2]._value = SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression, SyntaxFactory.Token(SyntaxKind.NullKeyword));
 
-        GreenNode syntaxList = SyntaxFactory.List(children);
+        var syntaxList = SyntaxFactory.List(children);
 
         // Act
-        GreenNode? actualSlot = syntaxList.GetSlot(0);
+        var actualSlot = syntaxList.GetSlot(0);
 
         // Assert
-        Assert.Equal(children[0].Value, actualSlot);
+        Assert.Equal(children[0]._value, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 1 must return the second child.")]
@@ -61,17 +60,17 @@ public class WithManyChildrenTests
         // Arrange
         ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[3];
 
-        children[0].Value = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        children[1].Value = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        children[2].Value = SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression, SyntaxFactory.Token(SyntaxKind.NullKeyword));
+        children[0]._value = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        children[1]._value = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        children[2]._value = SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression, SyntaxFactory.Token(SyntaxKind.NullKeyword));
 
-        GreenNode syntaxList = SyntaxFactory.List(children);
+        var syntaxList = SyntaxFactory.List(children);
 
         // Act
-        GreenNode? actualSlot = syntaxList.GetSlot(1);
+        var actualSlot = syntaxList.GetSlot(1);
 
         // Assert
-        Assert.Equal(children[1].Value, actualSlot);
+        Assert.Equal(children[1]._value, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 2 must return the third child.")]
@@ -80,17 +79,17 @@ public class WithManyChildrenTests
         // Arrange
         ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[3];
 
-        children[0].Value = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        children[1].Value = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        children[2].Value = SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression, SyntaxFactory.Token(SyntaxKind.NullKeyword));
+        children[0]._value = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        children[1]._value = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        children[2]._value = SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression, SyntaxFactory.Token(SyntaxKind.NullKeyword));
 
-        GreenNode syntaxList = SyntaxFactory.List(children);
+        var syntaxList = SyntaxFactory.List(children);
 
         // Act
-        GreenNode? actualSlot = syntaxList.GetSlot(2);
+        var actualSlot = syntaxList.GetSlot(2);
 
         // Assert
-        Assert.Equal(children[2].Value, actualSlot);
+        Assert.Equal(children[2]._value, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 3 must return null.")]
@@ -99,14 +98,14 @@ public class WithManyChildrenTests
         // Arrange
         ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[3];
 
-        children[0].Value = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        children[1].Value = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        children[2].Value = SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression, SyntaxFactory.Token(SyntaxKind.NullKeyword));
+        children[0]._value = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        children[1]._value = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        children[2]._value = SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression, SyntaxFactory.Token(SyntaxKind.NullKeyword));
 
-        GreenNode syntaxList = SyntaxFactory.List(children);
+        var syntaxList = SyntaxFactory.List(children);
 
         // Act
-        GreenNode? actualSlot = syntaxList.GetSlot(3);
+        var actualSlot = syntaxList.GetSlot(3);
 
         // Assert
         Assert.Null(actualSlot);
@@ -116,17 +115,17 @@ public class WithManyChildrenTests
     public void FullWidthProperty_MustIncludeAllSlots()
     {
         // Arrange
-        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        var trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
         ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[3];
 
-        children[0].Value = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        children[1].Value = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
-        children[2].Value = SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression, SyntaxFactory.Token(SyntaxKind.NullKeyword, trivia, trivia));
+        children[0]._value = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        children[1]._value = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
+        children[2]._value = SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression, SyntaxFactory.Token(SyntaxKind.NullKeyword, trivia, trivia));
 
-        GreenNode syntaxList = SyntaxFactory.List(children);
+        var syntaxList = SyntaxFactory.List(children);
 
         // Act
-        int actualFullWidth = syntaxList.FullWidth;
+        var actualFullWidth = syntaxList.FullWidth;
 
         // Assert
         Assert.Equal(19, actualFullWidth);
@@ -136,17 +135,17 @@ public class WithManyChildrenTests
     public void WidthProperty_MustIncludeAllSlots()
     {
         // Arrange
-        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        var trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
         ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[3];
 
-        children[0].Value = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        children[1].Value = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
-        children[2].Value = SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression, SyntaxFactory.Token(SyntaxKind.NullKeyword, trivia, trivia));
+        children[0]._value = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        children[1]._value = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
+        children[2]._value = SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression, SyntaxFactory.Token(SyntaxKind.NullKeyword, trivia, trivia));
 
-        GreenNode syntaxList = SyntaxFactory.List(children);
+        var syntaxList = SyntaxFactory.List(children);
 
         // Act
-        int actualWidth = syntaxList.Width;
+        var actualWidth = syntaxList.Width;
 
         // Assert
         Assert.Equal(17, actualWidth);
@@ -161,17 +160,17 @@ public class WithManyChildrenTests
     public void GetSlotOffsetMethod_MustReturnTheCorrectOffset(int index, int offset)
     {
         // Arrange
-        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        var trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
         ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[3];
 
-        children[0].Value = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        children[1].Value = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
-        children[2].Value = SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression, SyntaxFactory.Token(SyntaxKind.NullKeyword, trivia, trivia));
+        children[0]._value = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        children[1]._value = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
+        children[2]._value = SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression, SyntaxFactory.Token(SyntaxKind.NullKeyword, trivia, trivia));
 
-        GreenNode syntaxList = SyntaxFactory.List(children);
+        var syntaxList = SyntaxFactory.List(children);
 
         // Act
-        int actualOffset = syntaxList.GetSlotOffset(index);
+        var actualOffset = syntaxList.GetSlotOffset(index);
 
         // Assert
         Assert.Equal(offset, actualOffset);
@@ -181,18 +180,18 @@ public class WithManyChildrenTests
     public void SyntaxFactory_List_MustBeAssignedToWithManyChildren()
     {
         // Arrange
-        const int slotCount = 9;
+        const int SlotCount = 9;
 
-        LiteralExpressionSyntax literalExpressionSyntax = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[slotCount];
+        var literalExpressionSyntax = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[SlotCount];
 
-        for (int i = 0; i < slotCount; i++)
+        for (var i = 0; i < SlotCount; i++)
         {
-            children[i].Value = literalExpressionSyntax;
+            children[i]._value = literalExpressionSyntax;
         }
 
         // Act
-        GreenNode syntaxList = SyntaxFactory.List(children);
+        var syntaxList = SyntaxFactory.List(children);
 
         // Assert
         Assert.IsType<SyntaxList.WithManyChildren>(syntaxList);
@@ -202,69 +201,69 @@ public class WithManyChildrenTests
     public void ToStringMethod_MustNotIncludeTrivia()
     {
         // Arrange
-        const int slotCount = 9;
-        const string expectedString = "true  true  true  true  true  true  true  true  true";
+        const int SlotCount = 9;
+        const string ExpectedString = "true  true  true  true  true  true  true  true  true";
         GreenNode trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        LiteralExpressionSyntax literalExpressionSyntax = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[slotCount];
+        var literalExpressionSyntax = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[SlotCount];
 
-        for (int i = 0; i < slotCount; i++)
+        for (var i = 0; i < SlotCount; i++)
         {
-            children[i].Value = literalExpressionSyntax;
+            children[i]._value = literalExpressionSyntax;
         }
 
         // Act
-        GreenNode syntaxList = SyntaxFactory.List(children);
-        string actualString = syntaxList.ToString();
+        var syntaxList = SyntaxFactory.List(children);
+        var actualString = syntaxList.ToString();
 
         // Assert
-        Assert.Equal(expectedString, actualString);
+        Assert.Equal(ExpectedString, actualString);
     }
 
     [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
     public void ToFullStringMethod_MustIncludeTrivia()
     {
         // Arrange
-        const int slotCount = 9;
-        const string expectedString = " true  true  true  true  true  true  true  true  true ";
+        const int SlotCount = 9;
+        const string ExpectedString = " true  true  true  true  true  true  true  true  true ";
         GreenNode trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        LiteralExpressionSyntax literalExpressionSyntax = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[slotCount];
+        var literalExpressionSyntax = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[SlotCount];
 
-        for (int i = 0; i < slotCount; i++)
+        for (var i = 0; i < SlotCount; i++)
         {
-            children[i].Value = literalExpressionSyntax;
+            children[i]._value = literalExpressionSyntax;
         }
 
         // Act
-        GreenNode syntaxList = SyntaxFactory.List(children);
-        string actualString = syntaxList.ToFullString();
+        var syntaxList = SyntaxFactory.List(children);
+        var actualString = syntaxList.ToFullString();
 
         // Assert
-        Assert.Equal(expectedString, actualString);
+        Assert.Equal(ExpectedString, actualString);
     }
 
     [Fact(DisplayName = "The SetDiagnostics() method must set the diagnostics and return a new instance.")]
     public void SetDiagnosticsMethod_MustSetDiagnosticsAndReturnNewInstance()
     {
         // Arrange
-        const int slotCount = 9;
+        const int SlotCount = 9;
         GreenNode trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        LiteralExpressionSyntax literalExpressionSyntax = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[slotCount];
+        var literalExpressionSyntax = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        ArrayElement<GreenNode>[] children = new ArrayElement<GreenNode>[SlotCount];
 
-        for (int i = 0; i < slotCount; i++)
+        for (var i = 0; i < SlotCount; i++)
         {
-            children[i].Value = literalExpressionSyntax;
+            children[i]._value = literalExpressionSyntax;
         }
 
-        GreenNode syntaxList = SyntaxFactory.List(children);
+        var syntaxList = SyntaxFactory.List(children);
 
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
         DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
-        GreenNode actualSyntaxList = syntaxList.SetDiagnostics(diagnostics);
+        var actualSyntaxList = syntaxList.SetDiagnostics(diagnostics);
 
         // Assert
         Assert.NotSame(syntaxList, actualSyntaxList);

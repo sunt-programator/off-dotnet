@@ -12,9 +12,9 @@ using Primitives;
 
 public sealed class DocumentCatalog : PdfDictionary<IPdfObject>, IDocumentCatalog
 {
-    private static readonly PdfName TypeName = "Type";
-    private static readonly PdfName CatalogName = "Catalog";
-    private static readonly PdfName PagesName = "Pages";
+    private static readonly PdfName s_typeName = "Type";
+    private static readonly PdfName s_catalogName = "Catalog";
+    private static readonly PdfName s_pagesName = "Pages";
 
     public DocumentCatalog(Action<DocumentCatalogOptions> optionsFunc)
         : this(GetDocumentCatalogOptions(optionsFunc))
@@ -41,8 +41,8 @@ public sealed class DocumentCatalog : PdfDictionary<IPdfObject>, IDocumentCatalo
     private static IReadOnlyDictionary<PdfName, IPdfObject> GenerateDictionary(DocumentCatalogOptions options)
     {
         var documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(2)
-            .WithKeyValue(TypeName, CatalogName)
-            .WithKeyValue(PagesName, options.Pages);
+            .WithKeyValue(s_typeName, s_catalogName)
+            .WithKeyValue(s_pagesName, options.Pages);
 
         return new ReadOnlyDictionary<PdfName, IPdfObject>(documentCatalogDictionary);
     }

@@ -14,14 +14,14 @@ public class MoveTextOperationTests
     public void MoveTextOperation_PdfOperatorProperty_ShouldReturnValidValue()
     {
         // Arrange
-        const string expectedOperator = "Td";
+        const string ExpectedOperator = "Td";
         IMoveTextOperation moveTextOperation = new MoveTextOperation(3, 6);
 
         // Act
-        string actualPdfOperator = moveTextOperation.PdfOperator;
+        var actualPdfOperator = moveTextOperation.PdfOperator;
 
         // Assert
-        Assert.Equal(expectedOperator, actualPdfOperator);
+        Assert.Equal(ExpectedOperator, actualPdfOperator);
     }
 
     [Theory(DisplayName = $"The {nameof(MoveTextOperation.X)} and {nameof(MoveTextOperation.Y)} properties should return valid values")]
@@ -56,7 +56,7 @@ public class MoveTextOperationTests
         IMoveTextOperation moveTextOperation = new MoveTextOperation(x, y);
 
         // Act
-        string actualContent = moveTextOperation.Content;
+        var actualContent = moveTextOperation.Content;
 
         // Assert
         Assert.Equal(expectedContent, actualContent);
@@ -74,7 +74,7 @@ public class MoveTextOperationTests
         IMoveTextOperation moveTextOperation = new MoveTextOperation(x, y);
 
         // Act
-        byte[] actualBytes = moveTextOperation.Bytes.ToArray();
+        var actualBytes = moveTextOperation.Bytes.ToArray();
 
         // Assert
         Assert.Equal(expectedBytes, actualBytes);
@@ -89,11 +89,11 @@ public class MoveTextOperationTests
     public void MoveTextOperation_GetHashCode_ShouldReturnValidValue(float x, float y)
     {
         // Arrange
-        int expectedHashCode = HashCode.Combine(nameof(MoveTextOperation), (PdfReal)x, (PdfReal)y, "Td");
+        var expectedHashCode = HashCode.Combine(nameof(MoveTextOperation), (PdfReal)x, (PdfReal)y, "Td");
         IMoveTextOperation moveTextOperation = new MoveTextOperation(x, y);
 
         // Act
-        int actualHashCode = moveTextOperation.GetHashCode();
+        var actualHashCode = moveTextOperation.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
@@ -113,7 +113,7 @@ public class MoveTextOperationTests
         IMoveTextOperation? moveTextOperation2 = moveTextX2.HasValue && moveTextY2.HasValue ? new MoveTextOperation(moveTextX2.Value, moveTextY2.Value) : null;
 
         // Act
-        bool actualResult = moveTextOperation1.Equals(moveTextOperation2);
+        var actualResult = moveTextOperation1.Equals(moveTextOperation2);
 
         // Assert
         Assert.Equal(expectedResult, actualResult);

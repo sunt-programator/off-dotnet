@@ -12,20 +12,20 @@ internal abstract partial class SyntaxList
 {
     internal class WithLotsOfChildren : WithManyChildrenBase
     {
-        private readonly int[] childOffsets;
+        private readonly int[] _childOffsets;
 
         public WithLotsOfChildren(ArrayElement<GreenNode>[] children, DiagnosticInfo[]? diagnostics = null)
             : base(children, diagnostics)
         {
-            this.childOffsets = CalculateOffsets(children);
+            _childOffsets = CalculateOffsets(children);
         }
 
         /// <inheritdoc/>
         public override int GetSlotOffset(int index)
         {
-            return index < this.childOffsets.Length
-                ? this.childOffsets[index]
-                : this.childOffsets[^1];
+            return index < _childOffsets.Length
+                ? _childOffsets[index]
+                : _childOffsets[^1];
         }
 
         /// <inheritdoc/>
@@ -41,7 +41,7 @@ internal abstract partial class SyntaxList
             for (var i = 0; i < children.Length; i++)
             {
                 offsets[i] = offset;
-                offset += children[i].Value.FullWidth;
+                offset += children[i]._value.FullWidth;
             }
 
             return offsets;

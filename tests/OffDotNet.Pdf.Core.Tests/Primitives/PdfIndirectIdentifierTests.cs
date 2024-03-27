@@ -19,7 +19,7 @@ public class PdfIndirectIdentifierTests
         IPdfIndirectIdentifier<PdfString> pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber).ToPdfIndirectIdentifier();
 
         // Act
-        string actualContent = pdfIndirect.Content;
+        var actualContent = pdfIndirect.Content;
 
         // Assert
         Assert.Equal(expectedContent, actualContent);
@@ -33,10 +33,10 @@ public class PdfIndirectIdentifierTests
     {
         // Arrange
         IPdfIndirectIdentifier<PdfString> pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber).ToPdfIndirectIdentifier();
-        int expectedHashCode = HashCode.Combine(nameof(PdfIndirectIdentifier<PdfString>), objectNumber, generationNumber);
+        var expectedHashCode = HashCode.Combine(nameof(PdfIndirectIdentifier<PdfString>), objectNumber, generationNumber);
 
         // Act
-        int actualHashCode = pdfIndirect.GetHashCode();
+        var actualHashCode = pdfIndirect.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
@@ -49,8 +49,8 @@ public class PdfIndirectIdentifierTests
         IPdfIndirectIdentifier<PdfString> pdfIndirect = new PdfString("Test").ToPdfIndirect(0).ToPdfIndirectIdentifier();
 
         // Act
-        bool actualResult1 = pdfIndirect.Equals(null);
-        bool actualResult2 = pdfIndirect!.Equals(null);
+        var actualResult1 = pdfIndirect.Equals(null);
+        var actualResult2 = pdfIndirect!.Equals(null);
 
         // Assert
         Assert.False(actualResult1);
@@ -72,7 +72,7 @@ public class PdfIndirectIdentifierTests
         IPdfIndirectIdentifier<PdfString> pdfIndirect2 = new PdfString(actualStringValue2).ToPdfIndirect(objectNumber2, generationNumber2).ToPdfIndirectIdentifier();
 
         // Act
-        bool actualResult = pdfIndirect1.Equals(pdfIndirect2);
+        var actualResult = pdfIndirect1.Equals(pdfIndirect2);
 
         // Assert
         Assert.Equal(expectedResult, actualResult);
@@ -88,8 +88,8 @@ public class PdfIndirectIdentifierTests
         IPdfIndirectIdentifier<PdfString> pdfIndirect = new PdfString(actualStringValue).ToPdfIndirect(objectNumber, generationNumber).ToPdfIndirectIdentifier();
 
         // Act
-        string actualContent1 = pdfIndirect.Content;
-        string actualContent2 = pdfIndirect.Content;
+        var actualContent1 = pdfIndirect.Content;
+        var actualContent2 = pdfIndirect.Content;
 
         // Assert
         Assert.Equal(actualContent1, actualContent2);
@@ -106,7 +106,7 @@ public class PdfIndirectIdentifierTests
         IPdfIndirectIdentifier<PdfString> pdfIndirect = new PdfString("Test").ToPdfIndirect(objectNumber, generationNumber).ToPdfIndirectIdentifier();
 
         // Act
-        ReadOnlyMemory<byte> actualBytes = pdfIndirect.Bytes;
+        var actualBytes = pdfIndirect.Bytes;
 
         // Assert
         Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));

@@ -15,10 +15,10 @@ public class XRefTableTests
     public void XRefTable_NegativeGenerationNumber_ShouldThrowException()
     {
         // Arrange
-        ICollection<IXRefSection> sections = new List<IXRefSection>(0);
+        ICollection<IxRefSection> sections = new List<IxRefSection>(0);
 
         // Act
-        IXRefTable XRefTableFunction()
+        IxRefTable XRefTableFunction()
         {
             return new XRefTable(sections);
         }
@@ -32,22 +32,22 @@ public class XRefTableTests
     public void XRefTable_Content_ShouldReturnValidValue()
     {
         // Arrange
-        const string expectedContent = "xref\n0 1\n0000000000 65535 f \n3 1\n0000025325 00000 n \n30 1\n0000025777 00000 n \n23 2\n0000025518 00002 n \n0000025635 00000 n \n";
-        IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
-        IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
-        IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
-        List<IXRefEntry> multipleEntries =
+        const string ExpectedContent = "xref\n0 1\n0000000000 65535 f \n3 1\n0000025325 00000 n \n30 1\n0000025777 00000 n \n23 2\n0000025518 00002 n \n0000025635 00000 n \n";
+        var xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
+        var xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
+        var xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
+        List<IxRefEntry> multipleEntries =
             [new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse)];
-        List<IXRefSubSection> subSections =
+        List<IxRefSubSection> subSections =
             [xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23)];
 
-        IXRefTable xRefTable = subSections.ToXRefTable();
+        var xRefTable = subSections.ToXRefTable();
 
         // Act
-        string actualContent = xRefTable.Content;
+        var actualContent = xRefTable.Content;
 
         // Assert
-        Assert.Equal(expectedContent, actualContent);
+        Assert.Equal(ExpectedContent, actualContent);
     }
 
     [Fact(DisplayName = $"{nameof(XRefTable.Bytes)} property should return a valid value")]
@@ -180,18 +180,18 @@ public class XRefTableTests
             0x20,
             0x0A
         ];
-        IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
-        IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
-        IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
-        List<IXRefEntry> multipleEntries =
+        var xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
+        var xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
+        var xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
+        List<IxRefEntry> multipleEntries =
             [new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse)];
-        List<IXRefSubSection> subSections =
+        List<IxRefSubSection> subSections =
             [xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23)];
 
-        IXRefTable xRefTable = subSections.ToXRefTable();
+        var xRefTable = subSections.ToXRefTable();
 
         // Act
-        byte[] actualBytes = xRefTable.Bytes.ToArray();
+        var actualBytes = xRefTable.Bytes.ToArray();
 
         // Assert
         Assert.Equal(expectedBytes, actualBytes);
@@ -201,19 +201,19 @@ public class XRefTableTests
     public void XRefTable_Content_MultipleAccesses_ShouldReturnSameReference()
     {
         // Arrange
-        IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
-        IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
-        IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
-        List<IXRefEntry> multipleEntries =
+        var xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
+        var xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
+        var xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
+        List<IxRefEntry> multipleEntries =
             [new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse)];
-        List<IXRefSubSection> subSections =
+        List<IxRefSubSection> subSections =
             [xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23)];
 
-        IXRefTable xRefTable = subSections.ToXRefTable();
+        var xRefTable = subSections.ToXRefTable();
 
         // Act
-        string actualContent1 = xRefTable.Content;
-        string actualContent2 = xRefTable.Content;
+        var actualContent1 = xRefTable.Content;
+        var actualContent2 = xRefTable.Content;
 
         // Assert
         Assert.True(ReferenceEquals(actualContent1, actualContent2));
@@ -223,20 +223,20 @@ public class XRefTableTests
     public void XRefTable_Equals_MustReturnFalse()
     {
         // Arrange
-        IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
-        IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
-        IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
-        List<IXRefEntry> multipleEntries =
+        var xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
+        var xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
+        var xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
+        List<IxRefEntry> multipleEntries =
             [new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse)];
-        List<IXRefSubSection> subSections1 =
+        List<IxRefSubSection> subSections1 =
             [xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23)];
-        List<IXRefSubSection> subSections2 = [xRefSubSection1, xRefSubSection2, xRefSubSection3];
+        List<IxRefSubSection> subSections2 = [xRefSubSection1, xRefSubSection2, xRefSubSection3];
 
-        IXRefTable xRefTable1 = subSections1.ToXRefTable();
-        IXRefTable xRefTable2 = subSections2.ToXRefTable();
+        var xRefTable1 = subSections1.ToXRefTable();
+        var xRefTable2 = subSections2.ToXRefTable();
 
         // Act
-        bool actualResult = xRefTable1.Equals(xRefTable2);
+        var actualResult = xRefTable1.Equals(xRefTable2);
 
         // Assert
         Assert.False(actualResult);
@@ -246,21 +246,21 @@ public class XRefTableTests
     public void XRefTable_Equals_MustReturnTrue()
     {
         // Arrange
-        IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
-        IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
-        IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
-        List<IXRefEntry> multipleEntries =
+        var xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
+        var xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
+        var xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
+        List<IxRefEntry> multipleEntries =
             [new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse)];
-        List<IXRefSubSection> subSections1 =
+        List<IxRefSubSection> subSections1 =
             [xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23)];
-        List<IXRefSubSection> subSections2 =
+        List<IxRefSubSection> subSections2 =
             [xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23)];
 
-        IXRefTable xRefTable1 = subSections1.ToXRefTable();
-        IXRefTable xRefTable2 = subSections2.ToXRefTable();
+        var xRefTable1 = subSections1.ToXRefTable();
+        var xRefTable2 = subSections2.ToXRefTable();
 
         // Act
-        bool actualResult = xRefTable1.Equals(xRefTable2);
+        var actualResult = xRefTable1.Equals(xRefTable2);
 
         // Assert
         Assert.True(actualResult);
@@ -270,21 +270,21 @@ public class XRefTableTests
     public void XRefTable_EqualsNullObject_CheckValidity()
     {
         // Arrange
-        IXRefSubSection xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
-        IXRefSubSection xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
-        IXRefSubSection xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
-        List<IXRefEntry> multipleEntries =
+        var xRefSubSection1 = new XRefEntry(0, 65535, XRefEntryType.Free).ToXRefSubSection(0);
+        var xRefSubSection2 = new XRefEntry(25325, 0, XRefEntryType.InUse).ToXRefSubSection(3);
+        var xRefSubSection3 = new XRefEntry(25777, 0, XRefEntryType.InUse).ToXRefSubSection(30);
+        List<IxRefEntry> multipleEntries =
             [new XRefEntry(25518, 2, XRefEntryType.InUse), new XRefEntry(25635, 0, XRefEntryType.InUse)];
-        List<IXRefSubSection> subSections =
+        List<IxRefSubSection> subSections =
             [xRefSubSection1, xRefSubSection2, xRefSubSection3, multipleEntries.ToXRefSubSection(23)];
 
-        IXRefTable xRefTable = subSections.ToXRefTable();
+        var xRefTable = subSections.ToXRefTable();
 
         // Act
-        bool actualResult1 = xRefTable.Equals(null);
+        var actualResult1 = xRefTable.Equals(null);
 
         Debug.Assert(xRefTable != null, nameof(xRefTable) + " != null");
-        bool actualResult2 = xRefTable.Equals(null);
+        var actualResult2 = xRefTable.Equals(null);
 
         // Assert
         Assert.False(actualResult1);

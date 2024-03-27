@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
-using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxTrivia;
 
 [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "Verified")]
 public class WithTwoChildrenTests
@@ -18,11 +17,11 @@ public class WithTwoChildrenTests
     public void SlotCountProperty_MustBeEqualTo2()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        GreenNode syntaxList = SyntaxFactory.List(literalExpression, literalExpression);
+        var literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        var syntaxList = SyntaxFactory.List(literalExpression, literalExpression);
 
         // Act
-        int actualSlotCount = syntaxList.SlotCount;
+        var actualSlotCount = syntaxList.SlotCount;
 
         // Assert
         Assert.Equal(2, actualSlotCount);
@@ -32,12 +31,12 @@ public class WithTwoChildrenTests
     public void GetSlotMethod_Index0_MustReturnFirstObject()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        GreenNode syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        var syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
-        GreenNode? actualSlot = syntaxList.GetSlot(0);
+        var actualSlot = syntaxList.GetSlot(0);
 
         // Assert
         Assert.Equal(literalExpression1, actualSlot);
@@ -47,12 +46,12 @@ public class WithTwoChildrenTests
     public void GetSlotMethod_Index1_MustReturnSecondObject()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        GreenNode syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        var syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
-        GreenNode? actualSlot = syntaxList.GetSlot(1);
+        var actualSlot = syntaxList.GetSlot(1);
 
         // Assert
         Assert.Equal(literalExpression2, actualSlot);
@@ -62,12 +61,12 @@ public class WithTwoChildrenTests
     public void GetSlotMethod_Index2_MustReturnNull()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        GreenNode syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        var syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
-        GreenNode? actualSlot = syntaxList.GetSlot(2);
+        var actualSlot = syntaxList.GetSlot(2);
 
         // Assert
         Assert.Null(actualSlot);
@@ -77,13 +76,13 @@ public class WithTwoChildrenTests
     public void FullWidthProperty_MustIncludeAllSlots()
     {
         // Arrange
-        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
-        GreenNode syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
+        var syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
-        int actualFullWidth = syntaxList.FullWidth;
+        var actualFullWidth = syntaxList.FullWidth;
 
         // Assert
         Assert.Equal(13, actualFullWidth);
@@ -93,13 +92,13 @@ public class WithTwoChildrenTests
     public void WidthProperty_MustIncludeAllSlots()
     {
         // Arrange
-        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
-        GreenNode syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
+        var syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
-        int actualWidth = syntaxList.Width;
+        var actualWidth = syntaxList.Width;
 
         // Assert
         Assert.Equal(11, actualWidth);
@@ -113,13 +112,13 @@ public class WithTwoChildrenTests
     public void GetSlotOffsetMethod_MustReturnTheCorrectOffset(int index, int offset)
     {
         // Arrange
-        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
-        GreenNode syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
+        var syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
-        int actualOffset = syntaxList.GetSlotOffset(index);
+        var actualOffset = syntaxList.GetSlotOffset(index);
 
         // Assert
         Assert.Equal(offset, actualOffset);
@@ -129,50 +128,50 @@ public class WithTwoChildrenTests
     public void ToStringMethod_MustNotIncludeTrivia()
     {
         // Arrange
-        const string expectedString = "true  false";
+        const string ExpectedString = "true  false";
         GreenNode trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
 
         // Act
-        GreenNode syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
-        string actualString = syntaxList.ToString();
+        var syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var actualString = syntaxList.ToString();
 
         // Assert
-        Assert.Equal(expectedString, actualString);
+        Assert.Equal(ExpectedString, actualString);
     }
 
     [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
     public void ToFullStringMethod_MustIncludeTrivia()
     {
         // Arrange
-        const string expectedString = " true  false ";
+        const string ExpectedString = " true  false ";
         GreenNode trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
 
         // Act
-        GreenNode syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
-        string actualString = syntaxList.ToFullString();
+        var syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var actualString = syntaxList.ToFullString();
 
         // Assert
-        Assert.Equal(expectedString, actualString);
+        Assert.Equal(ExpectedString, actualString);
     }
 
     [Fact(DisplayName = "The SetDiagnostics() method must set the diagnostics and return a new instance.")]
     public void SetDiagnosticsMethod_MustSetDiagnosticsAndReturnNewInstance()
     {
         // Arrange
-        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
-        GreenNode syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
+        var syntaxList = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
         DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
-        GreenNode actualSyntaxList = syntaxList.SetDiagnostics(diagnostics);
+        var actualSyntaxList = syntaxList.SetDiagnostics(diagnostics);
 
         // Assert
         Assert.NotEqual(syntaxList, actualSyntaxList);

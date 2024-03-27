@@ -24,21 +24,21 @@ using Text.Operations.TextState;
 [CategoriesColumn]
 public class SimplePdfBenchmarks
 {
-    private MemoryStream? memoryStream;
-    private BinaryWriter? streamWriter;
+    private MemoryStream? _memoryStream;
+    private BinaryWriter? _streamWriter;
 
     [GlobalSetup]
     public void Setup()
     {
-        this.memoryStream = new MemoryStream();
-        this.streamWriter = new BinaryWriter(this.memoryStream);
+        _memoryStream = new MemoryStream();
+        _streamWriter = new BinaryWriter(_memoryStream);
     }
 
     [GlobalCleanup]
     public void Cleanup()
     {
-        this.memoryStream?.Dispose();
-        this.streamWriter?.Dispose();
+        _memoryStream?.Dispose();
+        _streamWriter?.Dispose();
     }
 
     [Benchmark]
@@ -50,19 +50,19 @@ public class SimplePdfBenchmarks
     [Arguments(10000)]
     public MemoryStream? BasicPdfWithMultiplePagesAndSameContentStream(int pagesCount)
     {
-        if (this.streamWriter == null)
+        if (_streamWriter == null)
         {
-            return this.memoryStream;
+            return _memoryStream;
         }
 
-        FileHeader fileHeader = FileHeader.PdfVersion17;
+        var fileHeader = FileHeader.PdfVersion17;
 
-        int objectNumber = 0;
+        var objectNumber = 0;
         IPdfIndirectIdentifier<IDocumentCatalog> documentCatalogIndirect = new PdfIndirect<IDocumentCatalog>(++objectNumber).ToPdfIndirectIdentifier();
         IPdfIndirectIdentifier<IPageTreeNode> rootPageTreeNodeIndirect = new PdfIndirect<IPageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
 
         List<IPdfIndirectIdentifier<IPageObject>> pageObjectsIndirectList = new(pagesCount);
-        for (int i = 0; i < pagesCount; i++)
+        for (var i = 0; i < pagesCount; i++)
         {
             pageObjectsIndirectList.Add(new PdfIndirect<IPageObject>(++objectNumber).ToPdfIndirectIdentifier());
         }
@@ -99,8 +99,8 @@ public class SimplePdfBenchmarks
         fontIndirect.PdfIndirect.Value = StandardFonts.Helvetica;
 
         // XTable
-        int byteOffset = 0;
-        List<IXRefEntry> xRefEntries = new(5 + pagesCount) { new XRefEntry(byteOffset, 65535, XRefEntryType.Free) };
+        var byteOffset = 0;
+        List<IxRefEntry> xRefEntries = new(5 + pagesCount) { new XRefEntry(byteOffset, 65535, XRefEntryType.Free) };
 
         byteOffset += fileHeader.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
@@ -121,7 +121,7 @@ public class SimplePdfBenchmarks
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
 
         byteOffset += fontIndirect.PdfIndirect.Bytes.Length;
-        IXRefTable xRefTable = xRefEntries.ToXRefTable(0);
+        var xRefTable = xRefEntries.ToXRefTable(0);
 
         IFileTrailer fileTrailer = new FileTrailer(byteOffset, options =>
         {
@@ -129,21 +129,21 @@ public class SimplePdfBenchmarks
             options.Root = documentCatalogIndirect;
         });
 
-        this.streamWriter.Write(fileHeader.Bytes.Span);
-        this.streamWriter.Write(documentCatalogIndirect.PdfIndirect.Bytes.Span);
-        this.streamWriter.Write(rootPageTreeNodeIndirect.PdfIndirect.Bytes.Span);
+        _streamWriter.Write(fileHeader.Bytes.Span);
+        _streamWriter.Write(documentCatalogIndirect.PdfIndirect.Bytes.Span);
+        _streamWriter.Write(rootPageTreeNodeIndirect.PdfIndirect.Bytes.Span);
 
         foreach (IPdfIndirectIdentifier<IPageObject> pageObjectIndirect in pageObjectsIndirectList)
         {
-            this.streamWriter.Write(pageObjectIndirect.PdfIndirect.Bytes.Span);
+            _streamWriter.Write(pageObjectIndirect.PdfIndirect.Bytes.Span);
         }
 
-        this.streamWriter.Write(contentStreamIndirect.PdfIndirect.Bytes.Span);
-        this.streamWriter.Write(fontIndirect.PdfIndirect.Bytes.Span);
-        this.streamWriter.Write(xRefTable.Bytes.Span);
-        this.streamWriter.Write(fileTrailer.Bytes.Span);
+        _streamWriter.Write(contentStreamIndirect.PdfIndirect.Bytes.Span);
+        _streamWriter.Write(fontIndirect.PdfIndirect.Bytes.Span);
+        _streamWriter.Write(xRefTable.Bytes.Span);
+        _streamWriter.Write(fileTrailer.Bytes.Span);
 
-        return this.memoryStream;
+        return _memoryStream;
     }
 
     [Benchmark]
@@ -155,25 +155,25 @@ public class SimplePdfBenchmarks
     [Arguments(10000)]
     public MemoryStream? BasicPdfWithMultiplePagesAndDifferentContentStreams(int pagesCount)
     {
-        if (this.streamWriter == null)
+        if (_streamWriter == null)
         {
-            return this.memoryStream;
+            return _memoryStream;
         }
 
-        FileHeader fileHeader = FileHeader.PdfVersion17;
+        var fileHeader = FileHeader.PdfVersion17;
 
-        int objectNumber = 0;
+        var objectNumber = 0;
         IPdfIndirectIdentifier<IDocumentCatalog> documentCatalogIndirect = new PdfIndirect<IDocumentCatalog>(++objectNumber).ToPdfIndirectIdentifier();
         IPdfIndirectIdentifier<IPageTreeNode> rootPageTreeNodeIndirect = new PdfIndirect<IPageTreeNode>(++objectNumber).ToPdfIndirectIdentifier();
 
         List<IPdfIndirectIdentifier<IPageObject>> pageObjectsIndirectList = new(pagesCount);
         List<IPdfIndirectIdentifier<IPdfStream>> contentStreamsIndirectList = new(pagesCount);
-        for (int i = 0; i < pagesCount; i++)
+        for (var i = 0; i < pagesCount; i++)
         {
             pageObjectsIndirectList.Add(new PdfIndirect<IPageObject>(++objectNumber).ToPdfIndirectIdentifier());
         }
 
-        for (int i = 0; i < pagesCount; i++)
+        for (var i = 0; i < pagesCount; i++)
         {
             contentStreamsIndirectList.Add(new PdfIndirect<IPdfStream>(++objectNumber).ToPdfIndirectIdentifier());
         }
@@ -194,9 +194,9 @@ public class SimplePdfBenchmarks
         documentCatalogIndirect.PdfIndirect.Value = new DocumentCatalog(options => options.Pages = rootPageTreeNodeIndirect);
         rootPageTreeNodeIndirect.PdfIndirect.Value = new PageTreeNode(options => options.Kids = pageObjectsIndirectList.ToPdfArray());
 
-        for (int i = 0; i < pageObjectsIndirectList.Count; i++)
+        for (var i = 0; i < pageObjectsIndirectList.Count; i++)
         {
-            int index = i;
+            var index = i;
             pageObjectsIndirectList[i].PdfIndirect.Value = new PageObject(options =>
             {
                 options.Parent = rootPageTreeNodeIndirect;
@@ -214,8 +214,8 @@ public class SimplePdfBenchmarks
         fontIndirect.PdfIndirect.Value = StandardFonts.Helvetica;
 
         // XTable
-        int byteOffset = 0;
-        List<IXRefEntry> xRefEntries = new(5 + (pagesCount * 2)) { new XRefEntry(byteOffset, 65535, XRefEntryType.Free) };
+        var byteOffset = 0;
+        List<IxRefEntry> xRefEntries = new(5 + (pagesCount * 2)) { new XRefEntry(byteOffset, 65535, XRefEntryType.Free) };
 
         byteOffset += fileHeader.Bytes.Length;
         xRefEntries.Add(new XRefEntry(byteOffset, 0, XRefEntryType.InUse));
@@ -239,7 +239,7 @@ public class SimplePdfBenchmarks
         }
 
         byteOffset += fontIndirect.PdfIndirect.Bytes.Length;
-        IXRefTable xRefTable = xRefEntries.ToXRefTable(0);
+        var xRefTable = xRefEntries.ToXRefTable(0);
 
         IFileTrailer fileTrailer = new FileTrailer(byteOffset, options =>
         {
@@ -247,24 +247,24 @@ public class SimplePdfBenchmarks
             options.Root = documentCatalogIndirect;
         });
 
-        this.streamWriter.Write(fileHeader.Bytes.Span);
-        this.streamWriter.Write(documentCatalogIndirect.PdfIndirect.Bytes.Span);
-        this.streamWriter.Write(rootPageTreeNodeIndirect.PdfIndirect.Bytes.Span);
+        _streamWriter.Write(fileHeader.Bytes.Span);
+        _streamWriter.Write(documentCatalogIndirect.PdfIndirect.Bytes.Span);
+        _streamWriter.Write(rootPageTreeNodeIndirect.PdfIndirect.Bytes.Span);
 
         foreach (IPdfIndirectIdentifier<IPageObject> pageObjectIndirect in pageObjectsIndirectList)
         {
-            this.streamWriter.Write(pageObjectIndirect.PdfIndirect.Bytes.Span);
+            _streamWriter.Write(pageObjectIndirect.PdfIndirect.Bytes.Span);
         }
 
         foreach (IPdfIndirectIdentifier<IPdfStream> contentStreamIndirect in contentStreamsIndirectList)
         {
-            this.streamWriter.Write(contentStreamIndirect.PdfIndirect.Bytes.Span);
+            _streamWriter.Write(contentStreamIndirect.PdfIndirect.Bytes.Span);
         }
 
-        this.streamWriter.Write(fontIndirect.PdfIndirect.Bytes.Span);
-        this.streamWriter.Write(xRefTable.Bytes.Span);
-        this.streamWriter.Write(fileTrailer.Bytes.Span);
+        _streamWriter.Write(fontIndirect.PdfIndirect.Bytes.Span);
+        _streamWriter.Write(xRefTable.Bytes.Span);
+        _streamWriter.Write(fileTrailer.Bytes.Span);
 
-        return this.memoryStream;
+        return _memoryStream;
     }
 }

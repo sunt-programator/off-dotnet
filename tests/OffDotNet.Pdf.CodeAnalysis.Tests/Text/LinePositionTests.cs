@@ -17,12 +17,12 @@ public class LinePositionTests
     public void Constructor_NegativeLine_MustThrowArgumentOutOfRangeException()
     {
         // Arrange
-        const int line = -1;
+        const int Line = -1;
 
         // Assert
         static void LinePositionFunc()
         {
-            LinePosition linePosition = new(line, 2);
+            LinePosition linePosition = new(Line, 2);
         }
 
         // Act
@@ -35,7 +35,7 @@ public class LinePositionTests
     public void Constructor_NegativeCharacter_MustThrowArgumentOutOfRangeException()
     {
         // Arrange
-        const int character = -1;
+        const int Character = -1;
 
         // Assert
         Assert.Throws<ArgumentOutOfRangeException>(LinePositionFunc);
@@ -43,7 +43,7 @@ public class LinePositionTests
         // Act
         static void LinePositionFunc()
         {
-            LinePosition linePosition = new(0, character);
+            LinePosition linePosition = new(0, Character);
         }
     }
 
@@ -51,28 +51,28 @@ public class LinePositionTests
     public void LineProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        const int line = 1;
-        LinePosition linePosition = new(line, 2);
+        const int Line = 1;
+        LinePosition linePosition = new(Line, 2);
 
         // Act
-        int actualLine = linePosition.Line;
+        var actualLine = linePosition.Line;
 
         // Assert
-        Assert.Equal(line, actualLine);
+        Assert.Equal(Line, actualLine);
     }
 
     [Fact(DisplayName = $"The {nameof(LinePosition.Character)} property must be assigned from the constructor.")]
     public void CharacterProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        const int character = 2;
-        LinePosition linePosition = new(1, character);
+        const int Character = 2;
+        LinePosition linePosition = new(1, Character);
 
         // Act
-        int actualCharacter = linePosition.Character;
+        var actualCharacter = linePosition.Character;
 
         // Assert
-        Assert.Equal(character, actualCharacter);
+        Assert.Equal(Character, actualCharacter);
     }
 
     [Fact(DisplayName = $"The GetHashCode() method must include the {nameof(LinePosition.Line)} and {nameof(LinePosition.Character)} properties.")]
@@ -80,10 +80,10 @@ public class LinePositionTests
     {
         // Arrange
         LinePosition linePosition = new(1, 2);
-        int expectedHashCode = HashCode.Combine(linePosition.Line, linePosition.Character);
+        var expectedHashCode = HashCode.Combine(linePosition.Line, linePosition.Character);
 
         // Act
-        int actualHashCode = linePosition.GetHashCode();
+        var actualHashCode = linePosition.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
@@ -109,10 +109,10 @@ public class LinePositionTests
         LinePosition linePosition2 = new(1, 2);
 
         // Act
-        bool actualEquals1 = linePosition1.Equals(linePosition2);
-        bool actualEquals2 = linePosition2.Equals((object?)linePosition1);
-        bool actualEquals3 = linePosition1 == linePosition2;
-        bool actualEquals4 = linePosition1 != linePosition2;
+        var actualEquals1 = linePosition1.Equals(linePosition2);
+        var actualEquals2 = linePosition2.Equals((object?)linePosition1);
+        var actualEquals3 = linePosition1 == linePosition2;
+        var actualEquals4 = linePosition1 != linePosition2;
 
         // Assert
         Assert.True(actualEquals1);
@@ -129,10 +129,10 @@ public class LinePositionTests
         LinePosition linePosition2 = new(3, 4);
 
         // Act
-        bool actualEquals1 = linePosition1.Equals(linePosition2);
-        bool actualEquals2 = linePosition2.Equals((object?)linePosition1);
-        bool actualEquals3 = linePosition1 == linePosition2;
-        bool actualEquals4 = linePosition1 != linePosition2;
+        var actualEquals1 = linePosition1.Equals(linePosition2);
+        var actualEquals2 = linePosition2.Equals((object?)linePosition1);
+        var actualEquals3 = linePosition1 == linePosition2;
+        var actualEquals4 = linePosition1 != linePosition2;
 
         // Assert
         Assert.False(actualEquals1);
@@ -166,7 +166,7 @@ public class LinePositionTests
         LinePosition linePosition2 = new(line2, char2);
 
         // Act
-        int actualCompareTo = linePosition1.CompareTo(linePosition2);
+        var actualCompareTo = linePosition1.CompareTo(linePosition2);
 
         // Assert
         Assert.Equal(compareTo, actualCompareTo);
@@ -179,18 +179,18 @@ public class LinePositionTests
         // Arrange
 
         // Act
-        bool compare1 = new LinePosition(1, 1) > new LinePosition(1, 1); // skipcq: CS-W1026
-        bool compare2 = new LinePosition(1, 1) < new LinePosition(1, 1); // skipcq: CS-W1026
-        bool compare3 = new LinePosition(1, 1) >= new LinePosition(1, 1); // skipcq: CS-W1026
-        bool compare4 = new LinePosition(1, 1) <= new LinePosition(1, 1); // skipcq: CS-W1026
-        bool compare5 = new LinePosition(1, 1) > new LinePosition(2, 1);
-        bool compare6 = new LinePosition(1, 1) < new LinePosition(2, 1);
-        bool compare7 = new LinePosition(1, 1) >= new LinePosition(2, 1);
-        bool compare8 = new LinePosition(1, 1) <= new LinePosition(2, 1);
-        bool compare9 = new LinePosition(1, 1) > new LinePosition(1, 2);
-        bool compare10 = new LinePosition(1, 1) < new LinePosition(1, 2);
-        bool compare11 = new LinePosition(1, 1) >= new LinePosition(1, 2);
-        bool compare12 = new LinePosition(1, 1) <= new LinePosition(1, 2);
+        var compare1 = new LinePosition(1, 1) > new LinePosition(1, 1); // skipcq: CS-W1026
+        var compare2 = new LinePosition(1, 1) < new LinePosition(1, 1); // skipcq: CS-W1026
+        var compare3 = new LinePosition(1, 1) >= new LinePosition(1, 1); // skipcq: CS-W1026
+        var compare4 = new LinePosition(1, 1) <= new LinePosition(1, 1); // skipcq: CS-W1026
+        var compare5 = new LinePosition(1, 1) > new LinePosition(2, 1);
+        var compare6 = new LinePosition(1, 1) < new LinePosition(2, 1);
+        var compare7 = new LinePosition(1, 1) >= new LinePosition(2, 1);
+        var compare8 = new LinePosition(1, 1) <= new LinePosition(2, 1);
+        var compare9 = new LinePosition(1, 1) > new LinePosition(1, 2);
+        var compare10 = new LinePosition(1, 1) < new LinePosition(1, 2);
+        var compare11 = new LinePosition(1, 1) >= new LinePosition(1, 2);
+        var compare12 = new LinePosition(1, 1) <= new LinePosition(1, 2);
 
         // Assert
         Assert.False(compare1);
@@ -212,12 +212,12 @@ public class LinePositionTests
     {
         // Arrange
         LinePosition linePosition = new(1, 2);
-        const string expectedToString = "1,2";
+        const string ExpectedToString = "1,2";
 
         // Act
-        string actualString = linePosition.ToString();
+        var actualString = linePosition.ToString();
 
         // Assert
-        Assert.Equal(expectedToString, actualString);
+        Assert.Equal(ExpectedToString, actualString);
     }
 }

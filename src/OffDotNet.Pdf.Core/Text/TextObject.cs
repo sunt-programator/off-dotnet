@@ -10,25 +10,25 @@ using Common;
 
 public sealed class TextObject : PdfObject, ITextObject
 {
-    private readonly Lazy<string> literalValue;
-    private readonly Lazy<byte[]> bytes;
+    private readonly Lazy<string> _literalValue;
+    private readonly Lazy<byte[]> _bytes;
 
     public TextObject(IReadOnlyCollection<IPdfOperation> operations)
     {
         this.Value = operations;
 
-        this.literalValue = new Lazy<string>(this.GenerateContent);
-        this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
+        _literalValue = new Lazy<string>(this.GenerateContent);
+        _bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
 
     /// <inheritdoc/>
-    public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
+    public override ReadOnlyMemory<byte> Bytes => _bytes.Value;
 
     /// <inheritdoc/>
     public IReadOnlyCollection<IPdfOperation> Value { get; }
 
     /// <inheritdoc/>
-    public override string Content => this.literalValue.Value;
+    public override string Content => _literalValue.Value;
 
     /// <inheritdoc/>
     protected override IEnumerable<object> GetEqualityComponents()

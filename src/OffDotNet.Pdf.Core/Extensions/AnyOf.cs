@@ -12,17 +12,17 @@ public readonly struct AnyOf<T1, T2>
     where T1 : IPdfObject
     where T2 : IPdfObject
 {
-    private readonly T1? firstType;
-    private readonly T2? secondType;
+    private readonly T1? _firstType;
+    private readonly T2? _secondType;
 
     public AnyOf(T1 type)
     {
-        this.firstType = type;
+        _firstType = type;
     }
 
     public AnyOf(T2 type)
     {
-        this.secondType = type;
+        _secondType = type;
     }
 
     [SuppressMessage(
@@ -30,9 +30,9 @@ public readonly struct AnyOf<T1, T2>
         "ReplaceConditionalExpressionWithNullCoalescing",
         Justification = "Thi fixer leads to compiler error")]
     public IPdfObject PdfObject =>
-        this.firstType is { } t1
+        _firstType is { } t1
             ? t1
-            : this.secondType!;
+            : _secondType!;
 
     public static implicit operator AnyOf<T1, T2>(T1 type1)
     {

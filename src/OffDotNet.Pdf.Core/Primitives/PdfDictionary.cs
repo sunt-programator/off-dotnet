@@ -11,20 +11,20 @@ using Common;
 public class PdfDictionary<TValue> : PdfObject, IPdfDictionary<TValue>
     where TValue : IPdfObject
 {
-    private string literalValue = string.Empty;
-    private byte[]? bytes;
+    private string _literalValue = string.Empty;
+    private byte[]? _bytes;
 
     public PdfDictionary(IReadOnlyDictionary<PdfName, TValue> value)
     {
         this.Value = value;
-        this.bytes = null;
+        _bytes = null;
     }
 
     /// <inheritdoc/>
     public IReadOnlyDictionary<PdfName, TValue> Value { get; }
 
     /// <inheritdoc/>
-    public override ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
+    public override ReadOnlyMemory<byte> Bytes => _bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
     /// <inheritdoc/>
     public override string Content => this.GenerateContent();
@@ -37,9 +37,9 @@ public class PdfDictionary<TValue> : PdfObject, IPdfDictionary<TValue>
 
     private string GenerateContent()
     {
-        if (this.literalValue.Length != 0)
+        if (_literalValue.Length != 0)
         {
-            return this.literalValue;
+            return _literalValue;
         }
 
         StringBuilder stringBuilder = new();
@@ -58,11 +58,11 @@ public class PdfDictionary<TValue> : PdfObject, IPdfDictionary<TValue>
             stringBuilder.Remove(stringBuilder.Length - 1, 1);
         }
 
-        this.literalValue = stringBuilder
+        _literalValue = stringBuilder
             .Insert(0, "<<")
             .Append(">>")
             .ToString();
 
-        return this.literalValue;
+        return _literalValue;
     }
 }

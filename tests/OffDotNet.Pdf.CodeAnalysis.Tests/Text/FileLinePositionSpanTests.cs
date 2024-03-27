@@ -34,14 +34,14 @@ public class FileLinePositionSpanTests
         // Arrange
         LinePosition start = new(1, 0);
         LinePosition end = new(5, 0);
-        const string path = @"C:\1.pdf";
+        const string Path = @"C:\1.pdf";
 
         // Act
-        FileLinePositionSpan fileLinePositionSpan = new(path, start, end);
-        string actualPath = fileLinePositionSpan.Path;
+        FileLinePositionSpan fileLinePositionSpan = new(Path, start, end);
+        var actualPath = fileLinePositionSpan.Path;
 
         // Assert
-        Assert.Equal(path, actualPath);
+        Assert.Equal(Path, actualPath);
     }
 
     [Fact(DisplayName = $"The {nameof(FileLinePositionSpan.Span)} property must be assigned from the constructor.")]
@@ -50,12 +50,12 @@ public class FileLinePositionSpanTests
         // Arrange
         LinePosition start = new(1, 0);
         LinePosition end = new(5, 0);
-        const string path = @"C:\1.pdf";
+        const string Path = @"C:\1.pdf";
         LinePositionSpan expectedSpan = new(start, end);
 
         // Act
-        FileLinePositionSpan fileLinePositionSpan = new(path, start, end);
-        LinePositionSpan actualSpan = fileLinePositionSpan.Span;
+        FileLinePositionSpan fileLinePositionSpan = new(Path, start, end);
+        var actualSpan = fileLinePositionSpan.Span;
 
         // Assert
         Assert.Equal(expectedSpan, actualSpan);
@@ -67,11 +67,11 @@ public class FileLinePositionSpanTests
         // Arrange
         LinePosition start = new(1, 0);
         LinePosition end = new(5, 0);
-        const string path = @"C:\1.pdf";
+        const string Path = @"C:\1.pdf";
 
         // Act
-        FileLinePositionSpan fileLinePositionSpan = new(path, start, end);
-        LinePosition actualLinePosition = fileLinePositionSpan.StartLinePosition;
+        FileLinePositionSpan fileLinePositionSpan = new(Path, start, end);
+        var actualLinePosition = fileLinePositionSpan.StartLinePosition;
 
         // Assert
         Assert.Equal(start, actualLinePosition);
@@ -83,11 +83,11 @@ public class FileLinePositionSpanTests
         // Arrange
         LinePosition start = new(1, 0);
         LinePosition end = new(5, 0);
-        const string path = @"C:\1.pdf";
+        const string Path = @"C:\1.pdf";
 
         // Act
-        FileLinePositionSpan fileLinePositionSpan = new(path, start, end);
-        LinePosition actualLinePosition = fileLinePositionSpan.EndLinePosition;
+        FileLinePositionSpan fileLinePositionSpan = new(Path, start, end);
+        var actualLinePosition = fileLinePositionSpan.EndLinePosition;
 
         // Assert
         Assert.Equal(end, actualLinePosition);
@@ -99,10 +99,10 @@ public class FileLinePositionSpanTests
         // Arrange
         LinePosition start = new(1, 0);
         LinePosition end = new(5, 0);
-        const string path = @"C:\1.pdf";
+        const string Path = @"C:\1.pdf";
 
         // Act
-        FileLinePositionSpan fileLinePositionSpan = new(path, start, end);
+        FileLinePositionSpan fileLinePositionSpan = new(Path, start, end);
 
         // Assert
         Assert.IsAssignableFrom<IEquatable<FileLinePositionSpan>>(fileLinePositionSpan);
@@ -114,15 +114,15 @@ public class FileLinePositionSpanTests
         // Arrange
         LinePosition start = new(1, 0);
         LinePosition end = new(5, 0);
-        const string path = @"C:\1.pdf";
-        FileLinePositionSpan fileLinePositionSpan1 = new(path, start, end);
-        FileLinePositionSpan fileLinePositionSpan2 = new(path, start, end);
+        const string Path = @"C:\1.pdf";
+        FileLinePositionSpan fileLinePositionSpan1 = new(Path, start, end);
+        FileLinePositionSpan fileLinePositionSpan2 = new(Path, start, end);
 
         // Act
-        bool actualEquals1 = fileLinePositionSpan1.Equals(fileLinePositionSpan2);
-        bool actualEquals2 = fileLinePositionSpan1.Equals((object?)fileLinePositionSpan2);
-        bool actualEquals3 = fileLinePositionSpan1 == fileLinePositionSpan2;
-        bool actualEquals4 = fileLinePositionSpan1 != fileLinePositionSpan2;
+        var actualEquals1 = fileLinePositionSpan1.Equals(fileLinePositionSpan2);
+        var actualEquals2 = fileLinePositionSpan1.Equals((object?)fileLinePositionSpan2);
+        var actualEquals3 = fileLinePositionSpan1 == fileLinePositionSpan2;
+        var actualEquals4 = fileLinePositionSpan1 != fileLinePositionSpan2;
 
         // Assert
         Assert.True(actualEquals1);
@@ -139,16 +139,16 @@ public class FileLinePositionSpanTests
         LinePosition start2 = new(2, 0);
         LinePosition end1 = new(5, 0);
         LinePosition end2 = new(3, 0);
-        const string path1 = @"C:\1.pdf";
-        const string path2 = @"C:\2.pdf";
-        FileLinePositionSpan fileLinePositionSpan1 = new(path1, start1, end1);
-        FileLinePositionSpan fileLinePositionSpan2 = new(path2, start2, end2);
+        const string Path1 = @"C:\1.pdf";
+        const string Path2 = @"C:\2.pdf";
+        FileLinePositionSpan fileLinePositionSpan1 = new(Path1, start1, end1);
+        FileLinePositionSpan fileLinePositionSpan2 = new(Path2, start2, end2);
 
         // Act
-        bool actualEquals1 = fileLinePositionSpan1.Equals(fileLinePositionSpan2);
-        bool actualEquals2 = fileLinePositionSpan1.Equals((object?)fileLinePositionSpan2);
-        bool actualEquals3 = fileLinePositionSpan1 == fileLinePositionSpan2;
-        bool actualEquals4 = fileLinePositionSpan1 != fileLinePositionSpan2;
+        var actualEquals1 = fileLinePositionSpan1.Equals(fileLinePositionSpan2);
+        var actualEquals2 = fileLinePositionSpan1.Equals((object?)fileLinePositionSpan2);
+        var actualEquals3 = fileLinePositionSpan1 == fileLinePositionSpan2;
+        var actualEquals4 = fileLinePositionSpan1 != fileLinePositionSpan2;
 
         // Assert
         Assert.False(actualEquals1);
@@ -163,12 +163,12 @@ public class FileLinePositionSpanTests
         // Arrange
         LinePosition start = new(1, 0);
         LinePosition end = new(5, 0);
-        const string path = @"C:\1.pdf";
-        int expectedHashCode = HashCode.Combine(path, new LinePositionSpan(start, end));
+        const string Path = @"C:\1.pdf";
+        var expectedHashCode = HashCode.Combine(Path, new LinePositionSpan(start, end));
 
         // Act
-        FileLinePositionSpan fileLinePositionSpan = new(path, start, end);
-        int actualHashCode = fileLinePositionSpan.GetHashCode();
+        FileLinePositionSpan fileLinePositionSpan = new(Path, start, end);
+        var actualHashCode = fileLinePositionSpan.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
@@ -180,12 +180,12 @@ public class FileLinePositionSpanTests
         // Arrange
         LinePosition start = new(1, 0);
         LinePosition end = new(5, 0);
-        const string path = @"C:\1.pdf";
-        string expectedToString = $"{path}: ({start})-({end})";
+        const string Path = @"C:\1.pdf";
+        var expectedToString = $"{Path}: ({start})-({end})";
 
         // Act
-        FileLinePositionSpan fileLinePositionSpan = new(path, start, end);
-        string actualToString = fileLinePositionSpan.ToString();
+        FileLinePositionSpan fileLinePositionSpan = new(Path, start, end);
+        var actualToString = fileLinePositionSpan.ToString();
 
         // Assert
         Assert.Equal(expectedToString, actualToString);

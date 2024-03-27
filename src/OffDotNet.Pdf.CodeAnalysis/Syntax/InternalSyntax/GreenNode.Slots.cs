@@ -10,7 +10,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 /// </summary>
 internal abstract partial class GreenNode
 {
-    private readonly byte slotCount;
+    private readonly byte _slotCount;
 
     /// <summary>Gets the number of slots in a <see cref="GreenNode"/>.</summary>
     /// <remarks>
@@ -18,11 +18,11 @@ internal abstract partial class GreenNode
     /// </remarks>
     public int SlotCount
     {
-        get => this.slotCount == byte.MaxValue
+        get => _slotCount == byte.MaxValue
             ? this.GetSlotCount()
-            : this.slotCount;
+            : _slotCount;
 
-        protected init => this.slotCount = (byte)value;
+        protected init => _slotCount = (byte)value;
     }
 
     /// <summary>Gets the offset of the slot at the specified index within a <see cref="GreenNode"/>.</summary>
@@ -53,6 +53,6 @@ internal abstract partial class GreenNode
     /// <returns>The number of slots in a <see cref="GreenNode"/>.</returns>
     protected virtual int GetSlotCount()
     {
-        return this.slotCount;
+        return _slotCount;
     }
 }

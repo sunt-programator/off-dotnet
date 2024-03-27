@@ -14,78 +14,78 @@ public class MessageProviderTests
     public void CodePrefixProperty_MustReturnPDF()
     {
         // Arrange
-        const string expectedCodePrefix = "PDF";
+        const string ExpectedCodePrefix = "PDF";
 
         // Act
-        string actualCodePrefix = MessageProvider.Instance.CodePrefix;
+        var actualCodePrefix = MessageProvider.Instance.CodePrefix;
 
         // Assert
-        Assert.Equal(expectedCodePrefix, actualCodePrefix);
+        Assert.Equal(ExpectedCodePrefix, actualCodePrefix);
     }
 
     [Fact(DisplayName = "The GetTitle() method must return the title from the resource string.")]
     public void GetTitleMethod_MustReturnFromResourceString()
     {
         // Arrange
-        const string title = "The PDF file is invalid";
+        const string Title = "The PDF file is invalid";
 
         // Act
-        string actualTitle = MessageProvider.Instance.GetTitle(DiagnosticCode.ERR_InvalidPDF).ToString(CultureInfo.InvariantCulture);
+        var actualTitle = MessageProvider.Instance.GetTitle(DiagnosticCode.ERR_InvalidPDF).ToString(CultureInfo.InvariantCulture);
 
         // Assert
-        Assert.Equal(title, actualTitle);
+        Assert.Equal(Title, actualTitle);
     }
 
     [Fact(DisplayName = "The GetDescription() method must return the title from the resource string.")]
     public void GetDescriptionMethod_MustReturnFromResourceString()
     {
         // Arrange
-        const string description = "Some detailed description about this error";
+        const string Description = "Some detailed description about this error";
 
         // Act
-        string actualDescription = MessageProvider.Instance.GetDescription(DiagnosticCode.ERR_InvalidPDF).ToString(CultureInfo.InvariantCulture);
+        var actualDescription = MessageProvider.Instance.GetDescription(DiagnosticCode.ERR_InvalidPDF).ToString(CultureInfo.InvariantCulture);
 
         // Assert
-        Assert.Equal(description, actualDescription);
+        Assert.Equal(Description, actualDescription);
     }
 
     [Fact(DisplayName = "The GetSeverity() method must return the severity based on the diagnostic code.")]
     public void GetSeverityMethod_MustComputeFromDiagnosticCode()
     {
         // Arrange
-        const DiagnosticSeverity severity = DiagnosticSeverity.Error;
+        const DiagnosticSeverity Severity = DiagnosticSeverity.Error;
 
         // Act
-        DiagnosticSeverity actualSeverity = MessageProvider.Instance.GetSeverity(DiagnosticCode.ERR_InvalidPDF);
+        var actualSeverity = MessageProvider.Instance.GetSeverity(DiagnosticCode.ERR_InvalidPDF);
 
         // Assert
-        Assert.Equal(severity, actualSeverity);
+        Assert.Equal(Severity, actualSeverity);
     }
 
     [Fact(DisplayName = "The GetMessage() method must return the message from the resource string.")]
     public void GetMessageMethod_MustComputeFromDiagnosticCode()
     {
         // Arrange
-        const DiagnosticCode code = DiagnosticCode.ERR_InvalidPDF;
-        const string message = "The PDF file is invalid";
+        const DiagnosticCode Code = DiagnosticCode.ERR_InvalidPDF;
+        const string Message = "The PDF file is invalid";
 
         // Act
-        string actualMessage = MessageProvider.Instance.GetMessage(code).ToString(CultureInfo.InvariantCulture);
+        var actualMessage = MessageProvider.Instance.GetMessage(Code).ToString(CultureInfo.InvariantCulture);
 
         // Assert
-        Assert.Equal(message, actualMessage);
+        Assert.Equal(Message, actualMessage);
     }
 
     [Fact(DisplayName = "The GetMessage() method must return the message from the resource string.")]
     public void GetHelpLinkMethod_MustComputeFromDiagnosticCode()
     {
         // Arrange
-        const DiagnosticCode code = DiagnosticCode.ERR_InvalidPDF;
-        const int codeNumber = (int)code;
-        string helpLink = $"https://github.com/search?q=repo%3Asunt-programator%2Foff-dotnet%20PDF{codeNumber:0000}&type=code";
+        const DiagnosticCode Code = DiagnosticCode.ERR_InvalidPDF;
+        const int CodeNumber = (int)Code;
+        var helpLink = $"https://github.com/search?q=repo%3Asunt-programator%2Foff-dotnet%20PDF{CodeNumber:0000}&type=code";
 
         // Act
-        string actualHelpLink = MessageProvider.Instance.GetHelpLink(code);
+        var actualHelpLink = MessageProvider.Instance.GetHelpLink(Code);
 
         // Assert
         Assert.Equal(helpLink, actualHelpLink);
@@ -98,7 +98,7 @@ public class MessageProviderTests
         // Arrange
 
         // Act
-        string actualCategory = MessageProvider.Instance.GetCategory(code);
+        var actualCategory = MessageProvider.Instance.GetCategory(code);
 
         // Assert
         Assert.Equal(category, actualCategory);
@@ -108,10 +108,10 @@ public class MessageProviderTests
     public void GetIsEnabledByDefaultMethod_MustReturnTrue()
     {
         // Arrange
-        const DiagnosticCode code = DiagnosticCode.ERR_InvalidPDF;
+        const DiagnosticCode Code = DiagnosticCode.ERR_InvalidPDF;
 
         // Act
-        bool actualIsEnabledByDefault = MessageProvider.Instance.GetIsEnabledByDefault(code);
+        var actualIsEnabledByDefault = MessageProvider.Instance.GetIsEnabledByDefault(Code);
 
         // Assert
         Assert.True(actualIsEnabledByDefault);
@@ -121,14 +121,14 @@ public class MessageProviderTests
     public void LoadMessageMethod_MustReturnCorrectMessage()
     {
         // Arrange
-        const DiagnosticCode code = DiagnosticCode.ERR_InvalidPDF;
-        const string message = "The PDF file is invalid";
+        const DiagnosticCode Code = DiagnosticCode.ERR_InvalidPDF;
+        const string Message = "The PDF file is invalid";
 
         // Act
-        string actualMessage = MessageProvider.Instance.LoadMessage(code, CultureInfo.InvariantCulture);
+        var actualMessage = MessageProvider.Instance.LoadMessage(Code, CultureInfo.InvariantCulture);
 
         // Assert
-        Assert.Equal(message, actualMessage);
+        Assert.Equal(Message, actualMessage);
     }
 
     [Theory(DisplayName = "The GetMessagePrefix() method must return correct prefix.")]
@@ -142,7 +142,7 @@ public class MessageProviderTests
         // Arrange
 
         // Act
-        string actualPrefix = MessageProvider.Instance.GetMessagePrefix(code, severity, isWarningAsError, CultureInfo.InvariantCulture);
+        var actualPrefix = MessageProvider.Instance.GetMessagePrefix(code, severity, isWarningAsError, CultureInfo.InvariantCulture);
 
         // Assert
         Assert.Equal(prefix, actualPrefix);

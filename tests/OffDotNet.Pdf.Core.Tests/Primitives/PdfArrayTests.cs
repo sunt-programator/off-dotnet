@@ -38,7 +38,7 @@ public class PdfArrayTests
         IPdfArray<PdfName> pdfArray1 = new PdfName("Name1").ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
 
         // Act
-        bool actualResult = pdfArray1.Equals(null);
+        var actualResult = pdfArray1.Equals(null);
 
         // Assert
         Assert.False(actualResult);
@@ -51,7 +51,7 @@ public class PdfArrayTests
         IPdfArray<IPdfObject> pdfArray1 = new PdfString("901FA", true).ToPdfArray();
 
         // Act
-        bool actualResult = pdfArray1.Equals(null);
+        var actualResult = pdfArray1.Equals(null);
 
         // Assert
         Assert.False(actualResult);
@@ -66,7 +66,7 @@ public class PdfArrayTests
         IPdfArray<IPdfObject> pdfArray2 = pdfArray1; // Use the ToPdfArray extension method to initialize an PdfArray instance
 
         // Act
-        bool actualResult = pdfArray1.Equals(pdfArray2);
+        var actualResult = pdfArray1.Equals(pdfArray2);
 
         // Assert
         Assert.True(actualResult);
@@ -81,7 +81,7 @@ public class PdfArrayTests
         IPdfArray<IPdfObject> pdfArray2 = objects1.ToPdfArray(); // Use the ToPdfArray extension method to initialize an PdfArray instance
 
         // Act
-        bool actualResult = pdfArray1.Equals(pdfArray2);
+        var actualResult = pdfArray1.Equals(pdfArray2);
 
         // Assert
         Assert.False(actualResult);
@@ -141,7 +141,7 @@ public class PdfArrayTests
         IPdfArray<IPdfObject> pdfArray1 = items.ToPdfArray();
 
         // Act
-        byte[] actualBytes = pdfArray1.Bytes.ToArray();
+        var actualBytes = pdfArray1.Bytes.ToArray();
 
         // Assert
         Assert.True(actualBytes.SequenceEqual(expectedBytes));
@@ -161,12 +161,12 @@ public class PdfArrayTests
         ];
         IPdfArray<IPdfObject> pdfArray1 = new PdfArray<IPdfObject>(value1);
         IPdfArray<IPdfObject> pdfArray2 = new PdfArray<IPdfObject>(value1);
-        int expectedHashCode = HashCode.Combine(nameof(PdfArray<IPdfObject>), value1);
+        var expectedHashCode = HashCode.Combine(nameof(PdfArray<IPdfObject>), value1);
 
         // Act
-        int actualHashCode1 = pdfArray1.GetHashCode();
-        int actualHashCode2 = pdfArray2.GetHashCode();
-        bool areHashCodeEquals = actualHashCode1 == actualHashCode2;
+        var actualHashCode1 = pdfArray1.GetHashCode();
+        var actualHashCode2 = pdfArray2.GetHashCode();
+        var areHashCodeEquals = actualHashCode1 == actualHashCode2;
 
         // Assert
         Assert.True(areHashCodeEquals);
@@ -198,9 +198,9 @@ public class PdfArrayTests
         IPdfArray<IPdfObject> pdfArray2 = new PdfArray<IPdfObject>(value2);
 
         // Act
-        int actualHashCode1 = pdfArray1.GetHashCode();
-        int actualHashCode2 = pdfArray2.GetHashCode();
-        bool areHashCodeEquals = actualHashCode1 == actualHashCode2;
+        var actualHashCode1 = pdfArray1.GetHashCode();
+        var actualHashCode2 = pdfArray2.GetHashCode();
+        var areHashCodeEquals = actualHashCode1 == actualHashCode2;
 
         // Assert
         Assert.False(areHashCodeEquals);
@@ -210,10 +210,10 @@ public class PdfArrayTests
     public void PdfArray_Value_Count_ShouldReturn1()
     {
         // Arrange
-        IPdfArray<PdfInteger> pdfArray1 = new PdfInteger(549).ToPdfArray();
+        var pdfArray1 = new PdfInteger(549).ToPdfArray();
 
         // Act
-        int actualValueCount = pdfArray1.Value.Count;
+        var actualValueCount = pdfArray1.Value.Count;
 
         // Assert
         Assert.Equal(1, actualValueCount);
@@ -222,7 +222,7 @@ public class PdfArrayTests
     [Fact(DisplayName = "Check the Content property.")]
     public void PdfArray_Content_Check()
     {
-        const string expectedContentValue = "[549 3.14 false (Ralph) /SomeName]";
+        const string ExpectedContentValue = "[549 3.14 false (Ralph) /SomeName]";
         IPdfArray<IPdfObject> pdfArray1 = new List<IPdfObject>
         {
             new PdfInteger(549),
@@ -233,11 +233,11 @@ public class PdfArrayTests
         }.ToPdfArray();
 
         // Act
-        string actualContentValue = pdfArray1.Content;
-        string actualContentValue2 = pdfArray1.Content;
+        var actualContentValue = pdfArray1.Content;
+        var actualContentValue2 = pdfArray1.Content;
 
         // Assert
-        Assert.Equal(expectedContentValue, actualContentValue);
+        Assert.Equal(ExpectedContentValue, actualContentValue);
         Assert.Equal(actualContentValue, actualContentValue2);
     }
 }

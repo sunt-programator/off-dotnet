@@ -32,7 +32,7 @@ public class Type1FontTests
         // Arrange
 
         // Act
-        string actualContent = type1Font.Content;
+        var actualContent = type1Font.Content;
 
         // Assert
         Assert.Equal(expectedContent, actualContent);
@@ -42,11 +42,11 @@ public class Type1FontTests
 [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "TestData generator class can be in the same file")]
 internal static class Type1FontTestsDataGenerator
 {
-    private static readonly Type1FontOptions Options = new() { BaseFont = "Helvetica", FontName = "Custom-Font" };
-    private static readonly IType1Font CustomType1Font = new Type1Font(Options);
+    private static readonly Type1FontOptions s_options = new() { BaseFont = "Helvetica", FontName = "Custom-Font" };
+    private static readonly IType1Font s_customType1Font = new Type1Font(s_options);
 
-    private static readonly Type1FontOptions OptionsWithoutName = new() { BaseFont = "Helvetica" };
-    private static readonly IType1Font CustomType1FontWithoutName = new Type1Font(OptionsWithoutName);
+    private static readonly Type1FontOptions s_optionsWithoutName = new() { BaseFont = "Helvetica" };
+    private static readonly IType1Font s_customType1FontWithoutName = new Type1Font(s_optionsWithoutName);
 
     public static IEnumerable<object[]> Type1Font_Content_TestCases()
     {
@@ -86,7 +86,7 @@ internal static class Type1FontTestsDataGenerator
         yield return [StandardFonts.ZapfDingbats,
             "<</Type /Font /Subtype /Type1 /Name /ZapfDingbats /BaseFont /ZapfDingbats>>"
         ];
-        yield return [CustomType1Font, "<</Type /Font /Subtype /Type1 /Name /Custom-Font /BaseFont /Helvetica>>"];
-        yield return [CustomType1FontWithoutName, "<</Type /Font /Subtype /Type1 /BaseFont /Helvetica>>"];
+        yield return [s_customType1Font, "<</Type /Font /Subtype /Type1 /Name /Custom-Font /BaseFont /Helvetica>>"];
+        yield return [s_customType1FontWithoutName, "<</Type /Font /Subtype /Type1 /BaseFont /Helvetica>>"];
     }
 }

@@ -17,14 +17,14 @@ public class LocalizableResourceStringTests
     public void ToStringMethod_MustBeOverriden()
     {
         // Arrange
-        const string nameOfResource = "Resource1";
+        const string NameOfResource = "Resource1";
         ResourceManager resourceManager = GetTestResourceManagerInstance();
-        ResourceSet? defaultCultureResourceSet = resourceManager.GetResourceSet(CustomResourceManager.DefaultCulture, false, false);
-        string expectedString = defaultCultureResourceSet?.GetString(nameOfResource) ?? string.Empty;
+        var defaultCultureResourceSet = resourceManager.GetResourceSet(CustomResourceManager.DefaultCulture, false, false);
+        var expectedString = defaultCultureResourceSet?.GetString(NameOfResource) ?? string.Empty;
 
         // Act
-        LocalizableResourceString localizableResourceString = new(nameOfResource, resourceManager, typeof(CustomResourceManager));
-        string actualString = localizableResourceString.ToString(null);
+        LocalizableResourceString localizableResourceString = new(NameOfResource, resourceManager, typeof(CustomResourceManager));
+        var actualString = localizableResourceString.ToString(null);
 
         // Assert
         Assert.Equal(expectedString, actualString);
@@ -34,13 +34,13 @@ public class LocalizableResourceStringTests
     public void ToStringMethod_WithNonExistingResource_MustReturnStringEmpty()
     {
         // Arrange
-        const string nameOfResource = "ResourceZZZ";
+        const string NameOfResource = "ResourceZZZ";
         ResourceManager resourceManager = GetTestResourceManagerInstance();
-        string expectedString = string.Empty;
+        var expectedString = string.Empty;
 
         // Act
-        LocalizableResourceString localizableResourceString = new(nameOfResource, resourceManager, typeof(CustomResourceManager));
-        string actualString = localizableResourceString.ToString(null);
+        LocalizableResourceString localizableResourceString = new(NameOfResource, resourceManager, typeof(CustomResourceManager));
+        var actualString = localizableResourceString.ToString(null);
 
         // Assert
         Assert.Equal(expectedString, actualString);
@@ -50,16 +50,16 @@ public class LocalizableResourceStringTests
     public void ToStringMethod_WithArguments_MustFormatTheResourceString()
     {
         // Arrange
-        const string nameOfResource = "ResourceWithArguments";
-        const string argumentValue = "formatted";
+        const string NameOfResource = "ResourceWithArguments";
+        const string ArgumentValue = "formatted";
         ResourceManager resourceManager = GetTestResourceManagerInstance();
-        ResourceSet? defaultCultureResourceSet = resourceManager.GetResourceSet(CustomResourceManager.DefaultCulture, false, false);
-        string resourceStringValue = defaultCultureResourceSet?.GetString(nameOfResource) ?? string.Empty;
-        string expectedString = string.Format(CultureInfo.InvariantCulture, resourceStringValue, argumentValue);
+        var defaultCultureResourceSet = resourceManager.GetResourceSet(CustomResourceManager.DefaultCulture, false, false);
+        var resourceStringValue = defaultCultureResourceSet?.GetString(NameOfResource) ?? string.Empty;
+        var expectedString = string.Format(CultureInfo.InvariantCulture, resourceStringValue, ArgumentValue);
 
         // Act
-        LocalizableResourceString localizableResourceString = new(nameOfResource, resourceManager, typeof(CustomResourceManager), argumentValue);
-        string actualString = localizableResourceString.ToString(null);
+        LocalizableResourceString localizableResourceString = new(NameOfResource, resourceManager, typeof(CustomResourceManager), ArgumentValue);
+        var actualString = localizableResourceString.ToString(null);
 
         // Assert
         Assert.Equal(expectedString, actualString);
@@ -69,16 +69,16 @@ public class LocalizableResourceStringTests
     public void EqualsMethod_MustReturnTrue()
     {
         // Arrange
-        const string nameOfResource = "Resource1";
+        const string NameOfResource = "Resource1";
         ResourceManager resourceManager = GetTestResourceManagerInstance();
 
         // Act
-        LocalizableResourceString localizableResourceString1 = new(nameOfResource, resourceManager, typeof(CustomResourceManager));
-        LocalizableResourceString localizableResourceString2 = new(nameOfResource, resourceManager, typeof(CustomResourceManager));
-        bool actualEquals1 = localizableResourceString1.Equals(localizableResourceString2);
-        bool actualEquals2 = localizableResourceString1.Equals((object?)localizableResourceString2);
-        bool actualEquals3 = localizableResourceString1 == localizableResourceString2;
-        bool actualEquals4 = localizableResourceString1 != localizableResourceString2;
+        LocalizableResourceString localizableResourceString1 = new(NameOfResource, resourceManager, typeof(CustomResourceManager));
+        LocalizableResourceString localizableResourceString2 = new(NameOfResource, resourceManager, typeof(CustomResourceManager));
+        var actualEquals1 = localizableResourceString1.Equals(localizableResourceString2);
+        var actualEquals2 = localizableResourceString1.Equals((object?)localizableResourceString2);
+        var actualEquals3 = localizableResourceString1 == localizableResourceString2;
+        var actualEquals4 = localizableResourceString1 != localizableResourceString2;
 
         // Assert
         Assert.True(actualEquals1);
@@ -91,17 +91,17 @@ public class LocalizableResourceStringTests
     public void EqualsMethod_DifferentResourceName_MustReturnFalse()
     {
         // Arrange
-        const string nameOfResource1 = "Resource1";
-        const string nameOfResource2 = "Resource2";
+        const string NameOfResource1 = "Resource1";
+        const string NameOfResource2 = "Resource2";
         ResourceManager resourceManager = GetTestResourceManagerInstance();
 
         // Act
-        LocalizableResourceString localizableResourceString1 = new(nameOfResource1, resourceManager, typeof(CustomResourceManager));
-        LocalizableResourceString localizableResourceString2 = new(nameOfResource2, resourceManager, typeof(CustomResourceManager));
-        bool actualEquals1 = localizableResourceString1.Equals(localizableResourceString2);
-        bool actualEquals2 = localizableResourceString1.Equals((object?)localizableResourceString2);
-        bool actualEquals3 = localizableResourceString1 == localizableResourceString2;
-        bool actualEquals4 = localizableResourceString1 != localizableResourceString2;
+        LocalizableResourceString localizableResourceString1 = new(NameOfResource1, resourceManager, typeof(CustomResourceManager));
+        LocalizableResourceString localizableResourceString2 = new(NameOfResource2, resourceManager, typeof(CustomResourceManager));
+        var actualEquals1 = localizableResourceString1.Equals(localizableResourceString2);
+        var actualEquals2 = localizableResourceString1.Equals((object?)localizableResourceString2);
+        var actualEquals3 = localizableResourceString1 == localizableResourceString2;
+        var actualEquals4 = localizableResourceString1 != localizableResourceString2;
 
         // Assert
         Assert.False(actualEquals1);
@@ -114,17 +114,17 @@ public class LocalizableResourceStringTests
     public void EqualsMethod_DifferentResourceManager_MustReturnFalse()
     {
         // Arrange
-        const string nameOfResource = "Resource1";
+        const string NameOfResource = "Resource1";
         ResourceManager resourceManager1 = GetTestResourceManagerInstance();
         ResourceManager resourceManager2 = GetTestResourceManagerInstance();
 
         // Act
-        LocalizableResourceString localizableResourceString1 = new(nameOfResource, resourceManager1, typeof(CustomResourceManager));
-        LocalizableResourceString localizableResourceString2 = new(nameOfResource, resourceManager2, typeof(CustomResourceManager));
-        bool actualEquals1 = localizableResourceString1.Equals(localizableResourceString2);
-        bool actualEquals2 = localizableResourceString1.Equals((object?)localizableResourceString2);
-        bool actualEquals3 = localizableResourceString1 == localizableResourceString2;
-        bool actualEquals4 = localizableResourceString1 != localizableResourceString2;
+        LocalizableResourceString localizableResourceString1 = new(NameOfResource, resourceManager1, typeof(CustomResourceManager));
+        LocalizableResourceString localizableResourceString2 = new(NameOfResource, resourceManager2, typeof(CustomResourceManager));
+        var actualEquals1 = localizableResourceString1.Equals(localizableResourceString2);
+        var actualEquals2 = localizableResourceString1.Equals((object?)localizableResourceString2);
+        var actualEquals3 = localizableResourceString1 == localizableResourceString2;
+        var actualEquals4 = localizableResourceString1 != localizableResourceString2;
 
         // Assert
         Assert.False(actualEquals1);
@@ -137,18 +137,18 @@ public class LocalizableResourceStringTests
     public void EqualsMethod_DifferentResourceSource_MustReturnFalse()
     {
         // Arrange
-        const string nameOfResource = "Resource1";
+        const string NameOfResource = "Resource1";
         ResourceManager resourceManager = GetTestResourceManagerInstance();
-        Type resourceSource1 = typeof(CustomResourceManager);
-        Type resourceSource2 = typeof(LocalizableResourceStringTests);
+        var resourceSource1 = typeof(CustomResourceManager);
+        var resourceSource2 = typeof(LocalizableResourceStringTests);
 
         // Act
-        LocalizableResourceString localizableResourceString1 = new(nameOfResource, resourceManager, resourceSource1);
-        LocalizableResourceString localizableResourceString2 = new(nameOfResource, resourceManager, resourceSource2);
-        bool actualEquals1 = localizableResourceString1.Equals(localizableResourceString2);
-        bool actualEquals2 = localizableResourceString1.Equals((object?)localizableResourceString2);
-        bool actualEquals3 = localizableResourceString1 == localizableResourceString2;
-        bool actualEquals4 = localizableResourceString1 != localizableResourceString2;
+        LocalizableResourceString localizableResourceString1 = new(NameOfResource, resourceManager, resourceSource1);
+        LocalizableResourceString localizableResourceString2 = new(NameOfResource, resourceManager, resourceSource2);
+        var actualEquals1 = localizableResourceString1.Equals(localizableResourceString2);
+        var actualEquals2 = localizableResourceString1.Equals((object?)localizableResourceString2);
+        var actualEquals3 = localizableResourceString1 == localizableResourceString2;
+        var actualEquals4 = localizableResourceString1 != localizableResourceString2;
 
         // Assert
         Assert.False(actualEquals1);
@@ -161,18 +161,18 @@ public class LocalizableResourceStringTests
     public void EqualsMethod_DifferentArgument_MustReturnFalse()
     {
         // Arrange
-        const string nameOfResource = "Resource1";
+        const string NameOfResource = "Resource1";
         ResourceManager resourceManager = GetTestResourceManagerInstance();
-        const string argumentValue1 = "argument1";
-        const string argumentValue2 = "argument2";
+        const string ArgumentValue1 = "argument1";
+        const string ArgumentValue2 = "argument2";
 
         // Act
-        LocalizableResourceString localizableResourceString1 = new(nameOfResource, resourceManager, typeof(CustomResourceManager), argumentValue1);
-        LocalizableResourceString localizableResourceString2 = new(nameOfResource, resourceManager, typeof(CustomResourceManager), argumentValue2);
-        bool actualEquals1 = localizableResourceString1.Equals(localizableResourceString2);
-        bool actualEquals2 = localizableResourceString1.Equals((object?)localizableResourceString2);
-        bool actualEquals3 = localizableResourceString1 == localizableResourceString2;
-        bool actualEquals4 = localizableResourceString1 != localizableResourceString2;
+        LocalizableResourceString localizableResourceString1 = new(NameOfResource, resourceManager, typeof(CustomResourceManager), ArgumentValue1);
+        LocalizableResourceString localizableResourceString2 = new(NameOfResource, resourceManager, typeof(CustomResourceManager), ArgumentValue2);
+        var actualEquals1 = localizableResourceString1.Equals(localizableResourceString2);
+        var actualEquals2 = localizableResourceString1.Equals((object?)localizableResourceString2);
+        var actualEquals3 = localizableResourceString1 == localizableResourceString2;
+        var actualEquals4 = localizableResourceString1 != localizableResourceString2;
 
         // Assert
         Assert.False(actualEquals1);
@@ -185,12 +185,12 @@ public class LocalizableResourceStringTests
     public void GetHashCodeMethod_MustNotBeZero()
     {
         // Arrange
-        const string nameOfResource = "Resource1";
+        const string NameOfResource = "Resource1";
         ResourceManager resourceManager = GetTestResourceManagerInstance();
 
         // Act
-        LocalizableResourceString localizableResourceString = new(nameOfResource, resourceManager, typeof(CustomResourceManager));
-        int actualHashCode = localizableResourceString.GetHashCode();
+        LocalizableResourceString localizableResourceString = new(NameOfResource, resourceManager, typeof(CustomResourceManager));
+        var actualHashCode = localizableResourceString.GetHashCode();
 
         // Assert
         Assert.NotEqual(0, actualHashCode);
@@ -225,16 +225,16 @@ public class LocalizableResourceStringTests
 
     private class CustomResourceManager : ResourceManager
     {
-        private readonly Dictionary<string, CustomResourceSet> resourceSetMap;
+        private readonly Dictionary<string, CustomResourceSet> _resourceSetMap;
 
         public CustomResourceManager(Dictionary<string, Dictionary<string, string>> resourceSetMap)
         {
-            this.resourceSetMap = new Dictionary<string, CustomResourceSet>();
+            _resourceSetMap = new Dictionary<string, CustomResourceSet>();
 
             foreach (var kvp in resourceSetMap)
             {
                 var resourceSet = new CustomResourceSet(kvp.Value);
-                this.resourceSetMap.Add(kvp.Key, resourceSet);
+                _resourceSetMap.Add(kvp.Key, resourceSet);
             }
         }
 
@@ -242,7 +242,7 @@ public class LocalizableResourceStringTests
 
         public override ResourceSet GetResourceSet(CultureInfo culture, bool createIfNotExists, bool tryParents)
         {
-            return this.resourceSetMap[culture.Name];
+            return _resourceSetMap[culture.Name];
         }
 
         public override string GetString(string name, CultureInfo culture)
@@ -267,16 +267,16 @@ public class LocalizableResourceStringTests
 
         private class CustomResourceSet : ResourceSet
         {
-            private readonly Dictionary<string, string> resourcesMap;
+            private readonly Dictionary<string, string> _resourcesMap;
 
             public CustomResourceSet(Dictionary<string, string> resourcesMap)
             {
-                this.resourcesMap = resourcesMap;
+                _resourcesMap = resourcesMap;
             }
 
             public override string GetString(string name)
             {
-                return this.resourcesMap[name];
+                return _resourcesMap[name];
             }
 
             public override string GetString(string name, bool ignoreCase)

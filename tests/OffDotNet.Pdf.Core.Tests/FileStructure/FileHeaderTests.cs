@@ -70,7 +70,7 @@ public class FileHeaderTests
         FileHeader fileHeader = new(majorVersion, minorVersion);
 
         // Act
-        string actualContent = fileHeader.Content;
+        var actualContent = fileHeader.Content;
 
         // Assert
         Assert.Equal(expectedContent, actualContent);
@@ -92,7 +92,7 @@ public class FileHeaderTests
         FileHeader fileHeader = new(majorVersion, minorVersion);
 
         // Act
-        int actualMajorVersion = fileHeader.MajorVersion;
+        var actualMajorVersion = fileHeader.MajorVersion;
 
         // Assert
         Assert.Equal(expectedMajorVersion, actualMajorVersion);
@@ -114,7 +114,7 @@ public class FileHeaderTests
         FileHeader fileHeader = new(majorVersion, minorVersion);
 
         // Act
-        int actualMinorVersion = fileHeader.MinorVersion;
+        var actualMinorVersion = fileHeader.MinorVersion;
 
         // Assert
         Assert.Equal(expectedMinorVersion, actualMinorVersion);
@@ -136,7 +136,7 @@ public class FileHeaderTests
         FileHeader fileHeader = new(majorVersion, minorVersion);
 
         // Act
-        byte[] actualBytes = fileHeader.Bytes.ToArray();
+        var actualBytes = fileHeader.Bytes.ToArray();
 
         // Assert
         Assert.Equal(expectedBytes, actualBytes);
@@ -154,7 +154,7 @@ public class FileHeaderTests
         FileHeader fileHeader2 = new(majorVersion2, minorVersion2);
 
         // Act
-        bool actualResult = fileHeader1.Equals(fileHeader2);
+        var actualResult = fileHeader1.Equals(fileHeader2);
 
         // Assert
         Assert.Equal(expectedResult, actualResult);
@@ -172,7 +172,7 @@ public class FileHeaderTests
         object fileHeader2 = new FileHeader(majorVersion2, minorVersion2);
 
         // Act
-        bool actualResult = fileHeader1.Equals(fileHeader2);
+        var actualResult = fileHeader1.Equals(fileHeader2);
 
         // Assert
         Assert.Equal(expectedResult, actualResult);
@@ -190,7 +190,7 @@ public class FileHeaderTests
         FileHeader fileHeader2 = new(majorVersion2, minorVersion2);
 
         // Act
-        bool actualResult = fileHeader1 == fileHeader2;
+        var actualResult = fileHeader1 == fileHeader2;
 
         // Assert
         Assert.Equal(expectedResult, actualResult);
@@ -208,7 +208,7 @@ public class FileHeaderTests
         FileHeader fileHeader2 = new(majorVersion2, minorVersion2);
 
         // Act
-        bool actualResult = fileHeader1 != fileHeader2;
+        var actualResult = fileHeader1 != fileHeader2;
 
         // Assert
         Assert.Equal(!expectedResult, actualResult);
@@ -228,10 +228,10 @@ public class FileHeaderTests
     {
         // Arrange
         FileHeader fileHeader = new(majorVersion, minorVersion);
-        int expectedHashCode = HashCode.Combine(nameof(FileHeader), fileHeader.MajorVersion, fileHeader.MinorVersion);
+        var expectedHashCode = HashCode.Combine(nameof(FileHeader), fileHeader.MajorVersion, fileHeader.MinorVersion);
 
         // Act
-        int actualHashCode = fileHeader.GetHashCode();
+        var actualHashCode = fileHeader.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);

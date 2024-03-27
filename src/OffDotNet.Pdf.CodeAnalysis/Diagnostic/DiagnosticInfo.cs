@@ -13,10 +13,10 @@ using System.Globalization;
 [DebuggerDisplay("{GetDebuggerDisplay(), nq}")]
 internal class DiagnosticInfo : IFormattable
 {
-    private static readonly ImmutableArray<string> CompilerErrorCustomTags =
+    private static readonly ImmutableArray<string> s_compilerErrorCustomTags =
         ImmutableArray.Create(WellKnownDiagnosticTags.Compiler, WellKnownDiagnosticTags.Telemetry, WellKnownDiagnosticTags.NotConfigurable);
 
-    private static readonly ImmutableArray<string> CompilerNonErrorCustomTags = ImmutableArray.Create(WellKnownDiagnosticTags.Compiler, WellKnownDiagnosticTags.Telemetry);
+    private static readonly ImmutableArray<string> s_compilerNonErrorCustomTags = ImmutableArray.Create(WellKnownDiagnosticTags.Compiler, WellKnownDiagnosticTags.Telemetry);
 
     [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Reviewed.")]
     private static ImmutableDictionary<DiagnosticCode, DiagnosticDescriptor> errorCodeToDescriptorMap = ImmutableDictionary<DiagnosticCode, DiagnosticDescriptor>.Empty;
@@ -151,7 +151,7 @@ internal class DiagnosticInfo : IFormattable
         var messageFormat = messageProvider.GetMessage(errorCode);
         var helpLink = messageProvider.GetHelpLink(errorCode);
         var category = messageProvider.GetCategory(errorCode);
-        var customTags = defaultSeverity == DiagnosticSeverity.Error ? CompilerErrorCustomTags : CompilerNonErrorCustomTags;
+        var customTags = defaultSeverity == DiagnosticSeverity.Error ? s_compilerErrorCustomTags : s_compilerNonErrorCustomTags;
         var isEnabledByDefault = messageProvider.GetIsEnabledByDefault(errorCode);
         return new DiagnosticDescriptor(id, title, messageFormat, category, defaultSeverity, isEnabledByDefault, description, helpLink, customTags);
     }

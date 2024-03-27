@@ -7,7 +7,7 @@ namespace OffDotNet.Pdf.Core.FileStructure;
 
 using Common;
 
-public interface IXRefEntry : IPdfObject
+public interface IxRefEntry : IPdfObject
 {
     long ByteOffset { get; }
 

@@ -13,34 +13,34 @@ using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxTriv
 
 public class XRefSectionExpressionSyntaxTests
 {
-    private readonly SyntaxToken xRefKeyword;
-    private readonly SyntaxList<XRefSubSectionExpressionSyntax> subSections;
+    private readonly SyntaxToken _xRefKeyword;
+    private readonly SyntaxList<XRefSubSectionExpressionSyntax> _subSections;
 
     public XRefSectionExpressionSyntaxTests()
     {
         GreenNode trivia = SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, " ");
-        SyntaxToken firstObjectNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "28", 28, trivia, trivia);
-        SyntaxToken numberOfEntriesToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "2", 2, trivia, trivia);
+        var firstObjectNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "28", 28, trivia, trivia);
+        var numberOfEntriesToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "2", 2, trivia, trivia);
 
-        SyntaxToken offsetToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "0000000017", 17, trivia, trivia);
-        SyntaxToken generationNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "00007", 7, trivia, trivia);
+        var offsetToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "0000000017", 17, trivia, trivia);
+        var generationNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "00007", 7, trivia, trivia);
 
-        LiteralExpressionSyntax offset = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, offsetToken);
-        LiteralExpressionSyntax generationNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, generationNumberToken);
-        SyntaxToken entryTypeKeyword = SyntaxFactory.Token(SyntaxKind.FreeXRefEntryKeyword, trivia, trivia);
+        var offset = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, offsetToken);
+        var generationNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, generationNumberToken);
+        var entryTypeKeyword = SyntaxFactory.Token(SyntaxKind.FreeXRefEntryKeyword, trivia, trivia);
 
-        XRefEntryExpressionSyntax xRefEntryExpressionSyntax = SyntaxFactory.XRefEntry(offset, generationNumber, entryTypeKeyword);
+        var xRefEntryExpressionSyntax = SyntaxFactory.XRefEntry(offset, generationNumber, entryTypeKeyword);
 
-        LiteralExpressionSyntax objectNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, firstObjectNumberToken);
-        LiteralExpressionSyntax numberOfEntries = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, numberOfEntriesToken);
+        var objectNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, firstObjectNumberToken);
+        var numberOfEntries = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, numberOfEntriesToken);
         SyntaxList<XRefEntryExpressionSyntax> entries = new SyntaxListBuilder(2)
             .AddRange(new GreenNode[] { xRefEntryExpressionSyntax, xRefEntryExpressionSyntax })
             .ToList<XRefEntryExpressionSyntax>();
 
-        XRefSubSectionExpressionSyntax xRefSectionExpression = SyntaxFactory.XRefSubSection(objectNumber, numberOfEntries, entries);
+        var xRefSectionExpression = SyntaxFactory.XRefSubSection(objectNumber, numberOfEntries, entries);
 
-        this.xRefKeyword = SyntaxFactory.Token(SyntaxKind.XRefKeyword, trivia, trivia);
-        this.subSections = new SyntaxListBuilder(2)
+        _xRefKeyword = SyntaxFactory.Token(SyntaxKind.XRefKeyword, trivia, trivia);
+        _subSections = new SyntaxListBuilder(2)
             .AddRange(new GreenNode[] { xRefSectionExpression, xRefSectionExpression })
             .ToList<XRefSubSectionExpressionSyntax>();
     }
@@ -49,10 +49,10 @@ public class XRefSectionExpressionSyntaxTests
     public void KindProperty_MustBeXRefSection()
     {
         // Arrange
-        XRefSectionExpressionSyntax xRefSectionExpression = SyntaxFactory.XRefSection(this.xRefKeyword, this.subSections);
+        var xRefSectionExpression = SyntaxFactory.XRefSection(_xRefKeyword, _subSections);
 
         // Act
-        SyntaxKind actualKind = xRefSectionExpression.Kind;
+        var actualKind = xRefSectionExpression.Kind;
 
         // Assert
         Assert.Equal(SyntaxKind.XRefSection, actualKind);
@@ -62,36 +62,36 @@ public class XRefSectionExpressionSyntaxTests
     public void XRefKeywordProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        XRefSectionExpressionSyntax xRefSectionExpression = SyntaxFactory.XRefSection(this.xRefKeyword, this.subSections);
+        var xRefSectionExpression = SyntaxFactory.XRefSection(_xRefKeyword, _subSections);
 
         // Act
-        SyntaxToken actualXRefKeyword = xRefSectionExpression.XRefKeyword;
+        var actualXRefKeyword = xRefSectionExpression.XRefKeyword;
 
         // Assert
-        Assert.Equal(this.xRefKeyword, actualXRefKeyword);
+        Assert.Equal(_xRefKeyword, actualXRefKeyword);
     }
 
     [Fact(DisplayName = $"The {nameof(XRefSectionExpressionSyntax.SubSections)} property must be assigned from constructor.")]
     public void SubSectionsProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        XRefSectionExpressionSyntax xRefSectionExpression = SyntaxFactory.XRefSection(this.xRefKeyword, this.subSections);
+        var xRefSectionExpression = SyntaxFactory.XRefSection(_xRefKeyword, _subSections);
 
         // Act
-        GreenNode? actualSubSections = xRefSectionExpression.SubSections;
+        var actualSubSections = xRefSectionExpression.SubSections;
 
         // Assert
-        Assert.Equal(this.subSections.Node, actualSubSections);
+        Assert.Equal(_subSections.Node, actualSubSections);
     }
 
     [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.SlotCount)} property must be equal to 2.")]
     public void SlotCountProperty_MustBeEqualTo3()
     {
         // Arrange
-        XRefSectionExpressionSyntax xRefSectionExpression = SyntaxFactory.XRefSection(this.xRefKeyword, this.subSections);
+        var xRefSectionExpression = SyntaxFactory.XRefSection(_xRefKeyword, _subSections);
 
         // Act
-        int actualSlotCount = xRefSectionExpression.SlotCount;
+        var actualSlotCount = xRefSectionExpression.SlotCount;
 
         // Assert
         Assert.Equal(2, actualSlotCount);
@@ -101,36 +101,36 @@ public class XRefSectionExpressionSyntaxTests
     public void GetSlotMethod_Index0_MustReturnFirstObject()
     {
         // Arrange
-        XRefSectionExpressionSyntax xRefSectionExpression = SyntaxFactory.XRefSection(this.xRefKeyword, this.subSections);
+        var xRefSectionExpression = SyntaxFactory.XRefSection(_xRefKeyword, _subSections);
 
         // Act
-        GreenNode? actualSlot = xRefSectionExpression.GetSlot(0);
+        var actualSlot = xRefSectionExpression.GetSlot(0);
 
         // Assert
-        Assert.Equal(this.xRefKeyword, actualSlot);
+        Assert.Equal(_xRefKeyword, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 1 must return {nameof(XRefSectionExpressionSyntax.SubSections)} property.")]
     public void GetSlotMethod_Index1_MustReturnSecondObject()
     {
         // Arrange
-        XRefSectionExpressionSyntax xRefSectionExpression = SyntaxFactory.XRefSection(this.xRefKeyword, this.subSections);
+        var xRefSectionExpression = SyntaxFactory.XRefSection(_xRefKeyword, _subSections);
 
         // Act
-        GreenNode? actualSlot = xRefSectionExpression.GetSlot(1);
+        var actualSlot = xRefSectionExpression.GetSlot(1);
 
         // Assert
-        Assert.Equal(this.subSections.Node, actualSlot);
+        Assert.Equal(_subSections.Node, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 2 must return null.")]
     public void GetSlotMethod_Index3_MustReturnNull()
     {
         // Arrange
-        XRefSectionExpressionSyntax xRefSectionExpression = SyntaxFactory.XRefSection(this.xRefKeyword, this.subSections);
+        var xRefSectionExpression = SyntaxFactory.XRefSection(_xRefKeyword, _subSections);
 
         // Act
-        GreenNode? actualSlot = xRefSectionExpression.GetSlot(2);
+        var actualSlot = xRefSectionExpression.GetSlot(2);
 
         // Assert
         Assert.Null(actualSlot);
@@ -140,10 +140,10 @@ public class XRefSectionExpressionSyntaxTests
     public void WidthProperty_MustIncludeAllSlots()
     {
         // Arrange
-        XRefSectionExpressionSyntax xRefSectionExpression = SyntaxFactory.XRefSection(this.xRefKeyword, this.subSections);
+        var xRefSectionExpression = SyntaxFactory.XRefSection(_xRefKeyword, _subSections);
 
         // Act
-        int actualWidth = xRefSectionExpression.Width;
+        var actualWidth = xRefSectionExpression.Width;
 
         // Assert
         Assert.Equal(106, actualWidth);
@@ -153,10 +153,10 @@ public class XRefSectionExpressionSyntaxTests
     public void FullWidthProperty_MustIncludeAllSlots()
     {
         // Arrange
-        XRefSectionExpressionSyntax xRefSectionExpression = SyntaxFactory.XRefSection(this.xRefKeyword, this.subSections);
+        var xRefSectionExpression = SyntaxFactory.XRefSection(_xRefKeyword, _subSections);
 
         // Act
-        int actualFullWidth = xRefSectionExpression.FullWidth;
+        var actualFullWidth = xRefSectionExpression.FullWidth;
 
         // Assert
         Assert.Equal(108, actualFullWidth);
@@ -166,40 +166,40 @@ public class XRefSectionExpressionSyntaxTests
     public void ToStringMethod_MustNotIncludeTrivia()
     {
         // Arrange
-        const string expectedString = "xref  28  2  0000000017  00007  f  0000000017  00007  f  28  2  0000000017  00007  f  0000000017  00007  f";
-        XRefSectionExpressionSyntax xRefSectionExpression = SyntaxFactory.XRefSection(this.xRefKeyword, this.subSections);
+        const string ExpectedString = "xref  28  2  0000000017  00007  f  0000000017  00007  f  28  2  0000000017  00007  f  0000000017  00007  f";
+        var xRefSectionExpression = SyntaxFactory.XRefSection(_xRefKeyword, _subSections);
 
         // Act
-        string actualString = xRefSectionExpression.ToString();
+        var actualString = xRefSectionExpression.ToString();
 
         // Assert
-        Assert.Equal(expectedString, actualString);
+        Assert.Equal(ExpectedString, actualString);
     }
 
     [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
     public void ToFullStringMethod_MustIncludeTrivia()
     {
         // Arrange
-        const string expectedString = " xref  28  2  0000000017  00007  f  0000000017  00007  f  28  2  0000000017  00007  f  0000000017  00007  f ";
-        XRefSectionExpressionSyntax xRefSectionExpression = SyntaxFactory.XRefSection(this.xRefKeyword, this.subSections);
+        const string ExpectedString = " xref  28  2  0000000017  00007  f  0000000017  00007  f  28  2  0000000017  00007  f  0000000017  00007  f ";
+        var xRefSectionExpression = SyntaxFactory.XRefSection(_xRefKeyword, _subSections);
 
         // Act
-        string actualString = xRefSectionExpression.ToFullString();
+        var actualString = xRefSectionExpression.ToFullString();
 
         // Assert
-        Assert.Equal(expectedString, actualString);
+        Assert.Equal(ExpectedString, actualString);
     }
 
     [Fact(DisplayName = "The SetDiagnostics() method must set the diagnostics and return a new instance.")]
     public void SetDiagnosticsMethod_MustSetTheDiagnosticsAndReturnNewInstance()
     {
         // Arrange
-        XRefSectionExpressionSyntax xRefSectionExpression = SyntaxFactory.XRefSection(this.xRefKeyword, this.subSections);
+        var xRefSectionExpression = SyntaxFactory.XRefSection(_xRefKeyword, _subSections);
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
         DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
-        XRefSectionExpressionSyntax actualXRefSectionExpression = (XRefSectionExpressionSyntax)xRefSectionExpression.SetDiagnostics(diagnostics);
+        var actualXRefSectionExpression = (XRefSectionExpressionSyntax)xRefSectionExpression.SetDiagnostics(diagnostics);
 
         // Assert
         Assert.NotSame(xRefSectionExpression, actualXRefSectionExpression);

@@ -30,7 +30,7 @@ public class DocumentCatalogTests
     public void DocumentCatalog_Content_ShouldReturnValidValue()
     {
         // Arrange
-        const string expectedContent = "<</Type /Catalog /Pages 3 0 R>>";
+        const string ExpectedContent = "<</Type /Catalog /Pages 3 0 R>>";
         IPdfIndirectIdentifier<IPageTreeNode> pages = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<IPageObject>>().ToPdfArray())
             .ToPdfIndirect<IPageTreeNode>(3)
             .ToPdfIndirectIdentifier();
@@ -38,9 +38,9 @@ public class DocumentCatalogTests
         IDocumentCatalog documentCatalog = new DocumentCatalog(options => options.Pages = pages);
 
         // Act
-        string actualContent = documentCatalog.Content;
+        var actualContent = documentCatalog.Content;
 
         // Assert
-        Assert.Equal(expectedContent, actualContent);
+        Assert.Equal(ExpectedContent, actualContent);
     }
 }

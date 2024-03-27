@@ -14,14 +14,14 @@ public class ShowTextOperationTests
     public void ShowTextOperation_PdfOperatorProperty_ShouldReturnValidValue()
     {
         // Arrange
-        const string expectedOperator = "Tj";
+        const string ExpectedOperator = "Tj";
         IShowTextOperation showTextOperation = new ShowTextOperation("test");
 
         // Act
-        string actualPdfOperator = showTextOperation.PdfOperator;
+        var actualPdfOperator = showTextOperation.PdfOperator;
 
         // Assert
-        Assert.Equal(expectedOperator, actualPdfOperator);
+        Assert.Equal(ExpectedOperator, actualPdfOperator);
     }
 
     [Theory(DisplayName = $"The {nameof(ShowTextOperation.Text)} property should return a valid value")]
@@ -48,7 +48,7 @@ public class ShowTextOperationTests
         IShowTextOperation showTextOperation = new ShowTextOperation(text);
 
         // Act
-        string actualContent = showTextOperation.Content;
+        var actualContent = showTextOperation.Content;
 
         // Assert
         Assert.Equal(expectedContent, actualContent);
@@ -58,7 +58,7 @@ public class ShowTextOperationTests
     public void ShowTextOperation_Bytes_ShouldReturnValidValue()
     {
         // Arrange
-        const string text = "SecondText with special chars !@#$%^&*()";
+        const string Text = "SecondText with special chars !@#$%^&*()";
         byte[] expectedBytes =
         [
             0x28,
@@ -109,10 +109,10 @@ public class ShowTextOperationTests
             0x0A
         ];
 
-        IShowTextOperation showTextOperation = new ShowTextOperation(text);
+        IShowTextOperation showTextOperation = new ShowTextOperation(Text);
 
         // Act
-        byte[] actualBytes = showTextOperation.Bytes.ToArray();
+        var actualBytes = showTextOperation.Bytes.ToArray();
 
         // Assert
         Assert.Equal(expectedBytes, actualBytes);
@@ -125,11 +125,11 @@ public class ShowTextOperationTests
     {
         // Arrange
         PdfString pdfString = text;
-        int expectedHashCode = HashCode.Combine(nameof(ShowTextOperation), pdfString, ShowTextOperation.OperatorName);
+        var expectedHashCode = HashCode.Combine(nameof(ShowTextOperation), pdfString, ShowTextOperation.OperatorName);
         IShowTextOperation showTextOperation = new ShowTextOperation(pdfString);
 
         // Act
-        int actualHashCode = showTextOperation.GetHashCode();
+        var actualHashCode = showTextOperation.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
@@ -148,7 +148,7 @@ public class ShowTextOperationTests
         IShowTextOperation? showTextOperation2 = showTextOperationText2 is null ? null : new ShowTextOperation(showTextOperationText2);
 
         // Act
-        bool actualResult = showTextOperation1.Equals(showTextOperation2);
+        var actualResult = showTextOperation1.Equals(showTextOperation2);
 
         // Assert
         Assert.Equal(expectedResult, actualResult);

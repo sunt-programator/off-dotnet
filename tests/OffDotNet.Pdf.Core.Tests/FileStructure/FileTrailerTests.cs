@@ -14,12 +14,12 @@ using Properties;
 
 public class FileTrailerTests
 {
-    private static readonly IPdfIndirectIdentifier<IPageTreeNode> Pages = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<IPageObject>>().ToPdfArray())
+    private static readonly IPdfIndirectIdentifier<IPageTreeNode> s_pages = new PageTreeNode(options => options.Kids = Array.Empty<IPdfIndirectIdentifier<IPageObject>>().ToPdfArray())
         .ToPdfIndirect<IPageTreeNode>(3)
         .ToPdfIndirectIdentifier();
 
-    private static readonly IPdfIndirectIdentifier<IDocumentCatalog> RootDictionary =
-        new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = Pages).ToPdfIndirect<IDocumentCatalog>(2).ToPdfIndirectIdentifier();
+    private static readonly IPdfIndirectIdentifier<IDocumentCatalog> s_rootDictionary =
+        new DocumentCatalog(documentCatalogOptions => documentCatalogOptions.Pages = s_pages).ToPdfIndirect<IDocumentCatalog>(2).ToPdfIndirectIdentifier();
 
     [Theory(DisplayName = $"Constructor with negative {nameof(FileTrailer.ByteOffset)} should throw an {nameof(ArgumentOutOfRangeException)}")]
     [InlineData(-1)]
@@ -28,7 +28,7 @@ public class FileTrailerTests
     public void FileTrailer_ConstructorWithNegativeBytesOffset_ShouldThrowException(long byteOffset)
     {
         // Arrange
-        FileTrailerOptions fileTrailerOptions = new() { Root = RootDictionary };
+        FileTrailerOptions fileTrailerOptions = new() { Root = s_rootDictionary };
 
         // Act
         IFileTrailer FileTrailerFunction()
@@ -97,7 +97,7 @@ public class FileTrailerTests
             {
                 options.Size = 456;
                 options.Prev = 789;
-                options.Root = RootDictionary;
+                options.Root = s_rootDictionary;
                 options.Encrypt = encryptDictionary.ToPdfDictionary();
             });
         }
@@ -120,7 +120,7 @@ public class FileTrailerTests
             {
                 options.Size = 456;
                 options.Prev = 789;
-                options.Root = RootDictionary;
+                options.Root = s_rootDictionary;
                 options.Encrypt = encryptDictionary.ToPdfDictionary();
             });
         }
@@ -141,12 +141,12 @@ public class FileTrailerTests
         {
             Size = 456,
             Prev = 789,
-            Root = RootDictionary,
+            Root = s_rootDictionary,
         };
         IFileTrailer fileTrailer = new FileTrailer(byteOffset, fileTrailerOptions);
 
         // Act
-        long actualByteOffset = fileTrailer.ByteOffset;
+        var actualByteOffset = fileTrailer.ByteOffset;
 
         // Assert
         Assert.Equal(byteOffset, actualByteOffset);
@@ -160,12 +160,12 @@ public class FileTrailerTests
         {
             Size = 456,
             Prev = 789,
-            Root = RootDictionary,
+            Root = s_rootDictionary,
         };
         IFileTrailer fileTrailer = new FileTrailer(123, fileTrailerOptions);
 
         // Act
-        IPdfDictionary<IPdfObject> fileTrailerDictionary = fileTrailer.FileTrailerDictionary;
+        var fileTrailerDictionary = fileTrailer.FileTrailerDictionary;
 
         // Assert
         Assert.Contains("Size", fileTrailerDictionary.Value);
@@ -180,44 +180,44 @@ public class FileTrailerTests
     public void FileTrailer_Content_ShouldReturnValidValue()
     {
         // Arrange
-        const long byteOffset = 12345;
-        const int size = 22;
-        const int prev = 196;
-        const string rootDictionaryRefContent = "2 0 R";
-        const string encryptDictionaryContent = "<</Test1 1 /Test2 2>>";
-        const string infoRefContent = "1 0 R";
-        const string idArrayContent = "[<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]";
-        const string expectedContent =
+        const long ByteOffset = 12345;
+        const int Size = 22;
+        const int Prev = 196;
+        const string RootDictionaryRefContent = "2 0 R";
+        const string EncryptDictionaryContent = "<</Test1 1 /Test2 2>>";
+        const string InfoRefContent = "1 0 R";
+        const string IdArrayContent = "[<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]";
+        const string ExpectedContent =
             "trailer\n<</Size 22 /Prev 196 /Root 2 0 R /Encrypt <</Test1 1 /Test2 2>> /Info 1 0 R /ID [<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]>>\nstartxref\n12345\n%%EOF";
 
-        FileTrailerOptions fileTrailerOptions = GetFileTrailerOptions(size, prev, rootDictionaryRefContent, encryptDictionaryContent, infoRefContent, idArrayContent);
-        FileTrailer fileTrailer = new(byteOffset, fileTrailerOptions);
+        var fileTrailerOptions = GetFileTrailerOptions(Size, Prev, RootDictionaryRefContent, EncryptDictionaryContent, InfoRefContent, IdArrayContent);
+        FileTrailer fileTrailer = new(ByteOffset, fileTrailerOptions);
 
         // Act
-        string actualContent = fileTrailer.Content;
+        var actualContent = fileTrailer.Content;
 
         // Assert
-        Assert.Equal(expectedContent, actualContent);
+        Assert.Equal(ExpectedContent, actualContent);
     }
 
     [Fact(DisplayName = $"{nameof(FileTrailer.Content)} property, accessed multiple times, should return the same reference")]
     public void FileTrailer_Content_MultipleAccesses_ShouldReturnSameReference()
     {
         // Arrange
-        const long byteOffset = 12345;
-        const int size = 22;
-        const int prev = 196;
-        const string rootDictionaryRefContent = "2 0 R";
-        const string encryptDictionaryContent = "<</Test1 1 /Test2 2>>";
-        const string infoRefContent = "1 0 R";
-        const string idArrayContent = "[<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]";
+        const long ByteOffset = 12345;
+        const int Size = 22;
+        const int Prev = 196;
+        const string RootDictionaryRefContent = "2 0 R";
+        const string EncryptDictionaryContent = "<</Test1 1 /Test2 2>>";
+        const string InfoRefContent = "1 0 R";
+        const string IdArrayContent = "[<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]";
 
-        FileTrailerOptions fileTrailerOptions = GetFileTrailerOptions(size, prev, rootDictionaryRefContent, encryptDictionaryContent, infoRefContent, idArrayContent);
-        FileTrailer fileTrailer = new(byteOffset, fileTrailerOptions);
+        var fileTrailerOptions = GetFileTrailerOptions(Size, Prev, RootDictionaryRefContent, EncryptDictionaryContent, InfoRefContent, IdArrayContent);
+        FileTrailer fileTrailer = new(ByteOffset, fileTrailerOptions);
 
         // Act
-        string actualContent1 = fileTrailer.Content;
-        string actualContent2 = fileTrailer.Content;
+        var actualContent1 = fileTrailer.Content;
+        var actualContent2 = fileTrailer.Content;
 
         // Assert
         Assert.True(ReferenceEquals(actualContent1, actualContent2));
@@ -227,13 +227,13 @@ public class FileTrailerTests
     public void FileTrailer_Bytes_ShouldReturnValidValue()
     {
         // Arrange
-        const long byteOffset = 12345;
-        const int size = 22;
-        const int prev = 196;
-        const string rootDictionaryRefContent = "2 0 R";
-        const string encryptDictionaryContent = "<</Test1 1 /Test2 2>>";
-        const string infoRefContent = "1 0 R";
-        const string idArrayContent = "[<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]";
+        const long ByteOffset = 12345;
+        const int Size = 22;
+        const int Prev = 196;
+        const string RootDictionaryRefContent = "2 0 R";
+        const string EncryptDictionaryContent = "<</Test1 1 /Test2 2>>";
+        const string InfoRefContent = "1 0 R";
+        const string IdArrayContent = "[<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]";
         byte[] expectedBytes =
         [
             0x74,
@@ -421,11 +421,11 @@ public class FileTrailerTests
             0x46
         ];
 
-        FileTrailerOptions fileTrailerOptions = GetFileTrailerOptions(size, prev, rootDictionaryRefContent, encryptDictionaryContent, infoRefContent, idArrayContent);
-        FileTrailer fileTrailer = new(byteOffset, fileTrailerOptions);
+        var fileTrailerOptions = GetFileTrailerOptions(Size, Prev, RootDictionaryRefContent, EncryptDictionaryContent, InfoRefContent, IdArrayContent);
+        FileTrailer fileTrailer = new(ByteOffset, fileTrailerOptions);
 
         // Act
-        byte[] actualBytes = fileTrailer.Bytes.ToArray();
+        var actualBytes = fileTrailer.Bytes.ToArray();
 
         // Assert
         Assert.Equal(expectedBytes, actualBytes);
@@ -435,21 +435,21 @@ public class FileTrailerTests
     public void XFileTrailer_GetHashCode_CheckValidity()
     {
         // Arrange
-        const long byteOffset = 12345;
-        const int size = 22;
-        const int prev = 196;
-        const string rootDictionaryRefContent = "2 0 R";
-        const string encryptDictionaryContent = "<</Test1 1 /Test2 2>>";
-        const string infoRefContent = "1 0 R";
-        const string idArrayContent = "[<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]";
+        const long ByteOffset = 12345;
+        const int Size = 22;
+        const int Prev = 196;
+        const string RootDictionaryRefContent = "2 0 R";
+        const string EncryptDictionaryContent = "<</Test1 1 /Test2 2>>";
+        const string InfoRefContent = "1 0 R";
+        const string IdArrayContent = "[<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]";
 
-        FileTrailerOptions fileTrailerOptions = GetFileTrailerOptions(size, prev, rootDictionaryRefContent, encryptDictionaryContent, infoRefContent, idArrayContent);
-        FileTrailer fileTrailer = new(byteOffset, fileTrailerOptions);
+        var fileTrailerOptions = GetFileTrailerOptions(Size, Prev, RootDictionaryRefContent, EncryptDictionaryContent, InfoRefContent, IdArrayContent);
+        FileTrailer fileTrailer = new(ByteOffset, fileTrailerOptions);
 
-        int expectedHashCode = HashCode.Combine(nameof(FileTrailer), fileTrailer.Content);
+        var expectedHashCode = HashCode.Combine(nameof(FileTrailer), fileTrailer.Content);
 
         // Act
-        int actualHashCode = fileTrailer.GetHashCode();
+        var actualHashCode = fileTrailer.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
@@ -462,21 +462,21 @@ public class FileTrailerTests
     public void FileTrailer_Equals_CheckValidity(long byteOffset1, long byteOffset2, bool expectedValue)
     {
         // Arrange
-        const int size = 22;
-        const int prev = 196;
-        const string rootDictionaryRefContent = "2 0 R";
-        const string encryptDictionaryContent = "<</Test1 1 /Test2 2>>";
-        const string infoRefContent = "1 0 R";
-        const string idArrayContent = "[<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]";
+        const int Size = 22;
+        const int Prev = 196;
+        const string RootDictionaryRefContent = "2 0 R";
+        const string EncryptDictionaryContent = "<</Test1 1 /Test2 2>>";
+        const string InfoRefContent = "1 0 R";
+        const string IdArrayContent = "[<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]";
 
-        FileTrailerOptions fileTrailerOptions1 = GetFileTrailerOptions(size, prev, rootDictionaryRefContent, encryptDictionaryContent, infoRefContent, idArrayContent);
-        FileTrailerOptions fileTrailerOptions2 = GetFileTrailerOptions(size, prev, rootDictionaryRefContent, encryptDictionaryContent, infoRefContent, idArrayContent);
+        var fileTrailerOptions1 = GetFileTrailerOptions(Size, Prev, RootDictionaryRefContent, EncryptDictionaryContent, InfoRefContent, IdArrayContent);
+        var fileTrailerOptions2 = GetFileTrailerOptions(Size, Prev, RootDictionaryRefContent, EncryptDictionaryContent, InfoRefContent, IdArrayContent);
 
         FileTrailer fileTrailer1 = new(byteOffset1, fileTrailerOptions1);
         FileTrailer fileTrailer2 = new(byteOffset2, fileTrailerOptions2);
 
         // Act
-        bool actualResult = fileTrailer1.Equals(fileTrailer2);
+        var actualResult = fileTrailer1.Equals(fileTrailer2);
 
         // Assert
         Assert.Equal(expectedValue, actualResult);
@@ -486,22 +486,22 @@ public class FileTrailerTests
     public void FileTrailer_EqualsNullObject_CheckValidity()
     {
         // Arrange
-        const long byteOffset = 12345;
-        const int size = 22;
-        const int prev = 196;
-        const string rootDictionaryRefContent = "2 0 R";
-        const string encryptDictionaryContent = "<</Test1 1 /Test2 2>>";
-        const string infoRefContent = "1 0 R";
-        const string idArrayContent = "[<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]";
+        const long ByteOffset = 12345;
+        const int Size = 22;
+        const int Prev = 196;
+        const string RootDictionaryRefContent = "2 0 R";
+        const string EncryptDictionaryContent = "<</Test1 1 /Test2 2>>";
+        const string InfoRefContent = "1 0 R";
+        const string IdArrayContent = "[<81b14aafa313db63dbd6f981e49f94f4> <81b14aafa313db63dbd6f981e49f94f4>]";
 
-        FileTrailerOptions fileTrailerOptions = GetFileTrailerOptions(size, prev, rootDictionaryRefContent, encryptDictionaryContent, infoRefContent, idArrayContent);
-        FileTrailer fileTrailer = new(byteOffset, fileTrailerOptions);
+        var fileTrailerOptions = GetFileTrailerOptions(Size, Prev, RootDictionaryRefContent, EncryptDictionaryContent, InfoRefContent, IdArrayContent);
+        FileTrailer fileTrailer = new(ByteOffset, fileTrailerOptions);
 
         // Act
-        bool actualResult1 = fileTrailer.Equals(null);
+        var actualResult1 = fileTrailer.Equals(null);
 
         Debug.Assert(fileTrailer != null, nameof(fileTrailer) + " != null");
-        bool actualResult2 = fileTrailer.Equals(null);
+        var actualResult2 = fileTrailer.Equals(null);
 
         // Assert
         Assert.False(actualResult1);

@@ -8,19 +8,18 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Collections;
 using OffDotNet.Pdf.CodeAnalysis.Collections;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
-using SyntaxToken = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxToken;
 
 public class ArrayElementTests
 {
-    [Fact(DisplayName = $"The {nameof(ArrayElement<GreenNode>)} struct must have a {nameof(ArrayElement<GreenNode>.Value)} property")]
+    [Fact(DisplayName = $"The {nameof(ArrayElement<GreenNode>)} struct must have a {nameof(ArrayElement<GreenNode>._value)} property")]
     public void ValueProperty()
     {
         // Arrange
-        SyntaxToken syntaxToken = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        ArrayElement<GreenNode> arrayElement = new() { Value = syntaxToken };
+        var syntaxToken = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
+        ArrayElement<GreenNode> arrayElement = new() { _value = syntaxToken };
 
         // Act
-        GreenNode actualValue = arrayElement.Value;
+        var actualValue = arrayElement._value;
 
         // Assert
         Assert.Equal(syntaxToken, actualValue);
@@ -30,8 +29,8 @@ public class ArrayElementTests
     public void ImplicitOperator()
     {
         // Arrange
-        SyntaxToken syntaxToken = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        ArrayElement<GreenNode> arrayElement = new() { Value = syntaxToken };
+        var syntaxToken = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
+        ArrayElement<GreenNode> arrayElement = new() { _value = syntaxToken };
 
         // Act
         GreenNode actualValue = arrayElement;

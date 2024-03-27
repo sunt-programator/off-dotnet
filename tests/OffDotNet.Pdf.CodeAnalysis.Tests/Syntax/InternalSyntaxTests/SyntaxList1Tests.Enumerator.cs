@@ -14,7 +14,7 @@ public class SyntaxList1EnumeratorTests
     public void Enumerator_MustImplementIEnumerator()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(literalExpression1);
@@ -28,15 +28,15 @@ public class SyntaxList1EnumeratorTests
     public void CurrentProperty_MustReturnNull()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        var list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         SyntaxList<GreenNode> syntaxList = new(list);
         SyntaxList<GreenNode>.Enumerator enumerator = new(syntaxList);
 
         // Act
-        GreenNode? actualNode = enumerator.Current;
+        var actualNode = enumerator.Current;
 
         // Assert
         Assert.Null(actualNode);
@@ -46,15 +46,15 @@ public class SyntaxList1EnumeratorTests
     public void MoveNext_Iteration0_MustReturnTrue()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        var list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         SyntaxList<GreenNode> syntaxList = new(list);
         SyntaxList<GreenNode>.Enumerator enumerator = new(syntaxList);
 
         // Act
-        bool canMoveNext = enumerator.MoveNext();
+        var canMoveNext = enumerator.MoveNext();
 
         // Assert
         Assert.True(canMoveNext);
@@ -64,16 +64,16 @@ public class SyntaxList1EnumeratorTests
     public void MoveNext_Iteration1_MustReturnTrue()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        var list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         SyntaxList<GreenNode> syntaxList = new(list);
         SyntaxList<GreenNode>.Enumerator enumerator = new(syntaxList);
 
         // Act
         enumerator.MoveNext();
-        bool canMoveNext = enumerator.MoveNext();
+        var canMoveNext = enumerator.MoveNext();
 
         // Assert
         Assert.True(canMoveNext);
@@ -83,9 +83,9 @@ public class SyntaxList1EnumeratorTests
     public void MoveNext_Iteration2_MustReturnFalse()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        var list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         SyntaxList<GreenNode> syntaxList = new(list);
         SyntaxList<GreenNode>.Enumerator enumerator = new(syntaxList);
@@ -93,7 +93,7 @@ public class SyntaxList1EnumeratorTests
         // Act
         enumerator.MoveNext();
         enumerator.MoveNext();
-        bool canMoveNext = enumerator.MoveNext();
+        var canMoveNext = enumerator.MoveNext();
 
         // Assert
         Assert.False(canMoveNext);
@@ -103,16 +103,16 @@ public class SyntaxList1EnumeratorTests
     public void CurrentProperty_Index0_MustReturnTheFirstElement()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        var list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         SyntaxList<GreenNode> syntaxList = new(list);
         SyntaxList<GreenNode>.Enumerator enumerator = new(syntaxList);
 
         // Act
         enumerator.MoveNext();
-        GreenNode actualNode = enumerator.Current;
+        var actualNode = enumerator.Current;
 
         // Assert
         Assert.Equal(literalExpression1, actualNode);
@@ -122,9 +122,9 @@ public class SyntaxList1EnumeratorTests
     public void CurrentProperty_Index1_MustReturnTheSecondElement()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        var list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         SyntaxList<GreenNode> syntaxList = new(list);
         SyntaxList<GreenNode>.Enumerator enumerator = new(syntaxList);
@@ -132,7 +132,7 @@ public class SyntaxList1EnumeratorTests
         // Act
         enumerator.MoveNext();
         enumerator.MoveNext();
-        GreenNode actualNode = enumerator.Current;
+        var actualNode = enumerator.Current;
 
         // Assert
         Assert.Equal(literalExpression2, actualNode);
@@ -142,9 +142,9 @@ public class SyntaxList1EnumeratorTests
     public void CurrentProperty_IndexOutOfRange_MustReturnTheLastElement()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        var list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         SyntaxList<GreenNode> syntaxList = new(list);
         SyntaxList<GreenNode>.Enumerator enumerator = new(syntaxList);
@@ -153,7 +153,7 @@ public class SyntaxList1EnumeratorTests
         enumerator.MoveNext();
         enumerator.MoveNext();
         enumerator.MoveNext();
-        GreenNode actualNode = enumerator.Current;
+        var actualNode = enumerator.Current;
 
         // Assert
         Assert.Equal(literalExpression2, actualNode);
@@ -163,9 +163,9 @@ public class SyntaxList1EnumeratorTests
     public void ResetMethod()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        var list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         SyntaxList<GreenNode> syntaxList = new(list);
         SyntaxList<GreenNode>.Enumerator enumerator = new(syntaxList);
@@ -174,7 +174,7 @@ public class SyntaxList1EnumeratorTests
         enumerator.MoveNext();
         enumerator.MoveNext();
         enumerator.Reset();
-        GreenNode? actualNode = enumerator.Current;
+        var actualNode = enumerator.Current;
 
         // Assert
         Assert.Null(actualNode);
@@ -184,9 +184,9 @@ public class SyntaxList1EnumeratorTests
     public void DisposeMethod()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        LiteralExpressionSyntax literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var literalExpression1 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        var literalExpression2 = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
+        var list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         SyntaxList<GreenNode> syntaxList = new(list);
         SyntaxList<GreenNode>.Enumerator enumerator = new(syntaxList);
@@ -195,7 +195,7 @@ public class SyntaxList1EnumeratorTests
         enumerator.MoveNext();
         enumerator.MoveNext();
         enumerator.Dispose();
-        GreenNode? actualNode = enumerator.Current;
+        var actualNode = enumerator.Current;
 
         // Assert
         Assert.Null(actualNode);

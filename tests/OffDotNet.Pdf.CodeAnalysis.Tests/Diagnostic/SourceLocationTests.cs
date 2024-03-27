@@ -12,13 +12,13 @@ using OffDotNet.Pdf.CodeAnalysis.Text;
 public class SourceLocationTests
 {
     private const string FilePath = @"C:\test.pdf";
-    private static readonly TextSpan Span = new(0, 2);
-    private static readonly SyntaxTree SyntaxTree = Substitute.For<SyntaxTree>();
-    private readonly SourceLocation location = (SourceLocation)Location.Create(SyntaxTree, Span);
+    private static readonly TextSpan s_span = new(0, 2);
+    private static readonly SyntaxTree s_syntaxTree = Substitute.For<SyntaxTree>();
+    private readonly SourceLocation _location = (SourceLocation)Location.Create(s_syntaxTree, s_span);
 
     public SourceLocationTests()
     {
-        SyntaxTree.FilePath.Returns(FilePath);
+        s_syntaxTree.FilePath.Returns(FilePath);
     }
 
     [Fact(DisplayName = $"The {nameof(SourceLocation.Kind)} property must return {nameof(LocationKind.SourceFile)}.")]
@@ -27,7 +27,7 @@ public class SourceLocationTests
         // Arrange
 
         // Act
-        LocationKind actualKind = this.location.Kind;
+        var actualKind = _location.Kind;
 
         // Assert
         Assert.Equal(LocationKind.SourceFile, actualKind);
@@ -39,10 +39,10 @@ public class SourceLocationTests
         // Arrange
 
         // Act
-        TextSpan actualSourceSpan = this.location.SourceSpan;
+        var actualSourceSpan = _location.SourceSpan;
 
         // Assert
-        Assert.Equal(Span, actualSourceSpan);
+        Assert.Equal(s_span, actualSourceSpan);
     }
 
     [Fact(DisplayName = $"The {nameof(SourceLocation.SyntaxTree)} property must be assigned from constructor.")]
@@ -51,24 +51,24 @@ public class SourceLocationTests
         // Arrange
 
         // Act
-        SyntaxTree? actualSyntaxTree = this.location.SyntaxTree;
+        var actualSyntaxTree = _location.SyntaxTree;
 
         // Assert
-        Assert.Equal(SyntaxTree, actualSyntaxTree);
+        Assert.Equal(s_syntaxTree, actualSyntaxTree);
     }
 
     [Fact(DisplayName = "The Equals() method must return true.")]
     public void EqualsMethod_MustReturnTrue()
     {
         // Arrange
-        SourceLocation location1 = (SourceLocation)Location.Create(SyntaxTree, Span);
-        SourceLocation location2 = (SourceLocation)Location.Create(SyntaxTree, Span);
+        var location1 = (SourceLocation)Location.Create(s_syntaxTree, s_span);
+        var location2 = (SourceLocation)Location.Create(s_syntaxTree, s_span);
 
         // Act
-        bool actualEquals1 = location1.Equals(location2);
-        bool actualEquals2 = location1.Equals((object?)location2);
-        bool actualEquals3 = location1 == location2;
-        bool actualEquals4 = location1 != location2;
+        var actualEquals1 = location1.Equals(location2);
+        var actualEquals2 = location1.Equals((object?)location2);
+        var actualEquals3 = location1 == location2;
+        var actualEquals4 = location1 != location2;
 
         // Assert
         Assert.True(actualEquals1);
@@ -81,14 +81,14 @@ public class SourceLocationTests
     public void EqualsMethod_SameReference_MustReturnTrue()
     {
         // Arrange
-        SourceLocation location1 = (SourceLocation)Location.Create(SyntaxTree, Span);
-        SourceLocation location2 = location1;
+        var location1 = (SourceLocation)Location.Create(s_syntaxTree, s_span);
+        var location2 = location1;
 
         // Act
-        bool actualEquals1 = location1.Equals(location2);
-        bool actualEquals2 = location1.Equals((object?)location2);
-        bool actualEquals3 = location1 == location2;
-        bool actualEquals4 = location1 != location2;
+        var actualEquals1 = location1.Equals(location2);
+        var actualEquals2 = location1.Equals((object?)location2);
+        var actualEquals3 = location1 == location2;
+        var actualEquals4 = location1 != location2;
 
         // Assert
         Assert.True(actualEquals1);
@@ -102,14 +102,14 @@ public class SourceLocationTests
     {
         // Arrange
         TextSpan span2 = new(3, 3);
-        SourceLocation location1 = (SourceLocation)Location.Create(SyntaxTree, Span);
-        SourceLocation location2 = (SourceLocation)Location.Create(SyntaxTree, span2);
+        var location1 = (SourceLocation)Location.Create(s_syntaxTree, s_span);
+        var location2 = (SourceLocation)Location.Create(s_syntaxTree, span2);
 
         // Act
-        bool actualEquals1 = location1.Equals(location2);
-        bool actualEquals2 = location1.Equals((object?)location2);
-        bool actualEquals3 = location1 == location2;
-        bool actualEquals4 = location1 != location2;
+        var actualEquals1 = location1.Equals(location2);
+        var actualEquals2 = location1.Equals((object?)location2);
+        var actualEquals3 = location1 == location2;
+        var actualEquals4 = location1 != location2;
 
         // Assert
         Assert.False(actualEquals1);
@@ -126,17 +126,17 @@ public class SourceLocationTests
         // Act
 
         // Assert
-        Assert.IsAssignableFrom<IEquatable<SourceLocation>>(this.location);
+        Assert.IsAssignableFrom<IEquatable<SourceLocation>>(_location);
     }
 
     [Fact(DisplayName = $"The GetHashCode() method must include the {nameof(SourceLocation.SourceSpan)} and {nameof(SourceLocation.LineSpan)} properties.")]
     public void GetHashCodeMethod_MustIncludeLineAndSourceSpan()
     {
         // Arrange
-        int expectedHashCode = HashCode.Combine(this.location.SyntaxTree, this.location.LineSpan);
+        var expectedHashCode = HashCode.Combine(_location.SyntaxTree, _location.LineSpan);
 
         // Act
-        int actualHashCode = this.location.GetHashCode();
+        var actualHashCode = _location.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
@@ -146,12 +146,12 @@ public class SourceLocationTests
     public void ToStringMethod_MustIncludeKindAndFileLinePositionSpan()
     {
         // Arrange
-        const string expectedLocation = @"SourceFile (C:\test.pdf[0..2))";
+        const string ExpectedLocation = @"SourceFile (C:\test.pdf[0..2))";
 
         // Act
-        string actualString = this.location.ToString();
+        var actualString = _location.ToString();
 
         // Assert
-        Assert.Equal(expectedLocation, actualString);
+        Assert.Equal(ExpectedLocation, actualString);
     }
 }

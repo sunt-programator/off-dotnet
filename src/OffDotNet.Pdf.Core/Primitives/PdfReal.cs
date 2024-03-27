@@ -14,9 +14,9 @@ public struct PdfReal : IPdfObject, IEquatable<PdfReal>, IComparable, IComparabl
 {
     private const float Tolerance = 0.00001f;
     private const float ApproximationValue = 1.175e-38f;
-    private readonly int hashCode;
-    private string literalValue = string.Empty;
-    private byte[]? bytes;
+    private readonly int _hashCode;
+    private string _literalValue = string.Empty;
+    private byte[]? _bytes;
 
     public PdfReal()
         : this(0f)
@@ -31,14 +31,14 @@ public struct PdfReal : IPdfObject, IEquatable<PdfReal>, IComparable, IComparabl
         }
 
         this.Value = value;
-        this.hashCode = HashCode.Combine(nameof(PdfReal), value);
-        this.bytes = null;
+        _hashCode = HashCode.Combine(nameof(PdfReal), value);
+        _bytes = null;
     }
 
     public float Value { get; }
 
     /// <inheritdoc/>
-    public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
+    public ReadOnlyMemory<byte> Bytes => _bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
     /// <inheritdoc/>
     public string Content => this.GenerateContent();
@@ -91,7 +91,7 @@ public struct PdfReal : IPdfObject, IEquatable<PdfReal>, IComparable, IComparabl
     /// <inheritdoc/>
     public override int GetHashCode()
     {
-        return this.hashCode;
+        return _hashCode;
     }
 
     /// <inheritdoc/>
@@ -130,11 +130,11 @@ public struct PdfReal : IPdfObject, IEquatable<PdfReal>, IComparable, IComparabl
 
     private string GenerateContent()
     {
-        if (this.literalValue.Length == 0)
+        if (_literalValue.Length == 0)
         {
-            this.literalValue = this.Value.ToString(CultureInfo.InvariantCulture);
+            _literalValue = this.Value.ToString(CultureInfo.InvariantCulture);
         }
 
-        return this.literalValue;
+        return _literalValue;
     }
 }

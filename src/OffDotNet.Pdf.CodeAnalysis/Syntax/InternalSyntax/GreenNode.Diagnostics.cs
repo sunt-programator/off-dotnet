@@ -13,8 +13,8 @@ using Diagnostic;
 /// </summary>
 internal abstract partial class GreenNode
 {
-    private static readonly ConditionalWeakTable<GreenNode, DiagnosticInfo[]> DiagnosticsTable = new();
-    private static readonly DiagnosticInfo[] NoDiagnostics = Array.Empty<DiagnosticInfo>();
+    private static readonly ConditionalWeakTable<GreenNode, DiagnosticInfo[]> s_diagnosticsTable = new();
+    private static readonly DiagnosticInfo[] s_noDiagnostics = Array.Empty<DiagnosticInfo>();
 
     /// <summary>Gets the diagnostics associated with this node.</summary>
     /// <returns>The diagnostics associated with this node.</returns>
@@ -22,10 +22,10 @@ internal abstract partial class GreenNode
     {
         if (!this.ContainsFlags(NodeFlags.ContainsDiagnostics))
         {
-            return NoDiagnostics;
+            return s_noDiagnostics;
         }
 
-        return DiagnosticsTable.TryGetValue(this, out var diagnostics) ? diagnostics : NoDiagnostics;
+        return s_diagnosticsTable.TryGetValue(this, out var diagnostics) ? diagnostics : s_noDiagnostics;
     }
 
     /// <summary>Sets the diagnostics associated with this node.</summary>

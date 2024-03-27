@@ -11,22 +11,22 @@ using Properties;
 
 public sealed class PdfString : PdfObject
 {
-    private readonly bool isHexString;
-    private string literalValue = string.Empty;
-    private byte[]? bytes;
+    private readonly bool _isHexString;
+    private string _literalValue = string.Empty;
+    private byte[]? _bytes;
 
     public PdfString(string value, bool isHexString = false)
     {
         ThrowExceptionIfValueIsNotValid(value, isHexString);
         this.Value = value;
-        this.bytes = null;
-        this.isHexString = isHexString;
+        _bytes = null;
+        _isHexString = isHexString;
     }
 
     public string Value { get; }
 
     /// <inheritdoc/>
-    public override ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
+    public override ReadOnlyMemory<byte> Bytes => _bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
     /// <inheritdoc/>
     public override string Content => this.GenerateContent();
@@ -171,9 +171,9 @@ public sealed class PdfString : PdfObject
 
     private string GenerateContent()
     {
-        if (this.literalValue.Length != 0)
+        if (_literalValue.Length != 0)
         {
-            return this.literalValue;
+            return _literalValue;
         }
 
         StringBuilder stringBuilder = new();
@@ -183,11 +183,11 @@ public sealed class PdfString : PdfObject
             stringBuilder.Append(ch);
         }
 
-        this.literalValue = stringBuilder
-            .Insert(0, this.isHexString ? '<' : '(')
-            .Append(this.isHexString ? '>' : ')')
+        _literalValue = stringBuilder
+            .Insert(0, _isHexString ? '<' : '(')
+            .Append(_isHexString ? '>' : ')')
             .ToString();
 
-        return this.literalValue;
+        return _literalValue;
     }
 }

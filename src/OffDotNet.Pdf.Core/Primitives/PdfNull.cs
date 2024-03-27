@@ -13,11 +13,11 @@ using Common;
 public readonly struct PdfNull : IPdfObject
 {
     private const string LiteralValue = "null";
-    private static readonly int HashCode = System.HashCode.Combine(nameof(PdfNull), LiteralValue);
-    private static readonly ReadOnlyMemory<byte> BytesArray = Encoding.ASCII.GetBytes(LiteralValue);
+    private static readonly int s_hashCode = System.HashCode.Combine(nameof(PdfNull), LiteralValue);
+    private static readonly ReadOnlyMemory<byte> s_bytesArray = Encoding.ASCII.GetBytes(LiteralValue);
 
     /// <inheritdoc/>
-    public ReadOnlyMemory<byte> Bytes => BytesArray;
+    public ReadOnlyMemory<byte> Bytes => s_bytesArray;
 
     /// <inheritdoc/>
     public string Content => LiteralValue;
@@ -25,7 +25,7 @@ public readonly struct PdfNull : IPdfObject
     /// <inheritdoc/>
     public override int GetHashCode()
     {
-        return HashCode;
+        return s_hashCode;
     }
 
     /// <inheritdoc/>

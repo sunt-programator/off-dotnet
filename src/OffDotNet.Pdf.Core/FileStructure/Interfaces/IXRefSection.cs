@@ -7,7 +7,7 @@ namespace OffDotNet.Pdf.Core.FileStructure;
 
 using Common;
 
-public interface IXRefSection : IPdfObject
+public interface IxRefSection : IPdfObject
 {
-    ICollection<IXRefSubSection> Value { get; }
+    ICollection<IxRefSubSection> Value { get; }
 }

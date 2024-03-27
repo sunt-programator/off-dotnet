@@ -8,14 +8,14 @@ namespace OffDotNet.Pdf.CodeAnalysis.Collections;
 using System.Diagnostics;
 using Syntax.InternalSyntax;
 
-[DebuggerDisplay("{Value,nq}")]
+[DebuggerDisplay("{_value,nq}")]
 internal struct ArrayElement<TNode>
     where TNode : GreenNode?
 {
-    internal TNode Value;
+    internal TNode _value;
 
     public static implicit operator TNode(ArrayElement<TNode> arrayElement)
     {
-        return arrayElement.Value;
+        return arrayElement._value;
     }
 }

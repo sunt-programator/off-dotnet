@@ -5,7 +5,6 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Diagnostic;
 
-using System.Collections.Immutable;
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 
 public class DiagnosticDescriptorTests
@@ -18,9 +17,9 @@ public class DiagnosticDescriptorTests
     private const string Description = "Some longer description of the diagnostic.";
     private const string HelpLinkUri = "https://github.com/sunt-programator/off-dotnet";
     private const string CustomTag = "CustomTag";
-    private static readonly DiagnosticSeverity DiagnosticSeverity = DiagnosticSeverity.Error;
+    private static readonly DiagnosticSeverity s_diagnosticSeverity = DiagnosticSeverity.Error;
 
-    private readonly DiagnosticDescriptor diagnosticDescriptor = new(Id, Title, MessageFormat, Category, DiagnosticSeverity, IsEnabledByDefault, Description, HelpLinkUri, CustomTag);
+    private readonly DiagnosticDescriptor _diagnosticDescriptor = new(Id, Title, MessageFormat, Category, s_diagnosticSeverity, IsEnabledByDefault, Description, HelpLinkUri, CustomTag);
 
     [Fact(DisplayName = $"The {nameof(DiagnosticDescriptor.Id)} property should return the value passed to the constructor")]
     public void IdProperty_MustBeSetFromConstructor()
@@ -28,7 +27,7 @@ public class DiagnosticDescriptorTests
         // Arrange
 
         // Act
-        string actualId = this.diagnosticDescriptor.Id;
+        var actualId = _diagnosticDescriptor.Id;
 
         // Assert
         Assert.Equal(Id, actualId);
@@ -40,7 +39,7 @@ public class DiagnosticDescriptorTests
         // Arrange
 
         // Act
-        LocalizableString actualTitle = this.diagnosticDescriptor.Title;
+        var actualTitle = _diagnosticDescriptor.Title;
 
         // Assert
         Assert.Equal(Title, actualTitle);
@@ -52,7 +51,7 @@ public class DiagnosticDescriptorTests
         // Arrange
 
         // Act
-        LocalizableString actualMessageFormat = this.diagnosticDescriptor.MessageFormat;
+        var actualMessageFormat = _diagnosticDescriptor.MessageFormat;
 
         // Assert
         Assert.Equal(MessageFormat, actualMessageFormat);
@@ -64,7 +63,7 @@ public class DiagnosticDescriptorTests
         // Arrange
 
         // Act
-        string actualCategory = this.diagnosticDescriptor.Category;
+        var actualCategory = _diagnosticDescriptor.Category;
 
         // Assert
         Assert.Equal(Category, actualCategory);
@@ -76,10 +75,10 @@ public class DiagnosticDescriptorTests
         // Arrange
 
         // Act
-        DiagnosticSeverity actualDiagnosticSeverity = this.diagnosticDescriptor.DefaultSeverity;
+        var actualDiagnosticSeverity = _diagnosticDescriptor.DefaultSeverity;
 
         // Assert
-        Assert.Equal(DiagnosticSeverity, actualDiagnosticSeverity);
+        Assert.Equal(s_diagnosticSeverity, actualDiagnosticSeverity);
     }
 
     [Fact(DisplayName = $"The {nameof(DiagnosticDescriptor.IsEnabledByDefault)} property should return the value passed to the constructor")]
@@ -88,7 +87,7 @@ public class DiagnosticDescriptorTests
         // Arrange
 
         // Act
-        bool actualIsEnabledByDefault = this.diagnosticDescriptor.IsEnabledByDefault;
+        var actualIsEnabledByDefault = _diagnosticDescriptor.IsEnabledByDefault;
 
         // Assert
         Assert.Equal(IsEnabledByDefault, actualIsEnabledByDefault);
@@ -100,7 +99,7 @@ public class DiagnosticDescriptorTests
         // Arrange
 
         // Act
-        LocalizableString actualDescription = this.diagnosticDescriptor.Description;
+        var actualDescription = _diagnosticDescriptor.Description;
 
         // Assert
         Assert.Equal(Description, actualDescription);
@@ -112,7 +111,7 @@ public class DiagnosticDescriptorTests
         // Arrange
 
         // Act
-        string actualHelpLinkUri = this.diagnosticDescriptor.HelpLinkUri;
+        var actualHelpLinkUri = _diagnosticDescriptor.HelpLinkUri;
 
         // Assert
         Assert.Equal(HelpLinkUri, actualHelpLinkUri);
@@ -124,7 +123,7 @@ public class DiagnosticDescriptorTests
         // Arrange
 
         // Act
-        ImmutableArray<string> actualCustomTags = this.diagnosticDescriptor.CustomTags;
+        var actualCustomTags = _diagnosticDescriptor.CustomTags;
 
         // Assert
         Assert.Single(actualCustomTags);
@@ -139,7 +138,7 @@ public class DiagnosticDescriptorTests
         // Act
 
         // Assert
-        Assert.IsAssignableFrom<IEquatable<DiagnosticDescriptor>>(this.diagnosticDescriptor);
+        Assert.IsAssignableFrom<IEquatable<DiagnosticDescriptor>>(_diagnosticDescriptor);
     }
 
     [Fact(DisplayName = "The Equals() method must return true")]
@@ -150,11 +149,11 @@ public class DiagnosticDescriptorTests
         // Act
         DiagnosticDescriptor diagnosticDescriptor1 = new("1", "2", "3", "4", DiagnosticSeverity.Error, true, "5", "6", "7");
         DiagnosticDescriptor diagnosticDescriptor2 = new("1", "2", "3", "4", DiagnosticSeverity.Error, true, "5", "6", "7");
-        bool actualEquals0 = diagnosticDescriptor1.Equals(diagnosticDescriptor1); // skipcq: CS-W1086
-        bool actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
-        bool actualEquals2 = diagnosticDescriptor1.Equals((object?)diagnosticDescriptor2);
-        bool actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
-        bool actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
+        var actualEquals0 = diagnosticDescriptor1.Equals(diagnosticDescriptor1); // skipcq: CS-W1086
+        var actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
+        var actualEquals2 = diagnosticDescriptor1.Equals((object?)diagnosticDescriptor2);
+        var actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
+        var actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
 
         // Assert
         Assert.True(actualEquals0);
@@ -168,16 +167,16 @@ public class DiagnosticDescriptorTests
     public void EqualsMethod_DifferentId_MustReturnFalse()
     {
         // Arrange
-        const string id1 = "PDF0001";
-        const string id2 = "PDF0002";
+        const string Id1 = "PDF0001";
+        const string Id2 = "PDF0002";
 
         // Act
-        DiagnosticDescriptor diagnosticDescriptor1 = new(id1, "2", "3", "4", DiagnosticSeverity.Error, true, "5", "6", "7");
-        DiagnosticDescriptor diagnosticDescriptor2 = new(id2, "2", "3", "4", DiagnosticSeverity.Error, true, "5", "6", "7");
-        bool actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
-        bool actualEquals2 = diagnosticDescriptor1.Equals((object?)null);
-        bool actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
-        bool actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
+        DiagnosticDescriptor diagnosticDescriptor1 = new(Id1, "2", "3", "4", DiagnosticSeverity.Error, true, "5", "6", "7");
+        DiagnosticDescriptor diagnosticDescriptor2 = new(Id2, "2", "3", "4", DiagnosticSeverity.Error, true, "5", "6", "7");
+        var actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
+        var actualEquals2 = diagnosticDescriptor1.Equals((object?)null);
+        var actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
+        var actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
 
         // Assert
         Assert.False(actualEquals1);
@@ -190,16 +189,16 @@ public class DiagnosticDescriptorTests
     public void EqualsMethod_DifferentTitle_MustReturnFalse()
     {
         // Arrange
-        const string oldValue = "x";
-        const string newValue = "y";
+        const string OldValue = "x";
+        const string NewValue = "y";
 
         // Act
-        DiagnosticDescriptor diagnosticDescriptor1 = new("1", oldValue, "3", "4", DiagnosticSeverity.Error, true, "5", "6", "7");
-        DiagnosticDescriptor diagnosticDescriptor2 = new("1", newValue, "3", "4", DiagnosticSeverity.Error, true, "5", "6", "7");
-        bool actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
-        bool actualEquals2 = diagnosticDescriptor1.Equals((object?)null);
-        bool actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
-        bool actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
+        DiagnosticDescriptor diagnosticDescriptor1 = new("1", OldValue, "3", "4", DiagnosticSeverity.Error, true, "5", "6", "7");
+        DiagnosticDescriptor diagnosticDescriptor2 = new("1", NewValue, "3", "4", DiagnosticSeverity.Error, true, "5", "6", "7");
+        var actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
+        var actualEquals2 = diagnosticDescriptor1.Equals((object?)null);
+        var actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
+        var actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
 
         // Assert
         Assert.False(actualEquals1);
@@ -212,16 +211,16 @@ public class DiagnosticDescriptorTests
     public void EqualsMethod_DifferentMessageFormat_MustReturnFalse()
     {
         // Arrange
-        const string oldValue = "x";
-        const string newValue = "y";
+        const string OldValue = "x";
+        const string NewValue = "y";
 
         // Act
-        DiagnosticDescriptor diagnosticDescriptor1 = new("1", "2", oldValue, "4", DiagnosticSeverity.Error, true, "5", "6", "7");
-        DiagnosticDescriptor diagnosticDescriptor2 = new("1", "2", newValue, "4", DiagnosticSeverity.Error, true, "5", "6", "7");
-        bool actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
-        bool actualEquals2 = diagnosticDescriptor1.Equals((object?)null);
-        bool actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
-        bool actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
+        DiagnosticDescriptor diagnosticDescriptor1 = new("1", "2", OldValue, "4", DiagnosticSeverity.Error, true, "5", "6", "7");
+        DiagnosticDescriptor diagnosticDescriptor2 = new("1", "2", NewValue, "4", DiagnosticSeverity.Error, true, "5", "6", "7");
+        var actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
+        var actualEquals2 = diagnosticDescriptor1.Equals((object?)null);
+        var actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
+        var actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
 
         // Assert
         Assert.False(actualEquals1);
@@ -234,16 +233,16 @@ public class DiagnosticDescriptorTests
     public void EqualsMethod_DifferentCategory_MustReturnFalse()
     {
         // Arrange
-        const string oldValue = "x";
-        const string newValue = "y";
+        const string OldValue = "x";
+        const string NewValue = "y";
 
         // Act
-        DiagnosticDescriptor diagnosticDescriptor1 = new("1", "2", "3", oldValue, DiagnosticSeverity.Error, true, "5", "6", "7");
-        DiagnosticDescriptor diagnosticDescriptor2 = new("1", "2", "3", newValue, DiagnosticSeverity.Error, true, "5", "6", "7");
-        bool actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
-        bool actualEquals2 = diagnosticDescriptor1.Equals((object?)null);
-        bool actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
-        bool actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
+        DiagnosticDescriptor diagnosticDescriptor1 = new("1", "2", "3", OldValue, DiagnosticSeverity.Error, true, "5", "6", "7");
+        DiagnosticDescriptor diagnosticDescriptor2 = new("1", "2", "3", NewValue, DiagnosticSeverity.Error, true, "5", "6", "7");
+        var actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
+        var actualEquals2 = diagnosticDescriptor1.Equals((object?)null);
+        var actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
+        var actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
 
         // Assert
         Assert.False(actualEquals1);
@@ -256,17 +255,17 @@ public class DiagnosticDescriptorTests
     public void EqualsMethod_DifferentDiagnosticSeverity_MustReturnFalse()
     {
         // Arrange
-        const DiagnosticSeverity oldValue = DiagnosticSeverity.Error;
-        const DiagnosticSeverity newValue = DiagnosticSeverity.Warning;
+        const DiagnosticSeverity OldValue = DiagnosticSeverity.Error;
+        const DiagnosticSeverity NewValue = DiagnosticSeverity.Warning;
 
         // Act
-        DiagnosticDescriptor diagnosticDescriptor1 = new("1", "2", "3", "4", oldValue, true, "5", "6", "7");
-        DiagnosticDescriptor diagnosticDescriptor2 = new("1", "2", "3", "4", newValue, true, "5", "6", "7");
+        DiagnosticDescriptor diagnosticDescriptor1 = new("1", "2", "3", "4", OldValue, true, "5", "6", "7");
+        DiagnosticDescriptor diagnosticDescriptor2 = new("1", "2", "3", "4", NewValue, true, "5", "6", "7");
 
-        bool actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
-        bool actualEquals2 = diagnosticDescriptor1.Equals((object?)null);
-        bool actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
-        bool actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
+        var actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
+        var actualEquals2 = diagnosticDescriptor1.Equals((object?)null);
+        var actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
+        var actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
 
         // Assert
         Assert.False(actualEquals1);
@@ -279,17 +278,17 @@ public class DiagnosticDescriptorTests
     public void EqualsMethod_DifferentIsEnabledByDefault_MustReturnFalse()
     {
         // Arrange
-        const bool oldValue = true;
-        const bool newValue = false;
+        const bool OldValue = true;
+        const bool NewValue = false;
 
         // Act
-        DiagnosticDescriptor diagnosticDescriptor1 = new("1", "2", "3", "4", DiagnosticSeverity.Error, oldValue, "5", "6", "7");
-        DiagnosticDescriptor diagnosticDescriptor2 = new("1", "2", "3", "4", DiagnosticSeverity.Error, newValue, "5", "6", "7");
+        DiagnosticDescriptor diagnosticDescriptor1 = new("1", "2", "3", "4", DiagnosticSeverity.Error, OldValue, "5", "6", "7");
+        DiagnosticDescriptor diagnosticDescriptor2 = new("1", "2", "3", "4", DiagnosticSeverity.Error, NewValue, "5", "6", "7");
 
-        bool actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
-        bool actualEquals2 = diagnosticDescriptor1.Equals((object?)null);
-        bool actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
-        bool actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
+        var actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
+        var actualEquals2 = diagnosticDescriptor1.Equals((object?)null);
+        var actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
+        var actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
 
         // Assert
         Assert.False(actualEquals1);
@@ -302,16 +301,16 @@ public class DiagnosticDescriptorTests
     public void EqualsMethod_DifferentDescription_MustReturnFalse()
     {
         // Arrange
-        const string oldValue = "x";
-        const string newValue = "y";
+        const string OldValue = "x";
+        const string NewValue = "y";
 
         // Act
-        DiagnosticDescriptor diagnosticDescriptor1 = new("1", "2", "3", "4", DiagnosticSeverity.Error, true, oldValue, "6", "7");
-        DiagnosticDescriptor diagnosticDescriptor2 = new("1", "2", "3", "4", DiagnosticSeverity.Error, true, newValue, "6", "7");
-        bool actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
-        bool actualEquals2 = diagnosticDescriptor1.Equals((object?)null);
-        bool actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
-        bool actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
+        DiagnosticDescriptor diagnosticDescriptor1 = new("1", "2", "3", "4", DiagnosticSeverity.Error, true, OldValue, "6", "7");
+        DiagnosticDescriptor diagnosticDescriptor2 = new("1", "2", "3", "4", DiagnosticSeverity.Error, true, NewValue, "6", "7");
+        var actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
+        var actualEquals2 = diagnosticDescriptor1.Equals((object?)null);
+        var actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
+        var actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
 
         // Assert
         Assert.False(actualEquals1);
@@ -324,16 +323,16 @@ public class DiagnosticDescriptorTests
     public void EqualsMethod_DifferentHelpLinkUri_MustReturnFalse()
     {
         // Arrange
-        const string oldValue = "x";
-        const string newValue = "y";
+        const string OldValue = "x";
+        const string NewValue = "y";
 
         // Act
-        DiagnosticDescriptor diagnosticDescriptor1 = new("1", "2", "3", "4", DiagnosticSeverity.Error, true, "5", oldValue, "7");
-        DiagnosticDescriptor diagnosticDescriptor2 = new("1", "2", "3", "4", DiagnosticSeverity.Error, true, "5", newValue, "7");
-        bool actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
-        bool actualEquals2 = diagnosticDescriptor1.Equals((object?)null);
-        bool actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
-        bool actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
+        DiagnosticDescriptor diagnosticDescriptor1 = new("1", "2", "3", "4", DiagnosticSeverity.Error, true, "5", OldValue, "7");
+        DiagnosticDescriptor diagnosticDescriptor2 = new("1", "2", "3", "4", DiagnosticSeverity.Error, true, "5", NewValue, "7");
+        var actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
+        var actualEquals2 = diagnosticDescriptor1.Equals((object?)null);
+        var actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;
+        var actualEquals4 = diagnosticDescriptor1 != diagnosticDescriptor2;
 
         // Assert
         Assert.False(actualEquals1);
@@ -348,7 +347,7 @@ public class DiagnosticDescriptorTests
         // Arrange
 
         // Act
-        int actualHashCode = this.diagnosticDescriptor.GetHashCode();
+        var actualHashCode = _diagnosticDescriptor.GetHashCode();
 
         // Assert
         Assert.NotEqual(0, actualHashCode);

@@ -11,7 +11,7 @@ using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "Nested class.")]
 public class LocationNoneTests
 {
-    private readonly Location location = Location.NoLocation.Instance;
+    private readonly Location _location = Location.NoLocation.Instance;
 
     [Fact(DisplayName = $"The {nameof(Location.NoLocation.Kind)} property must return {nameof(LocationKind.None)}.")]
     public void KindProperty_MustReturnNone()
@@ -19,7 +19,7 @@ public class LocationNoneTests
         // Arrange
 
         // Act
-        LocationKind actualKind = this.location.Kind;
+        var actualKind = _location.Kind;
 
         // Assert
         Assert.Equal(LocationKind.None, actualKind);
@@ -32,7 +32,7 @@ public class LocationNoneTests
         const int ExpectedHashCode = 0x16487756;
 
         // Act
-        int actualHashCode = this.location.GetHashCode();
+        var actualHashCode = _location.GetHashCode();
 
         // Assert
         Assert.Equal(ExpectedHashCode, actualHashCode);
@@ -42,10 +42,10 @@ public class LocationNoneTests
     public void EqualsMethod_MustReturnTrue()
     {
         // Arrange
-        Location location2 = Location.NoLocation.Instance;
+        var location2 = Location.NoLocation.Instance;
 
         // Act
-        bool actualEquals1 = this.location.Equals(location2);
+        var actualEquals1 = _location.Equals(location2);
 
         // Assert
         Assert.True(actualEquals1);

@@ -13,115 +13,115 @@ public class TextSpanTests
     public void Constructor_NegativeStartArgument_MustThrowArgumentOutOfRangeException()
     {
         // Arrange
-        const int start = -1;
-        const int length = 0;
-        const string expectedParamName = "start";
+        const int Start = -1;
+        const int Length = 0;
+        const string ExpectedParamName = "start";
 
         // Act
         static object? ActualTextSpanFunc()
         {
-            return new TextSpan(start, length);
+            return new TextSpan(Start, Length);
         }
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(ActualTextSpanFunc);
-        Assert.Equal(expectedParamName, exception.ParamName);
+        Assert.Equal(ExpectedParamName, exception.ParamName);
     }
 
     [Fact(DisplayName = $"The {nameof(TextSpan)} constructor with negative 'length' argument must throw {nameof(ArgumentOutOfRangeException)} exception.")]
     public void Constructor_NegativeLengthArgument_MustThrowArgumentOutOfRangeException()
     {
         // Arrange
-        const int start = 0;
-        const int length = -1;
-        const string expectedParamName = "length";
+        const int Start = 0;
+        const int Length = -1;
+        const string ExpectedParamName = "length";
 
         // Act
         static object? ActualTextSpanFunc()
         {
-            return new TextSpan(start, length);
+            return new TextSpan(Start, Length);
         }
 
         // Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(ActualTextSpanFunc);
-        Assert.Equal(expectedParamName, exception.ParamName);
+        Assert.Equal(ExpectedParamName, exception.ParamName);
     }
 
     [Fact(DisplayName = $"The {nameof(TextSpan)} constructor must set the {nameof(TextSpan.Start)} property.")]
     public void Constructor_WithStartArgument_MustSetTheValueToStartProperty()
     {
         // Arrange
-        const int start = 150;
-        const int length = 0;
+        const int Start = 150;
+        const int Length = 0;
 
-        TextSpan textSpan = new(start, length);
+        TextSpan textSpan = new(Start, Length);
 
         // Act
-        int actualStart = textSpan.Start;
+        var actualStart = textSpan.Start;
 
         // Assert
-        Assert.Equal(start, actualStart);
+        Assert.Equal(Start, actualStart);
     }
 
     [Fact(DisplayName = $"The {nameof(TextSpan)} constructor must set the {nameof(TextSpan.Length)} property.")]
     public void Constructor_WithLengthArgument_MustSetTheValueToLengthProperty()
     {
         // Arrange
-        const int start = 150;
-        const int length = 3;
+        const int Start = 150;
+        const int Length = 3;
 
-        TextSpan textSpan = new(start, length);
+        TextSpan textSpan = new(Start, Length);
 
         // Act
-        int actualLength = textSpan.Length;
+        var actualLength = textSpan.Length;
 
         // Assert
-        Assert.Equal(length, actualLength);
+        Assert.Equal(Length, actualLength);
     }
 
     [Fact(DisplayName = $"The {nameof(TextSpan.End)} property must be computed by adding {nameof(TextSpan.Start)} and {nameof(TextSpan.Length)} properties.")]
     public void EndProperty_MustBeComputedByAddingStartAndLengthProperties()
     {
         // Arrange
-        const int start = 150;
-        const int length = 3;
-        const int expectedEnd = 153;
+        const int Start = 150;
+        const int Length = 3;
+        const int ExpectedEnd = 153;
 
-        TextSpan textSpan = new(start, length);
+        TextSpan textSpan = new(Start, Length);
 
         // Act
-        int actualEnd = textSpan.End;
+        var actualEnd = textSpan.End;
 
         // Assert
-        Assert.Equal(expectedEnd, actualEnd);
+        Assert.Equal(ExpectedEnd, actualEnd);
     }
 
     [Fact(DisplayName = $"The {nameof(TextSpan.ToString)} method must return span interval.")]
     public void ToStringMethod_MustReturnSpanInterval()
     {
         // Arrange
-        const int start = 150;
-        const int length = 3;
-        const string expectedString = "[150..153)";
+        const int Start = 150;
+        const int Length = 3;
+        const string ExpectedString = "[150..153)";
 
-        TextSpan textSpan = new(start, length);
+        TextSpan textSpan = new(Start, Length);
 
         // Act
-        string actualStringValue = textSpan.ToString();
+        var actualStringValue = textSpan.ToString();
 
         // Assert
-        Assert.Equal(expectedString, actualStringValue);
+        Assert.Equal(ExpectedString, actualStringValue);
     }
 
     [Fact(DisplayName = $"The {nameof(TextSpan)} struct must implement {nameof(IEquatable<TextSpan>)} interface.")]
     public void TextSpan_MustImplementIEquatableInterface()
     {
         // Arrange
-        const int start = 150;
-        const int length = 3;
+        const int Start = 150;
+        const int Length = 3;
 
         // Act
-        TextSpan textSpan = new(start, length);
+        TextSpan textSpan = new(Start, Length);
 
         // Assert
         Assert.IsAssignableFrom<IEquatable<TextSpan>>(textSpan);
@@ -131,14 +131,14 @@ public class TextSpanTests
     public void EqualsMethod_MustReturnTrue()
     {
         // Arrange
-        const int start = 150;
-        const int length = 3;
+        const int Start = 150;
+        const int Length = 3;
 
-        TextSpan textSpan1 = new(start, length);
-        TextSpan textSpan2 = new(start, length);
+        TextSpan textSpan1 = new(Start, Length);
+        TextSpan textSpan2 = new(Start, Length);
 
         // Act
-        bool equals = textSpan1.Equals(textSpan2);
+        var equals = textSpan1.Equals(textSpan2);
 
         // Assert
         Assert.True(equals);
@@ -148,15 +148,15 @@ public class TextSpanTests
     public void EqualsMethod_MustReturnFalse()
     {
         // Arrange
-        const int start1 = 150;
-        const int start2 = 159;
-        const int length = 3;
+        const int Start1 = 150;
+        const int Start2 = 159;
+        const int Length = 3;
 
-        TextSpan textSpan1 = new(start1, length);
-        TextSpan textSpan2 = new(start2, length);
+        TextSpan textSpan1 = new(Start1, Length);
+        TextSpan textSpan2 = new(Start2, Length);
 
         // Act
-        bool equals = textSpan1.Equals(textSpan2);
+        var equals = textSpan1.Equals(textSpan2);
 
         // Assert
         Assert.False(equals);
@@ -166,14 +166,14 @@ public class TextSpanTests
     public void EqualsMethod_ObjectParam_MustReturnTrue()
     {
         // Arrange
-        const int start = 150;
-        const int length = 3;
+        const int Start = 150;
+        const int Length = 3;
 
-        TextSpan textSpan1 = new(start, length);
-        object textSpan2 = new TextSpan(start, length);
+        TextSpan textSpan1 = new(Start, Length);
+        object textSpan2 = new TextSpan(Start, Length);
 
         // Act
-        bool equals = textSpan1.Equals(textSpan2);
+        var equals = textSpan1.Equals(textSpan2);
 
         // Assert
         Assert.True(equals);
@@ -183,14 +183,14 @@ public class TextSpanTests
     public void EqualsMethod_ObjectParam_MustReturnFalse()
     {
         // Arrange
-        const int start = 150;
-        const int length = 3;
+        const int Start = 150;
+        const int Length = 3;
 
-        TextSpan textSpan1 = new(start, length);
+        TextSpan textSpan1 = new(Start, Length);
         object? textSpan2 = null;
 
         // Act
-        bool equals = textSpan1.Equals(textSpan2);
+        var equals = textSpan1.Equals(textSpan2);
 
         // Assert
         Assert.False(equals);
@@ -200,14 +200,14 @@ public class TextSpanTests
     public void GetHashCodeMethod_MustBeComputedByCombiningStartAndLengthValues()
     {
         // Arrange
-        const int start = 150;
-        const int length = 3;
+        const int Start = 150;
+        const int Length = 3;
 
-        int hashCode = HashCode.Combine(start, length);
-        TextSpan textSpan = new(start, length);
+        var hashCode = HashCode.Combine(Start, Length);
+        TextSpan textSpan = new(Start, Length);
 
         // Act
-        int actualHashCode = textSpan.GetHashCode();
+        var actualHashCode = textSpan.GetHashCode();
 
         // Assert
         Assert.Equal(hashCode, actualHashCode);
@@ -217,15 +217,15 @@ public class TextSpanTests
     public void EqualsOperator_MustReturnTrue()
     {
         // Arrange
-        const int start1 = 150;
-        const int start2 = 150;
-        const int length = 3;
+        const int Start1 = 150;
+        const int Start2 = 150;
+        const int Length = 3;
 
-        TextSpan textSpan1 = new(start1, length);
-        TextSpan textSpan2 = new(start2, length);
+        TextSpan textSpan1 = new(Start1, Length);
+        TextSpan textSpan2 = new(Start2, Length);
 
         // Act
-        bool equals = textSpan1 == textSpan2;
+        var equals = textSpan1 == textSpan2;
 
         // Assert
         Assert.True(equals);
@@ -235,15 +235,15 @@ public class TextSpanTests
     public void NotEqualOperator_MustReturnTrue()
     {
         // Arrange
-        const int start1 = 150;
-        const int start2 = 153;
-        const int length = 3;
+        const int Start1 = 150;
+        const int Start2 = 153;
+        const int Length = 3;
 
-        TextSpan textSpan1 = new(start1, length);
-        TextSpan textSpan2 = new(start2, length);
+        TextSpan textSpan1 = new(Start1, Length);
+        TextSpan textSpan2 = new(Start2, Length);
 
         // Act
-        bool equals = textSpan1 != textSpan2;
+        var equals = textSpan1 != textSpan2;
 
         // Assert
         Assert.True(equals);
@@ -253,11 +253,11 @@ public class TextSpanTests
     public void TextSpan_MustImplementIComparableInterface()
     {
         // Arrange
-        const int start = 150;
-        const int length = 3;
+        const int Start = 150;
+        const int Length = 3;
 
         // Act
-        TextSpan textSpan = new(start, length);
+        TextSpan textSpan = new(Start, Length);
 
         // Assert
         Assert.IsAssignableFrom<IComparable<TextSpan>>(textSpan);
@@ -267,38 +267,38 @@ public class TextSpanTests
     public void CompareToMethod_MustReturnSubtractedStartProperties()
     {
         // Arrange
-        const int start1 = 150;
-        const int start2 = 140;
-        const int length = 3;
-        const int expectedCompareTo = 10;
+        const int Start1 = 150;
+        const int Start2 = 140;
+        const int Length = 3;
+        const int ExpectedCompareTo = 10;
 
-        TextSpan textSpan1 = new(start1, length);
-        TextSpan textSpan2 = new(start2, length);
+        TextSpan textSpan1 = new(Start1, Length);
+        TextSpan textSpan2 = new(Start2, Length);
 
         // Act
-        int actualCompareTo = textSpan1.CompareTo(textSpan2);
+        var actualCompareTo = textSpan1.CompareTo(textSpan2);
 
         // Assert
-        Assert.Equal(expectedCompareTo, actualCompareTo);
+        Assert.Equal(ExpectedCompareTo, actualCompareTo);
     }
 
     [Fact(DisplayName = $"The CompareTo() method must return the subtracted {nameof(TextSpan.Length)} properties if {nameof(TextSpan.Start)} properties are equal.")]
     public void CompareToMethod_MustReturnSubtractedLengthPropertiesIfStartPropertiesAreEqual()
     {
         // Arrange
-        const int start = 150;
-        const int length1 = 3;
-        const int length2 = 5;
-        const int expectedCompareTo = -2;
+        const int Start = 150;
+        const int Length1 = 3;
+        const int Length2 = 5;
+        const int ExpectedCompareTo = -2;
 
-        TextSpan textSpan1 = new(start, length1);
-        TextSpan textSpan2 = new(start, length2);
+        TextSpan textSpan1 = new(Start, Length1);
+        TextSpan textSpan2 = new(Start, Length2);
 
         // Act
-        int actualCompareTo = textSpan1.CompareTo(textSpan2);
+        var actualCompareTo = textSpan1.CompareTo(textSpan2);
 
         // Assert
-        Assert.Equal(expectedCompareTo, actualCompareTo);
+        Assert.Equal(ExpectedCompareTo, actualCompareTo);
     }
 
     [Theory(DisplayName = $"The {nameof(TextSpan.IsEmpty)} property must return correct value.")]
@@ -307,12 +307,12 @@ public class TextSpanTests
     public void IsEmptyProperty_MustReturnCorrectValue(int length, bool isEmpty)
     {
         // Arrange
-        const int start = 150;
+        const int Start = 150;
 
-        TextSpan textSpan = new(start, length);
+        TextSpan textSpan = new(Start, length);
 
         // Act
-        bool actualIsEmpty = textSpan.IsEmpty;
+        var actualIsEmpty = textSpan.IsEmpty;
 
         // Assert
         Assert.Equal(isEmpty, actualIsEmpty);

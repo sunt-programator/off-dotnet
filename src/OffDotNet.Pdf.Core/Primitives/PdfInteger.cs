@@ -12,9 +12,9 @@ using Properties;
 
 public struct PdfInteger : IPdfObject, IEquatable<PdfInteger>, IComparable, IComparable<PdfInteger>
 {
-    private readonly int hashCode;
-    private string literalValue = string.Empty;
-    private byte[]? bytes;
+    private readonly int _hashCode;
+    private string _literalValue = string.Empty;
+    private byte[]? _bytes;
 
     public PdfInteger()
         : this(0)
@@ -24,14 +24,14 @@ public struct PdfInteger : IPdfObject, IEquatable<PdfInteger>, IComparable, ICom
     public PdfInteger(int value)
     {
         this.Value = value;
-        this.hashCode = HashCode.Combine(nameof(PdfInteger), value);
-        this.bytes = null;
+        _hashCode = HashCode.Combine(nameof(PdfInteger), value);
+        _bytes = null;
     }
 
     public int Value { get; }
 
     /// <inheritdoc/>
-    public ReadOnlyMemory<byte> Bytes => this.bytes ??= Encoding.ASCII.GetBytes(this.Content);
+    public ReadOnlyMemory<byte> Bytes => _bytes ??= Encoding.ASCII.GetBytes(this.Content);
 
     /// <inheritdoc/>
     public string Content => this.GenerateContent();
@@ -79,7 +79,7 @@ public struct PdfInteger : IPdfObject, IEquatable<PdfInteger>, IComparable, ICom
     /// <inheritdoc/>
     public override int GetHashCode()
     {
-        return this.hashCode;
+        return _hashCode;
     }
 
     /// <inheritdoc/>
@@ -118,11 +118,11 @@ public struct PdfInteger : IPdfObject, IEquatable<PdfInteger>, IComparable, ICom
 
     private string GenerateContent()
     {
-        if (this.literalValue.Length == 0)
+        if (_literalValue.Length == 0)
         {
-            this.literalValue = this.Value.ToString(CultureInfo.InvariantCulture);
+            _literalValue = this.Value.ToString(CultureInfo.InvariantCulture);
         }
 
-        return this.literalValue;
+        return _literalValue;
     }
 }

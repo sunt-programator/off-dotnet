@@ -5,8 +5,6 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Lexer;
 
-using System.Diagnostics;
-
 /// <summary>The initial state of the lexer.</summary>
 internal sealed class DefaultState : LexerState
 {

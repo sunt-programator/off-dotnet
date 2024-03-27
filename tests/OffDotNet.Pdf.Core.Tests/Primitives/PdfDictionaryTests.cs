@@ -30,7 +30,7 @@ public class PdfDictionaryTests
         IPdfDictionary<IPdfObject> pdfDictionary1 = new KeyValuePair<PdfName, IPdfObject>(new PdfName("Name1"), new PdfBoolean()).ToPdfDictionary();
 
         // Act
-        bool actualResult = pdfDictionary1.Equals(null);
+        var actualResult = pdfDictionary1.Equals(null);
 
         // Assert
         Assert.False(actualResult);
@@ -43,7 +43,7 @@ public class PdfDictionaryTests
         IPdfDictionary<IPdfObject> pdfDictionary1 = new KeyValuePair<PdfName, IPdfObject>(new PdfName("Name1"), new PdfString("Value1")).ToPdfDictionary();
 
         // Act
-        bool actualResult = pdfDictionary1.Equals(null);
+        var actualResult = pdfDictionary1.Equals(null);
 
         // Assert
         Assert.False(actualResult);
@@ -58,7 +58,7 @@ public class PdfDictionaryTests
         IPdfDictionary<IPdfObject> pdfDictionary2 = pdfDictionary1; // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
 
         // Act
-        bool actualResult = pdfDictionary1.Equals(pdfDictionary2);
+        var actualResult = pdfDictionary1.Equals(pdfDictionary2);
 
         // Assert
         Assert.True(actualResult);
@@ -73,7 +73,7 @@ public class PdfDictionaryTests
         IPdfDictionary<IPdfObject> pdfDictionary2 = objects1.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
 
         // Act
-        bool actualResult = pdfDictionary1.Equals(pdfDictionary2);
+        var actualResult = pdfDictionary1.Equals(pdfDictionary2);
 
         // Assert
         Assert.False(actualResult);
@@ -286,7 +286,7 @@ public class PdfDictionaryTests
         IPdfDictionary<IPdfObject> pdfDictionary1 = inputValues.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
 
         // Act
-        byte[] actualBytes = pdfDictionary1.Bytes.ToArray();
+        var actualBytes = pdfDictionary1.Bytes.ToArray();
 
         // Assert
         Assert.True(actualBytes.SequenceEqual(expectedBytes));
@@ -299,12 +299,12 @@ public class PdfDictionaryTests
         Dictionary<PdfName, IPdfObject> value1 = new() { { new PdfName("Type"), new PdfName("Example") }, { new PdfName("SubType"), new PdfName("DictionaryExample") } };
         IPdfDictionary<IPdfObject> pdfDictionary1 = new PdfDictionary<IPdfObject>(value1);
         IPdfDictionary<IPdfObject> pdfDictionary2 = new PdfDictionary<IPdfObject>(value1);
-        int expectedHashCode = HashCode.Combine(nameof(PdfDictionary<IPdfObject>), value1);
+        var expectedHashCode = HashCode.Combine(nameof(PdfDictionary<IPdfObject>), value1);
 
         // Act
-        int actualHashCode1 = pdfDictionary1.GetHashCode();
-        int actualHashCode2 = pdfDictionary2.GetHashCode();
-        bool areHashCodeEquals = actualHashCode1 == actualHashCode2;
+        var actualHashCode1 = pdfDictionary1.GetHashCode();
+        var actualHashCode2 = pdfDictionary2.GetHashCode();
+        var areHashCodeEquals = actualHashCode1 == actualHashCode2;
 
         // Assert
         Assert.True(areHashCodeEquals);
@@ -322,9 +322,9 @@ public class PdfDictionaryTests
         IPdfDictionary<IPdfObject> pdfDictionary2 = new PdfDictionary<IPdfObject>(value2);
 
         // Act
-        int actualHashCode1 = pdfDictionary1.GetHashCode();
-        int actualHashCode2 = pdfDictionary2.GetHashCode();
-        bool areHashCodeEquals = actualHashCode1 == actualHashCode2;
+        var actualHashCode1 = pdfDictionary1.GetHashCode();
+        var actualHashCode2 = pdfDictionary2.GetHashCode();
+        var areHashCodeEquals = actualHashCode1 == actualHashCode2;
 
         // Assert
         Assert.False(areHashCodeEquals);
@@ -337,7 +337,7 @@ public class PdfDictionaryTests
         IPdfDictionary<IPdfObject> pdfDictionary1 = new KeyValuePair<PdfName, IPdfObject>(new PdfName("Type"), new PdfName("Example")).ToPdfDictionary();
 
         // Act
-        int actualValueCount = pdfDictionary1.Value.Count;
+        var actualValueCount = pdfDictionary1.Value.Count;
 
         // Assert
         Assert.Equal(1, actualValueCount);
@@ -347,7 +347,7 @@ public class PdfDictionaryTests
     public void PdfDictionary_Content_Check()
     {
         // Arrange
-        const string expectedContentValue =
+        const string ExpectedContentValue =
             "<</Type /Example /SubType /DictionaryExample /Version 0.01 /IntegerItem 12 /StringItem (a string) /SubDictionary <</Item1 0.4 /Item2 true /LastItem (not!) /VeryLastItem (OK)>>>>";
 
         var inputValues = new Dictionary<PdfName, IPdfObject>
@@ -372,11 +372,11 @@ public class PdfDictionaryTests
         IPdfDictionary<IPdfObject> pdfDictionary1 = inputValues.ToPdfDictionary(); // Use the ToPdfDictionary extension method to initialize an PdfDictionary instance
 
         // Act
-        string actualContentValue = pdfDictionary1.Content;
-        string actualContentValue2 = pdfDictionary1.Content;
+        var actualContentValue = pdfDictionary1.Content;
+        var actualContentValue2 = pdfDictionary1.Content;
 
         // Assert
-        Assert.Equal(expectedContentValue, actualContentValue);
+        Assert.Equal(ExpectedContentValue, actualContentValue);
         Assert.Equal(actualContentValue, actualContentValue2);
     }
 }

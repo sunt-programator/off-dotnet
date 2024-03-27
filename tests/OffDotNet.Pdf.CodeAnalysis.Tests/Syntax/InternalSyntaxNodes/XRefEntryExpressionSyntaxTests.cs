@@ -13,29 +13,29 @@ using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxTriv
 
 public class XRefEntryExpressionSyntaxTests
 {
-    private readonly LiteralExpressionSyntax offset;
-    private readonly LiteralExpressionSyntax generationNumber;
-    private readonly SyntaxToken entryTypeKeyword;
+    private readonly LiteralExpressionSyntax _offset;
+    private readonly LiteralExpressionSyntax _generationNumber;
+    private readonly SyntaxToken _entryTypeKeyword;
 
     public XRefEntryExpressionSyntaxTests()
     {
         GreenNode trivia = SyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, " ");
-        SyntaxToken offsetToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "0000000017", 17, trivia, trivia);
-        SyntaxToken generationNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "00007", 7, trivia, trivia);
+        var offsetToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "0000000017", 17, trivia, trivia);
+        var generationNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "00007", 7, trivia, trivia);
 
-        this.offset = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, offsetToken);
-        this.generationNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, generationNumberToken);
-        this.entryTypeKeyword = SyntaxFactory.Token(SyntaxKind.FreeXRefEntryKeyword, trivia, trivia);
+        _offset = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, offsetToken);
+        _generationNumber = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, generationNumberToken);
+        _entryTypeKeyword = SyntaxFactory.Token(SyntaxKind.FreeXRefEntryKeyword, trivia, trivia);
     }
 
     [Fact(DisplayName = $"The {nameof(XRefEntryExpressionSyntax.Kind)} property must be {nameof(SyntaxKind.XRefEntry)}")]
     public void KindProperty_MustBeXRefEntry()
     {
         // Arrange
-        XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
+        var xRefEntryExpression = SyntaxFactory.XRefEntry(_offset, _generationNumber, _entryTypeKeyword);
 
         // Act
-        SyntaxKind actualKind = xRefEntryExpression.Kind;
+        var actualKind = xRefEntryExpression.Kind;
 
         // Assert
         Assert.Equal(SyntaxKind.XRefEntry, actualKind);
@@ -45,49 +45,49 @@ public class XRefEntryExpressionSyntaxTests
     public void OffsetProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
+        var xRefEntryExpression = SyntaxFactory.XRefEntry(_offset, _generationNumber, _entryTypeKeyword);
 
         // Act
-        LiteralExpressionSyntax actualOffset = xRefEntryExpression.Offset;
+        var actualOffset = xRefEntryExpression.Offset;
 
         // Assert
-        Assert.Equal(this.offset, actualOffset);
+        Assert.Equal(_offset, actualOffset);
     }
 
     [Fact(DisplayName = $"The {nameof(XRefEntryExpressionSyntax.GenerationNumber)} property must be assigned from constructor.")]
     public void GenerationNumberProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
+        var xRefEntryExpression = SyntaxFactory.XRefEntry(_offset, _generationNumber, _entryTypeKeyword);
 
         // Act
-        LiteralExpressionSyntax actualGenerationNumber = xRefEntryExpression.GenerationNumber;
+        var actualGenerationNumber = xRefEntryExpression.GenerationNumber;
 
         // Assert
-        Assert.Equal(this.generationNumber, actualGenerationNumber);
+        Assert.Equal(_generationNumber, actualGenerationNumber);
     }
 
     [Fact(DisplayName = $"The {nameof(XRefEntryExpressionSyntax.EntryType)} property must be assigned from constructor.")]
     public void ReferenceKeywordProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
+        var xRefEntryExpression = SyntaxFactory.XRefEntry(_offset, _generationNumber, _entryTypeKeyword);
 
         // Act
-        SyntaxToken actualEntryType = xRefEntryExpression.EntryType;
+        var actualEntryType = xRefEntryExpression.EntryType;
 
         // Assert
-        Assert.Equal(this.entryTypeKeyword, actualEntryType);
+        Assert.Equal(_entryTypeKeyword, actualEntryType);
     }
 
     [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.SlotCount)} property must be equal to 3.")]
     public void SlotCountProperty_MustBeEqualTo3()
     {
         // Arrange
-        XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
+        var xRefEntryExpression = SyntaxFactory.XRefEntry(_offset, _generationNumber, _entryTypeKeyword);
 
         // Act
-        int actualSlotCount = xRefEntryExpression.SlotCount;
+        var actualSlotCount = xRefEntryExpression.SlotCount;
 
         // Assert
         Assert.Equal(3, actualSlotCount);
@@ -97,49 +97,49 @@ public class XRefEntryExpressionSyntaxTests
     public void GetSlotMethod_Index0_MustReturnFirstObject()
     {
         // Arrange
-        XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
+        var xRefEntryExpression = SyntaxFactory.XRefEntry(_offset, _generationNumber, _entryTypeKeyword);
 
         // Act
-        GreenNode? actualSlot = xRefEntryExpression.GetSlot(0);
+        var actualSlot = xRefEntryExpression.GetSlot(0);
 
         // Assert
-        Assert.Equal(this.offset, actualSlot);
+        Assert.Equal(_offset, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 1 must return {nameof(XRefEntryExpressionSyntax.GenerationNumber)} property.")]
     public void GetSlotMethod_Index1_MustReturnSecondObject()
     {
         // Arrange
-        XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
+        var xRefEntryExpression = SyntaxFactory.XRefEntry(_offset, _generationNumber, _entryTypeKeyword);
 
         // Act
-        GreenNode? actualSlot = xRefEntryExpression.GetSlot(1);
+        var actualSlot = xRefEntryExpression.GetSlot(1);
 
         // Assert
-        Assert.Equal(this.generationNumber, actualSlot);
+        Assert.Equal(_generationNumber, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 2 must return {nameof(XRefEntryExpressionSyntax.EntryType)} property.")]
     public void GetSlotMethod_Index2_MustReturnThirdObject()
     {
         // Arrange
-        XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
+        var xRefEntryExpression = SyntaxFactory.XRefEntry(_offset, _generationNumber, _entryTypeKeyword);
 
         // Act
-        GreenNode? actualSlot = xRefEntryExpression.GetSlot(2);
+        var actualSlot = xRefEntryExpression.GetSlot(2);
 
         // Assert
-        Assert.Equal(this.entryTypeKeyword, actualSlot);
+        Assert.Equal(_entryTypeKeyword, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 3 must return null.")]
     public void GetSlotMethod_Index3_MustReturnNull()
     {
         // Arrange
-        XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
+        var xRefEntryExpression = SyntaxFactory.XRefEntry(_offset, _generationNumber, _entryTypeKeyword);
 
         // Act
-        GreenNode? actualSlot = xRefEntryExpression.GetSlot(3);
+        var actualSlot = xRefEntryExpression.GetSlot(3);
 
         // Assert
         Assert.Null(actualSlot);
@@ -149,10 +149,10 @@ public class XRefEntryExpressionSyntaxTests
     public void WidthProperty_MustIncludeAllSlots()
     {
         // Arrange
-        XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
+        var xRefEntryExpression = SyntaxFactory.XRefEntry(_offset, _generationNumber, _entryTypeKeyword);
 
         // Act
-        int actualWidth = xRefEntryExpression.Width;
+        var actualWidth = xRefEntryExpression.Width;
 
         // Assert
         Assert.Equal(20, actualWidth);
@@ -162,10 +162,10 @@ public class XRefEntryExpressionSyntaxTests
     public void FullWidthProperty_MustIncludeAllSlots()
     {
         // Arrange
-        XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
+        var xRefEntryExpression = SyntaxFactory.XRefEntry(_offset, _generationNumber, _entryTypeKeyword);
 
         // Act
-        int actualFullWidth = xRefEntryExpression.FullWidth;
+        var actualFullWidth = xRefEntryExpression.FullWidth;
 
         // Assert
         Assert.Equal(22, actualFullWidth);
@@ -175,40 +175,40 @@ public class XRefEntryExpressionSyntaxTests
     public void ToStringMethod_MustNotIncludeTrivia()
     {
         // Arrange
-        const string expectedString = "0000000017  00007  f";
-        XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
+        const string ExpectedString = "0000000017  00007  f";
+        var xRefEntryExpression = SyntaxFactory.XRefEntry(_offset, _generationNumber, _entryTypeKeyword);
 
         // Act
-        string actualString = xRefEntryExpression.ToString();
+        var actualString = xRefEntryExpression.ToString();
 
         // Assert
-        Assert.Equal(expectedString, actualString);
+        Assert.Equal(ExpectedString, actualString);
     }
 
     [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
     public void ToFullStringMethod_MustIncludeTrivia()
     {
         // Arrange
-        const string expectedString = " 0000000017  00007  f ";
-        XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
+        const string ExpectedString = " 0000000017  00007  f ";
+        var xRefEntryExpression = SyntaxFactory.XRefEntry(_offset, _generationNumber, _entryTypeKeyword);
 
         // Act
-        string actualString = xRefEntryExpression.ToFullString();
+        var actualString = xRefEntryExpression.ToFullString();
 
         // Assert
-        Assert.Equal(expectedString, actualString);
+        Assert.Equal(ExpectedString, actualString);
     }
 
     [Fact(DisplayName = "The SetDiagnostics() method must set the diagnostics and return a new instance.")]
     public void SetDiagnosticsMethod_MustSetDiagnosticsAndReturnNewInstance()
     {
         // Arrange
-        XRefEntryExpressionSyntax xRefEntryExpression = SyntaxFactory.XRefEntry(this.offset, this.generationNumber, this.entryTypeKeyword);
+        var xRefEntryExpression = SyntaxFactory.XRefEntry(_offset, _generationNumber, _entryTypeKeyword);
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
         DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
-        XRefEntryExpressionSyntax actualXRefEntryExpression = (XRefEntryExpressionSyntax)xRefEntryExpression.SetDiagnostics(diagnostics);
+        var actualXRefEntryExpression = (XRefEntryExpressionSyntax)xRefEntryExpression.SetDiagnostics(diagnostics);
 
         // Assert
         Assert.NotSame(xRefEntryExpression, actualXRefEntryExpression);

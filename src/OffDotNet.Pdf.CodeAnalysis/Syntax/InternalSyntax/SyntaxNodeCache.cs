@@ -16,7 +16,7 @@ internal static class SyntaxNodeCache
     private const int CacheSize = 1 << CacheSizeBits;
     private const int CacheMask = CacheSize - 1;
 
-    private static readonly CacheEntry<int, GreenNode?>[] Cache = new CacheEntry<int, GreenNode?>[CacheSize];
+    private static readonly CacheEntry<int, GreenNode?>[] s_cache = new CacheEntry<int, GreenNode?>[CacheSize];
 
     public static void AddNode(GreenNode node, int hash)
     {
@@ -27,7 +27,7 @@ internal static class SyntaxNodeCache
 
         Debug.Assert(GetCacheHash(node) == hash, "Hash must match");
         var index = hash & CacheMask;
-        Cache[index] = new CacheEntry<int, GreenNode?>(hash, node);
+        s_cache[index] = new CacheEntry<int, GreenNode?>(hash, node);
     }
 
     internal static GreenNode? TryGetNode(SyntaxKind kind, GreenNode? child1, out int hash)
@@ -40,7 +40,7 @@ internal static class SyntaxNodeCache
 
         hash = GetCacheHash(kind, child1);
         var index = hash & CacheMask;
-        var cacheEntry = Cache[index];
+        var cacheEntry = s_cache[index];
 
         if (cacheEntry.Key == hash && cacheEntry.Value != null && IsCacheEquivalent(kind, cacheEntry.Value, child1))
         {
@@ -60,7 +60,7 @@ internal static class SyntaxNodeCache
 
         hash = GetCacheHash(kind, child1, child2);
         var index = hash & CacheMask;
-        var cacheEntry = Cache[index];
+        var cacheEntry = s_cache[index];
 
         if (cacheEntry.Key == hash && cacheEntry.Value != null && IsCacheEquivalent(kind, cacheEntry.Value, child1, child2))
         {
@@ -80,7 +80,7 @@ internal static class SyntaxNodeCache
 
         hash = GetCacheHash(kind, child1, child2, child3);
         var index = hash & CacheMask;
-        var cacheEntry = Cache[index];
+        var cacheEntry = s_cache[index];
 
         if (cacheEntry.Key == hash && cacheEntry.Value != null && IsCacheEquivalent(kind, cacheEntry.Value, child1, child2, child3))
         {
@@ -179,6 +179,6 @@ internal static class SyntaxNodeCache
 
         var hash = GetCacheHash(child);
         var index = hash & CacheMask;
-        return Cache[index].Value == child;
+        return s_cache[index].Value == child;
     }
 }

@@ -13,7 +13,7 @@ using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 public class GreenNodeTests
 {
     [SuppressMessage("Substitute creation", "NS2002:Constructor parameters count mismatch.", Justification = "False positive.")]
-    private readonly GreenNode node = Substitute.For<GreenNode>(SyntaxKind.None, null);
+    private readonly GreenNode _node = Substitute.For<GreenNode>(SyntaxKind.None, null);
 
     [Fact(DisplayName = $"The {nameof(GreenNode.Flags)} property must return {nameof(GreenNode.NodeFlags.None)} by default")]
     public void FlagsProperty_MustReturnNoneByDefault()
@@ -21,7 +21,7 @@ public class GreenNodeTests
         // Arrange
 
         // Act
-        GreenNode.NodeFlags actualFlags = this.node.Flags;
+        var actualFlags = _node.Flags;
 
         // Assert
         Assert.Equal(GreenNode.NodeFlags.None, actualFlags);
@@ -31,11 +31,11 @@ public class GreenNodeTests
     public void SetFlagsMethod_MustBitwiseSetFlagsProperty()
     {
         // Arrange
-        GreenNode.NodeFlags expectedFlags = GreenNode.NodeFlags.ContainsDiagnostics;
+        var expectedFlags = GreenNode.NodeFlags.ContainsDiagnostics;
 
         // Act
-        this.node.SetFlags(expectedFlags);
-        GreenNode.NodeFlags actualFlags = this.node.Flags;
+        _node.SetFlags(expectedFlags);
+        var actualFlags = _node.Flags;
 
         // Assert
         Assert.Equal(expectedFlags, actualFlags);
@@ -45,12 +45,12 @@ public class GreenNodeTests
     public void ClearFlagsMethod_MustBitwiseClearFlagsProperty()
     {
         // Arrange
-        GreenNode.NodeFlags expectedFlags = GreenNode.NodeFlags.ContainsDiagnostics;
-        this.node.SetFlags(expectedFlags);
+        var expectedFlags = GreenNode.NodeFlags.ContainsDiagnostics;
+        _node.SetFlags(expectedFlags);
 
         // Act
-        this.node.ClearFlags(expectedFlags);
-        GreenNode.NodeFlags actualFlags = this.node.Flags;
+        _node.ClearFlags(expectedFlags);
+        var actualFlags = _node.Flags;
 
         // Assert
         Assert.Equal(GreenNode.NodeFlags.None, actualFlags);
@@ -60,11 +60,11 @@ public class GreenNodeTests
     public void ContainsFlagsMethod_MustReturnTrueIfFlagsPropertyContainsSpecifiedFlags()
     {
         // Arrange
-        GreenNode.NodeFlags expectedFlags = GreenNode.NodeFlags.ContainsDiagnostics;
-        this.node.SetFlags(expectedFlags);
+        var expectedFlags = GreenNode.NodeFlags.ContainsDiagnostics;
+        _node.SetFlags(expectedFlags);
 
         // Act
-        bool actualResult = this.node.ContainsFlags(expectedFlags);
+        var actualResult = _node.ContainsFlags(expectedFlags);
 
         // Assert
         Assert.True(actualResult);
@@ -77,7 +77,7 @@ public class GreenNodeTests
         // Arrange
 
         // Act
-        DiagnosticInfo[] actualResult = this.node.GetDiagnostics();
+        DiagnosticInfo[] actualResult = _node.GetDiagnostics();
 
         // Assert
         Assert.Empty(actualResult);

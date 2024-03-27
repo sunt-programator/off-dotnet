@@ -30,7 +30,7 @@ public class PdfBooleanTests
         PdfBoolean pdfBoolean = value; // Use an implicit conversion from bool to PdfBoolean
 
         // Act
-        bool expectedValue = pdfBoolean.Value;
+        var expectedValue = pdfBoolean.Value;
 
         // Assert
         Assert.Equal(expectedValue, pdfBoolean.Value);
@@ -48,7 +48,7 @@ public class PdfBooleanTests
         PdfBoolean pdfBoolean2 = value2; // Use an implicit conversion from bool to PdfBoolean
 
         // Act
-        bool actualResult = pdfBoolean1 == pdfBoolean2;
+        var actualResult = pdfBoolean1 == pdfBoolean2;
 
         // Assert
         Assert.Equal(expectedResult, actualResult);
@@ -66,7 +66,7 @@ public class PdfBooleanTests
         PdfBoolean pdfBoolean2 = value2; // Use an implicit conversion from bool to PdfBoolean
 
         // Act
-        bool actualResult = pdfBoolean1 != pdfBoolean2;
+        var actualResult = pdfBoolean1 != pdfBoolean2;
 
         // Assert
         Assert.Equal(expectedResult, actualResult);
@@ -79,7 +79,7 @@ public class PdfBooleanTests
         PdfBoolean pdfBoolean1 = true; // Use an implicit conversion from bool to PdfBoolean
 
         // Act
-        bool actualResult = pdfBoolean1.Equals(null);
+        var actualResult = pdfBoolean1.Equals(null);
 
         // Assert
         Assert.False(actualResult);
@@ -97,7 +97,7 @@ public class PdfBooleanTests
         PdfBoolean pdfBoolean2 = value2; // Use an implicit conversion from bool to PdfBoolean
 
         // Act
-        bool actualResult = pdfBoolean1.Equals((object)pdfBoolean2);
+        var actualResult = pdfBoolean1.Equals((object)pdfBoolean2);
 
         // Assert
         Assert.Equal(expectedResult, actualResult);
@@ -112,7 +112,7 @@ public class PdfBooleanTests
         PdfBoolean pdfBoolean1 = value1; // Use an implicit conversion from bool to PdfBoolean
 
         // Act
-        ReadOnlyMemory<byte> actualBytes = pdfBoolean1.Bytes;
+        var actualBytes = pdfBoolean1.Bytes;
 
         // Assert
         Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
@@ -125,10 +125,10 @@ public class PdfBooleanTests
     {
         // Arrange
         PdfBoolean pdfBoolean1 = value1; // Use an implicit conversion from bool to PdfBoolean
-        int expectedHashCode = HashCode.Combine(nameof(PdfBoolean), value1);
+        var expectedHashCode = HashCode.Combine(nameof(PdfBoolean), value1);
 
         // Act
-        int actualHashCode = pdfBoolean1.GetHashCode();
+        var actualHashCode = pdfBoolean1.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
@@ -150,7 +150,7 @@ public class PdfBooleanTests
         PdfBoolean pdfBoolean2 = value2; // Use an implicit conversion from bool to PdfBoolean
 
         // Act
-        bool actualResult = op switch
+        var actualResult = op switch
         {
             "==" => pdfBoolean1 == pdfBoolean2,
             "!=" => pdfBoolean1 != pdfBoolean2,
@@ -171,7 +171,7 @@ public class PdfBooleanTests
 
         // Act
         bool actualValue = pdfBoolean1; // Use an implicit conversion from PdfBoolean to bool
-        bool expectedValue = pdfBoolean1.Value;
+        var expectedValue = pdfBoolean1.Value;
 
         // Assert
         Assert.Equal(expectedValue, actualValue);
@@ -186,7 +186,7 @@ public class PdfBooleanTests
         PdfBoolean pdfBoolean1 = value1; // Use an implicit conversion from bool to PdfBoolean
 
         // Act
-        string actualPdfBooleanStringValue = pdfBoolean1.Content;
+        var actualPdfBooleanStringValue = pdfBoolean1.Content;
 
         // Assert
         Assert.Equal(expectedPdfBooleanStringValue, actualPdfBooleanStringValue);

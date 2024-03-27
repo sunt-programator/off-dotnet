@@ -40,7 +40,7 @@ public class PdfStringTests
         PdfString pdfString1 = "Name1"; // Use an implicit conversion from string to PdfString
 
         // Act
-        bool actualResult = pdfString1.Equals(null);
+        var actualResult = pdfString1.Equals(null);
 
         // Assert
         Assert.False(actualResult);
@@ -53,7 +53,7 @@ public class PdfStringTests
         PdfString pdfString1 = "Name1"; // Use an implicit conversion from string to PdfString
 
         // Act
-        bool actualResult = pdfString1.Equals((object?)null);
+        var actualResult = pdfString1.Equals((object?)null);
 
         // Assert
         Assert.False(actualResult);
@@ -70,7 +70,7 @@ public class PdfStringTests
         PdfString pdfString2 = value2; // Use an implicit conversion from string to PdfString
 
         // Act
-        bool actualResult = pdfString1.Equals((object)pdfString2);
+        var actualResult = pdfString1.Equals((object)pdfString2);
 
         // Assert
         Assert.Equal(expectedResult, actualResult);
@@ -96,7 +96,7 @@ public class PdfStringTests
         PdfString pdfString1 = value1; // Use an implicit conversion from string to PdfString
 
         // Act
-        ReadOnlyMemory<byte> actualBytes = pdfString1.Bytes;
+        var actualBytes = pdfString1.Bytes;
 
         // Assert
         Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
@@ -118,10 +118,10 @@ public class PdfStringTests
     {
         // Arrange
         PdfString pdfString1 = value1; // Use an implicit conversion from string to PdfString
-        int expectedHashCode = HashCode.Combine(nameof(PdfString), value1);
+        var expectedHashCode = HashCode.Combine(nameof(PdfString), value1);
 
         // Act
-        int actualHashCode = pdfString1.GetHashCode();
+        var actualHashCode = pdfString1.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
@@ -138,9 +138,9 @@ public class PdfStringTests
         PdfString pdfString2 = value2; // Use an implicit conversion from string to PdfString
 
         // Act
-        int actualHashCode1 = pdfString1.GetHashCode();
-        int actualHashCode2 = pdfString2.GetHashCode();
-        bool areHashCodeEquals = actualHashCode1 == actualHashCode2;
+        var actualHashCode1 = pdfString1.GetHashCode();
+        var actualHashCode2 = pdfString2.GetHashCode();
+        var areHashCodeEquals = actualHashCode1 == actualHashCode2;
 
         // Assert
         Assert.Equal(expectedResult, areHashCodeEquals);
@@ -157,7 +157,7 @@ public class PdfStringTests
         PdfString pdfString2 = value2; // Use an implicit conversion from string to PdfString
 
         // Act
-        bool actualEqual = pdfString1 == pdfString2;
+        var actualEqual = pdfString1 == pdfString2;
 
         // Assert
         Assert.Equal(actualEqual, expectedResult);
@@ -174,7 +174,7 @@ public class PdfStringTests
         PdfString pdfString2 = value2; // Use an implicit conversion from string to PdfString
 
         // Act
-        bool actualEqual = pdfString1 != pdfString2;
+        var actualEqual = pdfString1 != pdfString2;
 
         // Assert
         Assert.Equal(actualEqual, expectedResult);
@@ -199,7 +199,7 @@ public class PdfStringTests
 
         // Act
         string actualValue = pdfString1; // Use an implicit conversion from PdfString to string
-        string expectedValue = pdfString1.Value;
+        var expectedValue = pdfString1.Value;
 
         // Assert
         Assert.Equal(expectedValue, actualValue);
@@ -230,7 +230,7 @@ public class PdfStringTests
         PdfString pdfString1 = new(value1, isHexValue);
 
         // Act
-        string actualPdfStringStringValue = pdfString1.Content;
+        var actualPdfStringStringValue = pdfString1.Content;
 
         // Assert
         Assert.Equal(expectedPdfStringStringValue, actualPdfStringStringValue);
@@ -243,8 +243,8 @@ public class PdfStringTests
         PdfString pdfString1 = "CustomString"; // Use an implicit conversion from string to PdfString
 
         // Act
-        string firstString = pdfString1.Content;
-        string secondString = pdfString1.Content;
+        var firstString = pdfString1.Content;
+        var secondString = pdfString1.Content;
 
         // Assert
         Assert.Equal(firstString, secondString);

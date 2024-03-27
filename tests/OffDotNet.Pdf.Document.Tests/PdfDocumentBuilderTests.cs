@@ -11,7 +11,7 @@ public class PdfDocumentBuilderTests
     public async Task PdfDocument_ConstructorWithoutArguments_ShouldGenerateValidOutputStream()
     {
         // Arrange
-        const string expectedContent =
+        const string ExpectedContent =
             "%PDF-1.7\n" +
             "1 0 obj\n<</Type /Catalog /Pages 2 0 R>>\nendobj\n" +
             "2 0 obj\n<</Type /Pages /Kids [3 0 R] /Count 1>>\nendobj\n" +
@@ -22,10 +22,10 @@ public class PdfDocumentBuilderTests
             "trailer\n<</Size 5 /Root 1 0 R>>\n" +
             "startxref\n453\n%%EOF";
 
-        byte[] expectedBytes = Encoding.ASCII.GetBytes(expectedContent);
+        var expectedBytes = Encoding.ASCII.GetBytes(ExpectedContent);
         MemoryStream stream = new();
         IPdfDocumentBuilder pdfDocumentBuilder = new PdfDocumentBuilder();
-        PdfDocument pdfDocument = pdfDocumentBuilder.BuildPdfDocument(stream);
+        var pdfDocument = pdfDocumentBuilder.BuildPdfDocument(stream);
 
         // Act
         await using (stream.ConfigureAwait(false))

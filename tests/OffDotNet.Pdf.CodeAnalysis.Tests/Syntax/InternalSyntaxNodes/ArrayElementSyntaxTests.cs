@@ -9,27 +9,26 @@ using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 using LiteralExpressionSyntax = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.LiteralExpressionSyntax;
-using SyntaxToken = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxToken;
 
 public class ArrayElementSyntaxTests
 {
-    private readonly ExpressionSyntax expression;
+    private readonly ExpressionSyntax _expression;
 
     public ArrayElementSyntaxTests()
     {
         GreenNode trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        SyntaxToken objectNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "123", 123, trivia, trivia);
-        this.expression = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, objectNumberToken);
+        var objectNumberToken = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, "123", 123, trivia, trivia);
+        _expression = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, objectNumberToken);
     }
 
     [Fact(DisplayName = $"The {nameof(ArrayElementSyntax.Kind)} property must be {nameof(SyntaxKind.ArrayElement)}")]
     public void KindProperty_MustBeArrayElement()
     {
         // Arrange
-        ArrayElementSyntax arrayElement = SyntaxFactory.ArrayElement(this.expression);
+        var arrayElement = SyntaxFactory.ArrayElement(_expression);
 
         // Act
-        SyntaxKind actualKind = arrayElement.Kind;
+        var actualKind = arrayElement.Kind;
 
         // Assert
         Assert.Equal(SyntaxKind.ArrayElement, actualKind);
@@ -39,23 +38,23 @@ public class ArrayElementSyntaxTests
     public void ExpressionProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        ArrayElementSyntax arrayElement = SyntaxFactory.ArrayElement(this.expression);
+        var arrayElement = SyntaxFactory.ArrayElement(_expression);
 
         // Act
-        ExpressionSyntax actualReferenceKeyword = arrayElement.Expression;
+        var actualReferenceKeyword = arrayElement.Expression;
 
         // Assert
-        Assert.Equal(this.expression, actualReferenceKeyword);
+        Assert.Equal(_expression, actualReferenceKeyword);
     }
 
     [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.SlotCount)} property must be equal to 1.")]
     public void SlotCountProperty_MustBeEqualTo3()
     {
         // Arrange
-        ArrayElementSyntax arrayElement = SyntaxFactory.ArrayElement(this.expression);
+        var arrayElement = SyntaxFactory.ArrayElement(_expression);
 
         // Act
-        int actualSlotCount = arrayElement.SlotCount;
+        var actualSlotCount = arrayElement.SlotCount;
 
         // Assert
         Assert.Equal(1, actualSlotCount);
@@ -65,23 +64,23 @@ public class ArrayElementSyntaxTests
     public void GetSlotMethod_Index0_MustReturnFirstObject()
     {
         // Arrange
-        ArrayElementSyntax arrayElement = SyntaxFactory.ArrayElement(this.expression);
+        var arrayElement = SyntaxFactory.ArrayElement(_expression);
 
         // Act
-        GreenNode? actualSlot = arrayElement.GetSlot(0);
+        var actualSlot = arrayElement.GetSlot(0);
 
         // Assert
-        Assert.Equal(this.expression, actualSlot);
+        Assert.Equal(_expression, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 1 must return null.")]
     public void GetSlotMethod_Index1_MustReturnNull()
     {
         // Arrange
-        ArrayElementSyntax arrayElement = SyntaxFactory.ArrayElement(this.expression);
+        var arrayElement = SyntaxFactory.ArrayElement(_expression);
 
         // Act
-        GreenNode? actualSlot = arrayElement.GetSlot(1);
+        var actualSlot = arrayElement.GetSlot(1);
 
         // Assert
         Assert.Null(actualSlot);
@@ -91,10 +90,10 @@ public class ArrayElementSyntaxTests
     public void WidthProperty_MustIncludeAllSlots()
     {
         // Arrange
-        ArrayElementSyntax arrayElement = SyntaxFactory.ArrayElement(this.expression);
+        var arrayElement = SyntaxFactory.ArrayElement(_expression);
 
         // Act
-        int actualWidth = arrayElement.Width;
+        var actualWidth = arrayElement.Width;
 
         // Assert
         Assert.Equal(3, actualWidth);
@@ -104,10 +103,10 @@ public class ArrayElementSyntaxTests
     public void FullWidthProperty_MustIncludeAllSlots()
     {
         // Arrange
-        ArrayElementSyntax arrayElement = SyntaxFactory.ArrayElement(this.expression);
+        var arrayElement = SyntaxFactory.ArrayElement(_expression);
 
         // Act
-        int actualFullWidth = arrayElement.FullWidth;
+        var actualFullWidth = arrayElement.FullWidth;
 
         // Assert
         Assert.Equal(5, actualFullWidth);
@@ -117,40 +116,40 @@ public class ArrayElementSyntaxTests
     public void ToStringMethod_MustNotIncludeTrivia()
     {
         // Arrange
-        const string expectedString = "123";
-        ArrayElementSyntax arrayElement = SyntaxFactory.ArrayElement(this.expression);
+        const string ExpectedString = "123";
+        var arrayElement = SyntaxFactory.ArrayElement(_expression);
 
         // Act
-        string actualString = arrayElement.ToString();
+        var actualString = arrayElement.ToString();
 
         // Assert
-        Assert.Equal(expectedString, actualString);
+        Assert.Equal(ExpectedString, actualString);
     }
 
     [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
     public void ToFullStringMethod_MustIncludeTrivia()
     {
         // Arrange
-        const string expectedString = " 123 ";
-        ArrayElementSyntax arrayElement = SyntaxFactory.ArrayElement(this.expression);
+        const string ExpectedString = " 123 ";
+        var arrayElement = SyntaxFactory.ArrayElement(_expression);
 
         // Act
-        string actualString = arrayElement.ToFullString();
+        var actualString = arrayElement.ToFullString();
 
         // Assert
-        Assert.Equal(expectedString, actualString);
+        Assert.Equal(ExpectedString, actualString);
     }
 
     [Fact(DisplayName = "The SetDiagnostics() method must set the diagnostics and return a new instance.")]
     public void SetDiagnosticsMethod_MustSetDiagnosticsAndReturnNewInstance()
     {
         // Arrange
-        ArrayElementSyntax arrayElement = SyntaxFactory.ArrayElement(this.expression);
+        var arrayElement = SyntaxFactory.ArrayElement(_expression);
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
         DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
-        GreenNode actualNode = arrayElement.SetDiagnostics(diagnostics);
+        var actualNode = arrayElement.SetDiagnostics(diagnostics);
 
         // Assert
         Assert.NotSame(arrayElement, actualNode);

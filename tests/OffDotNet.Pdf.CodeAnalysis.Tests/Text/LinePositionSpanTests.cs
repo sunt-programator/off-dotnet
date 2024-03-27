@@ -39,7 +39,7 @@ public class LinePositionSpanTests
 
         // Act
         LinePositionSpan linePositionSpan = new(start, end);
-        LinePosition actualStart = linePositionSpan.Start;
+        var actualStart = linePositionSpan.Start;
 
         // Assert
         Assert.Equal(start, actualStart);
@@ -54,7 +54,7 @@ public class LinePositionSpanTests
 
         // Act
         LinePositionSpan linePositionSpan = new(start, end);
-        LinePosition actualEnd = linePositionSpan.End;
+        var actualEnd = linePositionSpan.End;
 
         // Assert
         Assert.Equal(end, actualEnd);
@@ -66,11 +66,11 @@ public class LinePositionSpanTests
         // Arrange
         LinePosition start = new(1, 0);
         LinePosition end = new(5, 0);
-        int expectedHashCode = HashCode.Combine(start, end);
+        var expectedHashCode = HashCode.Combine(start, end);
 
         // Act
         LinePositionSpan linePositionSpan = new(start, end);
-        int actualHashCode = linePositionSpan.GetHashCode();
+        var actualHashCode = linePositionSpan.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
@@ -82,11 +82,11 @@ public class LinePositionSpanTests
         // Arrange
         LinePosition start = new(1, 0);
         LinePosition end = new(5, 0);
-        string expectedToString = $"({start})-({end})";
+        var expectedToString = $"({start})-({end})";
 
         // Act
         LinePositionSpan linePositionSpan = new(start, end);
-        string actualToString = linePositionSpan.ToString();
+        var actualToString = linePositionSpan.ToString();
 
         // Assert
         Assert.Equal(expectedToString, actualToString);
@@ -118,10 +118,10 @@ public class LinePositionSpanTests
         LinePositionSpan linePosition2 = new(start2, end2);
 
         // Act
-        bool actualEquals1 = linePosition1.Equals(linePosition2);
-        bool actualEquals2 = linePosition2.Equals((object?)linePosition1);
-        bool actualEquals3 = linePosition1 == linePosition2;
-        bool actualEquals4 = linePosition1 != linePosition2;
+        var actualEquals1 = linePosition1.Equals(linePosition2);
+        var actualEquals2 = linePosition2.Equals((object?)linePosition1);
+        var actualEquals3 = linePosition1 == linePosition2;
+        var actualEquals4 = linePosition1 != linePosition2;
 
         // Assert
         Assert.True(actualEquals1);
@@ -142,10 +142,10 @@ public class LinePositionSpanTests
         LinePositionSpan linePosition2 = new(start2, end2);
 
         // Act
-        bool actualEquals1 = linePosition1.Equals(linePosition2);
-        bool actualEquals2 = linePosition2.Equals((object?)linePosition1);
-        bool actualEquals3 = linePosition1 == linePosition2;
-        bool actualEquals4 = linePosition1 != linePosition2;
+        var actualEquals1 = linePosition1.Equals(linePosition2);
+        var actualEquals2 = linePosition2.Equals((object?)linePosition1);
+        var actualEquals3 = linePosition1 == linePosition2;
+        var actualEquals4 = linePosition1 != linePosition2;
 
         // Assert
         Assert.False(actualEquals1);

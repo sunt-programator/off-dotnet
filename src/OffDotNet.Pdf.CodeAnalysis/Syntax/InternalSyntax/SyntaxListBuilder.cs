@@ -11,18 +11,18 @@ using Collections;
 internal sealed class SyntaxListBuilder
 {
     private const int DefaultCapacity = 8;
-    private ArrayElement<GreenNode?>[] nodes;
+    private ArrayElement<GreenNode?>[] _nodes;
 
     public SyntaxListBuilder(int size)
     {
-        this.nodes = new ArrayElement<GreenNode?>[size];
+        _nodes = new ArrayElement<GreenNode?>[size];
     }
 
     public int Count { get; private set; }
 
     public GreenNode? this[int index]
     {
-        get => this.nodes[index];
+        get => _nodes[index];
     }
 
     public static SyntaxListBuilder Create()
@@ -40,7 +40,7 @@ internal sealed class SyntaxListBuilder
         if (item.Kind != SyntaxKind.List)
         {
             this.EnsureAdditionalCapacity(1);
-            this.nodes[this.Count++].Value = item;
+            _nodes[this.Count++]._value = item;
             return this;
         }
 
@@ -137,14 +137,14 @@ internal sealed class SyntaxListBuilder
     public void RemoveLast()
     {
         this.Count--;
-        this.nodes[this.Count].Value = null;
+        _nodes[this.Count]._value = null;
     }
 
     public bool Any(SyntaxKind kind)
     {
         for (var i = 0; i < this.Count; i++)
         {
-            if (this.nodes[i].Value!.Kind == kind)
+            if (_nodes[i]._value!.Kind == kind)
             {
                 return true;
             }
@@ -158,7 +158,7 @@ internal sealed class SyntaxListBuilder
         var array = new GreenNode[this.Count];
         for (var i = 0; i < this.Count; i++)
         {
-            array[i] = this.nodes[i].Value!;
+            array[i] = _nodes[i]._value!;
         }
 
         return array;
@@ -182,14 +182,14 @@ internal sealed class SyntaxListBuilder
             case 0:
                 return null;
             case 1:
-                return this.nodes[0].Value;
+                return _nodes[0]._value;
             case 2:
-                return SyntaxFactory.List(this.nodes[0].Value!, this.nodes[1].Value!);
+                return SyntaxFactory.List(_nodes[0]._value!, _nodes[1]._value!);
             case 3:
-                return SyntaxFactory.List(this.nodes[0].Value!, this.nodes[1].Value!, this.nodes[2].Value!);
+                return SyntaxFactory.List(_nodes[0]._value!, _nodes[1]._value!, _nodes[2]._value!);
             default:
                 var tmp = new ArrayElement<GreenNode>[this.Count];
-                Array.Copy(this.nodes, tmp, this.Count);
+                Array.Copy(_nodes, tmp, this.Count);
                 return SyntaxFactory.List(tmp);
         }
     }
@@ -208,7 +208,7 @@ internal sealed class SyntaxListBuilder
 
     private void EnsureAdditionalCapacity(int additionalCount)
     {
-        var currentSize = this.nodes.Length;
+        var currentSize = _nodes.Length;
         var requiredSize = this.Count + additionalCount;
 
         if (requiredSize <= currentSize)
@@ -218,7 +218,7 @@ internal sealed class SyntaxListBuilder
 
         var newSize = GetNewSize(requiredSize, currentSize);
         Debug.Assert(newSize >= requiredSize, "The new size must be greater than or equal to the required size.");
-        Array.Resize(ref this.nodes, newSize);
+        Array.Resize(ref _nodes, newSize);
     }
 
     [Conditional("DEBUG")]
@@ -226,7 +226,7 @@ internal sealed class SyntaxListBuilder
     {
         for (var i = start; i < end; i++)
         {
-            Debug.Assert(this.nodes[i].Value != null, "The node must not be null.");
+            Debug.Assert(_nodes[i]._value != null, "The node must not be null.");
         }
     }
 }

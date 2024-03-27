@@ -14,12 +14,12 @@ using Primitives;
 
 public sealed class PageObject : PdfDictionary<IPdfObject>, IPageObject
 {
-    private static readonly PdfName TypeName = "Type";
-    private static readonly PdfName PageName = "Page";
-    private static readonly PdfName ParentName = "Parent";
-    private static readonly PdfName ResourcesName = "Resources";
-    private static readonly PdfName MediaBoxName = "MediaBox";
-    private static readonly PdfName ContentsName = "Contents";
+    private static readonly PdfName s_typeName = "Type";
+    private static readonly PdfName s_pageName = "Page";
+    private static readonly PdfName s_parentName = "Parent";
+    private static readonly PdfName s_resourcesName = "Resources";
+    private static readonly PdfName s_mediaBoxName = "MediaBox";
+    private static readonly PdfName s_contentsName = "Contents";
 
     public PageObject(Action<PageObjectOptions> optionsFunc)
         : this(GetPageObjectOptions(optionsFunc))
@@ -61,11 +61,11 @@ public sealed class PageObject : PdfDictionary<IPdfObject>, IPageObject
         options.NotNull(x => x.MediaBox);
 
         var documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(5)
-            .WithKeyValue(TypeName, PageName)
-            .WithKeyValue(ParentName, options.Parent)
-            .WithKeyValue(ResourcesName, options.Resources)
-            .WithKeyValue(MediaBoxName, options.MediaBox)
-            .WithKeyValue(ContentsName, options.Contents?.PdfObject);
+            .WithKeyValue(s_typeName, s_pageName)
+            .WithKeyValue(s_parentName, options.Parent)
+            .WithKeyValue(s_resourcesName, options.Resources)
+            .WithKeyValue(s_mediaBoxName, options.MediaBox)
+            .WithKeyValue(s_contentsName, options.Contents?.PdfObject);
 
         return new ReadOnlyDictionary<PdfName, IPdfObject>(documentCatalogDictionary);
     }

@@ -10,30 +10,30 @@ using Common;
 using Extensions;
 using Properties;
 
-public sealed class XRefSubSection : PdfObject, IXRefSubSection
+public sealed class XRefSubSection : PdfObject, IxRefSubSection
 {
-    private readonly Lazy<string> literalValue;
-    private readonly Lazy<byte[]> bytes;
+    private readonly Lazy<string> _literalValue;
+    private readonly Lazy<byte[]> _bytes;
 
-    public XRefSubSection(int objectNumber, ICollection<IXRefEntry> xRefEntries)
+    public XRefSubSection(int objectNumber, ICollection<IxRefEntry> xRefEntries)
     {
         this.ObjectNumber = objectNumber.CheckConstraints(num => num >= 0, Resource.PdfIndirect_ObjectNumberMustBePositive);
         this.Value = xRefEntries.CheckConstraints(entry => entry.Count > 0, Resource.XRefSubSection_MustHaveNonEmptyEntriesCollection);
-        this.literalValue = new Lazy<string>(this.GenerateContent);
-        this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
+        _literalValue = new Lazy<string>(this.GenerateContent);
+        _bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
     }
 
     /// <inheritdoc/>
     public int ObjectNumber { get; }
 
     /// <inheritdoc/>
-    public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
+    public override ReadOnlyMemory<byte> Bytes => _bytes.Value;
 
     /// <inheritdoc/>
-    public ICollection<IXRefEntry> Value { get; }
+    public ICollection<IxRefEntry> Value { get; }
 
     /// <inheritdoc/>
-    public override string Content => this.literalValue.Value;
+    public override string Content => _literalValue.Value;
 
     /// <inheritdoc/>
     protected override IEnumerable<object> GetEqualityComponents()

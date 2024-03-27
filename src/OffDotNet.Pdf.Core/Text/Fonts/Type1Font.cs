@@ -12,12 +12,12 @@ using Primitives;
 
 public sealed class Type1Font : PdfDictionary<IPdfObject>, IType1Font
 {
-    private static readonly PdfName TypeName = "Type";
-    private static readonly PdfName FontValueName = "Font";
-    private static readonly PdfName SubtypeName = "Subtype";
-    private static readonly PdfName Type1Name = "Type1";
-    private static readonly PdfName FontPdfName = "Name";
-    private static readonly PdfName BaseFontName = "BaseFont";
+    private static readonly PdfName s_typeName = "Type";
+    private static readonly PdfName s_fontValueName = "Font";
+    private static readonly PdfName s_subtypeName = "Subtype";
+    private static readonly PdfName s_type1Name = "Type1";
+    private static readonly PdfName s_fontPdfName = "Name";
+    private static readonly PdfName s_baseFontName = "BaseFont";
 
     public Type1Font(Action<Type1FontOptions> optionsFunc)
         : this(GetType1FontOptions(optionsFunc))
@@ -48,10 +48,10 @@ public sealed class Type1Font : PdfDictionary<IPdfObject>, IType1Font
     private static IReadOnlyDictionary<PdfName, IPdfObject> GenerateDictionary(Type1FontOptions options)
     {
         var documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(4)
-            .WithKeyValue(TypeName, FontValueName)
-            .WithKeyValue(SubtypeName, Type1Name)
-            .WithKeyValue(FontPdfName, options.FontName)
-            .WithKeyValue(BaseFontName, options.BaseFont);
+            .WithKeyValue(s_typeName, s_fontValueName)
+            .WithKeyValue(s_subtypeName, s_type1Name)
+            .WithKeyValue(s_fontPdfName, options.FontName)
+            .WithKeyValue(s_baseFontName, options.BaseFont);
 
         return new ReadOnlyDictionary<PdfName, IPdfObject>(documentCatalogDictionary);
     }

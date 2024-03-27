@@ -20,7 +20,7 @@ public class XRefEntryTests
         // Arrange
 
         // Act
-        IXRefEntry XRefEntryFunction()
+        IxRefEntry XRefEntryFunction()
         {
             return new XRefEntry(byteOffset, 0, XRefEntryType.InUse);
         }
@@ -40,7 +40,7 @@ public class XRefEntryTests
         // Arrange
 
         // Act
-        IXRefEntry XRefEntryFunction()
+        IxRefEntry XRefEntryFunction()
         {
             return new XRefEntry(byteOffset, 0, XRefEntryType.InUse);
         }
@@ -59,7 +59,7 @@ public class XRefEntryTests
         // Arrange
 
         // Act
-        IXRefEntry XRefEntryFunction()
+        IxRefEntry XRefEntryFunction()
         {
             return new XRefEntry(0, generationNumber, XRefEntryType.InUse);
         }
@@ -78,7 +78,7 @@ public class XRefEntryTests
         // Arrange
 
         // Act
-        IXRefEntry XRefEntryFunction()
+        IxRefEntry XRefEntryFunction()
         {
             return new XRefEntry(0, generationNumber, XRefEntryType.InUse);
         }
@@ -96,10 +96,10 @@ public class XRefEntryTests
     public void XRefEntry_Content_ShouldReturnValidValue(long byteOffset, int generationNumber, bool isInUse, string expectedContent)
     {
         // Arrange
-        IXRefEntry xRefEntry = new XRefEntry(byteOffset, generationNumber, isInUse ? XRefEntryType.InUse : XRefEntryType.Free);
+        IxRefEntry xRefEntry = new XRefEntry(byteOffset, generationNumber, isInUse ? XRefEntryType.InUse : XRefEntryType.Free);
 
         // Act
-        string actualContent = xRefEntry.Content;
+        var actualContent = xRefEntry.Content;
 
         // Assert
         Assert.Equal(expectedContent, actualContent);
@@ -113,10 +113,10 @@ public class XRefEntryTests
     public void XRefEntry_ByteOffset_ShouldReturnValidValue(long byteOffset, int generationNumber, bool isInUse)
     {
         // Arrange
-        IXRefEntry xRefEntry = new XRefEntry(byteOffset, generationNumber, isInUse ? XRefEntryType.InUse : XRefEntryType.Free);
+        IxRefEntry xRefEntry = new XRefEntry(byteOffset, generationNumber, isInUse ? XRefEntryType.InUse : XRefEntryType.Free);
 
         // Act
-        long actualByteOffset = xRefEntry.ByteOffset;
+        var actualByteOffset = xRefEntry.ByteOffset;
 
         // Assert
         Assert.Equal(byteOffset, actualByteOffset);
@@ -130,7 +130,7 @@ public class XRefEntryTests
     public void XRefEntry_GenerationNumber_ShouldReturnValidValue(long byteOffset, int generationNumber, bool isInUse)
     {
         // Arrange
-        IXRefEntry xRefEntry = new XRefEntry(byteOffset, generationNumber, isInUse ? XRefEntryType.InUse : XRefEntryType.Free);
+        IxRefEntry xRefEntry = new XRefEntry(byteOffset, generationNumber, isInUse ? XRefEntryType.InUse : XRefEntryType.Free);
 
         // Act
         long actualGenerationNumber = xRefEntry.GenerationNumber;
@@ -147,11 +147,11 @@ public class XRefEntryTests
     public void XRefEntry_EntryType_ShouldReturnValidValue(long byteOffset, int generationNumber, bool isInUse)
     {
         // Arrange
-        XRefEntryType xRefEntryType = isInUse ? XRefEntryType.InUse : XRefEntryType.Free;
-        IXRefEntry xRefEntry = new XRefEntry(byteOffset, generationNumber, xRefEntryType);
+        var xRefEntryType = isInUse ? XRefEntryType.InUse : XRefEntryType.Free;
+        IxRefEntry xRefEntry = new XRefEntry(byteOffset, generationNumber, xRefEntryType);
 
         // Act
-        XRefEntryType actualXRefEntryType = xRefEntry.EntryType;
+        var actualXRefEntryType = xRefEntry.EntryType;
 
         // Assert
         Assert.Equal(xRefEntryType, actualXRefEntryType);
@@ -165,10 +165,10 @@ public class XRefEntryTests
     public void XRefEntry_Bytes_ShouldReturnValidValue(long byteOffset, int generationNumber, bool isInUse, byte[] expectedBytes)
     {
         // Arrange
-        IXRefEntry xRefEntry = new XRefEntry(byteOffset, generationNumber, isInUse ? XRefEntryType.InUse : XRefEntryType.Free);
+        IxRefEntry xRefEntry = new XRefEntry(byteOffset, generationNumber, isInUse ? XRefEntryType.InUse : XRefEntryType.Free);
 
         // Act
-        byte[] actualBytes = xRefEntry.Bytes.ToArray();
+        var actualBytes = xRefEntry.Bytes.ToArray();
 
         // Assert
         Assert.Equal(expectedBytes, actualBytes);
@@ -182,12 +182,12 @@ public class XRefEntryTests
     public void XRefEntry_GetHashCode_CheckValidity(long byteOffset, int generationNumber, bool isInUse)
     {
         // Arrange
-        XRefEntryType xRefEntryType = isInUse ? XRefEntryType.InUse : XRefEntryType.Free;
-        IXRefEntry xRefEntry = new XRefEntry(byteOffset, generationNumber, xRefEntryType);
-        int expectedHashCode = HashCode.Combine(nameof(XRefEntry), byteOffset, generationNumber, xRefEntryType);
+        var xRefEntryType = isInUse ? XRefEntryType.InUse : XRefEntryType.Free;
+        IxRefEntry xRefEntry = new XRefEntry(byteOffset, generationNumber, xRefEntryType);
+        var expectedHashCode = HashCode.Combine(nameof(XRefEntry), byteOffset, generationNumber, xRefEntryType);
 
         // Act
-        int actualHashCode = xRefEntry.GetHashCode();
+        var actualHashCode = xRefEntry.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
@@ -197,11 +197,11 @@ public class XRefEntryTests
     public void XRefEntry_Content_MultipleAccesses_ShouldReturnSameReference()
     {
         // Arrange
-        IXRefEntry xRefEntry = new XRefEntry(0, 0, XRefEntryType.InUse);
+        IxRefEntry xRefEntry = new XRefEntry(0, 0, XRefEntryType.InUse);
 
         // Act
-        string actualContent1 = xRefEntry.Content;
-        string actualContent2 = xRefEntry.Content;
+        var actualContent1 = xRefEntry.Content;
+        var actualContent2 = xRefEntry.Content;
 
         // Assert
         Assert.True(ReferenceEquals(actualContent1, actualContent2));
@@ -216,13 +216,13 @@ public class XRefEntryTests
     public void XRefEntry_Equals_CheckValidity(long byteOffset1, long byteOffset2, int generationNumber1, int generationNumber2, bool isInUse1, bool isInUse2, bool expectedValue)
     {
         // Arrange
-        XRefEntryType xRefEntryType1 = isInUse1 ? XRefEntryType.InUse : XRefEntryType.Free;
-        XRefEntryType xRefEntryType2 = isInUse2 ? XRefEntryType.InUse : XRefEntryType.Free;
-        IXRefEntry xRefEntry1 = new XRefEntry(byteOffset1, generationNumber1, xRefEntryType1);
-        IXRefEntry xRefEntry2 = new XRefEntry(byteOffset2, generationNumber2, xRefEntryType2);
+        var xRefEntryType1 = isInUse1 ? XRefEntryType.InUse : XRefEntryType.Free;
+        var xRefEntryType2 = isInUse2 ? XRefEntryType.InUse : XRefEntryType.Free;
+        IxRefEntry xRefEntry1 = new XRefEntry(byteOffset1, generationNumber1, xRefEntryType1);
+        IxRefEntry xRefEntry2 = new XRefEntry(byteOffset2, generationNumber2, xRefEntryType2);
 
         // Act
-        bool actualResult = xRefEntry1.Equals(xRefEntry2);
+        var actualResult = xRefEntry1.Equals(xRefEntry2);
 
         // Assert
         Assert.Equal(expectedValue, actualResult);
@@ -232,13 +232,13 @@ public class XRefEntryTests
     public void XRefEntry_EqualsNullObject_CheckValidity()
     {
         // Arrange
-        IXRefEntry xRefEntry = new XRefEntry(0, 0, XRefEntryType.InUse);
+        IxRefEntry xRefEntry = new XRefEntry(0, 0, XRefEntryType.InUse);
 
         // Act
-        bool actualResult1 = xRefEntry.Equals(null);
+        var actualResult1 = xRefEntry.Equals(null);
 
         Debug.Assert(xRefEntry != null, nameof(xRefEntry) + " != null");
-        bool actualResult2 = xRefEntry.Equals(null);
+        var actualResult2 = xRefEntry.Equals(null);
 
         // Assert
         Assert.False(actualResult1);

@@ -33,7 +33,7 @@ public class PdfIntegerTests
         PdfInteger pdfInteger = value; // Use an implicit conversion from int to PdfInteger
 
         // Act
-        int expectedValue = pdfInteger.Value;
+        var expectedValue = pdfInteger.Value;
 
         // Assert
         Assert.Equal(expectedValue, pdfInteger.Value);
@@ -46,7 +46,7 @@ public class PdfIntegerTests
         PdfInteger pdfInteger1 = -98; // Use an implicit conversion from int to PdfInteger
 
         // Act
-        bool actualResult = pdfInteger1.Equals(null);
+        var actualResult = pdfInteger1.Equals(null);
 
         // Assert
         Assert.False(actualResult);
@@ -68,7 +68,7 @@ public class PdfIntegerTests
         PdfInteger pdfInteger2 = value2; // Use an implicit conversion from int to PdfInteger
 
         // Act
-        bool actualResult = pdfInteger1.Equals((object)pdfInteger2);
+        var actualResult = pdfInteger1.Equals((object)pdfInteger2);
 
         // Assert
         Assert.Equal(expectedResult, actualResult);
@@ -86,7 +86,7 @@ public class PdfIntegerTests
         PdfInteger pdfInteger1 = value1; // Use an implicit conversion from int to PdfInteger
 
         // Act
-        ReadOnlyMemory<byte> actualBytes = pdfInteger1.Bytes;
+        var actualBytes = pdfInteger1.Bytes;
 
         // Assert
         Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
@@ -102,10 +102,10 @@ public class PdfIntegerTests
     {
         // Arrange
         PdfInteger pdfInteger1 = value1; // Use an implicit conversion from int to PdfInteger
-        int expectedHashCode = HashCode.Combine(nameof(PdfInteger), value1);
+        var expectedHashCode = HashCode.Combine(nameof(PdfInteger), value1);
 
         // Act
-        int actualHashCode = pdfInteger1.GetHashCode();
+        var actualHashCode = pdfInteger1.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
@@ -129,7 +129,7 @@ public class PdfIntegerTests
         // Act
         int actualHashCode1 = pdfInteger1;
         int actualHashCode2 = pdfInteger2;
-        bool areHashCodeEquals = actualHashCode1 == actualHashCode2;
+        var areHashCodeEquals = actualHashCode1 == actualHashCode2;
 
         // Assert
         Assert.Equal(expectedResult, areHashCodeEquals);
@@ -151,12 +151,12 @@ public class PdfIntegerTests
         PdfInteger pdfInteger2 = value2; // Use an implicit conversion from int to PdfInteger
 
         // Act
-        bool actualEqual = pdfInteger1 == pdfInteger2;
-        bool actualNotEqual = pdfInteger1 != pdfInteger2;
-        bool actualGreaterOrEqualThan = pdfInteger1 >= pdfInteger2;
-        bool actualGreaterThan = pdfInteger1 > pdfInteger2;
-        bool actualLessOrEqualThan = pdfInteger1 <= pdfInteger2;
-        bool actualLessThan = pdfInteger1 < pdfInteger2;
+        var actualEqual = pdfInteger1 == pdfInteger2;
+        var actualNotEqual = pdfInteger1 != pdfInteger2;
+        var actualGreaterOrEqualThan = pdfInteger1 >= pdfInteger2;
+        var actualGreaterThan = pdfInteger1 > pdfInteger2;
+        var actualLessOrEqualThan = pdfInteger1 <= pdfInteger2;
+        var actualLessThan = pdfInteger1 < pdfInteger2;
 
         // Assert
         Assert.Equal(actualEqual, expectedEq);
@@ -180,7 +180,7 @@ public class PdfIntegerTests
 
         // Act
         int actualValue = pdfInteger1; // Use an implicit conversion from PdfInteger to int
-        int expectedValue = pdfInteger1.Value;
+        var expectedValue = pdfInteger1.Value;
 
         // Assert
         Assert.Equal(expectedValue, actualValue);
@@ -202,7 +202,7 @@ public class PdfIntegerTests
         object pdfInteger2 = new PdfInteger(value2);
 
         // Act
-        int actualValue = pdfInteger1.CompareTo(pdfInteger2);
+        var actualValue = pdfInteger1.CompareTo(pdfInteger2);
 
         // Assert
         Assert.Equal(expectedValue, actualValue);
@@ -235,7 +235,7 @@ public class PdfIntegerTests
         PdfInteger pdfInteger1 = value1; // Use an implicit conversion from int to PdfInteger
 
         // Act
-        string actualPdfIntegerStringValue = pdfInteger1.Content;
+        var actualPdfIntegerStringValue = pdfInteger1.Content;
 
         // Assert
         Assert.Equal(expectedPdfIntegerStringValue, actualPdfIntegerStringValue);

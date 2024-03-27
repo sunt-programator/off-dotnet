@@ -37,15 +37,15 @@ public class TextObjectTests
         IPdfOperation fontOperation = new FontOperation("F4", 13);
         IPdfOperation moveTextOperation = new MoveTextOperation(2, 72);
         IPdfOperation showTextOperation = new ShowTextOperation("A text with special chars !@#$%^&*()");
-        const string expectedContent = "BT\n/F4 13 Tf\n2 72 Td\n(A text with special chars !@#$%^&*()) Tj\nET\n";
+        const string ExpectedContent = "BT\n/F4 13 Tf\n2 72 Td\n(A text with special chars !@#$%^&*()) Tj\nET\n";
 
         ITextObject textObject = new TextObject(new[] { fontOperation, moveTextOperation, showTextOperation });
 
         // Act
-        string actualContent = textObject.Content;
+        var actualContent = textObject.Content;
 
         // Assert
-        Assert.Equal(expectedContent, actualContent);
+        Assert.Equal(ExpectedContent, actualContent);
     }
 
     [Fact(DisplayName = $"The {nameof(TextObject.Bytes)} property should return a valid value")]
@@ -129,7 +129,7 @@ public class TextObjectTests
         ITextObject textObject = new TextObject(new[] { fontOperation, moveTextOperation, showTextOperation });
 
         // Act
-        byte[] actualBytes = textObject.Bytes.ToArray();
+        var actualBytes = textObject.Bytes.ToArray();
 
         // Assert
         Assert.Equal(expectedBytes, actualBytes);
@@ -145,10 +145,10 @@ public class TextObjectTests
 
         ITextObject textObject = new TextObject(new[] { fontOperation, moveTextOperation, showTextOperation });
 
-        int expectedHashCode = HashCode.Combine(nameof(TextObject), textObject.Value);
+        var expectedHashCode = HashCode.Combine(nameof(TextObject), textObject.Value);
 
         // Act
-        int actualHashCode = textObject.GetHashCode();
+        var actualHashCode = textObject.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
@@ -166,7 +166,7 @@ public class TextObjectTests
         ITextObject textObject2 = new TextObject(pdfOperations);
 
         // Act
-        bool actualResult = textObject1.Equals(textObject2);
+        var actualResult = textObject1.Equals(textObject2);
 
         // Assert
         Assert.True(actualResult);
@@ -180,7 +180,7 @@ public class TextObjectTests
         ITextObject textObject2 = new TextObject(new IPdfOperation[] { new FontOperation("F4", 13), new MoveTextOperation(2, 72), new ShowTextOperation("A text with special chars !@#$%^&*()") });
 
         // Act
-        bool actualResult = textObject1.Equals(textObject2);
+        var actualResult = textObject1.Equals(textObject2);
 
         // Assert
         Assert.False(actualResult);

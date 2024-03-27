@@ -8,8 +8,6 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxTests;
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
-using SyntaxToken = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxToken;
-using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxTrivia;
 
 public class LiteralExpressionSyntaxTests
 {
@@ -17,11 +15,11 @@ public class LiteralExpressionSyntaxTests
     public void KeywordProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        SyntaxToken keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
+        var keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
+        var literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
 
         // Act
-        SyntaxToken actualToken = literalExpression.Token;
+        var actualToken = literalExpression.Token;
 
         // Assert
         Assert.Equal(keyword, actualToken);
@@ -31,11 +29,11 @@ public class LiteralExpressionSyntaxTests
     public void SlotCountProperty_MustBeEqualTo1()
     {
         // Arrange
-        SyntaxToken keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
+        var keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
+        var literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
 
         // Act
-        int actualSlotCount = literalExpression.SlotCount;
+        var actualSlotCount = literalExpression.SlotCount;
 
         // Assert
         Assert.Equal(1, actualSlotCount);
@@ -45,11 +43,11 @@ public class LiteralExpressionSyntaxTests
     public void GetSlotMethod_Index0_MustReturnKeywordProperty()
     {
         // Arrange
-        SyntaxToken keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
+        var keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
+        var literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
 
         // Act
-        GreenNode? actualSlot = literalExpression.GetSlot(0);
+        var actualSlot = literalExpression.GetSlot(0);
 
         // Assert
         Assert.Equal(keyword, actualSlot);
@@ -59,11 +57,11 @@ public class LiteralExpressionSyntaxTests
     public void GetSlotMethod_Index1_MustReturnNull()
     {
         // Arrange
-        SyntaxToken keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
+        var keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
+        var literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
 
         // Act
-        GreenNode? actualSlot = literalExpression.GetSlot(1);
+        var actualSlot = literalExpression.GetSlot(1);
 
         // Assert
         Assert.Null(actualSlot);
@@ -73,45 +71,45 @@ public class LiteralExpressionSyntaxTests
     public void ToStringMethod_MustNotIncludeTrivia()
     {
         // Arrange
-        const string expectedString = "true";
-        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        SyntaxToken keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia);
-        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
+        const string ExpectedString = "true";
+        var trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        var keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia);
+        var literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
 
         // Act
-        string actualString = literalExpression.ToString();
+        var actualString = literalExpression.ToString();
 
         // Assert
-        Assert.Equal(expectedString, actualString);
+        Assert.Equal(ExpectedString, actualString);
     }
 
     [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
     public void ToFullStringMethod_MustIncludeTrivia()
     {
         // Arrange
-        const string expectedString = " true ";
-        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
-        SyntaxToken keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia);
-        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
+        const string ExpectedString = " true ";
+        var trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        var keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia);
+        var literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
 
         // Act
-        string actualString = literalExpression.ToFullString();
+        var actualString = literalExpression.ToFullString();
 
         // Assert
-        Assert.Equal(expectedString, actualString);
+        Assert.Equal(ExpectedString, actualString);
     }
 
     [Fact(DisplayName = "The SetDiagnostics() method must set the diagnostics and return a new instance.")]
     public void SetDiagnosticsMethod_MustSetDiagnosticsAndReturnNewInstance()
     {
         // Arrange
-        SyntaxToken keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
+        var keyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
+        var literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
         DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
         // Act
-        LiteralExpressionSyntax actualNode = (LiteralExpressionSyntax)literalExpression.SetDiagnostics(diagnostics);
+        var actualNode = (LiteralExpressionSyntax)literalExpression.SetDiagnostics(diagnostics);
 
         // Assert
         Assert.NotSame(literalExpression, actualNode);

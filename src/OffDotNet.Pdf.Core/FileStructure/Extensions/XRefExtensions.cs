@@ -7,62 +7,62 @@ namespace OffDotNet.Pdf.Core.FileStructure;
 
 public static class XRefExtensions
 {
-    public static IXRefSubSection ToXRefSubSection(this IXRefEntry entry, int objectNumber)
+    public static IxRefSubSection ToXRefSubSection(this IxRefEntry entry, int objectNumber)
     {
-        return new XRefSubSection(objectNumber, new List<IXRefEntry>(1) { entry });
+        return new XRefSubSection(objectNumber, new List<IxRefEntry>(1) { entry });
     }
 
-    public static IXRefSubSection ToXRefSubSection(this ICollection<IXRefEntry> entries, int objectNumber)
+    public static IxRefSubSection ToXRefSubSection(this ICollection<IxRefEntry> entries, int objectNumber)
     {
         return new XRefSubSection(objectNumber, entries);
     }
 
-    public static IXRefSection ToXRefSection(this IXRefSubSection subSection)
+    public static IxRefSection ToXRefSection(this IxRefSubSection subSection)
     {
-        return new XRefSection(new List<IXRefSubSection>(1) { subSection });
+        return new XRefSection(new List<IxRefSubSection>(1) { subSection });
     }
 
-    public static IXRefSection ToXRefSection(this ICollection<IXRefSubSection> subSections)
+    public static IxRefSection ToXRefSection(this ICollection<IxRefSubSection> subSections)
     {
         return new XRefSection(subSections);
     }
 
-    public static IXRefSection ToXRefSection(this IXRefEntry entry, int objectNumber)
+    public static IxRefSection ToXRefSection(this IxRefEntry entry, int objectNumber)
     {
         return entry.ToXRefSubSection(objectNumber).ToXRefSection();
     }
 
-    public static IXRefSection ToXRefSection(this ICollection<IXRefEntry> entries, int objectNumber)
+    public static IxRefSection ToXRefSection(this ICollection<IxRefEntry> entries, int objectNumber)
     {
         return entries.ToXRefSubSection(objectNumber).ToXRefSection();
     }
 
-    public static IXRefTable ToXRefTable(this IXRefSection section)
+    public static IxRefTable ToXRefTable(this IxRefSection section)
     {
-        return new XRefTable(new List<IXRefSection>(1) { section });
+        return new XRefTable(new List<IxRefSection>(1) { section });
     }
 
-    public static IXRefTable ToXRefTable(this ICollection<IXRefSection> sections)
+    public static IxRefTable ToXRefTable(this ICollection<IxRefSection> sections)
     {
         return new XRefTable(sections);
     }
 
-    public static IXRefTable ToXRefTable(this IXRefSubSection subSection)
+    public static IxRefTable ToXRefTable(this IxRefSubSection subSection)
     {
         return subSection.ToXRefSection().ToXRefTable();
     }
 
-    public static IXRefTable ToXRefTable(this ICollection<IXRefSubSection> subSections)
+    public static IxRefTable ToXRefTable(this ICollection<IxRefSubSection> subSections)
     {
         return subSections.ToXRefSection().ToXRefTable();
     }
 
-    public static IXRefTable ToXRefTable(this IXRefEntry entry, int objectNumber)
+    public static IxRefTable ToXRefTable(this IxRefEntry entry, int objectNumber)
     {
         return entry.ToXRefSubSection(objectNumber).ToXRefSection().ToXRefTable();
     }
 
-    public static IXRefTable ToXRefTable(this ICollection<IXRefEntry> entries, int objectNumber)
+    public static IxRefTable ToXRefTable(this ICollection<IxRefEntry> entries, int objectNumber)
     {
         return entries.ToXRefSubSection(objectNumber).ToXRefSection().ToXRefTable();
     }

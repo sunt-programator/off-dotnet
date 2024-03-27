@@ -12,11 +12,11 @@ internal readonly struct SyntaxListBuilder<TNode>
     where TNode : GreenNode
 {
     private const int DefaultCapacity = 8;
-    private readonly SyntaxListBuilder builder;
+    private readonly SyntaxListBuilder _builder;
 
     internal SyntaxListBuilder(SyntaxListBuilder builder)
     {
-        this.builder = builder;
+        _builder = builder;
     }
 
     internal SyntaxListBuilder(int size)
@@ -24,15 +24,15 @@ internal readonly struct SyntaxListBuilder<TNode>
     {
     }
 
-    public bool IsNull => this.builder == null;
+    public bool IsNull => _builder == null;
 
-    public int Count => this.builder.Count;
+    public int Count => _builder.Count;
 
     public TNode this[int index]
     {
         get
         {
-            var result = this.builder[index];
+            var result = _builder[index];
             Debug.Assert(result != null, "We only allow assigning non-null nodes into us, and .Add filters null out. So we should never get null here.");
             return (TNode)result;
         }
@@ -40,13 +40,13 @@ internal readonly struct SyntaxListBuilder<TNode>
 
     public static implicit operator SyntaxListBuilder(SyntaxListBuilder<TNode> builder)
     {
-        return builder.builder;
+        return builder._builder;
     }
 
     [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract", Justification = "Can be null when using default operator")]
     public static implicit operator SyntaxList<TNode>(SyntaxListBuilder<TNode> builder)
     {
-        return builder.builder != null ? builder.ToList() : default;
+        return builder._builder != null ? builder.ToList() : default;
     }
 
     public static SyntaxListBuilder<TNode> Create()
@@ -56,37 +56,37 @@ internal readonly struct SyntaxListBuilder<TNode>
 
     public void Add(TNode? item)
     {
-        this.builder.Add(item);
+        _builder.Add(item);
     }
 
     [SuppressMessage("ReSharper", "CoVariantArrayConversion", Justification = "The array is covariant.")]
     public void AddRange(TNode[] items, int offset, int length)
     {
-        this.builder.AddRange(items, offset, length);
+        _builder.AddRange(items, offset, length);
     }
 
     public void AddRange(SyntaxList<TNode> nodes)
     {
-        this.builder.AddRange(nodes);
+        _builder.AddRange(nodes);
     }
 
     public void Clear()
     {
-        this.builder.Clear();
+        _builder.Clear();
     }
 
     public bool Any(SyntaxKind kind)
     {
-        return this.builder.Any(kind);
+        return _builder.Any(kind);
     }
 
     public GreenNode? ToListNode()
     {
-        return this.builder.ToListNode();
+        return _builder.ToListNode();
     }
 
     public SyntaxList<TNode> ToList()
     {
-        return this.builder.ToList<TNode>();
+        return _builder.ToList<TNode>();
     }
 }

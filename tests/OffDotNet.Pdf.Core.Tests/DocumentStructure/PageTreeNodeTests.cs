@@ -38,7 +38,7 @@ public class PageTreeNodeTests
 
         var kids = new List<IPdfIndirectIdentifier<IPageObject>>();
 
-        foreach (string kidRefContent in kidsRefContent)
+        foreach (var kidRefContent in kidsRefContent)
         {
             var kidContent = Substitute.For<IPdfIndirectIdentifier<IPageObject>>();
             kidContent.Content.Returns(kidRefContent);
@@ -60,8 +60,8 @@ public class PageTreeNodeTests
         }); // Options as a delegate
 
         // Act
-        string actualContent1 = pageObject1.Content;
-        string actualContent2 = pageObject2.Content;
+        var actualContent1 = pageObject1.Content;
+        var actualContent2 = pageObject2.Content;
 
         // Assert
         Assert.Equal(expectedContent, actualContent1);

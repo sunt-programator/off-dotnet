@@ -13,10 +13,10 @@ public class PdfNullTests
     public void PdfNull_Equals_NullArgument_ShouldReturnFalse()
     {
         // Arrange
-        PdfNull pdfNull1 = default(PdfNull);
+        var pdfNull1 = default(PdfNull);
 
         // Act
-        bool actualResult = pdfNull1.Equals(null);
+        var actualResult = pdfNull1.Equals(null);
 
         // Assert
         Assert.False(actualResult);
@@ -26,12 +26,12 @@ public class PdfNullTests
     public void PdfNull_Equality_CheckEquals()
     {
         // Arrange
-        PdfNull pdfNull1 = default(PdfNull);
-        PdfNull pdfNull2 = default(PdfNull);
+        var pdfNull1 = default(PdfNull);
+        var pdfNull2 = default(PdfNull);
 
         // Act
         // ReSharper disable once RedundantCast
-        bool actualResult = pdfNull1.Equals(pdfNull2);
+        var actualResult = pdfNull1.Equals(pdfNull2);
 
         // Assert
         Assert.True(actualResult);
@@ -42,10 +42,10 @@ public class PdfNullTests
     {
         // Arrange
         byte[] expectedBytes = [110, 117, 108, 108];
-        PdfNull pdfNull1 = default(PdfNull);
+        var pdfNull1 = default(PdfNull);
 
         // Act
-        ReadOnlyMemory<byte> actualBytes = pdfNull1.Bytes;
+        var actualBytes = pdfNull1.Bytes;
 
         // Assert
         Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
@@ -55,7 +55,7 @@ public class PdfNullTests
     public void PdfNull_GetHashCode_CheckValidity()
     {
         // Arrange
-        PdfNull pdfNull1 = default(PdfNull);
+        var pdfNull1 = default(PdfNull);
         float expectedHashCode = HashCode.Combine(nameof(PdfNull), "null");
 
         // Act
@@ -69,13 +69,13 @@ public class PdfNullTests
     public void PdfNull_GetHashCode_CompareHashes()
     {
         // Arrange
-        PdfNull pdfNull1 = default(PdfNull);
-        PdfNull pdfNull2 = default(PdfNull);
+        var pdfNull1 = default(PdfNull);
+        var pdfNull2 = default(PdfNull);
 
         // Act
-        int actualHashCode1 = pdfNull1.GetHashCode();
-        int actualHashCode2 = pdfNull2.GetHashCode();
-        bool areHashCodeEquals = actualHashCode1 == actualHashCode2;
+        var actualHashCode1 = pdfNull1.GetHashCode();
+        var actualHashCode2 = pdfNull2.GetHashCode();
+        var areHashCodeEquals = actualHashCode1 == actualHashCode2;
 
         // Assert
         Assert.True(areHashCodeEquals);
@@ -85,13 +85,13 @@ public class PdfNullTests
     public void PdfNull_Content_CheckEquality()
     {
         // Arrange
-        PdfNull pdfNull1 = default(PdfNull);
-        const string expectedStringValue = "null";
+        var pdfNull1 = default(PdfNull);
+        const string ExpectedStringValue = "null";
 
         // Act
-        string actualPdfNullStringValue = pdfNull1.Content;
+        var actualPdfNullStringValue = pdfNull1.Content;
 
         // Assert
-        Assert.Equal(expectedStringValue, actualPdfNullStringValue);
+        Assert.Equal(ExpectedStringValue, actualPdfNullStringValue);
     }
 }

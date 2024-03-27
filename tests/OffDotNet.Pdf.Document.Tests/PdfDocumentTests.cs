@@ -19,7 +19,7 @@ public class PdfDocumentTests
     public async Task PdfDocument_ConstructorWithoutArguments_ShouldGenerateValidOutputStream()
     {
         // Arrange
-        const string expectedContent =
+        const string ExpectedContent =
             "%PDF-1.7\n" +
             "1 0 obj\n<</Type /Catalog /Pages 2 0 R>>\nendobj\n" +
             "2 0 obj\n<</Type /Pages /Kids [3 0 R] /Count 1>>\nendobj\n" +
@@ -30,7 +30,7 @@ public class PdfDocumentTests
             "trailer\n<</Size 5 /Root 1 0 R>>\n" +
             "startxref\n453\n%%EOF";
 
-        byte[] expectedBytes = Encoding.ASCII.GetBytes(expectedContent);
+        var expectedBytes = Encoding.ASCII.GetBytes(ExpectedContent);
         MemoryStream stream = new();
         PdfDocument pdfDocument = new(stream, _ => { });
 
@@ -168,7 +168,7 @@ public class PdfDocumentTests
     public async Task PdfDocument_ConstructorWithoutArguments_XRefTable_ShouldBePredefined()
     {
         // Arrange
-        IXRefTable expectedXRefTable = new List<IXRefEntry>
+        var expectedXRefTable = new List<IxRefEntry>
         {
             new XRefEntry(0, 65535, XRefEntryType.Free),
             new XRefEntry(9, 0, XRefEntryType.InUse),

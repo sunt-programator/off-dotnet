@@ -12,17 +12,17 @@ internal readonly partial struct SyntaxList<TNode>
 {
     internal struct Enumerator : IEnumerator<TNode>
     {
-        private readonly SyntaxList<TNode> list;
-        private int index;
+        private readonly SyntaxList<TNode> _list;
+        private int _index;
 
         internal Enumerator(SyntaxList<TNode> list)
         {
-            this.list = list;
-            this.index = -1;
+            _list = list;
+            _index = -1;
         }
 
         /// <inheritdoc/>
-        public TNode Current => this.list[this.index]!;
+        public TNode Current => _list[_index]!;
 
         /// <inheritdoc/>
         object IEnumerator.Current => this.Current;
@@ -30,10 +30,10 @@ internal readonly partial struct SyntaxList<TNode>
         /// <inheritdoc/>
         public bool MoveNext()
         {
-            var newIndex = this.index + 1;
-            if (newIndex < this.list.Count)
+            var newIndex = _index + 1;
+            if (newIndex < _list.Count)
             {
-                this.index = newIndex;
+                _index = newIndex;
                 return true;
             }
 
@@ -43,7 +43,7 @@ internal readonly partial struct SyntaxList<TNode>
         /// <inheritdoc/>
         public void Reset()
         {
-            this.index = -1;
+            _index = -1;
         }
 
         /// <inheritdoc/>

@@ -42,8 +42,8 @@ public class ResourceDictionaryTests
         }); // Options as a delegate
 
         // Act
-        string actualContent1 = resourceDictionary1.Content;
-        string actualContent2 = resourceDictionary2.Content;
+        var actualContent1 = resourceDictionary1.Content;
+        var actualContent2 = resourceDictionary2.Content;
 
         // Assert
         Assert.Equal(expectedContent, actualContent1);

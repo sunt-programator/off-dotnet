@@ -6,7 +6,6 @@
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax;
 
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
-using OffDotNet.Pdf.CodeAnalysis.Text;
 using InternalSyntax = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 public class SyntaxTriviaTests
@@ -17,71 +16,71 @@ public class SyntaxTriviaTests
         // Arrange
         SyntaxToken syntaxToken = default;
         InternalSyntax.GreenNode? triviaNode = null;
-        const int position = 0;
-        const int index = 0;
+        const int Position = 0;
+        const int Index = 0;
 
-        SyntaxTrivia token = new(syntaxToken, triviaNode, position, index);
+        SyntaxTrivia token = new(syntaxToken, triviaNode, Position, Index);
 
         // Act
-        SyntaxKind actualKind = token.Kind;
+        var actualKind = token.Kind;
 
         // Assert
         Assert.Equal(SyntaxKind.None, actualKind);
     }
 
-    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.Node)} property must be null as default.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.UnderlyingNode)} property must be null as default.")]
     public void NodeProperty_MustBeNullByDefault()
     {
         // Arrange
         SyntaxToken syntaxToken = default; // TODO: change when implemented
         InternalSyntax.GreenNode? triviaNode = null;
-        const int position = 0;
-        const int index = 0;
+        const int Position = 0;
+        const int Index = 0;
 
-        SyntaxTrivia token = new(syntaxToken, triviaNode, position, index);
+        SyntaxTrivia token = new(syntaxToken, triviaNode, Position, Index);
 
         // Act
-        InternalSyntax.GreenNode? node = token.Node;
+        var node = token.UnderlyingNode;
 
         // Assert
         Assert.Null(node);
     }
 
-    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.Node)} property must be assigned from constructor.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.UnderlyingNode)} property must be assigned from constructor.")]
     public void NodeProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
         SyntaxToken syntaxToken = default;
         InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, "\n");
-        const int position = 0;
-        const int index = 0;
+        const int Position = 0;
+        const int Index = 0;
 
-        SyntaxTrivia token = new(syntaxToken, triviaNode, position, index);
+        SyntaxTrivia token = new(syntaxToken, triviaNode, Position, Index);
 
         // Act
-        InternalSyntax.GreenNode? node = token.Node;
+        var node = token.UnderlyingNode;
 
         // Assert
         Assert.Equal(triviaNode, node);
     }
 
-    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.Kind)} property must be assigned from {nameof(SyntaxTrivia.Node)} property.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.Kind)} property must be assigned from {nameof(SyntaxTrivia.UnderlyingNode)} property.")]
     public void KindProperty_MustBeAssignedFromNodeProperty()
     {
         // Arrange
         SyntaxToken syntaxToken = default;
-        const SyntaxKind expectedSyntaxKind = SyntaxKind.EndOfLineTrivia;
-        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(expectedSyntaxKind, "\n");
-        const int position = 0;
-        const int index = 0;
+        const SyntaxKind ExpectedSyntaxKind = SyntaxKind.EndOfLineTrivia;
+        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(ExpectedSyntaxKind, "\n");
+        const int Position = 0;
+        const int Index = 0;
 
-        SyntaxTrivia token = new(syntaxToken, triviaNode, position, index);
+        SyntaxTrivia token = new(syntaxToken, triviaNode, Position, Index);
 
         // Act
-        SyntaxKind actualSyntaxKind = token.Kind;
+        var actualSyntaxKind = token.Kind;
 
         // Assert
-        Assert.Equal(expectedSyntaxKind, actualSyntaxKind);
+        Assert.Equal(ExpectedSyntaxKind, actualSyntaxKind);
     }
 
     [Fact(DisplayName = $"The {nameof(SyntaxTrivia.Position)} property must be assigned from constructor.")]
@@ -90,16 +89,16 @@ public class SyntaxTriviaTests
         // Arrange
         SyntaxToken syntaxToken = default;
         InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, "\n");
-        const int position = 150;
-        const int index = 0;
+        const int Position = 150;
+        const int Index = 0;
 
-        SyntaxTrivia token = new(syntaxToken, triviaNode, position, index);
+        SyntaxTrivia token = new(syntaxToken, triviaNode, Position, Index);
 
         // Act
-        int actualPosition = token.Position;
+        var actualPosition = token.Position;
 
         // Assert
-        Assert.Equal(position, actualPosition);
+        Assert.Equal(Position, actualPosition);
     }
 
     [Fact(DisplayName = $"The {nameof(SyntaxTrivia.Index)} property must be assigned from constructor.")]
@@ -108,56 +107,56 @@ public class SyntaxTriviaTests
         // Arrange
         SyntaxToken syntaxToken = default;
         InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, "\n");
-        const int position = 0;
-        const int index = 3;
+        const int Position = 0;
+        const int Index = 3;
 
-        SyntaxTrivia token = new(syntaxToken, triviaNode, position, index);
+        SyntaxTrivia token = new(syntaxToken, triviaNode, Position, Index);
 
         // Act
-        int actualIndex = token.Index;
+        var actualIndex = token.Index;
 
         // Assert
-        Assert.Equal(index, actualIndex);
+        Assert.Equal(Index, actualIndex);
     }
 
-    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.Width)} property must be assigned from {nameof(SyntaxTrivia.Node)} property.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.Width)} property must be assigned from {nameof(SyntaxTrivia.UnderlyingNode)} property.")]
     public void WidthProperty_MustBeAssignedFromNodeProperty()
     {
         // Arrange
-        const string triviaText = "\r\n";
-        const int expectedWidth = 2;
-        const int position = 0;
-        const int index = 0;
+        const string TriviaText = "\r\n";
+        const int ExpectedWidth = 2;
+        const int Position = 0;
+        const int Index = 0;
         SyntaxToken syntaxToken = default;
-        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, triviaText);
+        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, TriviaText);
 
-        SyntaxTrivia token = new(syntaxToken, triviaNode, position, index);
+        SyntaxTrivia token = new(syntaxToken, triviaNode, Position, Index);
 
         // Act
-        int actualWidth = token.Width;
+        var actualWidth = token.Width;
 
         // Assert
-        Assert.Equal(expectedWidth, actualWidth);
+        Assert.Equal(ExpectedWidth, actualWidth);
     }
 
-    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.FullWidth)} property must be assigned from {nameof(SyntaxTrivia.Node)} property.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.FullWidth)} property must be assigned from {nameof(SyntaxTrivia.UnderlyingNode)} property.")]
     public void FullWidthProperty_MustBeAssignedFromNodeProperty()
     {
         // Arrange
-        const string triviaText = "\r\n";
-        const int expectedFullWidth = 2;
-        const int position = 0;
-        const int index = 0;
+        const string TriviaText = "\r\n";
+        const int ExpectedFullWidth = 2;
+        const int Position = 0;
+        const int Index = 0;
         SyntaxToken syntaxToken = default;
-        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, triviaText);
+        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, TriviaText);
 
-        SyntaxTrivia token = new(syntaxToken, triviaNode, position, index);
+        SyntaxTrivia token = new(syntaxToken, triviaNode, Position, Index);
 
         // Act
-        int actualFullWidth = token.FullWidth;
+        var actualFullWidth = token.FullWidth;
 
         // Assert
-        Assert.Equal(expectedFullWidth, actualFullWidth);
+        Assert.Equal(ExpectedFullWidth, actualFullWidth);
     }
 
     [Fact(DisplayName = $"The {nameof(SyntaxTrivia.SyntaxToken)} property must be assigned from constructor and passed by reference.")]
@@ -166,69 +165,69 @@ public class SyntaxTriviaTests
         // Arrange
         SyntaxToken syntaxToken = default;
         InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, "\n");
-        const int position = 0;
-        const int index = 3;
+        const int Position = 0;
+        const int Index = 3;
 
-        SyntaxTrivia token = new(syntaxToken, triviaNode, position, index);
+        SyntaxTrivia token = new(syntaxToken, triviaNode, Position, Index);
 
         // Act
-        SyntaxToken actualSyntaxToken = token.SyntaxToken;
+        var actualSyntaxToken = token.SyntaxToken;
 
         // Assert
         Assert.Equal(syntaxToken, actualSyntaxToken);
     }
 
-    [Fact(DisplayName = $"The ToString() method must be assigned from {nameof(SyntaxTrivia.Node)} property.")]
+    [Fact(DisplayName = $"The ToString() method must be assigned from {nameof(SyntaxTrivia.UnderlyingNode)} property.")]
     public void ToStringMethod_MustBeAssignedFromNodeProperty()
     {
         // Arrange
-        const string triviaText = "\r\n";
-        const int position = 0;
-        const int index = 0;
+        const string TriviaText = "\r\n";
+        const int Position = 0;
+        const int Index = 0;
         SyntaxToken syntaxToken = default;
-        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, triviaText);
+        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, TriviaText);
 
-        SyntaxTrivia token = new(syntaxToken, triviaNode, position, index);
+        SyntaxTrivia token = new(syntaxToken, triviaNode, Position, Index);
 
         // Act
-        string actualStringValue = token.ToString();
+        var actualStringValue = token.ToString();
 
         // Assert
-        Assert.Equal(triviaText, actualStringValue);
+        Assert.Equal(TriviaText, actualStringValue);
     }
 
     [Fact(DisplayName = $"The SyntaxTrivia must implement the {nameof(IEquatable<SyntaxTrivia>)} interface.")]
     public void SyntaxTrivia_MustImplementIEquatableInterface()
     {
         // Arrange
-        const string triviaText = "\r\n";
-        const int position = 0;
-        const int index = 0;
+        const string TriviaText = "\r\n";
+        const int Position = 0;
+        const int Index = 0;
         SyntaxToken syntaxToken = default;
-        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, triviaText);
+        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, TriviaText);
 
         // Act
-        SyntaxTrivia token = new(syntaxToken, triviaNode, position, index);
+        SyntaxTrivia token = new(syntaxToken, triviaNode, Position, Index);
 
         // Assert
         Assert.IsAssignableFrom<IEquatable<SyntaxTrivia>>(token);
     }
 
-    [Fact(DisplayName = $"The Equals() method must return true by comparing their {nameof(SyntaxTrivia.Node)}, {nameof(SyntaxTrivia.Position)} and {nameof(SyntaxTrivia.Index)} properties.")]
+    [Fact(DisplayName = $"The Equals() method must return true by comparing their {nameof(SyntaxTrivia.UnderlyingNode)}, {nameof(SyntaxTrivia.Position)} and {nameof(SyntaxTrivia.Index)} properties.")]
     public void EqualsMethod_MustReturnTrue()
     {
         // Arrange
-        const string triviaText = "\r\n";
-        const int position = 0;
-        const int index = 0;
+        const string TriviaText = "\r\n";
+        const int Position = 0;
+        const int Index = 0;
         SyntaxToken syntaxToken = default;
-        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, triviaText);
+        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, TriviaText);
 
-        SyntaxTrivia token1 = new(syntaxToken, triviaNode, position, index);
-        SyntaxTrivia token2 = new(syntaxToken, triviaNode, position, index);
+        SyntaxTrivia token1 = new(syntaxToken, triviaNode, Position, Index);
+        SyntaxTrivia token2 = new(syntaxToken, triviaNode, Position, Index);
 
         // Act
-        bool equals = token1.Equals(token2);
+        var equals = token1.Equals(token2);
 
         // Assert
         Assert.True(equals);
@@ -238,18 +237,18 @@ public class SyntaxTriviaTests
     public void EqualsMethod_DifferentPositions_MustReturnFalse()
     {
         // Arrange
-        const string triviaText = "\r\n";
-        const int position1 = 0;
-        const int position2 = 1;
-        const int index = 0;
+        const string TriviaText = "\r\n";
+        const int Position1 = 0;
+        const int Position2 = 1;
+        const int Index = 0;
         SyntaxToken syntaxToken = default;
-        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, triviaText);
+        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, TriviaText);
 
-        SyntaxTrivia token1 = new(syntaxToken, triviaNode, position1, index);
-        SyntaxTrivia token2 = new(syntaxToken, triviaNode, position2, index);
+        SyntaxTrivia token1 = new(syntaxToken, triviaNode, Position1, Index);
+        SyntaxTrivia token2 = new(syntaxToken, triviaNode, Position2, Index);
 
         // Act
-        bool equals = token1.Equals(token2);
+        var equals = token1.Equals(token2);
 
         // Assert
         Assert.False(equals);
@@ -259,60 +258,60 @@ public class SyntaxTriviaTests
     public void EqualsMethod_DifferentIndices_MustReturnFalse()
     {
         // Arrange
-        const string triviaText = "\r\n";
-        const int position = 0;
-        const int index1 = 0;
-        const int index2 = 1;
+        const string TriviaText = "\r\n";
+        const int Position = 0;
+        const int Index1 = 0;
+        const int Index2 = 1;
         SyntaxToken syntaxToken = default;
-        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, triviaText);
+        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, TriviaText);
 
-        SyntaxTrivia token1 = new(syntaxToken, triviaNode, position, index1);
-        SyntaxTrivia token2 = new(syntaxToken, triviaNode, position, index2);
+        SyntaxTrivia token1 = new(syntaxToken, triviaNode, Position, Index1);
+        SyntaxTrivia token2 = new(syntaxToken, triviaNode, Position, Index2);
 
         // Act
-        bool equals = token1.Equals(token2);
+        var equals = token1.Equals(token2);
 
         // Assert
         Assert.False(equals);
     }
 
-    [Fact(DisplayName = $"The Equals() method must return false by comparing their {nameof(SyntaxTrivia.Node)} properties.")]
+    [Fact(DisplayName = $"The Equals() method must return false by comparing their {nameof(SyntaxTrivia.UnderlyingNode)} properties.")]
     public void EqualsMethod_DifferentNodes_MustReturnFalse()
     {
         // Arrange
-        const string triviaText = "\r\n";
-        const int position = 0;
-        const int index = 0;
+        const string TriviaText = "\r\n";
+        const int Position = 0;
+        const int Index = 0;
         SyntaxToken syntaxToken1 = new(null, null, 0, 0);
         SyntaxToken syntaxToken2 = new(null, null, 3, 0);
-        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, triviaText);
+        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, TriviaText);
 
-        SyntaxTrivia token1 = new(syntaxToken1, triviaNode, position, index);
-        SyntaxTrivia token2 = new(syntaxToken2, triviaNode, position, index);
+        SyntaxTrivia token1 = new(syntaxToken1, triviaNode, Position, Index);
+        SyntaxTrivia token2 = new(syntaxToken2, triviaNode, Position, Index);
 
         // Act
-        bool equals = token1.Equals(token2);
+        var equals = token1.Equals(token2);
 
         // Assert
         Assert.False(equals);
     }
 
-    [Fact(DisplayName = $"The Equals() method must return true by comparing their {nameof(SyntaxTrivia.Node)} properties.")]
+    [Fact(DisplayName = $"The Equals() method must return true by comparing their {nameof(SyntaxTrivia.UnderlyingNode)} properties.")]
     public void EqualsMethod_EqualNodes_MustReturnTrue()
     {
         // Arrange
-        const string triviaText = "\r\n";
-        const int position = 0;
-        const int index = 0;
+        const string TriviaText = "\r\n";
+        const int Position = 0;
+        const int Index = 0;
         SyntaxToken syntaxToken1 = new(null, null, 3, 0);
         SyntaxToken syntaxToken2 = new(null, null, 3, 0);
-        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, triviaText);
+        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, TriviaText);
 
-        SyntaxTrivia token1 = new(syntaxToken1, triviaNode, position, index);
-        SyntaxTrivia token2 = new(syntaxToken2, triviaNode, position, index);
+        SyntaxTrivia token1 = new(syntaxToken1, triviaNode, Position, Index);
+        SyntaxTrivia token2 = new(syntaxToken2, triviaNode, Position, Index);
 
         // Act
-        bool equals = token1.Equals(token2);
+        var equals = token1.Equals(token2);
 
         // Assert
         Assert.True(equals);
@@ -322,18 +321,18 @@ public class SyntaxTriviaTests
     public void EqualsMethod_ObjectOverload_DifferentPosition_MustReturnFalse()
     {
         // Arrange
-        const string triviaText = "\r\n";
-        const int position1 = 0;
-        const int position2 = 5;
-        const int index = 0;
+        const string TriviaText = "\r\n";
+        const int Position1 = 0;
+        const int Position2 = 5;
+        const int Index = 0;
         SyntaxToken syntaxToken = default;
-        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, triviaText);
+        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, TriviaText);
 
-        SyntaxTrivia token1 = new(syntaxToken, triviaNode, position1, index);
-        object token2 = new SyntaxTrivia(syntaxToken, triviaNode, position2, index);
+        SyntaxTrivia token1 = new(syntaxToken, triviaNode, Position1, Index);
+        object token2 = new SyntaxTrivia(syntaxToken, triviaNode, Position2, Index);
 
         // Act
-        bool equals = token1.Equals(token2);
+        var equals = token1.Equals(token2);
 
         // Assert
         Assert.False(equals);
@@ -343,18 +342,18 @@ public class SyntaxTriviaTests
     public void EqualsMethod_ObjectOverload_SamePosition_MustReturnTrue()
     {
         // Arrange
-        const string triviaText = "\r\n";
-        const int position1 = 5;
-        const int position2 = 5;
-        const int index = 0;
+        const string TriviaText = "\r\n";
+        const int Position1 = 5;
+        const int Position2 = 5;
+        const int Index = 0;
         SyntaxToken syntaxToken = default;
-        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, triviaText);
+        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, TriviaText);
 
-        SyntaxTrivia token1 = new(syntaxToken, triviaNode, position1, index);
-        object token2 = new SyntaxTrivia(syntaxToken, triviaNode, position2, index);
+        SyntaxTrivia token1 = new(syntaxToken, triviaNode, Position1, Index);
+        object token2 = new SyntaxTrivia(syntaxToken, triviaNode, Position2, Index);
 
         // Act
-        bool equals = token1.Equals(token2);
+        var equals = token1.Equals(token2);
 
         // Assert
         Assert.True(equals);
@@ -364,18 +363,18 @@ public class SyntaxTriviaTests
     public void EqualsOperator_DifferentPosition_MustReturnFalse()
     {
         // Arrange
-        const string triviaText = "\r\n";
-        const int position1 = 0;
-        const int position2 = 5;
-        const int index = 0;
+        const string TriviaText = "\r\n";
+        const int Position1 = 0;
+        const int Position2 = 5;
+        const int Index = 0;
         SyntaxToken syntaxToken = default;
-        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, triviaText);
+        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, TriviaText);
 
-        SyntaxTrivia token1 = new(syntaxToken, triviaNode, position1, index);
-        SyntaxTrivia token2 = new(syntaxToken, triviaNode, position2, index);
+        SyntaxTrivia token1 = new(syntaxToken, triviaNode, Position1, Index);
+        SyntaxTrivia token2 = new(syntaxToken, triviaNode, Position2, Index);
 
         // Act
-        bool equals = token1 == token2;
+        var equals = token1 == token2;
 
         // Assert
         Assert.False(equals);
@@ -385,18 +384,18 @@ public class SyntaxTriviaTests
     public void NotEqualsOperator_SamePosition_MustReturnFalse()
     {
         // Arrange
-        const string triviaText = "\r\n";
-        const int position1 = 5;
-        const int position2 = 5;
-        const int index = 0;
+        const string TriviaText = "\r\n";
+        const int Position1 = 5;
+        const int Position2 = 5;
+        const int Index = 0;
         SyntaxToken syntaxToken = default;
-        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, triviaText);
+        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, TriviaText);
 
-        SyntaxTrivia token1 = new(syntaxToken, triviaNode, position1, index);
-        SyntaxTrivia token2 = new(syntaxToken, triviaNode, position2, index);
+        SyntaxTrivia token1 = new(syntaxToken, triviaNode, Position1, Index);
+        SyntaxTrivia token2 = new(syntaxToken, triviaNode, Position2, Index);
 
         // Act
-        bool equals = token1 != token2;
+        var equals = token1 != token2;
 
         // Assert
         Assert.False(equals);
@@ -406,54 +405,54 @@ public class SyntaxTriviaTests
     public void GetHashCodeMethod_MustBeComputed()
     {
         // Arrange
-        const string triviaText = "\r\n";
-        const int position = 0;
-        const int index = 0;
+        const string TriviaText = "\r\n";
+        const int Position = 0;
+        const int Index = 0;
         SyntaxToken syntaxToken = default;
-        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, triviaText);
-        int hashCode = HashCode.Combine(syntaxToken, triviaNode, position, index);
+        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, TriviaText);
+        var hashCode = HashCode.Combine(syntaxToken, triviaNode, Position, Index);
 
-        SyntaxTrivia token = new(syntaxToken, triviaNode, position, index);
+        SyntaxTrivia token = new(syntaxToken, triviaNode, Position, Index);
 
         // Act
-        int actualHashCode = token.GetHashCode();
+        var actualHashCode = token.GetHashCode();
 
         // Assert
         Assert.Equal(hashCode, actualHashCode);
     }
 
-    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.FullSpan)} must be a default struct if {nameof(SyntaxTrivia.Node)} is null.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.FullSpan)} must be a default struct if {nameof(SyntaxTrivia.UnderlyingNode)} is null.")]
     public void FullSpanProperty_NullNode_MustReturnDefaultTextSpan()
     {
         // Arrange
-        const int position = 3;
-        const int index = 0;
+        const int Position = 3;
+        const int Index = 0;
         SyntaxToken syntaxToken = default;
         InternalSyntax.GreenNode? triviaNode = null;
 
-        SyntaxTrivia token = new(syntaxToken, triviaNode, position, index);
+        SyntaxTrivia token = new(syntaxToken, triviaNode, Position, Index);
 
         // Act
-        TextSpan actualTextSpan = token.FullSpan;
+        var actualTextSpan = token.FullSpan;
 
         // Assert
         Assert.Equal(default, actualTextSpan);
     }
 
-    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.FullSpan)} must be computed from {nameof(SyntaxTrivia.Node)}")]
+    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.FullSpan)} must be computed from {nameof(SyntaxTrivia.UnderlyingNode)}")]
     public void FullSpanProperty_MustBeComputedFromNode()
     {
         // Arrange
-        const string triviaText = "\r\n";
-        const int position = 3;
-        const int index = 0;
+        const string TriviaText = "\r\n";
+        const int Position = 3;
+        const int Index = 0;
         SyntaxToken syntaxToken = default;
-        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, triviaText);
+        InternalSyntax.GreenNode triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, TriviaText);
 
-        SyntaxTrivia token = new(syntaxToken, triviaNode, position, index);
+        SyntaxTrivia token = new(syntaxToken, triviaNode, Position, Index);
 
         // Act
-        TextSpan actualTextSpan = token.FullSpan;
+        var actualTextSpan = token.FullSpan;
 
         // Assert
         Assert.Equal(3, actualTextSpan.Start);

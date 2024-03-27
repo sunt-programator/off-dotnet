@@ -19,9 +19,9 @@ internal abstract partial class SyntaxList
             : base(diagnostics)
         {
             this.SlotCount = 3;
-            this._child1 = child1;
-            this._child2 = child2;
-            this._child3 = child3;
+            _child1 = child1;
+            _child2 = child2;
+            _child3 = child3;
             this.FullWidth = child1.FullWidth + child2.FullWidth + child3.FullWidth;
         }
 
@@ -30,9 +30,9 @@ internal abstract partial class SyntaxList
         {
             return index switch
             {
-                0 => this._child1,
-                1 => this._child2,
-                2 => this._child3,
+                0 => _child1,
+                1 => _child2,
+                2 => _child3,
                 _ => null,
             };
         }
@@ -40,7 +40,7 @@ internal abstract partial class SyntaxList
         /// <inheritdoc cref="GreenNode.SetDiagnostics"/>
         internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
         {
-            return new WithThreeChildren(this._child1, this._child2, this._child3, diagnostics);
+            return new WithThreeChildren(_child1, _child2, _child3, diagnostics);
         }
     }
 }

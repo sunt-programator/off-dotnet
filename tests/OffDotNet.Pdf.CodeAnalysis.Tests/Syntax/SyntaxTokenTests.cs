@@ -7,25 +7,24 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax;
 
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
-using OffDotNet.Pdf.CodeAnalysis.Text;
 using SyntaxToken = OffDotNet.Pdf.CodeAnalysis.Syntax.SyntaxToken;
 using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.SyntaxTrivia;
 
 public class SyntaxTokenTests
 {
-    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.Node)} property must be null as default.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.UnderlyingNode)} property must be null as default.")]
     public void NodeProperty_MustBeNullByDefault()
     {
         // Arrange
         SyntaxNode? parent = null;
         GreenNode? underlyingNode = null;
-        const int position = 0;
-        const int index = 0;
+        const int Position = 0;
+        const int Index = 0;
 
-        SyntaxToken token = new(parent, underlyingNode, position, index);
+        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        GreenNode? actualNode = token.Node;
+        var actualNode = token.Node;
 
         // Assert
         Assert.Null(actualNode);
@@ -37,13 +36,13 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode? parent = null;
         GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int position = 0;
-        const int index = 0;
+        const int Position = 0;
+        const int Index = 0;
 
-        SyntaxToken token = new(parent, underlyingNode, position, index);
+        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        GreenNode? actualNode = token.Node;
+        var actualNode = token.Node;
 
         // Assert
         Assert.Equal(underlyingNode, actualNode);
@@ -55,13 +54,13 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode parent = new(SyntaxFactory.Token(SyntaxKind.TrueKeyword), null, 0);
         GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int position = 150;
-        const int index = 0;
+        const int Position = 150;
+        const int Index = 0;
 
-        SyntaxToken token = new(parent, underlyingNode, position, index);
+        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        SyntaxNode? actualParent = token.Parent;
+        var actualParent = token.Parent;
 
         // Assert
         Assert.Equal(parent, actualParent);
@@ -73,13 +72,13 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode? parent = null;
         GreenNode? underlyingToken = null;
-        const int position = 0;
-        const int index = 0;
+        const int Position = 0;
+        const int Index = 0;
 
-        SyntaxToken token = new(parent, underlyingToken, position, index);
+        SyntaxToken token = new(parent, underlyingToken, Position, Index);
 
         // Act
-        SyntaxKind actualKind = token.Kind;
+        var actualKind = token.Kind;
 
         // Assert
         Assert.Equal(SyntaxKind.None, actualKind);
@@ -91,13 +90,13 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode? parent = null;
         GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int position = 150;
-        const int index = 0;
+        const int Position = 150;
+        const int Index = 0;
 
-        SyntaxToken token = new(parent, underlyingNode, position, index);
+        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        int actualPosition = token.Position;
+        var actualPosition = token.Position;
 
         // Assert
         Assert.Equal(150, actualPosition);
@@ -109,13 +108,13 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode? parent = null;
         GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int position = 0;
-        const int index = 3;
+        const int Position = 0;
+        const int Index = 3;
 
-        SyntaxToken token = new(parent, underlyingNode, position, index);
+        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        int actualIndex = token.Index;
+        var actualIndex = token.Index;
 
         // Assert
         Assert.Equal(3, actualIndex);
@@ -127,13 +126,13 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode? parent = null;
         GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int position = 0;
-        const int index = 0;
+        const int Position = 0;
+        const int Index = 0;
 
-        SyntaxToken token = new(parent, underlyingNode, position, index);
+        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        int actualWidth = token.Width;
+        var actualWidth = token.Width;
 
         // Assert
         Assert.Equal(4, actualWidth);
@@ -145,13 +144,13 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode? parent = null;
         GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int position = 0;
-        const int index = 0;
+        const int Position = 0;
+        const int Index = 0;
 
-        SyntaxToken token = new(parent, underlyingNode, position, index);
+        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        int actualFullWidth = token.FullWidth;
+        var actualFullWidth = token.FullWidth;
 
         // Assert
         Assert.Equal(4, actualFullWidth);
@@ -163,13 +162,13 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode? parent = null;
         GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int position = 3;
-        const int index = 0;
+        const int Position = 3;
+        const int Index = 0;
 
-        SyntaxToken token = new(parent, underlyingNode, position, index);
+        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        TextSpan actualTextSpan = token.FullSpan;
+        var actualTextSpan = token.FullSpan;
 
         // Assert
         Assert.Equal(3, actualTextSpan.Start);
@@ -182,13 +181,13 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode? parent = null;
         GreenNode? underlyingNode = null;
-        const int position = 3;
-        const int index = 0;
+        const int Position = 3;
+        const int Index = 0;
 
-        SyntaxToken token = new(parent, underlyingNode, position, index);
+        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        string actualString = token.ToString();
+        var actualString = token.ToString();
 
         // Assert
         Assert.Equal(string.Empty, actualString);
@@ -200,13 +199,13 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode? parent = null;
         GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int position = 3;
-        const int index = 0;
+        const int Position = 3;
+        const int Index = 0;
 
-        SyntaxToken token = new(parent, underlyingNode, position, index);
+        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        string actualString = token.ToString();
+        var actualString = token.ToString();
 
         // Assert
         Assert.Equal("true", actualString);
@@ -218,30 +217,30 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode? parent = null;
         GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int position = 3;
-        const int index = 0;
+        const int Position = 3;
+        const int Index = 0;
 
         // Act
-        SyntaxToken token = new(parent, underlyingNode, position, index);
+        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Assert
         Assert.IsAssignableFrom<IEquatable<SyntaxToken>>(token);
     }
 
-    [Fact(DisplayName = $"The Equals() method must return true by comparing their {nameof(SyntaxTrivia.Node)}, {nameof(SyntaxTrivia.Position)} and {nameof(SyntaxTrivia.Index)} properties.")]
+    [Fact(DisplayName = $"The Equals() method must return true by comparing their {nameof(SyntaxTrivia.UnderlyingNode)}, {nameof(SyntaxTrivia.Position)} and {nameof(SyntaxTrivia.Index)} properties.")]
     public void EqualsMethod_MustReturnTrue()
     {
         // Arrange
         SyntaxNode? parent = null;
         GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int position = 3;
-        const int index = 0;
+        const int Position = 3;
+        const int Index = 0;
 
-        SyntaxToken token1 = new(parent, underlyingNode, position, index);
-        SyntaxToken token2 = new(parent, underlyingNode, position, index);
+        SyntaxToken token1 = new(parent, underlyingNode, Position, Index);
+        SyntaxToken token2 = new(parent, underlyingNode, Position, Index);
 
         // Act
-        bool equals = token1.Equals(token2);
+        var equals = token1.Equals(token2);
 
         // Assert
         Assert.True(equals);
@@ -253,15 +252,15 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode? parent = null;
         GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int position1 = 0;
-        const int position2 = 3;
-        const int index = 0;
+        const int Position1 = 0;
+        const int Position2 = 3;
+        const int Index = 0;
 
-        SyntaxToken token1 = new(parent, underlyingNode, position1, index);
-        SyntaxToken token2 = new(parent, underlyingNode, position2, index);
+        SyntaxToken token1 = new(parent, underlyingNode, Position1, Index);
+        SyntaxToken token2 = new(parent, underlyingNode, Position2, Index);
 
         // Act
-        bool equals = token1.Equals(token2);
+        var equals = token1.Equals(token2);
 
         // Assert
         Assert.False(equals);
@@ -273,35 +272,35 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode? parent = null;
         GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int position = 3;
-        const int index1 = 0;
-        const int index2 = 5;
+        const int Position = 3;
+        const int Index1 = 0;
+        const int Index2 = 5;
 
-        SyntaxToken token1 = new(parent, underlyingNode, position, index1);
-        SyntaxToken token2 = new(parent, underlyingNode, position, index2);
+        SyntaxToken token1 = new(parent, underlyingNode, Position, Index1);
+        SyntaxToken token2 = new(parent, underlyingNode, Position, Index2);
 
         // Act
-        bool equals = token1.Equals(token2);
+        var equals = token1.Equals(token2);
 
         // Assert
         Assert.False(equals);
     }
 
-    [Fact(DisplayName = $"The Equals() method must return false by comparing their {nameof(SyntaxTrivia.Node)} properties.")]
+    [Fact(DisplayName = $"The Equals() method must return false by comparing their {nameof(SyntaxTrivia.UnderlyingNode)} properties.")]
     public void EqualsMethod_DifferentNodes_MustReturnFalse()
     {
         // Arrange
         SyntaxNode? parent = null;
         GreenNode underlyingNode1 = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         GreenNode underlyingNode2 = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
-        const int position = 3;
-        const int index = 0;
+        const int Position = 3;
+        const int Index = 0;
 
-        SyntaxToken token1 = new(parent, underlyingNode1, position, index);
-        SyntaxToken token2 = new(parent, underlyingNode2, position, index);
+        SyntaxToken token1 = new(parent, underlyingNode1, Position, Index);
+        SyntaxToken token2 = new(parent, underlyingNode2, Position, Index);
 
         // Act
-        bool equals = token1.Equals(token2);
+        var equals = token1.Equals(token2);
 
         // Assert
         Assert.False(equals);
@@ -313,15 +312,15 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode? parent = null;
         GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int position1 = 0;
-        const int position2 = 3;
-        const int index = 0;
+        const int Position1 = 0;
+        const int Position2 = 3;
+        const int Index = 0;
 
-        SyntaxToken token1 = new(parent, underlyingNode, position1, index);
-        object token2 = new SyntaxToken(parent, underlyingNode, position2, index);
+        SyntaxToken token1 = new(parent, underlyingNode, Position1, Index);
+        object token2 = new SyntaxToken(parent, underlyingNode, Position2, Index);
 
         // Act
-        bool equals = token1.Equals(token2);
+        var equals = token1.Equals(token2);
 
         // Assert
         Assert.False(equals);
@@ -333,15 +332,15 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode? parent = null;
         GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int position1 = 3;
-        const int position2 = 3;
-        const int index = 0;
+        const int Position1 = 3;
+        const int Position2 = 3;
+        const int Index = 0;
 
-        SyntaxToken token1 = new(parent, underlyingNode, position1, index);
-        object token2 = new SyntaxToken(parent, underlyingNode, position2, index);
+        SyntaxToken token1 = new(parent, underlyingNode, Position1, Index);
+        object token2 = new SyntaxToken(parent, underlyingNode, Position2, Index);
 
         // Act
-        bool equals = token1.Equals(token2);
+        var equals = token1.Equals(token2);
 
         // Assert
         Assert.True(equals);
@@ -353,15 +352,15 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode? parent = null;
         GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int position1 = 0;
-        const int position2 = 3;
-        const int index = 0;
+        const int Position1 = 0;
+        const int Position2 = 3;
+        const int Index = 0;
 
-        SyntaxToken token1 = new(parent, underlyingNode, position1, index);
-        SyntaxToken token2 = new(parent, underlyingNode, position2, index);
+        SyntaxToken token1 = new(parent, underlyingNode, Position1, Index);
+        SyntaxToken token2 = new(parent, underlyingNode, Position2, Index);
 
         // Act
-        bool equals = token1 == token2;
+        var equals = token1 == token2;
 
         // Assert
         Assert.False(equals);
@@ -373,15 +372,15 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode? parent = null;
         GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int position1 = 3;
-        const int position2 = 3;
-        const int index = 0;
+        const int Position1 = 3;
+        const int Position2 = 3;
+        const int Index = 0;
 
-        SyntaxToken token1 = new(parent, underlyingNode, position1, index);
-        SyntaxToken token2 = new(parent, underlyingNode, position2, index);
+        SyntaxToken token1 = new(parent, underlyingNode, Position1, Index);
+        SyntaxToken token2 = new(parent, underlyingNode, Position2, Index);
 
         // Act
-        bool equals = token1 != token2;
+        var equals = token1 != token2;
 
         // Assert
         Assert.False(equals);
@@ -393,14 +392,14 @@ public class SyntaxTokenTests
         // Arrange
         SyntaxNode? parent = null;
         GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int position = 3;
-        const int index = 0;
+        const int Position = 3;
+        const int Index = 0;
 
-        int hashCode = HashCode.Combine(parent, underlyingNode, position, index);
-        SyntaxToken token = new(parent, underlyingNode, position, index);
+        var hashCode = HashCode.Combine(parent, underlyingNode, Position, Index);
+        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        int actualHashCode = token.GetHashCode();
+        var actualHashCode = token.GetHashCode();
 
         // Assert
         Assert.Equal(hashCode, actualHashCode);

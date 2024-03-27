@@ -20,7 +20,7 @@ internal abstract partial class SyntaxList
 
             for (var i = 0; i < this.Children.Length; i++)
             {
-                this.FullWidth += this.Children[i].Value.FullWidth;
+                this.FullWidth += this.Children[i]._value.FullWidth;
             }
         }
 
@@ -31,7 +31,7 @@ internal abstract partial class SyntaxList
         {
             return index >= this.Children.Length
                 ? null
-                : this.Children[index].Value;
+                : this.Children[index]._value;
         }
 
         /// <inheritdoc/>

@@ -9,34 +9,34 @@ public abstract partial class LocalizableString
 {
     private sealed class FixedLocalizableString : LocalizableString
     {
-        private static readonly FixedLocalizableString StringEmpty = new(string.Empty);
-        private readonly string fixedString;
+        private static readonly FixedLocalizableString s_stringEmpty = new(string.Empty);
+        private readonly string _fixedString;
 
         private FixedLocalizableString(string fixedResource)
         {
-            this.fixedString = fixedResource;
+            _fixedString = fixedResource;
         }
 
         internal override bool CanThrowExceptions => false;
 
         public static FixedLocalizableString Create(string? fixedResource)
         {
-            return string.IsNullOrEmpty(fixedResource) ? StringEmpty : new FixedLocalizableString(fixedResource);
+            return string.IsNullOrEmpty(fixedResource) ? s_stringEmpty : new FixedLocalizableString(fixedResource);
         }
 
         protected override string GetText(IFormatProvider? formatProvider)
         {
-            return this.fixedString;
+            return _fixedString;
         }
 
         protected override int GetHash()
         {
-            return this.fixedString.GetHashCode();
+            return _fixedString.GetHashCode();
         }
 
         protected override bool AreEqual(object? other)
         {
-            return other is FixedLocalizableString fixedLocalizableString && string.Equals(this.fixedString, fixedLocalizableString.fixedString);
+            return other is FixedLocalizableString fixedLocalizableString && string.Equals(_fixedString, fixedLocalizableString._fixedString);
         }
     }
 }

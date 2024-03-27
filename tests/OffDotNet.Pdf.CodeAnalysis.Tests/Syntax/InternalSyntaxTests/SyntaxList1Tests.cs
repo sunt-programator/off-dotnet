@@ -7,7 +7,6 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxTests;
 
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
-using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxTrivia;
 
 public class SyntaxList1Tests
 {
@@ -15,14 +14,14 @@ public class SyntaxList1Tests
     public void NodeProperty_MustBeSetFromConstructor()
     {
         // Arrange
-        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        var trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
         LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
         LiteralExpressionSyntax literalExpression2 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
-        GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(list);
-        GreenNode? actualNode = syntaxList.Node;
+        var actualNode = syntaxList.Node;
 
         // Assert
         Assert.Equal(actualNode, list);
@@ -35,7 +34,7 @@ public class SyntaxList1Tests
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(null);
-        GreenNode? actualNode = syntaxList.Node;
+        var actualNode = syntaxList.Node;
 
         // Assert
         Assert.Null(actualNode);
@@ -48,7 +47,7 @@ public class SyntaxList1Tests
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(null);
-        int actualCount = syntaxList.Count;
+        var actualCount = syntaxList.Count;
 
         // Assert
         Assert.Equal(0, actualCount);
@@ -58,14 +57,14 @@ public class SyntaxList1Tests
     public void CountProperty_ListNode_MustReturnSlotCount()
     {
         // Arrange
-        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        var trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
         LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
         LiteralExpressionSyntax literalExpression2 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
-        GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(list);
-        int actualCount = syntaxList.Count;
+        var actualCount = syntaxList.Count;
 
         // Assert
         Assert.Equal(2, actualCount);
@@ -75,12 +74,12 @@ public class SyntaxList1Tests
     public void CountProperty_NonListNode_MustReturnSlotCount()
     {
         // Arrange
-        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        var trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
         LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(literalExpression1);
-        int actualCount = syntaxList.Count;
+        var actualCount = syntaxList.Count;
 
         // Assert
         Assert.Equal(1, actualCount);
@@ -93,7 +92,7 @@ public class SyntaxList1Tests
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(null);
-        GreenNode? actualNode = syntaxList[0];
+        var actualNode = syntaxList[0];
 
         // Assert
         Assert.Null(actualNode);
@@ -103,14 +102,14 @@ public class SyntaxList1Tests
     public void IndexGet_ListNodeIndex0_MustReturnSlot0()
     {
         // Arrange
-        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        var trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
         LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
         LiteralExpressionSyntax literalExpression2 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
-        GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(list);
-        GreenNode? actualNode = syntaxList[0];
+        var actualNode = syntaxList[0];
 
         // Assert
         Assert.Equal(literalExpression1, actualNode);
@@ -120,14 +119,14 @@ public class SyntaxList1Tests
     public void IndexGet_ListNodeIndex1_MustReturnSlot1()
     {
         // Arrange
-        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        var trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
         LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
         LiteralExpressionSyntax literalExpression2 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword, trivia, trivia));
-        GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(list);
-        GreenNode? actualNode = syntaxList[1];
+        var actualNode = syntaxList[1];
 
         // Assert
         Assert.Equal(literalExpression2, actualNode);
@@ -137,12 +136,12 @@ public class SyntaxList1Tests
     public void IndexGet_NoListNodeIndex0_MustReturnTheCurrentNode()
     {
         // Arrange
-        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        var trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
         LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(literalExpression1);
-        GreenNode? actualNode = syntaxList[0];
+        var actualNode = syntaxList[0];
 
         // Assert
         Assert.Equal(literalExpression1, actualNode);
@@ -152,7 +151,7 @@ public class SyntaxList1Tests
     public void IndexGet_NoListNodeIndex1_MustThrowInvalidOperationException()
     {
         // Arrange
-        SyntaxTrivia trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        var trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
         LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
 
         // Act
@@ -174,7 +173,7 @@ public class SyntaxList1Tests
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(null);
-        bool hasAny = syntaxList.Any();
+        var hasAny = syntaxList.Any();
 
         // Assert
         Assert.False(hasAny);
@@ -188,7 +187,7 @@ public class SyntaxList1Tests
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(literalExpression1);
-        bool hasAny = syntaxList.Any();
+        var hasAny = syntaxList.Any();
 
         // Assert
         Assert.True(hasAny);
@@ -214,7 +213,7 @@ public class SyntaxList1Tests
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(literalExpression1);
-        bool hasAny = syntaxList.Any(SyntaxKind.NullLiteralExpression);
+        var hasAny = syntaxList.Any(SyntaxKind.NullLiteralExpression);
 
         // Assert
         Assert.False(hasAny);
@@ -228,7 +227,7 @@ public class SyntaxList1Tests
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(literalExpression1);
-        bool hasAny = syntaxList.Any(SyntaxKind.TrueLiteralExpression);
+        var hasAny = syntaxList.Any(SyntaxKind.TrueLiteralExpression);
 
         // Assert
         Assert.True(hasAny);
@@ -240,7 +239,7 @@ public class SyntaxList1Tests
         // Arrange
         LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
         LiteralExpressionSyntax literalExpression2 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var list = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(list);
@@ -270,17 +269,17 @@ public class SyntaxList1Tests
         // Arrange
         LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
         LiteralExpressionSyntax literalExpression2 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        GreenNode list1 = SyntaxFactory.List(literalExpression1, literalExpression2);
-        GreenNode list2 = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var list1 = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var list2 = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
         SyntaxList<GreenNode> syntaxList1 = new(list1);
         SyntaxList<GreenNode> syntaxList2 = new(list2);
-        bool equals1 = syntaxList1.Equals(syntaxList2);
-        bool equals2 = syntaxList1.Equals((object?)syntaxList2);
-        bool equals3 = syntaxList1.Equals(null);
-        bool equals4 = syntaxList1 == syntaxList2;
-        bool equals5 = syntaxList1 != syntaxList2;
+        var equals1 = syntaxList1.Equals(syntaxList2);
+        var equals2 = syntaxList1.Equals((object?)syntaxList2);
+        var equals3 = syntaxList1.Equals(null);
+        var equals4 = syntaxList1 == syntaxList2;
+        var equals5 = syntaxList1 != syntaxList2;
 
         // Assert
         Assert.False(equals1);
@@ -296,15 +295,15 @@ public class SyntaxList1Tests
         // Arrange
         LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
         LiteralExpressionSyntax literalExpression2 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        GreenNode list1 = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var list1 = SyntaxFactory.List(literalExpression1, literalExpression2);
 
         // Act
         SyntaxList<GreenNode> syntaxList1 = new(list1);
         SyntaxList<GreenNode> syntaxList2 = new(list1);
-        bool equals1 = syntaxList1.Equals(syntaxList2);
-        bool equals2 = syntaxList1.Equals((object?)syntaxList2);
-        bool equals3 = syntaxList1 == syntaxList2;
-        bool equals4 = syntaxList1 != syntaxList2;
+        var equals1 = syntaxList1.Equals(syntaxList2);
+        var equals2 = syntaxList1.Equals((object?)syntaxList2);
+        var equals3 = syntaxList1 == syntaxList2;
+        var equals4 = syntaxList1 != syntaxList2;
 
         // Assert
         Assert.True(equals1);
@@ -320,7 +319,7 @@ public class SyntaxList1Tests
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(null);
-        int actualHashCode = syntaxList.GetHashCode();
+        var actualHashCode = syntaxList.GetHashCode();
 
         // Assert
         Assert.Equal(0, actualHashCode);
@@ -332,12 +331,12 @@ public class SyntaxList1Tests
         // Arrange
         LiteralExpressionSyntax literalExpression1 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
         LiteralExpressionSyntax literalExpression2 = new(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.FalseKeyword));
-        GreenNode list = SyntaxFactory.List(literalExpression1, literalExpression2);
-        int expectedHashCode = list.GetHashCode();
+        var list = SyntaxFactory.List(literalExpression1, literalExpression2);
+        var expectedHashCode = list.GetHashCode();
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(list);
-        int actualHashCode = syntaxList.GetHashCode();
+        var actualHashCode = syntaxList.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);

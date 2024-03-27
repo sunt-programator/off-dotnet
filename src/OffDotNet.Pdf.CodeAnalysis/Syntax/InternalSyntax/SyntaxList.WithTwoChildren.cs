@@ -11,15 +11,15 @@ internal abstract partial class SyntaxList
 {
     internal class WithTwoChildren : SyntaxList
     {
-        private readonly GreenNode child0;
-        private readonly GreenNode child1;
+        private readonly GreenNode _child0;
+        private readonly GreenNode _child1;
 
         internal WithTwoChildren(GreenNode child0, GreenNode child1, DiagnosticInfo[]? diagnostics = null)
             : base(diagnostics)
         {
             this.SlotCount = 2;
-            this.child0 = child0;
-            this.child1 = child1;
+            _child0 = child0;
+            _child1 = child1;
             this.FullWidth = child0.FullWidth + child1.FullWidth;
         }
 
@@ -28,8 +28,8 @@ internal abstract partial class SyntaxList
         {
             return index switch
             {
-                0 => this.child0,
-                1 => this.child1,
+                0 => _child0,
+                1 => _child1,
                 _ => null,
             };
         }
@@ -37,7 +37,7 @@ internal abstract partial class SyntaxList
         /// <inheritdoc cref="GreenNode.SetDiagnostics"/>
         internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
         {
-            return new WithTwoChildren(this.child0, this.child1, diagnostics);
+            return new WithTwoChildren(_child0, _child1, diagnostics);
         }
     }
 }

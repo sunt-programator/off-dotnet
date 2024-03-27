@@ -16,71 +16,71 @@ public class SyntaxTriviaTests
     public void Create_MustSetKindProperty()
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.EndOfLineTrivia;
-        const string text = "\r\n";
-        InternalSyntax.SyntaxTrivia trivia = InternalSyntax.SyntaxTrivia.Create(kind, text);
+        const SyntaxKind Kind = SyntaxKind.EndOfLineTrivia;
+        const string Text = "\r\n";
+        var trivia = InternalSyntax.SyntaxTrivia.Create(Kind, Text);
 
         // Act
-        SyntaxKind actualSyntaxKind = trivia.Kind;
+        var actualSyntaxKind = trivia.Kind;
 
         // Assert
-        Assert.Equal(kind, actualSyntaxKind);
+        Assert.Equal(Kind, actualSyntaxKind);
     }
 
     [Fact(DisplayName = $"The Create() method must set the {nameof(InternalSyntax.SyntaxTrivia.Text)} property.")]
     public void Create_MustSetTextProperty()
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.EndOfLineTrivia;
-        const string text = "\r\n";
-        InternalSyntax.SyntaxTrivia trivia = InternalSyntax.SyntaxTrivia.Create(kind, text);
+        const SyntaxKind Kind = SyntaxKind.EndOfLineTrivia;
+        const string Text = "\r\n";
+        var trivia = InternalSyntax.SyntaxTrivia.Create(Kind, Text);
 
         // Act
-        string actualText = trivia.Text;
+        var actualText = trivia.Text;
 
         // Assert
-        Assert.Equal(text, actualText);
+        Assert.Equal(Text, actualText);
     }
 
     [Fact(DisplayName = $"The Create() method must set the {nameof(InternalSyntax.SyntaxTrivia.FullWidth)} property with the computed {nameof(InternalSyntax.SyntaxTrivia.Text)} property length.")]
     public void Create_MustSetFullWidthPropertyFromTextLength()
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.EndOfLineTrivia;
-        const string text = "\r\n";
-        const int expectedFullWidth = 2;
-        InternalSyntax.SyntaxTrivia trivia = InternalSyntax.SyntaxTrivia.Create(kind, text);
+        const SyntaxKind Kind = SyntaxKind.EndOfLineTrivia;
+        const string Text = "\r\n";
+        const int ExpectedFullWidth = 2;
+        var trivia = InternalSyntax.SyntaxTrivia.Create(Kind, Text);
 
         // Act
-        int actualFullWidth = trivia.FullWidth;
+        var actualFullWidth = trivia.FullWidth;
 
         // Assert
-        Assert.Equal(expectedFullWidth, actualFullWidth);
+        Assert.Equal(ExpectedFullWidth, actualFullWidth);
     }
 
     [Fact(DisplayName = $"The Create() method must set the {nameof(InternalSyntax.SyntaxTrivia.Width)} property with the computed {nameof(InternalSyntax.SyntaxTrivia.Text)} property length.")]
     public void Create_MustSetWidthPropertyFromTextLength()
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.EndOfLineTrivia;
-        const string text = "\r\n";
-        const int expectedFullWidth = 2;
-        InternalSyntax.SyntaxTrivia trivia = InternalSyntax.SyntaxTrivia.Create(kind, text);
+        const SyntaxKind Kind = SyntaxKind.EndOfLineTrivia;
+        const string Text = "\r\n";
+        const int ExpectedFullWidth = 2;
+        var trivia = InternalSyntax.SyntaxTrivia.Create(Kind, Text);
 
         // Act
-        int actualWidth = trivia.Width;
+        var actualWidth = trivia.Width;
 
         // Assert
-        Assert.Equal(expectedFullWidth, actualWidth);
+        Assert.Equal(ExpectedFullWidth, actualWidth);
     }
 
     [Fact(DisplayName = $"The GetSlot() method must throw an {nameof(InvalidOperationException)}")]
     public void GetSlot_MustThrowInvalidOperationException()
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.EndOfLineTrivia;
-        const string text = "\r\n";
-        GreenNode trivia = InternalSyntax.SyntaxTrivia.Create(kind, text);
+        const SyntaxKind Kind = SyntaxKind.EndOfLineTrivia;
+        const string Text = "\r\n";
+        GreenNode trivia = InternalSyntax.SyntaxTrivia.Create(Kind, Text);
 
         // Act
         GreenNode? ActualSlotFunc()
@@ -96,29 +96,29 @@ public class SyntaxTriviaTests
     public void ToStringMethod_MustReturnTheTextPropertyValue()
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.EndOfLineTrivia;
-        const string text = "\r\n";
+        const SyntaxKind Kind = SyntaxKind.EndOfLineTrivia;
+        const string Text = "\r\n";
 
-        InternalSyntax.SyntaxTrivia trivia = InternalSyntax.SyntaxTrivia.Create(kind, text);
+        var trivia = InternalSyntax.SyntaxTrivia.Create(Kind, Text);
 
         // Act
-        string actualToStringValue = trivia.ToString();
+        var actualToStringValue = trivia.ToString();
 
         // Assert
-        Assert.Equal(text, actualToStringValue);
+        Assert.Equal(Text, actualToStringValue);
     }
 
     [Fact(DisplayName = $"The {nameof(InternalSyntax.SyntaxTrivia.LeadingTriviaWidth)} must be overriden to 0.")]
     public void LeadingTriviaWidth_MustBeOverridenToZero()
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.EndOfLineTrivia;
-        const string text = "\r\n";
+        const SyntaxKind Kind = SyntaxKind.EndOfLineTrivia;
+        const string Text = "\r\n";
 
-        InternalSyntax.SyntaxTrivia trivia = InternalSyntax.SyntaxTrivia.Create(kind, text);
+        var trivia = InternalSyntax.SyntaxTrivia.Create(Kind, Text);
 
         // Act
-        int actualLeadingTriviaWidth = trivia.LeadingTriviaWidth;
+        var actualLeadingTriviaWidth = trivia.LeadingTriviaWidth;
 
         // Assert
         Assert.Equal(0, actualLeadingTriviaWidth);
@@ -128,13 +128,13 @@ public class SyntaxTriviaTests
     public void TrailingTriviaWidth_MustBeOverridenToZero()
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.EndOfLineTrivia;
-        const string text = "\r\n";
+        const SyntaxKind Kind = SyntaxKind.EndOfLineTrivia;
+        const string Text = "\r\n";
 
-        InternalSyntax.SyntaxTrivia trivia = InternalSyntax.SyntaxTrivia.Create(kind, text);
+        var trivia = InternalSyntax.SyntaxTrivia.Create(Kind, Text);
 
         // Act
-        int actualTrailingTriviaWidth = trivia.TrailingTriviaWidth;
+        var actualTrailingTriviaWidth = trivia.TrailingTriviaWidth;
 
         // Assert
         Assert.Equal(0, actualTrailingTriviaWidth);
@@ -144,13 +144,13 @@ public class SyntaxTriviaTests
     public void IsTriviaProperty_MustReturnTrue()
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.EndOfLineTrivia;
-        const string text = "\r\n";
+        const SyntaxKind Kind = SyntaxKind.EndOfLineTrivia;
+        const string Text = "\r\n";
 
-        InternalSyntax.SyntaxTrivia trivia = InternalSyntax.SyntaxTrivia.Create(kind, text);
+        var trivia = InternalSyntax.SyntaxTrivia.Create(Kind, Text);
 
         // Act
-        bool actualIsTrivia = trivia.IsTrivia;
+        var actualIsTrivia = trivia.IsTrivia;
 
         // Assert
         Assert.True(actualIsTrivia);
@@ -160,13 +160,13 @@ public class SyntaxTriviaTests
     public void IsTokenProperty_MustReturnFalse()
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.EndOfLineTrivia;
-        const string text = "\r\n";
+        const SyntaxKind Kind = SyntaxKind.EndOfLineTrivia;
+        const string Text = "\r\n";
 
-        InternalSyntax.SyntaxTrivia trivia = InternalSyntax.SyntaxTrivia.Create(kind, text);
+        var trivia = InternalSyntax.SyntaxTrivia.Create(Kind, Text);
 
         // Act
-        bool actualIsToken = trivia.IsToken;
+        var actualIsToken = trivia.IsToken;
 
         // Assert
         Assert.False(actualIsToken);
@@ -176,47 +176,47 @@ public class SyntaxTriviaTests
     public void ToStringMethod_MustNotIncludeTrivia()
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.EndOfLineTrivia;
-        const string text = "    ";
+        const SyntaxKind Kind = SyntaxKind.EndOfLineTrivia;
+        const string Text = "    ";
 
-        InternalSyntax.SyntaxTrivia trivia = InternalSyntax.SyntaxTrivia.Create(kind, text);
+        var trivia = InternalSyntax.SyntaxTrivia.Create(Kind, Text);
 
         // Act
-        string actualString = trivia.ToString();
+        var actualString = trivia.ToString();
 
         // Assert
-        Assert.Equal(text, actualString);
+        Assert.Equal(Text, actualString);
     }
 
     [Fact(DisplayName = "The ToFullString() method must include the trivia.")]
     public void ToFullStringMethod_MustIncludeTrivia()
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.EndOfLineTrivia;
-        const string text = "    ";
+        const SyntaxKind Kind = SyntaxKind.EndOfLineTrivia;
+        const string Text = "    ";
 
-        InternalSyntax.SyntaxTrivia trivia = InternalSyntax.SyntaxTrivia.Create(kind, text);
+        var trivia = InternalSyntax.SyntaxTrivia.Create(Kind, Text);
 
         // Act
-        string actualString = trivia.ToFullString();
+        var actualString = trivia.ToFullString();
 
         // Assert
-        Assert.Equal(text, actualString);
+        Assert.Equal(Text, actualString);
     }
 
     [Fact(DisplayName = "The SetDiagnostics() method must set the diagnostics and return a new instance.")]
     public void SetDiagnosticsMethod_MustSetDiagnosticsAndReturnNewInstance()
     {
         // Arrange
-        const SyntaxKind kind = SyntaxKind.EndOfLineTrivia;
-        const string text = "    ";
+        const SyntaxKind Kind = SyntaxKind.EndOfLineTrivia;
+        const string Text = "    ";
         DiagnosticInfo expectedDiagnostic = new(Substitute.For<IMessageProvider>(), DiagnosticCode.ERR_InvalidPDF);
         DiagnosticInfo[] diagnostics = [expectedDiagnostic];
 
-        InternalSyntax.SyntaxTrivia trivia = InternalSyntax.SyntaxTrivia.Create(kind, text);
+        var trivia = InternalSyntax.SyntaxTrivia.Create(Kind, Text);
 
         // Act
-        GreenNode actualNode = trivia.SetDiagnostics(diagnostics);
+        var actualNode = trivia.SetDiagnostics(diagnostics);
 
         // Assert
         Assert.NotSame(trivia, actualNode);

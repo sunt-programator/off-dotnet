@@ -13,17 +13,17 @@ using Properties;
 
 public sealed class FileTrailer : PdfObject, IFileTrailer
 {
-    private static readonly PdfName Size = "Size";
-    private static readonly PdfName Prev = "Prev";
-    private static readonly PdfName Root = "Root";
-    private static readonly PdfName Encrypt = "Encrypt";
-    private static readonly PdfName Info = "Info";
-    private static readonly PdfName Id = "ID";
+    private static readonly PdfName s_size = "Size";
+    private static readonly PdfName s_prev = "Prev";
+    private static readonly PdfName s_root = "Root";
+    private static readonly PdfName s_encrypt = "Encrypt";
+    private static readonly PdfName s_info = "Info";
+    private static readonly PdfName s_id = "ID";
 
-    private readonly FileTrailerOptions fileTrailerOptions;
-    private readonly Lazy<string> literalValue;
-    private readonly Lazy<byte[]> bytes;
-    private readonly Lazy<IPdfDictionary<IPdfObject>> fileTrailerDictionary;
+    private readonly FileTrailerOptions _fileTrailerOptions;
+    private readonly Lazy<string> _literalValue;
+    private readonly Lazy<byte[]> _bytes;
+    private readonly Lazy<IPdfDictionary<IPdfObject>> _fileTrailerDictionary;
 
     public FileTrailer(long byteOffset, Action<FileTrailerOptions> fileTrailerOptionsFunc)
         : this(byteOffset, GetFileTrailerOptions(fileTrailerOptionsFunc))
@@ -32,32 +32,32 @@ public sealed class FileTrailer : PdfObject, IFileTrailer
 
     public FileTrailer(long byteOffset, FileTrailerOptions fileTrailerOptions)
     {
-        this.fileTrailerOptions = fileTrailerOptions;
+        _fileTrailerOptions = fileTrailerOptions;
 
         this.ByteOffset = byteOffset.CheckConstraints(num => num >= 0, Resource.FileTrailer_ByteOffsetMustBePositive);
-        this.fileTrailerOptions
+        _fileTrailerOptions
             .CheckConstraints(option => option.Size > 0, Resource.FileTrailer_SizeMustBeGreaterThanZero)
             .CheckConstraints(option => option.Prev == null || option.Prev >= 0, Resource.FileTrailer_PrevMustBePositive)
             .CheckConstraints(option => option.Encrypt == null || option.Encrypt.Value.Count > 0, Resource.FileTrailer_EncryptMustHaveANonEmptyCollection)
             .CheckConstraints(option => option.Encrypt == null || option.Id?.Value.Count == 2, Resource.FileTrailer_IdMustBeAnArrayOfTwoByteStrings)
             .NotNull(x => x.Root);
 
-        this.literalValue = new Lazy<string>(this.GenerateContent);
-        this.bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
-        this.fileTrailerDictionary = new Lazy<IPdfDictionary<IPdfObject>>(this.GenerateFileTrailerDictionary);
+        _literalValue = new Lazy<string>(this.GenerateContent);
+        _bytes = new Lazy<byte[]>(() => Encoding.ASCII.GetBytes(this.Content));
+        _fileTrailerDictionary = new Lazy<IPdfDictionary<IPdfObject>>(this.GenerateFileTrailerDictionary);
     }
 
     /// <inheritdoc/>
     public long ByteOffset { get; }
 
     /// <inheritdoc/>
-    public IPdfDictionary<IPdfObject> FileTrailerDictionary => this.fileTrailerDictionary.Value;
+    public IPdfDictionary<IPdfObject> FileTrailerDictionary => _fileTrailerDictionary.Value;
 
     /// <inheritdoc/>
-    public override ReadOnlyMemory<byte> Bytes => this.bytes.Value;
+    public override ReadOnlyMemory<byte> Bytes => _bytes.Value;
 
     /// <inheritdoc/>
-    public override string Content => this.literalValue.Value;
+    public override string Content => _literalValue.Value;
 
     /// <inheritdoc/>
     protected override IEnumerable<object> GetEqualityComponents()
@@ -77,7 +77,7 @@ public sealed class FileTrailer : PdfObject, IFileTrailer
         return new StringBuilder()
             .Insert(0, "trailer")
             .Append('\n')
-            .Append(this.fileTrailerDictionary.Value.Content)
+            .Append(_fileTrailerDictionary.Value.Content)
             .Append('\n')
             .Append("startxref")
             .Append('\n')
@@ -90,12 +90,12 @@ public sealed class FileTrailer : PdfObject, IFileTrailer
     private IPdfDictionary<IPdfObject> GenerateFileTrailerDictionary()
     {
         return new Dictionary<PdfName, IPdfObject>(6)
-            .WithKeyValue(Size, this.fileTrailerOptions.Size)
-            .WithKeyValue(Prev, this.fileTrailerOptions.Prev)
-            .WithKeyValue(Root, this.fileTrailerOptions.Root)
-            .WithKeyValue(Encrypt, this.fileTrailerOptions.Encrypt)
-            .WithKeyValue(Info, this.fileTrailerOptions.Info)
-            .WithKeyValue(Id, this.fileTrailerOptions.Id)
+            .WithKeyValue(s_size, _fileTrailerOptions.Size)
+            .WithKeyValue(s_prev, _fileTrailerOptions.Prev)
+            .WithKeyValue(s_root, _fileTrailerOptions.Root)
+            .WithKeyValue(s_encrypt, _fileTrailerOptions.Encrypt)
+            .WithKeyValue(s_info, _fileTrailerOptions.Info)
+            .WithKeyValue(s_id, _fileTrailerOptions.Id)
             .ToPdfDictionary();
     }
 }

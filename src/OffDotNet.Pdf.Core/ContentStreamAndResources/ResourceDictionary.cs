@@ -12,8 +12,8 @@ using Text.Fonts;
 
 public sealed class ResourceDictionary : PdfDictionary<IPdfObject>, IResourceDictionary
 {
-    private static readonly PdfName FontName = "Font";
-    private static readonly PdfName ProcSetName = "ProcSet";
+    private static readonly PdfName s_fontName = "Font";
+    private static readonly PdfName s_procSetName = "ProcSet";
 
     public ResourceDictionary(Action<ResourceDictionaryOptions> optionsFunc)
         : this(GetResourceDictionaryOptions(optionsFunc))
@@ -43,8 +43,8 @@ public sealed class ResourceDictionary : PdfDictionary<IPdfObject>, IResourceDic
     private static IReadOnlyDictionary<PdfName, IPdfObject> GenerateDictionary(ResourceDictionaryOptions options)
     {
         var documentCatalogDictionary = new Dictionary<PdfName, IPdfObject>(2)
-            .WithKeyValue(FontName, options.Font)
-            .WithKeyValue(ProcSetName, options.ProcSet);
+            .WithKeyValue(s_fontName, options.Font)
+            .WithKeyValue(s_procSetName, options.ProcSet);
 
         return new ReadOnlyDictionary<PdfName, IPdfObject>(documentCatalogDictionary);
     }

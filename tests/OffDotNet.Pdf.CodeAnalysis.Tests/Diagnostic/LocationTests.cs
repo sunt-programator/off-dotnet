@@ -11,7 +11,7 @@ using OffDotNet.Pdf.CodeAnalysis.Text;
 
 public class LocationTests
 {
-    private readonly Location location = Substitute.For<Location>();
+    private readonly Location _location = Substitute.For<Location>();
 
     [Fact(DisplayName = $"The {nameof(Location.Kind)} property must return {nameof(LocationKind.None)}.")]
     public void KindProperty_MustReturnNone()
@@ -19,7 +19,7 @@ public class LocationTests
         // Arrange
 
         // Act
-        LocationKind actualKind = this.location.Kind;
+        var actualKind = _location.Kind;
 
         // Assert
         Assert.Equal(LocationKind.None, actualKind);
@@ -31,7 +31,7 @@ public class LocationTests
         // Arrange
 
         // Act
-        TextSpan actualSourceSpan = this.location.SourceSpan;
+        var actualSourceSpan = _location.SourceSpan;
 
         // Assert
         Assert.Equal(default, actualSourceSpan);
@@ -43,7 +43,7 @@ public class LocationTests
         // Arrange
 
         // Act
-        FileLinePositionSpan actualFileLinePositionSpan = this.location.LineSpan;
+        var actualFileLinePositionSpan = _location.LineSpan;
 
         // Assert
         Assert.Equal(default, actualFileLinePositionSpan);
@@ -55,7 +55,7 @@ public class LocationTests
         // Arrange
 
         // Act
-        Location actualLocation = Location.None;
+        var actualLocation = Location.None;
 
         // Assert
         Assert.Equal(Location.NoLocation.Instance, actualLocation);
@@ -65,14 +65,14 @@ public class LocationTests
     public void EqualsMethod_MustReturnTrue()
     {
         // Arrange
-        Location location1 = Location.None;
-        Location location2 = Location.None;
+        var location1 = Location.None;
+        var location2 = Location.None;
 
         // Act
-        bool actualEquals1 = location1.Equals(location2);
-        bool actualEquals2 = location1.Equals((object?)location2);
-        bool actualEquals3 = location1 == location2;
-        bool actualEquals4 = location1 != location2;
+        var actualEquals1 = location1.Equals(location2);
+        var actualEquals2 = location1.Equals((object?)location2);
+        var actualEquals3 = location1 == location2;
+        var actualEquals4 = location1 != location2;
 
         // Assert
         Assert.True(actualEquals1);
@@ -85,14 +85,14 @@ public class LocationTests
     public void EqualsMethod_MustReturnFalse()
     {
         // Arrange
-        Location location1 = Location.None;
+        var location1 = Location.None;
         Location? location2 = null;
 
         // Act
-        bool actualEquals1 = location1.Equals(location2);
-        bool actualEquals2 = location1.Equals((object?)location2);
-        bool actualEquals3 = location1 == location2;
-        bool actualEquals4 = location1 != location2;
+        var actualEquals1 = location1.Equals(location2);
+        var actualEquals2 = location1.Equals((object?)location2);
+        var actualEquals3 = location1 == location2;
+        var actualEquals4 = location1 != location2;
 
         // Assert
         Assert.False(actualEquals1);
@@ -105,32 +105,32 @@ public class LocationTests
     public void ToStringMethod_WithSyntaxTree_MustIncludeKind_PathAndSourceSpan()
     {
         // Arrange
-        const string expectedLocation = @"None (C:\1.pdf[1..2))";
-        SyntaxTree syntaxTree = Substitute.For<SyntaxTree>();
+        const string ExpectedLocation = @"None (C:\1.pdf[1..2))";
+        var syntaxTree = Substitute.For<SyntaxTree>();
         syntaxTree.FilePath.Returns(@"C:\1.pdf");
-        this.location.SyntaxTree.Returns(syntaxTree);
-        this.location.SourceSpan.Returns(new TextSpan(1, 1));
+        _location.SyntaxTree.Returns(syntaxTree);
+        _location.SourceSpan.Returns(new TextSpan(1, 1));
 
         // Act
-        string actualString = this.location.ToString();
+        var actualString = _location.ToString();
 
         // Assert
-        Assert.Equal(expectedLocation, actualString);
+        Assert.Equal(ExpectedLocation, actualString);
     }
 
     [Fact(DisplayName = $"The ToString() method with {nameof(FileLinePositionSpan.Path)} must include the {nameof(Location.Kind)} and {nameof(FileLinePositionSpan)} properties.")]
     public void ToStringMethod_WithPathInFileLinePositionSpan_MustIncludeKindAndFileLinePositionSpan()
     {
         // Arrange
-        const string expectedLocation = @"None (C:\1.pdf@2:3)";
-        this.location.SyntaxTree.Returns((SyntaxTree?)null);
-        this.location.LineSpan.Returns(new FileLinePositionSpan(@"C:\1.pdf", new LinePositionSpan(new LinePosition(1, 2), new LinePosition(2, 2))));
+        const string ExpectedLocation = @"None (C:\1.pdf@2:3)";
+        _location.SyntaxTree.Returns((SyntaxTree?)null);
+        _location.LineSpan.Returns(new FileLinePositionSpan(@"C:\1.pdf", new LinePositionSpan(new LinePosition(1, 2), new LinePosition(2, 2))));
 
         // Act
-        string actualString = this.location.ToString();
+        var actualString = _location.ToString();
 
         // Assert
-        Assert.Equal(expectedLocation, actualString);
+        Assert.Equal(ExpectedLocation, actualString);
     }
 
     [Fact(DisplayName = $"The {nameof(LocalizableString)} class must implement the {nameof(IEquatable<Location>)} interface.")]
@@ -139,7 +139,7 @@ public class LocationTests
         // Arrange
 
         // Act
-        Location actualLocation = Location.None;
+        var actualLocation = Location.None;
 
         // Assert
         Assert.IsAssignableFrom<IEquatable<Location>>(actualLocation);

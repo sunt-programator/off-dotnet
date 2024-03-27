@@ -14,10 +14,10 @@ public class FixedLocalizableStringTests
     public void Class_MustImplementIFormattableInterface()
     {
         // Arrange
-        const string value = "123";
+        const string Value = "123";
 
         // Act
-        LocalizableString localizableString = value;
+        LocalizableString localizableString = Value;
 
         // Assert
         Assert.IsAssignableFrom<IFormattable>(localizableString);
@@ -27,26 +27,26 @@ public class FixedLocalizableStringTests
     public void Class_MustHaveImplicitAndExplicitOperators()
     {
         // Arrange
-        const string value = "123";
+        const string Value = "123";
 
         // Act
-        LocalizableString localizableString = value;
-        string? actualString = (string?)localizableString;
+        LocalizableString localizableString = Value;
+        var actualString = (string?)localizableString;
 
         // Assert
-        Assert.Equal(value, actualString);
+        Assert.Equal(Value, actualString);
     }
 
     [Fact(DisplayName = $"The ToString() method must return the same reference if two instances of {nameof(LocalizableString)} are created with the string.Empty.")]
     public void ToStringMethod_TwoInstancesWithStringEmpty_MustReturnTheSameReference()
     {
         // Arrange
-        const string value = "";
+        const string Value = "";
 
         // Act
-        LocalizableString localizableString1 = value;
-        LocalizableString localizableString2 = value;
-        bool areEqual = ReferenceEquals((string?)localizableString1, (string?)localizableString2);
+        LocalizableString localizableString1 = Value;
+        LocalizableString localizableString2 = Value;
+        var areEqual = ReferenceEquals((string?)localizableString1, (string?)localizableString2);
 
         // Assert
         Assert.True(areEqual);
@@ -56,14 +56,14 @@ public class FixedLocalizableStringTests
     public void ToStringMethod_MustReturnStringValue()
     {
         // Arrange
-        const string value = "123";
+        const string Value = "123";
 
         // Act
-        LocalizableString localizableString = value;
-        string actualString = localizableString.ToString(null);
+        LocalizableString localizableString = Value;
+        var actualString = localizableString.ToString(null);
 
         // Assert
-        Assert.Equal(value, actualString);
+        Assert.Equal(Value, actualString);
     }
 
     [Fact(DisplayName = "The generic ToString() method must be overriden.")]
@@ -71,25 +71,25 @@ public class FixedLocalizableStringTests
     public void ToStringMethod_MustBeOverriden()
     {
         // Arrange
-        const string value = "123";
+        const string Value = "123";
 
         // Act
-        LocalizableString localizableString = value;
-        string actualString = localizableString.ToString();
+        LocalizableString localizableString = Value;
+        var actualString = localizableString.ToString();
 
         // Assert
-        Assert.Equal(value, actualString);
+        Assert.Equal(Value, actualString);
     }
 
     [Fact(DisplayName = $"The {nameof(LocalizableString.CanThrowExceptions)} property must return false.")]
     public void CanThrowExceptionsProperty_MustReturnFalse()
     {
         // Arrange
-        const string value = "123";
+        const string Value = "123";
 
         // Act
-        LocalizableString localizableString = value;
-        bool actualCanThrowExceptions = localizableString.CanThrowExceptions;
+        LocalizableString localizableString = Value;
+        var actualCanThrowExceptions = localizableString.CanThrowExceptions;
 
         // Assert
         Assert.False(actualCanThrowExceptions);
@@ -99,10 +99,10 @@ public class FixedLocalizableStringTests
     public void Class_MustImplementIEquatableInterface()
     {
         // Arrange
-        const string value = "123";
+        const string Value = "123";
 
         // Act
-        LocalizableString localizableString = value;
+        LocalizableString localizableString = Value;
 
         // Assert
         Assert.IsAssignableFrom<IEquatable<LocalizableString>>(localizableString);
@@ -112,12 +112,12 @@ public class FixedLocalizableStringTests
     public void GetHashCodeMethod_MustReturnCalculatedValue()
     {
         // Arrange
-        const string value = "123";
-        int expectedHashCode = value.GetHashCode();
+        const string Value = "123";
+        var expectedHashCode = Value.GetHashCode();
 
         // Act
-        LocalizableString localizableString = value;
-        int actualHashCode = localizableString.GetHashCode();
+        LocalizableString localizableString = Value;
+        var actualHashCode = localizableString.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
@@ -127,16 +127,16 @@ public class FixedLocalizableStringTests
     public void EqualsMethod_MustReturnTrue()
     {
         // Arrange
-        const string value1 = "123";
-        const string value2 = "123";
+        const string Value1 = "123";
+        const string Value2 = "123";
 
         // Act
-        LocalizableString localizableString1 = value1;
-        LocalizableString localizableString2 = value2;
-        bool actualEquals1 = localizableString1.Equals(localizableString2);
-        bool actualEquals2 = localizableString1.Equals((object?)localizableString2);
-        bool actualEquals3 = localizableString1 == localizableString2;
-        bool actualEquals4 = localizableString1 != localizableString2;
+        LocalizableString localizableString1 = Value1;
+        LocalizableString localizableString2 = Value2;
+        var actualEquals1 = localizableString1.Equals(localizableString2);
+        var actualEquals2 = localizableString1.Equals((object?)localizableString2);
+        var actualEquals3 = localizableString1 == localizableString2;
+        var actualEquals4 = localizableString1 != localizableString2;
 
         // Assert
         Assert.True(actualEquals1);
@@ -149,16 +149,16 @@ public class FixedLocalizableStringTests
     public void EqualsMethod_MustReturnFalse()
     {
         // Arrange
-        const string value1 = "123";
-        const string value2 = "456";
+        const string Value1 = "123";
+        const string Value2 = "456";
 
         // Act
-        LocalizableString localizableString1 = value1;
-        LocalizableString localizableString2 = value2;
-        bool actualEquals1 = localizableString1.Equals(localizableString2);
-        bool actualEquals2 = localizableString1.Equals((object?)localizableString2);
-        bool actualEquals3 = localizableString1 == localizableString2;
-        bool actualEquals4 = localizableString1 != localizableString2;
+        LocalizableString localizableString1 = Value1;
+        LocalizableString localizableString2 = Value2;
+        var actualEquals1 = localizableString1.Equals(localizableString2);
+        var actualEquals2 = localizableString1.Equals((object?)localizableString2);
+        var actualEquals3 = localizableString1 == localizableString2;
+        var actualEquals4 = localizableString1 != localizableString2;
 
         // Assert
         Assert.False(actualEquals1);

@@ -14,11 +14,11 @@ public class SyntaxListTests
     public void KindProperty_FromGreenNode_MustBeList()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
-        GreenNode syntaxList = SyntaxFactory.List(literalExpression, literalExpression);
+        var literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        var syntaxList = SyntaxFactory.List(literalExpression, literalExpression);
 
         // Act
-        SyntaxKind actualKind = syntaxList.Kind;
+        var actualKind = syntaxList.Kind;
 
         // Assert
         Assert.Equal(SyntaxKind.List, actualKind);
@@ -28,10 +28,10 @@ public class SyntaxListTests
     public void OneChild_MustReturnTheNode()
     {
         // Arrange
-        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
+        var literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword));
 
         // Act
-        GreenNode syntaxList = SyntaxFactory.List(literalExpression);
+        var syntaxList = SyntaxFactory.List(literalExpression);
 
         // Assert
         Assert.Equal(literalExpression, syntaxList);
@@ -42,11 +42,11 @@ public class SyntaxListTests
     {
         // Arrange
         GreenNode trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, "   ");
-        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        GreenNode syntaxList = SyntaxFactory.List(literalExpression);
+        var literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        var syntaxList = SyntaxFactory.List(literalExpression);
 
         // Act
-        string actualString = syntaxList.ToString();
+        var actualString = syntaxList.ToString();
 
         // Assert
         Assert.Equal("true", actualString);
@@ -57,11 +57,11 @@ public class SyntaxListTests
     {
         // Arrange
         GreenNode trivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, "   ");
-        LiteralExpressionSyntax literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
-        GreenNode syntaxList = SyntaxFactory.List(literalExpression);
+        var literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, SyntaxFactory.Token(SyntaxKind.TrueKeyword, trivia, trivia));
+        var syntaxList = SyntaxFactory.List(literalExpression);
 
         // Act
-        string actualString = syntaxList.ToFullString();
+        var actualString = syntaxList.ToFullString();
 
         // Assert
         Assert.Equal("   true   ", actualString);

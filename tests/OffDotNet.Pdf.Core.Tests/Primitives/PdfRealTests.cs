@@ -33,7 +33,7 @@ public class PdfRealTests
         PdfReal pdfReal = value; // Use an implicit conversion from float to PdfReal
 
         // Act
-        float expectedValue = pdfReal.Value;
+        var expectedValue = pdfReal.Value;
 
         // Assert
         Assert.Equal(expectedValue, pdfReal.Value);
@@ -46,7 +46,7 @@ public class PdfRealTests
         PdfReal pdfReal1 = +123.6f; // Use an implicit conversion from float to PdfReal
 
         // Act
-        bool actualResult = pdfReal1.Equals(null);
+        var actualResult = pdfReal1.Equals(null);
 
         // Assert
         Assert.False(actualResult);
@@ -66,7 +66,7 @@ public class PdfRealTests
         PdfReal pdfReal2 = value2; // Use an implicit conversion from float to PdfReal
 
         // Act
-        bool actualResult = pdfReal1.Equals((object)pdfReal2);
+        var actualResult = pdfReal1.Equals((object)pdfReal2);
 
         // Assert
         Assert.Equal(expectedResult, actualResult);
@@ -84,7 +84,7 @@ public class PdfRealTests
         PdfReal pdfReal1 = value1; // Use an implicit conversion from float to PdfReal
 
         // Act
-        ReadOnlyMemory<byte> actualBytes = pdfReal1.Bytes;
+        var actualBytes = pdfReal1.Bytes;
 
         // Assert
         Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
@@ -123,9 +123,9 @@ public class PdfRealTests
         PdfReal pdfReal2 = value2; // Use an implicit conversion from float to PdfReal
 
         // Act
-        int actualHashCode1 = pdfReal1.GetHashCode();
-        int actualHashCode2 = pdfReal2.GetHashCode();
-        bool areHashCodeEquals = actualHashCode1 == actualHashCode2;
+        var actualHashCode1 = pdfReal1.GetHashCode();
+        var actualHashCode2 = pdfReal2.GetHashCode();
+        var areHashCodeEquals = actualHashCode1 == actualHashCode2;
 
         // Assert
         Assert.Equal(expectedResult, areHashCodeEquals);
@@ -145,12 +145,12 @@ public class PdfRealTests
         PdfReal pdfReal2 = value2; // Use an implicit conversion from float to PdfReal
 
         // Act
-        bool actualEqual = pdfReal1 == pdfReal2;
-        bool actualNotEqual = pdfReal1 != pdfReal2;
-        bool actualGreaterOrEqualThan = pdfReal1 >= pdfReal2;
-        bool actualGreaterThan = pdfReal1 > pdfReal2;
-        bool actualLessOrEqualThan = pdfReal1 <= pdfReal2;
-        bool actualLessThan = pdfReal1 < pdfReal2;
+        var actualEqual = pdfReal1 == pdfReal2;
+        var actualNotEqual = pdfReal1 != pdfReal2;
+        var actualGreaterOrEqualThan = pdfReal1 >= pdfReal2;
+        var actualGreaterThan = pdfReal1 > pdfReal2;
+        var actualLessOrEqualThan = pdfReal1 <= pdfReal2;
+        var actualLessThan = pdfReal1 < pdfReal2;
 
         // Assert
         Assert.Equal(actualEqual, expectedEq);
@@ -174,7 +174,7 @@ public class PdfRealTests
 
         // Act
         float actualValue = pdfReal1; // Use an implicit conversion from PdfReal to float
-        float expectedValue = pdfReal1.Value;
+        var expectedValue = pdfReal1.Value;
 
         // Assert
         Assert.Equal(expectedValue, actualValue);
@@ -227,7 +227,7 @@ public class PdfRealTests
         PdfReal pdfReal1 = value1; // Use an implicit conversion from float to PdfReal
 
         // Act
-        string actualPdfRealStringValue = pdfReal1.Content;
+        var actualPdfRealStringValue = pdfReal1.Content;
 
         // Assert
         Assert.Equal(expectedPdfRealStringValue, actualPdfRealStringValue);
@@ -244,7 +244,7 @@ public class PdfRealTests
         PdfReal pdfReal1 = new(value1);
 
         // Act
-        float actualValue = pdfReal1.Value;
+        var actualValue = pdfReal1.Value;
 
         // Assert
         Assert.Equal(0f, actualValue);

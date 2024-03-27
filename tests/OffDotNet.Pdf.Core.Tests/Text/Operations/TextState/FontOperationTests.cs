@@ -34,14 +34,14 @@ public class FontOperationTests
     public void FontOperation_PdfOperatorProperty_ShouldReturnValidValue()
     {
         // Arrange
-        const string expectedOperator = "Tf";
+        const string ExpectedOperator = "Tf";
         IFontOperation fontOperation = new FontOperation("F13", 6);
 
         // Act
-        string actualPdfOperator = fontOperation.PdfOperator;
+        var actualPdfOperator = fontOperation.PdfOperator;
 
         // Assert
-        Assert.Equal(expectedOperator, actualPdfOperator);
+        Assert.Equal(ExpectedOperator, actualPdfOperator);
     }
 
     [Theory(DisplayName = $"The {nameof(FontOperation.FontName)} property should return a valid values")]
@@ -56,7 +56,7 @@ public class FontOperationTests
         IFontOperation fontOperation = new FontOperation(expectedFontName, fontSize);
 
         // Act
-        PdfName actualFontName = fontOperation.FontName;
+        var actualFontName = fontOperation.FontName;
 
         // Assert
         Assert.Equal(expectedFontName, actualFontName);
@@ -74,7 +74,7 @@ public class FontOperationTests
         IFontOperation fontOperation = new FontOperation(fontName, fontSize);
 
         // Act
-        PdfInteger actualFontSize = fontOperation.FontSize;
+        var actualFontSize = fontOperation.FontSize;
 
         // Assert
         Assert.Equal(actualFontSize, expectedFontSize);
@@ -91,7 +91,7 @@ public class FontOperationTests
         IFontOperation fontOperation = new FontOperation(fontName, fontSize);
 
         // Act
-        string actualContent = fontOperation.Content;
+        var actualContent = fontOperation.Content;
 
         // Assert
         Assert.Equal(expectedContent, actualContent);
@@ -108,7 +108,7 @@ public class FontOperationTests
         IFontOperation fontOperation = new FontOperation(fontName, fontSize);
 
         // Act
-        byte[] actualBytes = fontOperation.Bytes.ToArray();
+        var actualBytes = fontOperation.Bytes.ToArray();
 
         // Assert
         Assert.Equal(expectedBytes, actualBytes);
@@ -124,11 +124,11 @@ public class FontOperationTests
         // Arrange
         PdfName pdfFontName = fontName;
         PdfInteger pdfFontSize = fontSize;
-        int expectedHashCode = HashCode.Combine(nameof(FontOperation), pdfFontName, pdfFontSize, FontOperation.OperatorName);
+        var expectedHashCode = HashCode.Combine(nameof(FontOperation), pdfFontName, pdfFontSize, FontOperation.OperatorName);
         IFontOperation fontOperation = new FontOperation(fontName, fontSize);
 
         // Act
-        int actualHashCode = fontOperation.GetHashCode();
+        var actualHashCode = fontOperation.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
@@ -148,7 +148,7 @@ public class FontOperationTests
         IFontOperation? fontOperation2 = fontName2 != null && fontSize2 != null ? new FontOperation(fontName2, fontSize2.Value) : null;
 
         // Act
-        bool actualResult = fontOperation1.Equals(fontOperation2);
+        var actualResult = fontOperation1.Equals(fontOperation2);
 
         // Assert
         Assert.Equal(expectedResult, actualResult);

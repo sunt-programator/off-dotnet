@@ -21,7 +21,7 @@ internal abstract partial class GreenNode
         if (diagnostics?.Length > 0)
         {
             this.SetFlags(NodeFlags.ContainsDiagnostics);
-            DiagnosticsTable.Add(this, diagnostics);
+            s_diagnosticsTable.Add(this, diagnostics);
         }
     }
 

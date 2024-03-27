@@ -56,7 +56,7 @@ public class PdfNameTests
         PdfName pdfName1 = "Name1"; // Use an implicit conversion from string to PdfName
 
         // Act
-        bool actualResult = pdfName1.Equals(null);
+        var actualResult = pdfName1.Equals(null);
 
         // Assert
         Assert.False(actualResult);
@@ -69,7 +69,7 @@ public class PdfNameTests
         PdfName pdfName1 = "Name1"; // Use an implicit conversion from string to PdfName
 
         // Act
-        bool actualResult = pdfName1.Equals((object?)null);
+        var actualResult = pdfName1.Equals((object?)null);
 
         // Assert
         Assert.False(actualResult);
@@ -86,7 +86,7 @@ public class PdfNameTests
         PdfName pdfName2 = value2; // Use an implicit conversion from string to PdfName
 
         // Act
-        bool actualResult = pdfName1.Equals((object)pdfName2);
+        var actualResult = pdfName1.Equals((object)pdfName2);
 
         // Assert
         Assert.Equal(expectedResult, actualResult);
@@ -112,7 +112,7 @@ public class PdfNameTests
         PdfName pdfName1 = value1; // Use an implicit conversion from string to PdfName
 
         // Act
-        ReadOnlyMemory<byte> actualBytes = pdfName1.Bytes;
+        var actualBytes = pdfName1.Bytes;
 
         // Assert
         Assert.True(actualBytes.Span.SequenceEqual(expectedBytes));
@@ -134,10 +134,10 @@ public class PdfNameTests
     {
         // Arrange
         PdfName pdfName1 = value1; // Use an implicit conversion from string to PdfName
-        int expectedHashCode = HashCode.Combine(nameof(PdfName), value1);
+        var expectedHashCode = HashCode.Combine(nameof(PdfName), value1);
 
         // Act
-        int actualHashCode = pdfName1.GetHashCode();
+        var actualHashCode = pdfName1.GetHashCode();
 
         // Assert
         Assert.Equal(expectedHashCode, actualHashCode);
@@ -154,9 +154,9 @@ public class PdfNameTests
         PdfName pdfName2 = value2; // Use an implicit conversion from string to PdfName
 
         // Act
-        int actualHashCode1 = pdfName1.GetHashCode();
-        int actualHashCode2 = pdfName2.GetHashCode();
-        bool areHashCodeEquals = actualHashCode1 == actualHashCode2;
+        var actualHashCode1 = pdfName1.GetHashCode();
+        var actualHashCode2 = pdfName2.GetHashCode();
+        var areHashCodeEquals = actualHashCode1 == actualHashCode2;
 
         // Assert
         Assert.Equal(expectedResult, areHashCodeEquals);
@@ -173,7 +173,7 @@ public class PdfNameTests
         PdfName pdfName2 = value2; // Use an implicit conversion from string to PdfName
 
         // Act
-        bool actualEqual = pdfName1 == pdfName2;
+        var actualEqual = pdfName1 == pdfName2;
 
         // Assert
         Assert.Equal(actualEqual, expectedResult);
@@ -190,7 +190,7 @@ public class PdfNameTests
         PdfName pdfName2 = value2; // Use an implicit conversion from string to PdfName
 
         // Act
-        bool actualEqual = pdfName1 != pdfName2;
+        var actualEqual = pdfName1 != pdfName2;
 
         // Assert
         Assert.Equal(actualEqual, expectedResult);
@@ -215,7 +215,7 @@ public class PdfNameTests
 
         // Act
         string actualValue = pdfName1; // Use an implicit conversion from PdfName to string
-        string expectedValue = pdfName1.Value;
+        var expectedValue = pdfName1.Value;
 
         // Assert
         Assert.Equal(expectedValue, actualValue);
@@ -247,7 +247,7 @@ public class PdfNameTests
         PdfName pdfName1 = value1; // Use an implicit conversion from string to PdfName
 
         // Act
-        string actualPdfNameStringValue = pdfName1.Content;
+        var actualPdfNameStringValue = pdfName1.Content;
 
         // Assert
         Assert.Equal(expectedPdfNameStringValue, actualPdfNameStringValue);
@@ -260,8 +260,8 @@ public class PdfNameTests
         PdfName pdfName1 = "CustomName"; // Use an implicit conversion from string to PdfName
 
         // Act
-        string firstString = pdfName1.Content;
-        string secondString = pdfName1.Content;
+        var firstString = pdfName1.Content;
+        var secondString = pdfName1.Content;
 
         // Assert
         Assert.Equal(firstString, secondString);
