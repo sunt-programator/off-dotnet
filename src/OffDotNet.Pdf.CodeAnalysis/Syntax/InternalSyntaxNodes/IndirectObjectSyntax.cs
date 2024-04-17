@@ -3,9 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntaxNodes;
 
-using Diagnostic;
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal sealed class IndirectObjectSyntax : GreenNode
 {
@@ -13,9 +14,9 @@ internal sealed class IndirectObjectSyntax : GreenNode
         SyntaxKind kind,
         LiteralExpressionSyntax objectNumber,
         LiteralExpressionSyntax generationNumber,
-        SyntaxToken startObjectKeyword,
+        InternalSyntax.SyntaxToken startObjectKeyword,
         GreenNode content,
-        SyntaxToken endObjectKeyword,
+        InternalSyntax.SyntaxToken endObjectKeyword,
         DiagnosticInfo[]? diagnostics = null)
         : base(kind, diagnostics)
     {
@@ -32,11 +33,11 @@ internal sealed class IndirectObjectSyntax : GreenNode
 
     public LiteralExpressionSyntax GenerationNumber { get; }
 
-    public SyntaxToken StartObjectKeyword { get; }
+    public InternalSyntax.SyntaxToken StartObjectKeyword { get; }
 
     public GreenNode Content { get; }
 
-    public SyntaxToken EndObjectKeyword { get; }
+    public InternalSyntax.SyntaxToken EndObjectKeyword { get; }
 
     /// <inheritdoc/>
     internal override GreenNode? GetSlot(int index)

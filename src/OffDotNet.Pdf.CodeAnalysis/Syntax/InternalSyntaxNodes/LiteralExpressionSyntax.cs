@@ -3,13 +3,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntaxNodes;
 
-using Diagnostic;
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal sealed class LiteralExpressionSyntax : ExpressionSyntax
 {
-    internal LiteralExpressionSyntax(SyntaxKind kind, SyntaxToken token, DiagnosticInfo[]? diagnostics = null)
+    internal LiteralExpressionSyntax(SyntaxKind kind, InternalSyntax.SyntaxToken token, DiagnosticInfo[]? diagnostics = null)
         : base(kind, diagnostics)
     {
         this.Token = token;
@@ -17,7 +18,7 @@ internal sealed class LiteralExpressionSyntax : ExpressionSyntax
         this.FullWidth = token.FullWidth;
     }
 
-    public SyntaxToken Token { get; }
+    public InternalSyntax.SyntaxToken Token { get; }
 
     /// <inheritdoc/>
     internal override GreenNode? GetSlot(int index)

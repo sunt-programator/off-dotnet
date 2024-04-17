@@ -9,6 +9,8 @@ using OffDotNet.Pdf.CodeAnalysis.Collections;
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntaxNodes;
+using SyntaxFactory = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxFactory;
 
 public class WithLotsOfChildrenTests
 {
@@ -330,6 +332,6 @@ public class WithLotsOfChildrenTests
         // Assert
         Assert.NotSame(syntaxList, actualSyntaxList);
         Assert.Equal(diagnostics, actualSyntaxList.GetDiagnostics());
-        Assert.True(actualSyntaxList.ContainsFlags(GreenNode.NodeFlags.ContainsDiagnostics));
+        Assert.True(actualSyntaxList.ContainsFlags(NodeFlags.ContainsDiagnostics));
     }
 }

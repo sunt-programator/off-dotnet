@@ -14,6 +14,7 @@ using Parser;
 using PooledObjects;
 using Syntax;
 using Syntax.InternalSyntax;
+using SyntaxFactory = Syntax.InternalSyntax.SyntaxFactory;
 using SyntaxToken = Syntax.InternalSyntax.SyntaxToken;
 using SyntaxTrivia = Syntax.InternalSyntax.SyntaxTrivia;
 

@@ -7,6 +7,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax;
 
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using SyntaxFactory = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxFactory;
 using SyntaxToken = OffDotNet.Pdf.CodeAnalysis.Syntax.SyntaxToken;
 using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.SyntaxTrivia;
 

@@ -3,17 +3,18 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntaxNodes;
 
-using Diagnostic;
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal sealed class FileTrailerSyntax : GreenNode
 {
     internal FileTrailerSyntax(
         SyntaxKind kind,
-        SyntaxToken trailerKeyword,
+        InternalSyntax.SyntaxToken trailerKeyword,
         DictionaryExpressionSyntax trailerDictionary,
-        SyntaxToken startXRefKeyword,
+        InternalSyntax.SyntaxToken startXRefKeyword,
         LiteralExpressionSyntax byteOffset,
         DiagnosticInfo[]? diagnostics = null)
         : base(kind, diagnostics)
@@ -26,11 +27,11 @@ internal sealed class FileTrailerSyntax : GreenNode
         this.FullWidth = this.TrailerKeyword.FullWidth + this.TrailerDictionary.FullWidth + this.StartXRefKeyword.FullWidth + this.ByteOffset.FullWidth;
     }
 
-    public SyntaxToken TrailerKeyword { get; }
+    public InternalSyntax.SyntaxToken TrailerKeyword { get; }
 
     public DictionaryExpressionSyntax TrailerDictionary { get; }
 
-    public SyntaxToken StartXRefKeyword { get; }
+    public InternalSyntax.SyntaxToken StartXRefKeyword { get; }
 
     public LiteralExpressionSyntax ByteOffset { get; }
 

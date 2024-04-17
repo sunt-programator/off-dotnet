@@ -9,6 +9,8 @@ using System.Diagnostics.CodeAnalysis;
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntaxNodes;
+using SyntaxFactory = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxFactory;
 
 [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "Verified")]
 public class WithTwoChildrenTests
@@ -176,6 +178,6 @@ public class WithTwoChildrenTests
         // Assert
         Assert.NotEqual(syntaxList, actualSyntaxList);
         Assert.Equal(diagnostics, actualSyntaxList.GetDiagnostics());
-        Assert.True(actualSyntaxList.ContainsFlags(GreenNode.NodeFlags.ContainsDiagnostics));
+        Assert.True(actualSyntaxList.ContainsFlags(NodeFlags.ContainsDiagnostics));
     }
 }

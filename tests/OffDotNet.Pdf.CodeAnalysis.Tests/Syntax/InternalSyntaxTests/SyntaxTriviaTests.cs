@@ -221,6 +221,6 @@ public class SyntaxTriviaTests
         // Assert
         Assert.NotSame(trivia, actualNode);
         Assert.Equal(diagnostics, actualNode.GetDiagnostics());
-        Assert.True(actualNode.ContainsFlags(GreenNode.NodeFlags.ContainsDiagnostics));
+        Assert.True(actualNode.ContainsFlags(NodeFlags.ContainsDiagnostics));
     }
 }

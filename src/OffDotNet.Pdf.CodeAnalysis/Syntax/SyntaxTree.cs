@@ -5,7 +5,14 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax;
 
+using Diagnostic;
+using Text;
+
 public abstract class SyntaxTree
 {
     public abstract string FilePath { get; }
+
+    public abstract IEnumerable<AbstractDiagnostic> GetDiagnostics(SyntaxTrivia syntaxTrivia);
+
+    public abstract Location GetLocation(TextSpan span);
 }

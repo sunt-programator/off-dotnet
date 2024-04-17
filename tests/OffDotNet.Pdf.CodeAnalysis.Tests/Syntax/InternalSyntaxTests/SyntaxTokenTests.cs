@@ -8,6 +8,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxTests;
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using SyntaxFactory = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxFactory;
 using SyntaxToken = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxToken;
 using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxTrivia;
 
@@ -386,6 +387,6 @@ public class SyntaxTokenTests
         // Assert
         Assert.NotSame(token, actualToken);
         Assert.Equal(diagnostics, actualToken.GetDiagnostics());
-        Assert.True(actualToken.ContainsFlags(GreenNode.NodeFlags.ContainsDiagnostics));
+        Assert.True(actualToken.ContainsFlags(NodeFlags.ContainsDiagnostics));
     }
 }

@@ -12,4 +12,6 @@ public class SyntaxNode
     internal SyntaxNode(GreenNode green, SyntaxNode? parent, int position)
     {
     }
+
+    public SyntaxTree? SyntaxTree { get; }
 }

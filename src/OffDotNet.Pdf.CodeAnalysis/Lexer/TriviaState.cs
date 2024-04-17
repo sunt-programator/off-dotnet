@@ -7,7 +7,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Lexer;
 
 using System.Text;
 using Syntax;
-using Syntax.InternalSyntax;
+using SyntaxFactory = Syntax.InternalSyntax.SyntaxFactory;
 using SyntaxTrivia = Syntax.InternalSyntax.SyntaxTrivia;
 
 /// <summary>The state of the lexer for the simple token.</summary>

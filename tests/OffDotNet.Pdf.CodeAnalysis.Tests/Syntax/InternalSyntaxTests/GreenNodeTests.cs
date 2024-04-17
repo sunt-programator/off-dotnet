@@ -15,7 +15,7 @@ public class GreenNodeTests
     [SuppressMessage("Substitute creation", "NS2002:Constructor parameters count mismatch.", Justification = "False positive.")]
     private readonly GreenNode _node = Substitute.For<GreenNode>(SyntaxKind.None, null);
 
-    [Fact(DisplayName = $"The {nameof(GreenNode.Flags)} property must return {nameof(GreenNode.NodeFlags.None)} by default")]
+    [Fact(DisplayName = $"The {nameof(GreenNode.Flags)} property must return {nameof(NodeFlags.None)} by default")]
     public void FlagsProperty_MustReturnNoneByDefault()
     {
         // Arrange
@@ -24,14 +24,14 @@ public class GreenNodeTests
         var actualFlags = _node.Flags;
 
         // Assert
-        Assert.Equal(GreenNode.NodeFlags.None, actualFlags);
+        Assert.Equal(NodeFlags.None, actualFlags);
     }
 
     [Fact(DisplayName = $"The SetFlags() method must bitwise set the {nameof(GreenNode.Flags)} property")]
     public void SetFlagsMethod_MustBitwiseSetFlagsProperty()
     {
         // Arrange
-        var expectedFlags = GreenNode.NodeFlags.ContainsDiagnostics;
+        var expectedFlags = NodeFlags.ContainsDiagnostics;
 
         // Act
         _node.SetFlags(expectedFlags);
@@ -45,7 +45,7 @@ public class GreenNodeTests
     public void ClearFlagsMethod_MustBitwiseClearFlagsProperty()
     {
         // Arrange
-        var expectedFlags = GreenNode.NodeFlags.ContainsDiagnostics;
+        var expectedFlags = NodeFlags.ContainsDiagnostics;
         _node.SetFlags(expectedFlags);
 
         // Act
@@ -53,14 +53,14 @@ public class GreenNodeTests
         var actualFlags = _node.Flags;
 
         // Assert
-        Assert.Equal(GreenNode.NodeFlags.None, actualFlags);
+        Assert.Equal(NodeFlags.None, actualFlags);
     }
 
     [Fact(DisplayName = $"The ContainsFlags() method must return true if the {nameof(GreenNode.Flags)} property contains the specified flags")]
     public void ContainsFlagsMethod_MustReturnTrueIfFlagsPropertyContainsSpecifiedFlags()
     {
         // Arrange
-        var expectedFlags = GreenNode.NodeFlags.ContainsDiagnostics;
+        var expectedFlags = NodeFlags.ContainsDiagnostics;
         _node.SetFlags(expectedFlags);
 
         // Act
@@ -71,7 +71,7 @@ public class GreenNodeTests
     }
 
     [Fact(DisplayName =
-        $"The GetDiagnostics() method must return an empty array if the {nameof(GreenNode.NodeFlags)} property does not contain {nameof(GreenNode.NodeFlags.ContainsDiagnostics)} flag")]
+        $"The GetDiagnostics() method must return an empty array if the {nameof(NodeFlags)} property does not contain {nameof(NodeFlags.ContainsDiagnostics)} flag")]
     public void GetDiagnosticsMethod_MustReturnEmptyArrayIfFlagsPropertyDoesNotContainContainsDiagnosticsFlag()
     {
         // Arrange

@@ -3,13 +3,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntaxNodes;
 
-using Diagnostic;
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal sealed class XRefSectionExpressionSyntax : GreenNode
 {
-    internal XRefSectionExpressionSyntax(SyntaxKind kind, SyntaxToken xRefKeyword, GreenNode? subSections, DiagnosticInfo[]? diagnostics = null)
+    internal XRefSectionExpressionSyntax(SyntaxKind kind, InternalSyntax.SyntaxToken xRefKeyword, GreenNode? subSections, DiagnosticInfo[]? diagnostics = null)
         : base(kind, diagnostics)
     {
         this.XRefKeyword = xRefKeyword;
@@ -18,7 +19,7 @@ internal sealed class XRefSectionExpressionSyntax : GreenNode
         this.FullWidth = this.XRefKeyword.FullWidth + this.SubSections?.FullWidth ?? 0;
     }
 
-    public SyntaxToken XRefKeyword { get; }
+    public InternalSyntax.SyntaxToken XRefKeyword { get; }
 
     public GreenNode? SubSections { get; }
 

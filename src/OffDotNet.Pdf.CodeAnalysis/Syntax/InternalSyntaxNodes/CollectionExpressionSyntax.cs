@@ -3,13 +3,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntaxNodes;
 
-using Diagnostic;
+using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
+using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 internal abstract class CollectionExpressionSyntax : ExpressionSyntax
 {
-    protected CollectionExpressionSyntax(SyntaxKind kind, SyntaxToken openToken, GreenNode? elements, SyntaxToken closeToken, DiagnosticInfo[]? diagnostics = null)
+    protected CollectionExpressionSyntax(SyntaxKind kind, InternalSyntax.SyntaxToken openToken, GreenNode? elements, InternalSyntax.SyntaxToken closeToken, DiagnosticInfo[]? diagnostics = null)
         : base(kind, diagnostics)
     {
         this.OpenToken = openToken;
@@ -19,11 +20,11 @@ internal abstract class CollectionExpressionSyntax : ExpressionSyntax
         this.FullWidth = this.OpenToken.FullWidth + this.Elements?.FullWidth ?? 0 + this.CloseToken.FullWidth;
     }
 
-    public SyntaxToken OpenToken { get; }
+    public InternalSyntax.SyntaxToken OpenToken { get; }
 
     public GreenNode? Elements { get; }
 
-    public SyntaxToken CloseToken { get; }
+    public InternalSyntax.SyntaxToken CloseToken { get; }
 
     /// <inheritdoc/>
     internal override GreenNode? GetSlot(int index)

@@ -3,11 +3,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxTests;
+namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxNodes;
 
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntaxNodes;
+using SyntaxFactory = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxFactory;
 
 public class LiteralExpressionSyntaxTests
 {
@@ -114,6 +116,6 @@ public class LiteralExpressionSyntaxTests
         // Assert
         Assert.NotSame(literalExpression, actualNode);
         Assert.Equal(diagnostics, actualNode.GetDiagnostics());
-        Assert.True(actualNode.ContainsFlags(GreenNode.NodeFlags.ContainsDiagnostics));
+        Assert.True(actualNode.ContainsFlags(NodeFlags.ContainsDiagnostics));
     }
 }

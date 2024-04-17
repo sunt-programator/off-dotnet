@@ -37,6 +37,8 @@ public readonly struct SyntaxToken : IEquatable<SyntaxToken>
 
     internal int FullWidth => this.Node?.FullWidth ?? 0;
 
+    public SyntaxTree? SyntaxTree => Parent?.SyntaxTree;
+
     public static bool operator ==(SyntaxToken left, SyntaxToken right)
     {
         return left.Equals(right);

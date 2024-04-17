@@ -8,6 +8,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Tests.Collections;
 using OffDotNet.Pdf.CodeAnalysis.Collections;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using SyntaxFactory = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxFactory;
 
 public class ArrayElementTests
 {

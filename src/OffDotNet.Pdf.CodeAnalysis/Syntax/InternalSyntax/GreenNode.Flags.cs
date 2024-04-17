@@ -5,24 +5,22 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
-using System.Diagnostics.CodeAnalysis;
+/// <summary>Represents the flags that can be associated with a <see cref="GreenNode"/>.</summary>
+[Flags]
+internal enum NodeFlags : byte
+{
+    /// <summary>None.</summary>
+    None = 0,
+
+    /// <summary>Contains diagnostics.</summary>
+    ContainsDiagnostics = 1 << 0,
+}
 
 /// <summary>
 /// Additional class containing flag-related methods and properties for <see cref="GreenNode"/>.
 /// </summary>
 internal abstract partial class GreenNode
 {
-    [Flags]
-    [SuppressMessage("Minor Code Smell", "S2344:Enumeration type names should not have \"Flags\" or \"Enum\" suffixes", Justification = "This is a flags enum.")]
-    internal enum NodeFlags : byte
-    {
-        /// <summary>None.</summary>
-        None = 0,
-
-        /// <summary>Contains diagnostics.</summary>
-        ContainsDiagnostics = 1 << 0,
-    }
-
     /// <summary>Gets the node flags.</summary>
     public NodeFlags Flags { get; private set; }
 

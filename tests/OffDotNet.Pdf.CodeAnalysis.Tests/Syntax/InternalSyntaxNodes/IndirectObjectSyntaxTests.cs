@@ -3,13 +3,15 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxTests;
+namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxNodes;
 
 using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
-using SyntaxToken = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxToken;
-using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxTrivia;
+using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntaxNodes;
+using SyntaxFactory = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxFactory;
+using SyntaxToken = CodeAnalysis.Syntax.InternalSyntax.SyntaxToken;
+using SyntaxTrivia = CodeAnalysis.Syntax.InternalSyntax.SyntaxTrivia;
 
 public class IndirectObjectSyntaxTests
 {
@@ -269,6 +271,6 @@ public class IndirectObjectSyntaxTests
         // Assert
         Assert.NotSame(indirectObject, actualIndirectObject);
         Assert.Equal(diagnostics, actualIndirectObject.GetDiagnostics());
-        Assert.True(actualIndirectObject.ContainsFlags(GreenNode.NodeFlags.ContainsDiagnostics));
+        Assert.True(actualIndirectObject.ContainsFlags(NodeFlags.ContainsDiagnostics));
     }
 }
