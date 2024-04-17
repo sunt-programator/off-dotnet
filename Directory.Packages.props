@@ -1,6 +1,6 @@
 <Project>
   <ItemGroup>
-    <PackageVersion Include="Microsoft.Extensions.ObjectPool" Version="8.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.ObjectPool" Version="8.0.4" />
   </ItemGroup>
   <!-- Analyzers -->
   <ItemGroup>
