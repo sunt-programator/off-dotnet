@@ -117,7 +117,7 @@ public class SyntaxTriviaTests
     public void SyntaxTokenProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
-        var syntaxToken = new SyntaxToken(null, null, 0, 0);
+        var syntaxToken = new SyntaxToken(null, InternalSyntax.SyntaxFactory.Token(SyntaxKind.BadToken), 0, 0);
         var triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, "\n");
         const int Position = 0;
         const int Index = 3;
@@ -258,8 +258,8 @@ public class SyntaxTriviaTests
         const string TriviaText = "\r\n";
         const int Position = 0;
         const int Index = 0;
-        SyntaxToken syntaxToken1 = new(null, null, 0, 0);
-        SyntaxToken syntaxToken2 = new(null, null, 3, 0);
+        SyntaxToken syntaxToken1 = new(null, InternalSyntax.SyntaxFactory.Token(SyntaxKind.BadToken), 0, 0);
+        SyntaxToken syntaxToken2 = new(null, InternalSyntax.SyntaxFactory.Token(SyntaxKind.BadToken), 3, 0);
         var triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, TriviaText);
 
         SyntaxTrivia trivia1 = new(syntaxToken1, triviaNode, Position, Index);
@@ -284,8 +284,9 @@ public class SyntaxTriviaTests
         const string TriviaText = "\r\n";
         const int Position = 0;
         const int Index = 0;
-        SyntaxToken syntaxToken1 = new(null, null, 3, 0);
-        SyntaxToken syntaxToken2 = new(null, null, 3, 0);
+        var underlyingNode = InternalSyntax.SyntaxFactory.Token(SyntaxKind.BadToken);
+        SyntaxToken syntaxToken1 = new(null, underlyingNode, 3, 0);
+        SyntaxToken syntaxToken2 = new(null, underlyingNode, 3, 0);
         var triviaNode = InternalSyntax.SyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, TriviaText);
 
         SyntaxTrivia trivia1 = new(syntaxToken1, triviaNode, Position, Index);

@@ -9,9 +9,12 @@ using InternalSyntax;
 
 public class SyntaxNode
 {
-    internal SyntaxNode(GreenNode green, SyntaxNode? parent, int position)
+    internal SyntaxNode(GreenNode underlyingNode, SyntaxNode? parent, int position)
     {
+        UnderlyingNode = underlyingNode;
     }
 
     public SyntaxTree? SyntaxTree { get; }
+
+    internal GreenNode UnderlyingNode { get; }
 }

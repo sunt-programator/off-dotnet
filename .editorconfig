@@ -251,6 +251,9 @@ csharp_preserve_single_line_statements = true
 # IDE0060: Remove unused parameter
 dotnet_diagnostic.IDE0060.severity = warning
 
+# Nullable are treated as errors
+dotnet_diagnostic.CS8625.severity = error
+
 [tests/**/*.{cs,vb}]
 
 # SA1600: Elements should be documented

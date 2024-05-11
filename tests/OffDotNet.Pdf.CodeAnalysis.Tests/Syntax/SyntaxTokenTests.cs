@@ -13,25 +13,7 @@ using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.SyntaxTrivia;
 
 public class SyntaxTokenTests
 {
-    [Fact(DisplayName = $"The {nameof(SyntaxTrivia.UnderlyingNode)} property must be null as default.")]
-    public void NodeProperty_MustBeNullByDefault()
-    {
-        // Arrange
-        SyntaxNode? parent = null;
-        GreenNode? underlyingNode = null;
-        const int Position = 0;
-        const int Index = 0;
-
-        SyntaxToken token = new(parent, underlyingNode, Position, Index);
-
-        // Act
-        var actualNode = token.Node;
-
-        // Assert
-        Assert.Null(actualNode);
-    }
-
-    [Fact(DisplayName = $"The {nameof(SyntaxToken.Node)} property must be set from the constructor.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxToken.UnderlyingNode)} property must be set from the constructor.")]
     public void NodeProperty_MustBeSetFromConstructor()
     {
         // Arrange
@@ -43,7 +25,7 @@ public class SyntaxTokenTests
         SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        var actualNode = token.Node;
+        var actualNode = token.UnderlyingNode;
 
         // Assert
         Assert.Equal(underlyingNode, actualNode);
@@ -65,24 +47,6 @@ public class SyntaxTokenTests
 
         // Assert
         Assert.Equal(parent, actualParent);
-    }
-
-    [Fact(DisplayName = $"The {nameof(SyntaxToken.Kind)} property must have {nameof(SyntaxKind.None)} value as default.")]
-    public void KindProperty_NullGreenNode_MustBeSetToNone()
-    {
-        // Arrange
-        SyntaxNode? parent = null;
-        GreenNode? underlyingToken = null;
-        const int Position = 0;
-        const int Index = 0;
-
-        SyntaxToken token = new(parent, underlyingToken, Position, Index);
-
-        // Act
-        var actualKind = token.Kind;
-
-        // Assert
-        Assert.Equal(SyntaxKind.None, actualKind);
     }
 
     [Fact(DisplayName = $"The {nameof(SyntaxToken.Position)} property must be set from the constructor.")]
@@ -121,7 +85,7 @@ public class SyntaxTokenTests
         Assert.Equal(3, actualIndex);
     }
 
-    [Fact(DisplayName = $"The {nameof(SyntaxToken.Width)} property must be computed from the {nameof(SyntaxToken.Node)} property.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxToken.Width)} property must be computed from the {nameof(SyntaxToken.UnderlyingNode)} property.")]
     public void WidthProperty_MustBeComputedFromNodeProperty()
     {
         // Arrange
@@ -139,7 +103,7 @@ public class SyntaxTokenTests
         Assert.Equal(4, actualWidth);
     }
 
-    [Fact(DisplayName = $"The {nameof(SyntaxToken.FullWidth)} property must be computed from the {nameof(SyntaxToken.Node)} property.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxToken.FullWidth)} property must be computed from the {nameof(SyntaxToken.UnderlyingNode)} property.")]
     public void FullWidthProperty_MustBeComputedFromNodeProperty()
     {
         // Arrange
@@ -157,7 +121,7 @@ public class SyntaxTokenTests
         Assert.Equal(4, actualFullWidth);
     }
 
-    [Fact(DisplayName = $"The {nameof(SyntaxToken.FullSpan)} must be computed from {nameof(SyntaxToken.Node)} and {nameof(SyntaxToken.Position)} properties.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxToken.FullSpan)} must be computed from {nameof(SyntaxToken.UnderlyingNode)} and {nameof(SyntaxToken.Position)} properties.")]
     public void FullSpanProperty_MustBeComputedFromNode()
     {
         // Arrange
@@ -174,24 +138,6 @@ public class SyntaxTokenTests
         // Assert
         Assert.Equal(3, actualTextSpan.Start);
         Assert.Equal(4, actualTextSpan.Length);
-    }
-
-    [Fact(DisplayName = "The ToString() method must return string empty if the underlying node is null.")]
-    public void ToStringMethod_NullUnderlyingNode_MustReturnStringEmpty()
-    {
-        // Arrange
-        SyntaxNode? parent = null;
-        GreenNode? underlyingNode = null;
-        const int Position = 3;
-        const int Index = 0;
-
-        SyntaxToken token = new(parent, underlyingNode, Position, Index);
-
-        // Act
-        var actualString = token.ToString();
-
-        // Assert
-        Assert.Equal(string.Empty, actualString);
     }
 
     [Fact(DisplayName = "The ToString() method must return the underlying node string.")]
