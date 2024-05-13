@@ -12,10 +12,10 @@ using Text;
 [DebuggerDisplay("{ToString(), nq}")]
 internal sealed class SourceLocation : Location, IEquatable<SourceLocation>
 {
-    internal SourceLocation(SyntaxTree syntaxTree, TextSpan span)
+    internal SourceLocation(AbstractSyntaxTree abstractSyntaxTree, TextSpan span)
     {
         this.SourceSpan = span;
-        this.SyntaxTree = syntaxTree;
+        this.AbstractSyntaxTree = abstractSyntaxTree;
     }
 
     /// <inheritdoc/>
@@ -25,7 +25,7 @@ internal sealed class SourceLocation : Location, IEquatable<SourceLocation>
     public override TextSpan SourceSpan { get; }
 
     /// <inheritdoc/>
-    public override SyntaxTree? SyntaxTree { get; }
+    public override AbstractSyntaxTree? AbstractSyntaxTree { get; }
 
     /// <inheritdoc/>
     public bool Equals(SourceLocation? other)
@@ -35,7 +35,7 @@ internal sealed class SourceLocation : Location, IEquatable<SourceLocation>
             return true;
         }
 
-        return other != null && this.SyntaxTree == other.SyntaxTree && this.SourceSpan == other.SourceSpan;
+        return other != null && this.AbstractSyntaxTree == other.AbstractSyntaxTree && this.SourceSpan == other.SourceSpan;
     }
 
     /// <inheritdoc/>
@@ -47,6 +47,6 @@ internal sealed class SourceLocation : Location, IEquatable<SourceLocation>
     /// <inheritdoc/>
     public override int GetHashCode()
     {
-        return HashCode.Combine(this.SyntaxTree, this.LineSpan);
+        return HashCode.Combine(this.AbstractSyntaxTree, this.LineSpan);
     }
 }

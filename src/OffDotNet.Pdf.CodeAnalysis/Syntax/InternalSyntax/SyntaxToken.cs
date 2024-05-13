@@ -13,7 +13,22 @@ using InternalUtilities;
 /// <example>PDF identifiers, keywords, literals.</example>
 internal sealed class SyntaxToken : GreenNode
 {
-    internal SyntaxToken(SyntaxKind kind, string text, object? value, GreenNode? leading, GreenNode? trailing, int fullWidth, DiagnosticInfo[]? diagnostics = null)
+    /// <summary>Initializes a new instance of the <see cref="SyntaxToken"/> class.</summary>
+    /// <param name="kind">The <see cref="SyntaxKind"/> of the token.</param>
+    /// <param name="text">The lexeme of the token.</param>
+    /// <param name="value">The value of the token.</param>
+    /// <param name="leading">The leading trivia of the token.</param>
+    /// <param name="trailing">The trailing trivia of the token.</param>
+    /// <param name="fullWidth">The full width of the token.</param>
+    /// <param name="diagnostics">The diagnostics associated with this node.</param>
+    internal SyntaxToken(
+        SyntaxKind kind,
+        string text,
+        object? value,
+        GreenNode? leading,
+        GreenNode? trailing,
+        int fullWidth,
+        DiagnosticInfo[]? diagnostics = null)
         : base(kind, diagnostics)
     {
         this.Text = text;
@@ -30,7 +45,7 @@ internal sealed class SyntaxToken : GreenNode
 
     /// <summary>Gets the value of the token.</summary>
     /// <example>If the token is a <see cref="SyntaxKind.NumericLiteralToken"/>, the value is a <see cref="int"/> or a <see cref="double"/>.</example>
-    public object? Value { get; }
+    public override object? Value { get; }
 
     /// <summary>Gets the leading trivia of the token that is preceding the token.</summary>
     /// <remarks>Trivia or minutiae are parts of the source text that are largely insignificant for normal understanding of the PDF Syntax, such as whitespace, comments, etc.</remarks>

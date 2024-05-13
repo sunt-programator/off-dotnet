@@ -28,6 +28,9 @@ internal abstract partial class GreenNode
     /// <summary>Gets the <see cref="SyntaxKind"/> of the token.</summary>
     public SyntaxKind Kind { get; }
 
+    /// <summary>Gets the value of the token.</summary>
+    public virtual object? Value => null;
+
     /// <summary>Gets the leading trivia of the token that is preceding the token.</summary>
     /// <remarks>Trivia or minutiae are parts of the source text that are largely insignificant for normal understanding of the PDF Syntax, such as whitespace, comments, etc.</remarks>
     public virtual GreenNode? LeadingTrivia => null;

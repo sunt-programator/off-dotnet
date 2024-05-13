@@ -15,7 +15,12 @@ using Text;
 [StructLayout(LayoutKind.Auto)]
 public readonly struct SyntaxToken : IEquatable<SyntaxToken>
 {
-    internal SyntaxToken(SyntaxNode? parent, GreenNode token, int position, int index)
+    /// <summary>Initializes a new instance of the <see cref="SyntaxToken"/> struct.</summary>
+    /// <param name="parent">The parent node that contains this token.</param>
+    /// <param name="token">The green node that represents the token.</param>
+    /// <param name="position">The absolute position of the token in the source text.</param>
+    /// <param name="index">The index of the token in the parent token list.</param>
+    internal SyntaxToken(AbstractSyntaxNode? parent, GreenNode token, int position, int index)
     {
         Debug.Assert(token.IsToken, "Invalid token node.");
         Debug.Assert(parent == null || parent.UnderlyingNode.Kind != SyntaxKind.List, "List cannot be a parent.");
@@ -25,23 +30,48 @@ public readonly struct SyntaxToken : IEquatable<SyntaxToken>
         this.Parent = parent;
     }
 
+    /// <summary>Gets the kind of the token.</summary>
     public SyntaxKind Kind => this.UnderlyingNode.Kind;
 
+    /// <summary>Gets the text of the token.</summary>
+    public string Text => ToString();
+
+    /// <summary>Gets the value of the token.</summary>
+    /// <remarks>If the token represents an integer literal, then this property would return <see cref="int"/> type.</remarks>
+    public object? Value => this.UnderlyingNode.Value;
+
+    /// <summary>Gets the absolute span of this token, not including its leading or trailing trivia.</summary>
+    public TextSpan Span => new(Position + UnderlyingNode.LeadingTriviaWidth, UnderlyingNode.Width);
+
+    /// <summary>Gets the absolute span of this token, including its leading or trailing trivia.</summary>
     public TextSpan FullSpan => new(this.Position, this.FullWidth);
 
-    public SyntaxNode? Parent { get; }
+    /// <summary>Gets the parent node that contains this token.</summary>
+    public AbstractSyntaxNode? Parent { get; }
 
+    /// <summary>Gets the syntax tree that this token belongs to.</summary>
+    public AbstractSyntaxTree? SyntaxTree => Parent?.SyntaxTree;
+
+    /// <summary>Gets the green node that this token wraps.</summary>
     internal GreenNode UnderlyingNode { get; }
 
+    /// <summary>Gets the absolute position of the token in the source text.</summary>
     internal int Position { get; }
 
+    /// <summary>Gets the index of the token in the parent token list.</summary>
     internal int Index { get; }
 
+    /// <summary>Gets the width of the token.</summary>
     internal int Width => this.UnderlyingNode.Width;
 
+    /// <summary>Gets the full width of the token.</summary>
     internal int FullWidth => this.UnderlyingNode.FullWidth;
 
-    public SyntaxTree? SyntaxTree => Parent?.SyntaxTree;
+    /// <summary>Gets the leading trivia of the token.</summary>
+    internal int LeadingTriviaWidth => this.UnderlyingNode.LeadingTriviaWidth;
+
+    /// <summary>Gets the trailing trivia of the token.</summary>
+    internal int TrailingTriviaWidth => this.UnderlyingNode.TrailingTriviaWidth;
 
     public static bool operator ==(SyntaxToken left, SyntaxToken right)
     {
@@ -57,6 +87,14 @@ public readonly struct SyntaxToken : IEquatable<SyntaxToken>
     public override string ToString()
     {
         return this.UnderlyingNode.ToString();
+    }
+
+    /// <summary>Gets the full text of the token, including its leading and trailing trivia.</summary>
+    /// <returns>The full text of the token, including its leading and trailing trivia.</returns>
+    /// <remarks>The length of the returned string is equal to <see cref="FullSpan"/>.<see cref="TextSpan.Length"/>.</remarks>
+    public string ToFullString()
+    {
+        return this.UnderlyingNode.ToFullString();
     }
 
     /// <inheritdoc/>

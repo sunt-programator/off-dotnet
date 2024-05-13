@@ -42,7 +42,7 @@ public readonly struct SyntaxTrivia : IEquatable<SyntaxTrivia>
     public SyntaxToken SyntaxToken { get; }
 
     /// <summary>Gets the syntax tree that this trivia belongs to.</summary>
-    public SyntaxTree? SyntaxTree => this.SyntaxToken.SyntaxTree;
+    public AbstractSyntaxTree? SyntaxTree => this.SyntaxToken.SyntaxTree;
 
     /// <summary>Gets the span of the trivia.</summary>
     public TextSpan Span => this.UnderlyingNode != null

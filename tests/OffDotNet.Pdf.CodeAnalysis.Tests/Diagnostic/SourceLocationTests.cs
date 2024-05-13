@@ -13,12 +13,12 @@ public class SourceLocationTests
 {
     private const string FilePath = @"C:\test.pdf";
     private static readonly TextSpan s_span = new(0, 2);
-    private static readonly SyntaxTree s_syntaxTree = Substitute.For<SyntaxTree>();
-    private readonly SourceLocation _location = (SourceLocation)Location.Create(s_syntaxTree, s_span);
+    private static readonly AbstractSyntaxTree s_abstractSyntaxTree = Substitute.For<AbstractSyntaxTree>();
+    private readonly SourceLocation _location = (SourceLocation)Location.Create(s_abstractSyntaxTree, s_span);
 
     public SourceLocationTests()
     {
-        s_syntaxTree.FilePath.Returns(FilePath);
+        s_abstractSyntaxTree.FilePath.Returns(FilePath);
     }
 
     [Fact(DisplayName = $"The {nameof(SourceLocation.Kind)} property must return {nameof(LocationKind.SourceFile)}.")]
@@ -45,24 +45,24 @@ public class SourceLocationTests
         Assert.Equal(s_span, actualSourceSpan);
     }
 
-    [Fact(DisplayName = $"The {nameof(SourceLocation.SyntaxTree)} property must be assigned from constructor.")]
+    [Fact(DisplayName = $"The {nameof(SourceLocation.AbstractSyntaxTree)} property must be assigned from constructor.")]
     public void SyntaxTreeProperty_MustBeAssignedFromConstructor()
     {
         // Arrange
 
         // Act
-        var actualSyntaxTree = _location.SyntaxTree;
+        var actualSyntaxTree = _location.AbstractSyntaxTree;
 
         // Assert
-        Assert.Equal(s_syntaxTree, actualSyntaxTree);
+        Assert.Equal(s_abstractSyntaxTree, actualSyntaxTree);
     }
 
     [Fact(DisplayName = "The Equals() method must return true.")]
     public void EqualsMethod_MustReturnTrue()
     {
         // Arrange
-        var location1 = (SourceLocation)Location.Create(s_syntaxTree, s_span);
-        var location2 = (SourceLocation)Location.Create(s_syntaxTree, s_span);
+        var location1 = (SourceLocation)Location.Create(s_abstractSyntaxTree, s_span);
+        var location2 = (SourceLocation)Location.Create(s_abstractSyntaxTree, s_span);
 
         // Act
         var actualEquals1 = location1.Equals(location2);
@@ -81,7 +81,7 @@ public class SourceLocationTests
     public void EqualsMethod_SameReference_MustReturnTrue()
     {
         // Arrange
-        var location1 = (SourceLocation)Location.Create(s_syntaxTree, s_span);
+        var location1 = (SourceLocation)Location.Create(s_abstractSyntaxTree, s_span);
         var location2 = location1;
 
         // Act
@@ -102,8 +102,8 @@ public class SourceLocationTests
     {
         // Arrange
         TextSpan span2 = new(3, 3);
-        var location1 = (SourceLocation)Location.Create(s_syntaxTree, s_span);
-        var location2 = (SourceLocation)Location.Create(s_syntaxTree, span2);
+        var location1 = (SourceLocation)Location.Create(s_abstractSyntaxTree, s_span);
+        var location2 = (SourceLocation)Location.Create(s_abstractSyntaxTree, span2);
 
         // Act
         var actualEquals1 = location1.Equals(location2);
@@ -133,7 +133,7 @@ public class SourceLocationTests
     public void GetHashCodeMethod_MustIncludeLineAndSourceSpan()
     {
         // Arrange
-        var expectedHashCode = HashCode.Combine(_location.SyntaxTree, _location.LineSpan);
+        var expectedHashCode = HashCode.Combine(_location.AbstractSyntaxTree, _location.LineSpan);
 
         // Act
         var actualHashCode = _location.GetHashCode();
@@ -142,7 +142,7 @@ public class SourceLocationTests
         Assert.Equal(expectedHashCode, actualHashCode);
     }
 
-    [Fact(DisplayName = $"The ToString() method must include the {nameof(SourceLocation.Kind)}, {nameof(CodeAnalysis.Syntax.SyntaxTree.FilePath)} and {nameof(SourceLocation.SourceSpan)} properties.")]
+    [Fact(DisplayName = $"The ToString() method must include the {nameof(SourceLocation.Kind)}, {nameof(CodeAnalysis.Syntax.AbstractSyntaxTree.FilePath)} and {nameof(SourceLocation.SourceSpan)} properties.")]
     public void ToStringMethod_MustIncludeKindAndFileLinePositionSpan()
     {
         // Arrange

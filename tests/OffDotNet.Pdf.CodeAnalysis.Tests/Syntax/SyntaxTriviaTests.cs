@@ -155,9 +155,11 @@ public class SyntaxTriviaTests
 
         // Act
         var actualStringValue = trivia.ToFullString();
+        var actualFullSpan = trivia.FullSpan;
 
         // Assert
         Assert.Equal(TriviaText, actualStringValue);
+        Assert.Equal(2, actualFullSpan.Length);
     }
 
     [Fact(DisplayName = $"The SyntaxTrivia must implement the {nameof(IEquatable<SyntaxTrivia>)} interface.")]

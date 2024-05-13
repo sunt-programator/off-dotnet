@@ -7,14 +7,16 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax;
 
 using InternalSyntax;
 
-public class SyntaxNode
+public class SyntaxNode : AbstractSyntaxNode
 {
-    internal SyntaxNode(GreenNode underlyingNode, SyntaxNode? parent, int position)
+    internal SyntaxNode(GreenNode underlyingNode, AbstractSyntaxNode? parent, int position)
     {
         UnderlyingNode = underlyingNode;
     }
 
-    public SyntaxTree? SyntaxTree { get; }
+    /// <inheritdoc/>
+    public override AbstractSyntaxTree? SyntaxTree { get; }
 
-    internal GreenNode UnderlyingNode { get; }
+    /// <inheritdoc/>
+    internal override GreenNode UnderlyingNode { get; }
 }

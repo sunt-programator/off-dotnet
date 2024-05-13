@@ -13,178 +13,148 @@ using SyntaxTrivia = OffDotNet.Pdf.CodeAnalysis.Syntax.SyntaxTrivia;
 
 public class SyntaxTokenTests
 {
+    private const int Position = 5;
+    private const int Index = 2;
+    private const string Text = "123";
+    private const int Value = 123;
+    private const string LeadingTriviaText = " ";
+    private const string TrailingTriviaText = "\r\n";
+    private readonly SyntaxToken _token;
+    private readonly GreenNode _underlyingNode;
+    private readonly AbstractSyntaxNode _parent;
+
+    public SyntaxTokenTests()
+    {
+        var leadingTrivia = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, LeadingTriviaText);
+        var trailingTrivia = SyntaxFactory.Trivia(SyntaxKind.EndOfLineTrivia, TrailingTriviaText);
+        _underlyingNode = SyntaxFactory.Token(SyntaxKind.NumericLiteralToken, Text, Value, leadingTrivia, trailingTrivia);
+
+        _parent = Substitute.For<AbstractSyntaxNode>();
+        _parent.UnderlyingNode.Returns(_underlyingNode);
+
+        _token = new SyntaxToken(_parent, _underlyingNode, Position, Index);
+    }
+
     [Fact(DisplayName = $"The {nameof(SyntaxToken.UnderlyingNode)} property must be set from the constructor.")]
     public void NodeProperty_MustBeSetFromConstructor()
     {
         // Arrange
-        SyntaxNode? parent = null;
-        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int Position = 0;
-        const int Index = 0;
-
-        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        var actualNode = token.UnderlyingNode;
+        var actualNode = _token.UnderlyingNode;
 
         // Assert
-        Assert.Equal(underlyingNode, actualNode);
+        Assert.Equal(_underlyingNode, actualNode);
     }
 
     [Fact(DisplayName = $"The {nameof(SyntaxToken.Parent)} property must be set from the constructor.")]
     public void ParentProperty_MustBeSetFromConstructor()
     {
         // Arrange
-        SyntaxNode parent = new(SyntaxFactory.Token(SyntaxKind.TrueKeyword), null, 0);
-        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int Position = 150;
-        const int Index = 0;
-
-        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        var actualParent = token.Parent;
+        var actualParent = _token.Parent;
 
         // Assert
-        Assert.Equal(parent, actualParent);
+        Assert.Equal(_parent, actualParent);
     }
 
     [Fact(DisplayName = $"The {nameof(SyntaxToken.Position)} property must be set from the constructor.")]
     public void PositionProperty_MustBeSetFromConstructor()
     {
         // Arrange
-        SyntaxNode? parent = null;
-        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int Position = 150;
-        const int Index = 0;
-
-        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        var actualPosition = token.Position;
+        var actualPosition = _token.Position;
 
         // Assert
-        Assert.Equal(150, actualPosition);
+        Assert.Equal(Position, actualPosition);
     }
 
     [Fact(DisplayName = $"The {nameof(SyntaxToken.Index)} property must be set from the constructor.")]
     public void IndexProperty_MustBeSetFromConstructor()
     {
         // Arrange
-        SyntaxNode? parent = null;
-        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int Position = 0;
-        const int Index = 3;
-
-        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        var actualIndex = token.Index;
+        var actualIndex = _token.Index;
 
         // Assert
-        Assert.Equal(3, actualIndex);
+        Assert.Equal(Index, actualIndex);
     }
 
-    [Fact(DisplayName = $"The {nameof(SyntaxToken.Width)} property must be computed from the {nameof(SyntaxToken.UnderlyingNode)} property.")]
+    [Fact(DisplayName =
+        $"The {nameof(SyntaxToken.Width)} property must be computed from the {nameof(SyntaxToken.UnderlyingNode)} property.")]
     public void WidthProperty_MustBeComputedFromNodeProperty()
     {
         // Arrange
-        SyntaxNode? parent = null;
-        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int Position = 0;
-        const int Index = 0;
-
-        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        var actualWidth = token.Width;
+        var actualWidth = _token.Width;
 
         // Assert
-        Assert.Equal(4, actualWidth);
+        Assert.Equal(Text.Length, actualWidth);
     }
 
-    [Fact(DisplayName = $"The {nameof(SyntaxToken.FullWidth)} property must be computed from the {nameof(SyntaxToken.UnderlyingNode)} property.")]
+    [Fact(DisplayName =
+        $"The {nameof(SyntaxToken.FullWidth)} property must be computed from the {nameof(SyntaxToken.UnderlyingNode)} property.")]
     public void FullWidthProperty_MustBeComputedFromNodeProperty()
     {
         // Arrange
-        SyntaxNode? parent = null;
-        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int Position = 0;
-        const int Index = 0;
-
-        SyntaxToken token = new(parent, underlyingNode, Position, Index);
+        var expectedFullWidth = Text.Length + LeadingTriviaText.Length + TrailingTriviaText.Length;
 
         // Act
-        var actualFullWidth = token.FullWidth;
+        var actualFullWidth = _token.FullWidth;
 
         // Assert
-        Assert.Equal(4, actualFullWidth);
+        Assert.Equal(expectedFullWidth, actualFullWidth);
     }
 
-    [Fact(DisplayName = $"The {nameof(SyntaxToken.FullSpan)} must be computed from {nameof(SyntaxToken.UnderlyingNode)} and {nameof(SyntaxToken.Position)} properties.")]
+    [Fact(DisplayName =
+        $"The {nameof(SyntaxToken.FullSpan)} must be computed from {nameof(SyntaxToken.UnderlyingNode)} and {nameof(SyntaxToken.Position)} properties.")]
     public void FullSpanProperty_MustBeComputedFromNode()
     {
         // Arrange
-        SyntaxNode? parent = null;
-        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int Position = 3;
-        const int Index = 0;
-
-        SyntaxToken token = new(parent, underlyingNode, Position, Index);
+        var expectedSpanLength = Text.Length + LeadingTriviaText.Length + TrailingTriviaText.Length;
 
         // Act
-        var actualTextSpan = token.FullSpan;
+        var actualTextSpan = _token.FullSpan;
 
         // Assert
-        Assert.Equal(3, actualTextSpan.Start);
-        Assert.Equal(4, actualTextSpan.Length);
+        Assert.Equal(Position, actualTextSpan.Start);
+        Assert.Equal(expectedSpanLength, actualTextSpan.Length);
     }
 
     [Fact(DisplayName = "The ToString() method must return the underlying node string.")]
     public void ToStringMethod_MustReturnTheUnderlyingNodeString()
     {
         // Arrange
-        SyntaxNode? parent = null;
-        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int Position = 3;
-        const int Index = 0;
-
-        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Act
-        var actualString = token.ToString();
+        var actualString = _token.ToString();
 
         // Assert
-        Assert.Equal("true", actualString);
+        Assert.Equal(Text, actualString);
     }
 
     [Fact(DisplayName = $"The SyntaxTrivia must implement the {nameof(IEquatable<SyntaxToken>)} interface.")]
     public void SyntaxToken_MustImplementIEquatableInterface()
     {
         // Arrange
-        SyntaxNode? parent = null;
-        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int Position = 3;
-        const int Index = 0;
 
         // Act
-        SyntaxToken token = new(parent, underlyingNode, Position, Index);
 
         // Assert
-        Assert.IsAssignableFrom<IEquatable<SyntaxToken>>(token);
+        Assert.IsAssignableFrom<IEquatable<SyntaxToken>>(_token);
     }
 
-    [Fact(DisplayName = $"The Equals() method must return true by comparing their {nameof(SyntaxTrivia.UnderlyingNode)}, {nameof(SyntaxTrivia.Position)} and {nameof(SyntaxTrivia.Index)} properties.")]
+    [Fact(DisplayName =
+        $"The Equals() method must return true by comparing their {nameof(SyntaxTrivia.UnderlyingNode)}, {nameof(SyntaxTrivia.Position)} and {nameof(SyntaxTrivia.Index)} properties.")]
     public void EqualsMethod_MustReturnTrue()
     {
         // Arrange
-        SyntaxNode? parent = null;
-        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int Position = 3;
-        const int Index = 0;
-
-        SyntaxToken token1 = new(parent, underlyingNode, Position, Index);
-        SyntaxToken token2 = new(parent, underlyingNode, Position, Index);
+        SyntaxToken token1 = new(_parent, _underlyingNode, Position, Index);
+        SyntaxToken token2 = new(_parent, _underlyingNode, Position, Index);
 
         // Act
         var equals = token1.Equals(token2);
@@ -193,18 +163,16 @@ public class SyntaxTokenTests
         Assert.True(equals);
     }
 
-    [Fact(DisplayName = $"The Equals() method must return false by comparing their {nameof(SyntaxTrivia.Position)} properties.")]
+    [Fact(DisplayName =
+        $"The Equals() method must return false by comparing their {nameof(SyntaxTrivia.Position)} properties.")]
     public void EqualsMethod_DifferentPositions_MustReturnFalse()
     {
         // Arrange
-        SyntaxNode? parent = null;
-        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int Position1 = 0;
         const int Position2 = 3;
-        const int Index = 0;
 
-        SyntaxToken token1 = new(parent, underlyingNode, Position1, Index);
-        SyntaxToken token2 = new(parent, underlyingNode, Position2, Index);
+        SyntaxToken token1 = new(_parent, _underlyingNode, Position1, Index);
+        SyntaxToken token2 = new(_parent, _underlyingNode, Position2, Index);
 
         // Act
         var equals = token1.Equals(token2);
@@ -213,18 +181,16 @@ public class SyntaxTokenTests
         Assert.False(equals);
     }
 
-    [Fact(DisplayName = $"The Equals() method must return false by comparing their {nameof(SyntaxTrivia.Index)} properties.")]
+    [Fact(DisplayName =
+        $"The Equals() method must return false by comparing their {nameof(SyntaxTrivia.Index)} properties.")]
     public void EqualsMethod_DifferentIndices_MustReturnFalse()
     {
         // Arrange
-        SyntaxNode? parent = null;
-        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int Position = 3;
         const int Index1 = 0;
         const int Index2 = 5;
 
-        SyntaxToken token1 = new(parent, underlyingNode, Position, Index1);
-        SyntaxToken token2 = new(parent, underlyingNode, Position, Index2);
+        SyntaxToken token1 = new(_parent, _underlyingNode, Position, Index1);
+        SyntaxToken token2 = new(_parent, _underlyingNode, Position, Index2);
 
         // Act
         var equals = token1.Equals(token2);
@@ -233,18 +199,16 @@ public class SyntaxTokenTests
         Assert.False(equals);
     }
 
-    [Fact(DisplayName = $"The Equals() method must return false by comparing their {nameof(SyntaxTrivia.UnderlyingNode)} properties.")]
+    [Fact(DisplayName =
+        $"The Equals() method must return false by comparing their {nameof(SyntaxTrivia.UnderlyingNode)} properties.")]
     public void EqualsMethod_DifferentNodes_MustReturnFalse()
     {
         // Arrange
-        SyntaxNode? parent = null;
         GreenNode underlyingNode1 = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         GreenNode underlyingNode2 = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
-        const int Position = 3;
-        const int Index = 0;
 
-        SyntaxToken token1 = new(parent, underlyingNode1, Position, Index);
-        SyntaxToken token2 = new(parent, underlyingNode2, Position, Index);
+        SyntaxToken token1 = new(_parent, underlyingNode1, Position, Index);
+        SyntaxToken token2 = new(_parent, underlyingNode2, Position, Index);
 
         // Act
         var equals = token1.Equals(token2);
@@ -253,18 +217,16 @@ public class SyntaxTokenTests
         Assert.False(equals);
     }
 
-    [Fact(DisplayName = $"The Equals() method (object overload) must return false by comparing their {nameof(SyntaxTrivia.Position)} properties.")]
+    [Fact(DisplayName =
+        $"The Equals() method (object overload) must return false by comparing their {nameof(SyntaxTrivia.Position)} properties.")]
     public void EqualsMethod_ObjectOverload_DifferentPosition_MustReturnFalse()
     {
         // Arrange
-        SyntaxNode? parent = null;
-        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int Position1 = 0;
         const int Position2 = 3;
-        const int Index = 0;
 
-        SyntaxToken token1 = new(parent, underlyingNode, Position1, Index);
-        object token2 = new SyntaxToken(parent, underlyingNode, Position2, Index);
+        SyntaxToken token1 = new(_parent, _underlyingNode, Position1, Index);
+        object token2 = new SyntaxToken(_parent, _underlyingNode, Position2, Index);
 
         // Act
         var equals = token1.Equals(token2);
@@ -273,18 +235,16 @@ public class SyntaxTokenTests
         Assert.False(equals);
     }
 
-    [Fact(DisplayName = $"The Equals() method (object overload) must return true by comparing their {nameof(SyntaxTrivia.Position)} properties.")]
+    [Fact(DisplayName =
+        $"The Equals() method (object overload) must return true by comparing their {nameof(SyntaxTrivia.Position)} properties.")]
     public void EqualsMethod_ObjectOverload_SamePosition_MustReturnTrue()
     {
         // Arrange
-        SyntaxNode? parent = null;
-        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int Position1 = 3;
         const int Position2 = 3;
-        const int Index = 0;
 
-        SyntaxToken token1 = new(parent, underlyingNode, Position1, Index);
-        object token2 = new SyntaxToken(parent, underlyingNode, Position2, Index);
+        SyntaxToken token1 = new(_parent, _underlyingNode, Position1, Index);
+        object token2 = new SyntaxToken(_parent, _underlyingNode, Position2, Index);
 
         // Act
         var equals = token1.Equals(token2);
@@ -293,18 +253,16 @@ public class SyntaxTokenTests
         Assert.True(equals);
     }
 
-    [Fact(DisplayName = $"The '==' operator must return false by comparing their {nameof(SyntaxTrivia.Position)} properties.")]
+    [Fact(DisplayName =
+        $"The '==' operator must return false by comparing their {nameof(SyntaxTrivia.Position)} properties.")]
     public void EqualsOperator_DifferentPosition_MustReturnFalse()
     {
         // Arrange
-        SyntaxNode? parent = null;
-        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int Position1 = 0;
         const int Position2 = 3;
-        const int Index = 0;
 
-        SyntaxToken token1 = new(parent, underlyingNode, Position1, Index);
-        SyntaxToken token2 = new(parent, underlyingNode, Position2, Index);
+        SyntaxToken token1 = new(_parent, _underlyingNode, Position1, Index);
+        SyntaxToken token2 = new(_parent, _underlyingNode, Position2, Index);
 
         // Act
         var equals = token1 == token2;
@@ -313,18 +271,16 @@ public class SyntaxTokenTests
         Assert.False(equals);
     }
 
-    [Fact(DisplayName = $"The '!=' operator must return false by comparing their {nameof(SyntaxTrivia.Position)} properties.")]
+    [Fact(DisplayName =
+        $"The '!=' operator must return false by comparing their {nameof(SyntaxTrivia.Position)} properties.")]
     public void NotEqualsOperator_SamePosition_MustReturnFalse()
     {
         // Arrange
-        SyntaxNode? parent = null;
-        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         const int Position1 = 3;
         const int Position2 = 3;
-        const int Index = 0;
 
-        SyntaxToken token1 = new(parent, underlyingNode, Position1, Index);
-        SyntaxToken token2 = new(parent, underlyingNode, Position2, Index);
+        SyntaxToken token1 = new(_parent, _underlyingNode, Position1, Index);
+        SyntaxToken token2 = new(_parent, _underlyingNode, Position2, Index);
 
         // Act
         var equals = token1 != token2;
@@ -337,18 +293,108 @@ public class SyntaxTokenTests
     public void GetHashCodeMethod_MustBeComputed()
     {
         // Arrange
-        SyntaxNode? parent = null;
-        GreenNode underlyingNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        const int Position = 3;
-        const int Index = 0;
-
-        var hashCode = HashCode.Combine(parent, underlyingNode, Position, Index);
-        SyntaxToken token = new(parent, underlyingNode, Position, Index);
+        var hashCode = HashCode.Combine(_parent, _underlyingNode, Position, Index);
 
         // Act
-        var actualHashCode = token.GetHashCode();
+        var actualHashCode = _token.GetHashCode();
 
         // Assert
         Assert.Equal(hashCode, actualHashCode);
+    }
+
+    [Fact(DisplayName =
+        $"The {nameof(SyntaxToken.Kind)} property must be set from the {nameof(SyntaxToken.UnderlyingNode)} property.")]
+    public void KindProperty_MustBeSetFromNodeProperty()
+    {
+        // Arrange
+        const SyntaxKind ExpectedKind = SyntaxKind.NumericLiteralToken;
+
+        // Act
+        var actualKind = _token.Kind;
+
+        // Assert
+        Assert.Equal(ExpectedKind, actualKind);
+    }
+
+    [Fact(DisplayName =
+        $"The {nameof(SyntaxToken.Span)} must be computed from {nameof(SyntaxToken.UnderlyingNode)} and {nameof(SyntaxToken.Position)} properties.")]
+    public void SpanProperty_MustBeComputedFromNode()
+    {
+        // Arrange
+        var expectedSpanStart = Position + LeadingTriviaText.Length;
+        var expectedSpanLength = Text.Length;
+
+        // Act
+        var actualTextSpan = _token.Span;
+
+        // Assert
+        Assert.Equal(expectedSpanStart, actualTextSpan.Start);
+        Assert.Equal(expectedSpanLength, actualTextSpan.Length);
+    }
+
+    [Fact(DisplayName =
+        $"The {nameof(SyntaxToken.Value)} property must be computed from {nameof(SyntaxToken.UnderlyingNode)} property.")]
+    public void ValueProperty_MustBeComputedFromNodeProperty()
+    {
+        // Arrange
+
+        // Act
+        var actualValue = _token.Value;
+
+        // Assert
+        Assert.Equal(Value, actualValue);
+    }
+
+    [Fact(DisplayName =
+        $"The {nameof(SyntaxToken.Text)} property must be computed from {nameof(SyntaxToken.UnderlyingNode)} property.")]
+    public void TextProperty_MustBeComputedFromNodeProperty()
+    {
+        // Arrange
+
+        // Act
+        var actualText = _token.Text;
+
+        // Assert
+        Assert.Equal(Text, actualText);
+    }
+
+    [Fact(DisplayName =
+        $"The ToFullString() method must be computed from the {nameof(SyntaxToken.UnderlyingNode)} property.")]
+    public void ToFullStringMethod_MustBeComputedFromNodeProperty()
+    {
+        // Arrange
+        const string ExpectedFullText = $"{LeadingTriviaText}{Text}{TrailingTriviaText}";
+
+        // Act
+        var actualText = _token.ToFullString();
+        var actualFullSpan = _token.FullSpan;
+
+        // Assert
+        Assert.Equal(ExpectedFullText, actualText);
+        Assert.Equal(ExpectedFullText.Length, actualFullSpan.Length);
+    }
+
+    [Fact(DisplayName = $"The {nameof(SyntaxToken.LeadingTriviaWidth)} property must be computed from the {nameof(SyntaxToken.UnderlyingNode)} property.")]
+    public void LeadingWidthProperty_MustBeComputedFromNodeProperty()
+    {
+        // Arrange
+
+        // Act
+        var actualLeadingWidth = _token.LeadingTriviaWidth;
+
+        // Assert
+        Assert.Equal(LeadingTriviaText.Length, actualLeadingWidth);
+    }
+
+    [Fact(DisplayName = $"The {nameof(SyntaxToken.TrailingTriviaWidth)} property must be computed from the {nameof(SyntaxToken.UnderlyingNode)} property.")]
+    public void TrailingWidthProperty_MustBeComputedFromNodeProperty()
+    {
+        // Arrange
+
+        // Act
+        var actualTrailingWidth = _token.TrailingTriviaWidth;
+
+        // Assert
+        Assert.Equal(TrailingTriviaText.Length, actualTrailingWidth);
     }
 }

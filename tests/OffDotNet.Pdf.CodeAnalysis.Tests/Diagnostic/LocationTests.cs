@@ -101,14 +101,14 @@ public class LocationTests
         Assert.True(actualEquals4);
     }
 
-    [Fact(DisplayName = $"The ToString() method with a {nameof(SyntaxTree)} must include the {nameof(Location.Kind)}, {nameof(SyntaxTree.FilePath)} and {nameof(Location.SourceSpan)} properties.")]
+    [Fact(DisplayName = $"The ToString() method with a {nameof(AbstractSyntaxTree)} must include the {nameof(Location.Kind)}, {nameof(AbstractSyntaxTree.FilePath)} and {nameof(Location.SourceSpan)} properties.")]
     public void ToStringMethod_WithSyntaxTree_MustIncludeKind_PathAndSourceSpan()
     {
         // Arrange
         const string ExpectedLocation = @"None (C:\1.pdf[1..2))";
-        var syntaxTree = Substitute.For<SyntaxTree>();
+        var syntaxTree = Substitute.For<AbstractSyntaxTree>();
         syntaxTree.FilePath.Returns(@"C:\1.pdf");
-        _location.SyntaxTree.Returns(syntaxTree);
+        _location.AbstractSyntaxTree.Returns(syntaxTree);
         _location.SourceSpan.Returns(new TextSpan(1, 1));
 
         // Act
@@ -123,7 +123,7 @@ public class LocationTests
     {
         // Arrange
         const string ExpectedLocation = @"None (C:\1.pdf@2:3)";
-        _location.SyntaxTree.Returns((SyntaxTree?)null);
+        _location.AbstractSyntaxTree.Returns((AbstractSyntaxTree?)null);
         _location.LineSpan.Returns(new FileLinePositionSpan(@"C:\1.pdf", new LinePositionSpan(new LinePosition(1, 2), new LinePosition(2, 2))));
 
         // Act

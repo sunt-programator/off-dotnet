@@ -23,7 +23,7 @@ public abstract partial class Location : IEquatable<Location>
 
     public virtual FileLinePositionSpan LineSpan => default;
 
-    public virtual SyntaxTree? SyntaxTree => null;
+    public virtual AbstractSyntaxTree? AbstractSyntaxTree => null;
 
     public static bool operator ==(Location? left, Location? right)
     {
@@ -50,14 +50,14 @@ public abstract partial class Location : IEquatable<Location>
         return new ExternalFileLocation(filePath, textSpan, lineSpan);
     }
 
-    public static Location Create(SyntaxTree syntaxTree, TextSpan textSpan)
+    public static Location Create(AbstractSyntaxTree abstractSyntaxTree, TextSpan textSpan)
     {
-        if (syntaxTree == null)
+        if (abstractSyntaxTree == null)
         {
-            throw new ArgumentNullException(nameof(syntaxTree));
+            throw new ArgumentNullException(nameof(abstractSyntaxTree));
         }
 
-        return new SourceLocation(syntaxTree, textSpan);
+        return new SourceLocation(abstractSyntaxTree, textSpan);
     }
 
     /// <inheritdoc/>
@@ -77,12 +77,12 @@ public abstract partial class Location : IEquatable<Location>
     {
         StringBuilder result = new(this.Kind.ToString());
 
-        if (this.SyntaxTree is not null)
+        if (this.AbstractSyntaxTree is not null)
         {
             return result
                  .Append(' ')
                  .Append('(')
-                 .Append(this.SyntaxTree.FilePath)
+                 .Append(this.AbstractSyntaxTree.FilePath)
                  .Append(this.SourceSpan)
                  .Append(')')
                  .ToString();
