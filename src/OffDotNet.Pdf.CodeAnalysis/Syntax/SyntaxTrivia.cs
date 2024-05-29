@@ -21,14 +21,13 @@ public readonly struct SyntaxTrivia : IEquatable<SyntaxTrivia>
     /// <param name="triviaNode">The green node that represents the trivia.</param>
     /// <param name="position">The absolute position of the trivia in the source text.</param>
     /// <param name="index">The index of the trivia in the parent trivia list.</param>
-    internal SyntaxTrivia(in SyntaxToken token, GreenNode triviaNode, int position, int index) // skipcq: CS-R1138
+    internal SyntaxTrivia(in SyntaxToken token, GreenNode triviaNode, int position, int index)
     {
         this.UnderlyingNode = triviaNode;
         this.Position = position;
         this.Index = index;
         this.SyntaxToken = token;
 
-        Debug.Assert(triviaNode.IsTrivia, "Invalid trivia node.");
         Debug.Assert(this.Kind != SyntaxKind.None || this.Equals(default), "Invalid trivia node.");
     }
 

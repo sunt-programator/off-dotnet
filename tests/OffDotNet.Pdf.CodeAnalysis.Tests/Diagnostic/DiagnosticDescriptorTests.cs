@@ -149,7 +149,7 @@ public class DiagnosticDescriptorTests
         // Act
         DiagnosticDescriptor diagnosticDescriptor1 = new("1", "2", "3", "4", DiagnosticSeverity.Error, true, "5", "6", "7");
         DiagnosticDescriptor diagnosticDescriptor2 = new("1", "2", "3", "4", DiagnosticSeverity.Error, true, "5", "6", "7");
-        var actualEquals0 = diagnosticDescriptor1.Equals(diagnosticDescriptor1); // skipcq: CS-W1086
+        var actualEquals0 = diagnosticDescriptor1.Equals(diagnosticDescriptor1);
         var actualEquals1 = diagnosticDescriptor1.Equals(diagnosticDescriptor2);
         var actualEquals2 = diagnosticDescriptor1.Equals((object?)diagnosticDescriptor2);
         var actualEquals3 = diagnosticDescriptor1 == diagnosticDescriptor2;

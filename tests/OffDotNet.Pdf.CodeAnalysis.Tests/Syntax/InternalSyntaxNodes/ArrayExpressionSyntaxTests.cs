@@ -78,7 +78,7 @@ public class ArrayExpressionSyntaxTests
         var actualOpenBracketToken = arrayExpressionSyntax.OpenToken;
 
         // Assert
-        Assert.Equal(_openBracketToken, actualOpenBracketToken);
+        Assert.Same(_openBracketToken, actualOpenBracketToken);
     }
 
     [Fact(DisplayName = $"The {nameof(CollectionExpressionSyntax.Elements)} property must be assigned from constructor.")]
@@ -91,7 +91,7 @@ public class ArrayExpressionSyntaxTests
         var actualElements = arrayExpressionSyntax.Elements;
 
         // Assert
-        Assert.Equal(_elements.Node, actualElements);
+        Assert.Same(_elements.Node, actualElements);
     }
 
     [Fact(DisplayName = $"The {nameof(CollectionExpressionSyntax.CloseToken)} property must be assigned from constructor.")]
@@ -104,17 +104,17 @@ public class ArrayExpressionSyntaxTests
         var actualCloseBracketToken = arrayExpressionSyntax.CloseToken;
 
         // Assert
-        Assert.Equal(_closeBracketToken, actualCloseBracketToken);
+        Assert.Same(_closeBracketToken, actualCloseBracketToken);
     }
 
-    [Fact(DisplayName = $"The {nameof(CollectionExpressionSyntax.SlotCount)} property must be equal to 3.")]
+    [Fact(DisplayName = $"The {nameof(CollectionExpressionSyntax.Count)} property must be equal to 3.")]
     public void SlotCountProperty_MustBeEqualTo3()
     {
         // Arrange
         var arrayExpressionSyntax = SyntaxFactory.ArrayExpression(_openBracketToken, _elements, _closeBracketToken);
 
         // Act
-        var actualSlotCount = arrayExpressionSyntax.SlotCount;
+        var actualSlotCount = arrayExpressionSyntax.Count;
 
         // Assert
         Assert.Equal(3, actualSlotCount);
@@ -130,7 +130,7 @@ public class ArrayExpressionSyntaxTests
         var actualSlot = arrayExpressionSyntax.GetSlot(0);
 
         // Assert
-        Assert.Equal(_openBracketToken, actualSlot);
+        Assert.Same(_openBracketToken, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 1 must return {nameof(CollectionExpressionSyntax.Elements)} property.")]
@@ -143,7 +143,7 @@ public class ArrayExpressionSyntaxTests
         var actualSlot = arrayExpressionSyntax.GetSlot(1);
 
         // Assert
-        Assert.Equal(_elements.Node, actualSlot);
+        Assert.Same(_elements.Node, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 2 must return {nameof(CollectionExpressionSyntax.CloseToken)} property.")]
@@ -156,7 +156,7 @@ public class ArrayExpressionSyntaxTests
         var actualSlot = arrayExpressionSyntax.GetSlot(2);
 
         // Assert
-        Assert.Equal(_closeBracketToken, actualSlot);
+        Assert.Same(_closeBracketToken, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 3 must return null.")]

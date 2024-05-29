@@ -6,11 +6,9 @@
 namespace OffDotNet.Pdf.CodeAnalysis.Collections;
 
 using System.Diagnostics;
-using Syntax.InternalSyntax;
 
 [DebuggerDisplay("{_value,nq}")]
 internal struct ArrayElement<TNode>
-    where TNode : GreenNode?
 {
     internal TNode _value;
 

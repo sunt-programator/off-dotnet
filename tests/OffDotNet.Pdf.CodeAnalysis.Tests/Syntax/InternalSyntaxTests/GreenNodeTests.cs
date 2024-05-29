@@ -5,11 +5,13 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax.InternalSyntaxTests;
 
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
-using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using SyntaxFactory = CodeAnalysis.Syntax.InternalSyntax.SyntaxFactory;
 
+[SuppressMessage("ReSharper", "GenericEnumeratorNotDisposed", Justification = "Test file")]
 public class GreenNodeTests
 {
     [SuppressMessage("Substitute creation", "NS2002:Constructor parameters count mismatch.", Justification = "False positive.")]
@@ -77,9 +79,84 @@ public class GreenNodeTests
         // Arrange
 
         // Act
-        DiagnosticInfo[] actualResult = _node.GetDiagnostics();
+        var actualResult = _node.GetDiagnostics();
 
         // Assert
         Assert.Empty(actualResult);
+    }
+
+    [Fact(DisplayName = $"The class must implement the {nameof(IReadOnlyList<GreenNode>)} interface")]
+    public void Class_MustImplementIReadOnlyListInterface()
+    {
+        // Arrange
+
+        // Act
+
+        // Assert
+        Assert.IsAssignableFrom<IReadOnlyList<GreenNode>>(_node);
+    }
+
+    [Fact(DisplayName = "The GetEnumerator() method shoud return correct enumerator")]
+    public void GetEnumeratorMethod_ShouldReturnCorrectEnumerator()
+    {
+        // Arrange
+
+        // Act
+        var enumerator1 = _node.GetEnumerator();
+        var enumerator2 = ((IEnumerable<GreenNode>)_node).GetEnumerator();
+        var enumerator3 = ((IEnumerable)_node).GetEnumerator();
+
+        // Assert
+        Assert.IsType<GreenNode.Enumerator>(enumerator1);
+        Assert.IsType<GreenNode.EnumeratorImpl>(enumerator2);
+        Assert.IsType<GreenNode.EnumeratorImpl>(enumerator3);
+    }
+
+    [Fact(DisplayName = $"The Indexer must throw a {nameof(ArgumentOutOfRangeException)} if the node is not a list")]
+    public void Indexer_MustThrowArgumentOutOfRangeException_IfNodeIsNotList()
+    {
+        // Arrange
+
+        // Act
+        void Action() => _ = _node[0];
+
+        // Assert
+        Assert.Throws<ArgumentOutOfRangeException>(Action);
+    }
+
+    [Theory(DisplayName = $"The Indexer must throw a {nameof(ArgumentOutOfRangeException)} if the index is out of range")]
+    [InlineData(-1)]
+    [InlineData(-10)]
+    [InlineData(3)]
+    [InlineData(10)]
+    public void Indexer_MustThrowArgumentOutOfRangeException_IfIndexIsOutOfRange(int index)
+    {
+        // Arrange
+        var node = SyntaxFactory.List(
+            SyntaxFactory.Token(SyntaxKind.TrueKeyword),
+            SyntaxFactory.Token(SyntaxKind.FalseKeyword),
+            SyntaxFactory.Token(SyntaxKind.NullKeyword));
+
+        // Act
+        void Action() => _ = node[index];
+
+        // Assert
+        Assert.Throws<ArgumentOutOfRangeException>(Action);
+    }
+
+    [Fact(DisplayName = "The Indexer must return the node at the specified index")]
+    public void Indexer_MustReturnNodeAtSpecifiedIndex()
+    {
+        // Arrange
+        var node = SyntaxFactory.List(
+            SyntaxFactory.Token(SyntaxKind.TrueKeyword),
+            SyntaxFactory.Token(SyntaxKind.FalseKeyword),
+            SyntaxFactory.Token(SyntaxKind.NullKeyword));
+
+        // Act
+        var actual = node[1];
+
+        // Assert
+        Assert.Same(node.GetSlot(1), actual);
     }
 }

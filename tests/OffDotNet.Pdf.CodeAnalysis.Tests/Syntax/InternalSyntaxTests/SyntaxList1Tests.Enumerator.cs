@@ -116,7 +116,7 @@ public class SyntaxList1EnumeratorTests
         var actualNode = enumerator.Current;
 
         // Assert
-        Assert.Equal(literalExpression1, actualNode);
+        Assert.Same(literalExpression1, actualNode);
     }
 
     [Fact(DisplayName = $"The {nameof(SyntaxList<GreenNode>.Enumerator.Current)} property must return the second element.")]
@@ -136,7 +136,7 @@ public class SyntaxList1EnumeratorTests
         var actualNode = enumerator.Current;
 
         // Assert
-        Assert.Equal(literalExpression2, actualNode);
+        Assert.Same(literalExpression2, actualNode);
     }
 
     [Fact(DisplayName = $"The {nameof(SyntaxList<GreenNode>.Enumerator.Current)} property must return the last element if index is out of range.")]
@@ -157,7 +157,7 @@ public class SyntaxList1EnumeratorTests
         var actualNode = enumerator.Current;
 
         // Assert
-        Assert.Equal(literalExpression2, actualNode);
+        Assert.Same(literalExpression2, actualNode);
     }
 
     [Fact(DisplayName = "The Reset() method must reset the enumerator.")]

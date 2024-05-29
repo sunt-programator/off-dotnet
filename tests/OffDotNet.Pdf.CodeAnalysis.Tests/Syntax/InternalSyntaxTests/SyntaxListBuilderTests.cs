@@ -73,7 +73,7 @@ public class SyntaxListBuilderTests
         var node = syntaxListBuilder[2];
 
         // Assert
-        Assert.Equal(trueKeyword, node);
+        Assert.Same(trueKeyword, node);
     }
 
     [Fact(DisplayName = "The Add() method with null argument must not add a node.")]
@@ -111,7 +111,7 @@ public class SyntaxListBuilderTests
         var syntaxListBuilder = SyntaxListBuilder.Create().Add(trueKeyword);
 
         // Assert
-        Assert.Equal(trueKeyword, syntaxListBuilder[0]);
+        Assert.Same(trueKeyword, syntaxListBuilder[0]);
     }
 
     [Fact(DisplayName = $"The Add() method must increment the {nameof(SyntaxListBuilder.Count)} property.")]
@@ -142,9 +142,9 @@ public class SyntaxListBuilderTests
         var actualCount = syntaxListBuilder.Count;
 
         // Assert
-        Assert.Equal(trueKeyword, syntaxListBuilder[0]);
-        Assert.Equal(falseKeyword, syntaxListBuilder[1]);
-        Assert.Equal(nullKeyword, syntaxListBuilder[2]);
+        Assert.Same(trueKeyword, syntaxListBuilder[0]);
+        Assert.Same(falseKeyword, syntaxListBuilder[1]);
+        Assert.Same(nullKeyword, syntaxListBuilder[2]);
         Assert.Equal(3, actualCount);
     }
 
@@ -163,8 +163,8 @@ public class SyntaxListBuilderTests
         var syntaxListBuilder = SyntaxListBuilder.Create().AddRange(items, Offset, Length);
 
         // Assert
-        Assert.Equal(trueKeyword, syntaxListBuilder[0]);
-        Assert.Equal(falseKeyword, syntaxListBuilder[1]);
+        Assert.Same(trueKeyword, syntaxListBuilder[0]);
+        Assert.Same(falseKeyword, syntaxListBuilder[1]);
     }
 
     [Fact(DisplayName = "The AddRange() method with offset and length must add a list of nodes.")]
@@ -185,8 +185,8 @@ public class SyntaxListBuilderTests
         var syntaxListBuilder = SyntaxListBuilder.Create().AddRange(syntaxList, Offset, Length);
 
         // Assert
-        Assert.Equal(trueKeyword, syntaxListBuilder[0]);
-        Assert.Equal(falseKeyword, syntaxListBuilder[1]);
+        Assert.Same(trueKeyword, syntaxListBuilder[0]);
+        Assert.Same(falseKeyword, syntaxListBuilder[1]);
     }
 
     [Fact(DisplayName = "The AddRange() method with offset and length must add a list of nodes.")]
@@ -204,7 +204,7 @@ public class SyntaxListBuilderTests
         var syntaxListBuilder = SyntaxListBuilder.Create().AddRange(items, Offset, Length);
 
         // Assert
-        Assert.Equal(trueKeyword, syntaxListBuilder[0]);
+        Assert.Same(trueKeyword, syntaxListBuilder[0]);
         Assert.Null(syntaxListBuilder[1]);
     }
 
@@ -226,7 +226,7 @@ public class SyntaxListBuilderTests
         var syntaxListBuilder = SyntaxListBuilder.Create().AddRange(syntaxList, Offset, Length);
 
         // Assert
-        Assert.Equal(trueKeyword, syntaxListBuilder[0]);
+        Assert.Same(trueKeyword, syntaxListBuilder[0]);
         Assert.Null(syntaxListBuilder[1]);
     }
 
@@ -245,7 +245,7 @@ public class SyntaxListBuilderTests
         var syntaxListBuilder = SyntaxListBuilder.Create().AddRange(items, Offset, Length);
 
         // Assert
-        Assert.Equal(falseKeyword, syntaxListBuilder[0]);
+        Assert.Same(falseKeyword, syntaxListBuilder[0]);
         Assert.Null(syntaxListBuilder[1]);
     }
 
@@ -267,7 +267,7 @@ public class SyntaxListBuilderTests
         var syntaxListBuilder = SyntaxListBuilder.Create().AddRange(syntaxList, Offset, Length);
 
         // Assert
-        Assert.Equal(falseKeyword, syntaxListBuilder[0]);
+        Assert.Same(falseKeyword, syntaxListBuilder[0]);
         Assert.Null(syntaxListBuilder[1]);
     }
 
@@ -284,8 +284,8 @@ public class SyntaxListBuilderTests
         var syntaxListBuilder = SyntaxListBuilder.Create().AddRange(items);
 
         // Assert
-        Assert.Equal(trueKeyword, syntaxListBuilder[0]);
-        Assert.Equal(falseKeyword, syntaxListBuilder[1]);
+        Assert.Same(trueKeyword, syntaxListBuilder[0]);
+        Assert.Same(falseKeyword, syntaxListBuilder[1]);
     }
 
     [Fact(DisplayName = "The AddRange() method with offset and length must add a list of nodes.")]
@@ -304,8 +304,8 @@ public class SyntaxListBuilderTests
         var syntaxListBuilder = SyntaxListBuilder.Create().AddRange(syntaxList);
 
         // Assert
-        Assert.Equal(trueKeyword, syntaxListBuilder[0]);
-        Assert.Equal(falseKeyword, syntaxListBuilder[1]);
+        Assert.Same(trueKeyword, syntaxListBuilder[0]);
+        Assert.Same(falseKeyword, syntaxListBuilder[1]);
     }
 
     [Fact(DisplayName = "The Add() method must ensure additional capacity.")]
@@ -320,7 +320,7 @@ public class SyntaxListBuilderTests
             .Add(trueKeyword);
 
         // Assert
-        Assert.Equal(trueKeyword, syntaxListBuilder[1]);
+        Assert.Same(trueKeyword, syntaxListBuilder[1]);
     }
 
     [Fact(DisplayName = $"The AddRange() method with negative offset must throw {nameof(ArgumentOutOfRangeException)}.")]
@@ -601,7 +601,7 @@ public class SyntaxListBuilderTests
             .AddRange(items);
 
         // Assert
-        Assert.Equal(trueKeyword, syntaxListBuilder[15]);
+        Assert.Same(trueKeyword, syntaxListBuilder[15]);
     }
 
     [Fact(DisplayName = "The AddRange() method must ensure additional capacity.")]
@@ -625,7 +625,7 @@ public class SyntaxListBuilderTests
             .AddRange(syntaxList);
 
         // Assert
-        Assert.Equal(trueKeyword, syntaxListBuilder[15]);
+        Assert.Same(trueKeyword, syntaxListBuilder[15]);
     }
 
     [Fact(DisplayName = $"The Clear() method must reset the {nameof(SyntaxListBuilder.Count)} property.")]
@@ -752,7 +752,7 @@ public class SyntaxListBuilderTests
         var actualListNode = syntaxListBuilder.ToListNode();
 
         // Assert
-        Assert.Equal(trueKeyword, actualListNode);
+        Assert.Same(trueKeyword, actualListNode);
     }
 
     [Fact(DisplayName = $"The ToListNode() method with {nameof(SyntaxListBuilder.Count)}=2 must return a syntax list.")]
@@ -771,8 +771,8 @@ public class SyntaxListBuilderTests
 
         // Assert
         Assert.NotNull(actualListNode);
-        Assert.Equal(trueKeyword, actualListNode.GetSlot(0));
-        Assert.Equal(falseKeyword, actualListNode.GetSlot(1));
+        Assert.Same(trueKeyword, actualListNode.GetSlot(0));
+        Assert.Same(falseKeyword, actualListNode.GetSlot(1));
     }
 
     [Fact(DisplayName = $"The ToListNode() method with {nameof(SyntaxListBuilder.Count)}=3 must return a syntax list.")]
@@ -793,9 +793,9 @@ public class SyntaxListBuilderTests
 
         // Assert
         Assert.NotNull(actualListNode);
-        Assert.Equal(trueKeyword, actualListNode.GetSlot(0));
-        Assert.Equal(falseKeyword, actualListNode.GetSlot(1));
-        Assert.Equal(nullKeyword, actualListNode.GetSlot(2));
+        Assert.Same(trueKeyword, actualListNode.GetSlot(0));
+        Assert.Same(falseKeyword, actualListNode.GetSlot(1));
+        Assert.Same(nullKeyword, actualListNode.GetSlot(2));
     }
 
     [Fact(DisplayName = $"The ToListNode() method with {nameof(SyntaxListBuilder.Count)}>3 must return a syntax list.")]
@@ -818,10 +818,10 @@ public class SyntaxListBuilderTests
 
         // Assert
         Assert.NotNull(actualListNode);
-        Assert.Equal(trueKeyword, actualListNode.GetSlot(0));
-        Assert.Equal(falseKeyword, actualListNode.GetSlot(1));
-        Assert.Equal(nullKeyword, actualListNode.GetSlot(2));
-        Assert.Equal(xRefKeyword, actualListNode.GetSlot(3));
+        Assert.Same(trueKeyword, actualListNode.GetSlot(0));
+        Assert.Same(falseKeyword, actualListNode.GetSlot(1));
+        Assert.Same(nullKeyword, actualListNode.GetSlot(2));
+        Assert.Same(xRefKeyword, actualListNode.GetSlot(3));
     }
 
     [Fact(DisplayName = "The ToListNode() method must return a syntax list.")]
@@ -841,10 +841,10 @@ public class SyntaxListBuilderTests
 
         // Assert
         Assert.Equal(2, actualListNode1.Count);
-        Assert.Equal(trueKeyword, actualListNode1[0]);
-        Assert.Equal(falseKeyword, actualListNode1[1]);
+        Assert.Same(trueKeyword, actualListNode1[0]);
+        Assert.Same(falseKeyword, actualListNode1[1]);
         Assert.Equal(2, actualListNode2.Count);
-        Assert.Equal(trueKeyword, actualListNode2[0]);
-        Assert.Equal(falseKeyword, actualListNode2[1]);
+        Assert.Same(trueKeyword, actualListNode2[0]);
+        Assert.Same(falseKeyword, actualListNode2[1]);
     }
 }

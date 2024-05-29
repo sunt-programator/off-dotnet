@@ -16,7 +16,7 @@ internal abstract class CollectionExpressionSyntax : ExpressionSyntax
         this.OpenToken = openToken;
         this.Elements = elements;
         this.CloseToken = closeToken;
-        this.SlotCount = 3;
+        this.Count = 3;
         this.FullWidth = this.OpenToken.FullWidth + this.Elements?.FullWidth ?? 0 + this.CloseToken.FullWidth;
     }
 

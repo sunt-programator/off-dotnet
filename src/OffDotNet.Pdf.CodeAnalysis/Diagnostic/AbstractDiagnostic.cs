@@ -17,7 +17,7 @@ public abstract class AbstractDiagnostic : IEquatable<AbstractDiagnostic?>, IFor
     /// <inheritdoc/>
     public override string ToString()
     {
-        return $"";
+        return string.Empty;
     }
 
     /// <inheritdoc/>

@@ -15,7 +15,7 @@ using SyntaxFactory = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxFac
 [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "Verified")]
 public class WithThreeChildrenTests
 {
-    [Fact(DisplayName = $"The {nameof(SyntaxList.SlotCount)} property must be equal to 3.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxList.Count)} property must be equal to 3.")]
     public void SlotCountProperty_MustBeEqualTo2()
     {
         // Arrange
@@ -23,7 +23,7 @@ public class WithThreeChildrenTests
         var syntaxList = SyntaxFactory.List(literalExpression, literalExpression, literalExpression);
 
         // Act
-        var actualSlotCount = syntaxList.SlotCount;
+        var actualSlotCount = syntaxList.Count;
 
         // Assert
         Assert.Equal(3, actualSlotCount);
@@ -42,7 +42,7 @@ public class WithThreeChildrenTests
         var actualSlot = syntaxList.GetSlot(0);
 
         // Assert
-        Assert.Equal(literalExpression1, actualSlot);
+        Assert.Same(literalExpression1, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 1 must return the second child.")]
@@ -58,7 +58,7 @@ public class WithThreeChildrenTests
         var actualSlot = syntaxList.GetSlot(1);
 
         // Assert
-        Assert.Equal(literalExpression2, actualSlot);
+        Assert.Same(literalExpression2, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 2 must return the third child.")]
@@ -74,7 +74,7 @@ public class WithThreeChildrenTests
         var actualSlot = syntaxList.GetSlot(2);
 
         // Assert
-        Assert.Equal(literalExpression3, actualSlot);
+        Assert.Same(literalExpression3, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 3 must return null.")]

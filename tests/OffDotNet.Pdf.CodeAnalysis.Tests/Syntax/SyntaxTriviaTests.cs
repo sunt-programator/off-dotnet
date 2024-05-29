@@ -26,7 +26,7 @@ public class SyntaxTriviaTests
         var node = token.UnderlyingNode;
 
         // Assert
-        Assert.Equal(triviaNode, node);
+        Assert.Same(triviaNode, node);
     }
 
     [Fact(DisplayName =

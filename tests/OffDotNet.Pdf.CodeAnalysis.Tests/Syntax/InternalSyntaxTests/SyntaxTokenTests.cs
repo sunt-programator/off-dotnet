@@ -186,7 +186,7 @@ public class SyntaxTokenTests
         Assert.Equal(0, actualTrailingTriviaWidth);
     }
 
-    [Fact(DisplayName = $"The default SyntaxToken must have the {nameof(SyntaxToken.SlotCount)} set to 0.")]
+    [Fact(DisplayName = $"The default SyntaxToken must have the {nameof(SyntaxToken.Count)} set to 0.")]
     public void DefaultSyntaxToken_MustSetSlotCountToZero()
     {
         // Arrange
@@ -194,7 +194,7 @@ public class SyntaxTokenTests
         GreenNode token = SyntaxFactory.Token(Kind);
 
         // Act
-        var actualSlotCount = token.SlotCount;
+        var actualSlotCount = token.Count;
 
         // Assert
         Assert.Equal(0, actualSlotCount);
@@ -257,7 +257,7 @@ public class SyntaxTokenTests
         var actualLeadingTrivia = token.LeadingTrivia;
 
         // Assert
-        Assert.Equal(leadingTrivia, actualLeadingTrivia);
+        Assert.Same(leadingTrivia, actualLeadingTrivia);
     }
 
     [Fact(DisplayName = $"The {nameof(SyntaxTrivia.TrailingTrivia)} property must be assigned from constructor.")]
@@ -272,7 +272,7 @@ public class SyntaxTokenTests
         var actualTrailingTrivia = token.TrailingTrivia;
 
         // Assert
-        Assert.Equal(trailingTrivia, actualTrailingTrivia);
+        Assert.Same(trailingTrivia, actualTrailingTrivia);
     }
 
     [Fact(DisplayName = $"The {nameof(SyntaxToken.FullWidth)} property must take into account the leading and trailing trivia.")]

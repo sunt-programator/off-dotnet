@@ -5,8 +5,11 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Represents the flags that can be associated with a <see cref="GreenNode"/>.</summary>
 [Flags]
+[SuppressMessage("Minor Code Smell", "S2344:Enumeration type names should not have \"Flags\" or \"Enum\" suffixes", Justification = "This is a flags enum.")]
 internal enum NodeFlags : byte
 {
     /// <summary>None.</summary>

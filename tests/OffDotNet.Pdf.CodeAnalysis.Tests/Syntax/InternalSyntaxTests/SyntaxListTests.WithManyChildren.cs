@@ -14,7 +14,7 @@ using SyntaxFactory = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxFac
 
 public class WithManyChildrenTests
 {
-    [Fact(DisplayName = $"The {nameof(SyntaxList.SlotCount)} property must be equal to 3.")]
+    [Fact(DisplayName = $"The {nameof(SyntaxList.Count)} property must be equal to 3.")]
     public void SlotCountProperty_MustBeEqualTo256()
     {
         // Arrange
@@ -31,7 +31,7 @@ public class WithManyChildrenTests
         var syntaxList = SyntaxFactory.List(children);
 
         // Act
-        var actualSlotCount = syntaxList.SlotCount;
+        var actualSlotCount = syntaxList.Count;
 
         // Assert
         Assert.Equal(SlotCount, actualSlotCount);
@@ -53,7 +53,7 @@ public class WithManyChildrenTests
         var actualSlot = syntaxList.GetSlot(0);
 
         // Assert
-        Assert.Equal(children[0]._value, actualSlot);
+        Assert.Same(children[0]._value, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 1 must return the second child.")]
@@ -72,7 +72,7 @@ public class WithManyChildrenTests
         var actualSlot = syntaxList.GetSlot(1);
 
         // Assert
-        Assert.Equal(children[1]._value, actualSlot);
+        Assert.Same(children[1]._value, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 2 must return the third child.")]
@@ -91,7 +91,7 @@ public class WithManyChildrenTests
         var actualSlot = syntaxList.GetSlot(2);
 
         // Assert
-        Assert.Equal(children[2]._value, actualSlot);
+        Assert.Same(children[2]._value, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 3 must return null.")]

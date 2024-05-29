@@ -35,7 +35,7 @@ public class SyntaxListTests
         var syntaxList = SyntaxFactory.List(literalExpression);
 
         // Assert
-        Assert.Equal(literalExpression, syntaxList);
+        Assert.Same(literalExpression, syntaxList);
     }
 
     [Fact(DisplayName = "The ToString() method must not include the trivia.")]

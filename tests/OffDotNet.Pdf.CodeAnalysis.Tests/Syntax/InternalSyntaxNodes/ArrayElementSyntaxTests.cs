@@ -45,17 +45,17 @@ public class ArrayElementSyntaxTests
         var actualReferenceKeyword = arrayElement.Expression;
 
         // Assert
-        Assert.Equal(_expression, actualReferenceKeyword);
+        Assert.Same(_expression, actualReferenceKeyword);
     }
 
-    [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.SlotCount)} property must be equal to 1.")]
+    [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.Count)} property must be equal to 1.")]
     public void SlotCountProperty_MustBeEqualTo3()
     {
         // Arrange
         var arrayElement = SyntaxFactory.ArrayElement(_expression);
 
         // Act
-        var actualSlotCount = arrayElement.SlotCount;
+        var actualSlotCount = arrayElement.Count;
 
         // Assert
         Assert.Equal(1, actualSlotCount);
@@ -71,7 +71,7 @@ public class ArrayElementSyntaxTests
         var actualSlot = arrayElement.GetSlot(0);
 
         // Assert
-        Assert.Equal(_expression, actualSlot);
+        Assert.Same(_expression, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 1 must return null.")]
@@ -154,7 +154,6 @@ public class ArrayElementSyntaxTests
 
         // Assert
         Assert.NotSame(arrayElement, actualNode);
-        Assert.NotEqual(arrayElement, actualNode);
         Assert.Equal(diagnostics, actualNode.GetDiagnostics());
     }
 }

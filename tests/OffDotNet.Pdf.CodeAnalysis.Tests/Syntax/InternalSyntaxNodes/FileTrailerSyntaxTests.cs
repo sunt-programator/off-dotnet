@@ -71,7 +71,7 @@ public class FileTrailerSyntaxTests
         var actualTrailerKeyword = fileTrailerSyntax.TrailerKeyword;
 
         // Assert
-        Assert.Equal(_trailerKeyword, actualTrailerKeyword);
+        Assert.Same(_trailerKeyword, actualTrailerKeyword);
     }
 
     [Fact(DisplayName = $"The {nameof(FileTrailerSyntax.TrailerDictionary)} property must be assigned from constructor.")]
@@ -84,7 +84,7 @@ public class FileTrailerSyntaxTests
         CollectionExpressionSyntax actualTrailerDictionary = fileTrailerSyntax.TrailerDictionary;
 
         // Assert
-        Assert.Equal(_trailerDictionary, actualTrailerDictionary);
+        Assert.Same(_trailerDictionary, actualTrailerDictionary);
     }
 
     [Fact(DisplayName = $"The {nameof(FileTrailerSyntax.StartXRefKeyword)} property must be assigned from constructor.")]
@@ -97,7 +97,7 @@ public class FileTrailerSyntaxTests
         var actualStartXRefKeyword = fileTrailerSyntax.StartXRefKeyword;
 
         // Assert
-        Assert.Equal(_startXRefKeyword, actualStartXRefKeyword);
+        Assert.Same(_startXRefKeyword, actualStartXRefKeyword);
     }
 
     [Fact(DisplayName = $"The {nameof(FileTrailerSyntax.ByteOffset)} property must be assigned from constructor.")]
@@ -110,17 +110,17 @@ public class FileTrailerSyntaxTests
         var actualByteOffset = fileTrailerSyntax.ByteOffset;
 
         // Assert
-        Assert.Equal(_byteOffset, actualByteOffset);
+        Assert.Same(_byteOffset, actualByteOffset);
     }
 
-    [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.SlotCount)} property must be equal to 5.")]
+    [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.Count)} property must be equal to 5.")]
     public void SlotCountProperty_MustBeEqualTo4()
     {
         // Arrange
         var fileTrailerSyntax = SyntaxFactory.FileTrailer(_trailerKeyword, _trailerDictionary, _startXRefKeyword, _byteOffset);
 
         // Act
-        var actualSlotCount = fileTrailerSyntax.SlotCount;
+        var actualSlotCount = fileTrailerSyntax.Count;
 
         // Assert
         Assert.Equal(4, actualSlotCount);
@@ -136,7 +136,7 @@ public class FileTrailerSyntaxTests
         var actualSlot = fileTrailerSyntax.GetSlot(0);
 
         // Assert
-        Assert.Equal(_trailerKeyword, actualSlot);
+        Assert.Same(_trailerKeyword, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 1 must return {nameof(FileTrailerSyntax.TrailerDictionary)} property.")]
@@ -149,7 +149,7 @@ public class FileTrailerSyntaxTests
         var actualSlot = fileTrailerSyntax.GetSlot(1);
 
         // Assert
-        Assert.Equal(_trailerDictionary, actualSlot);
+        Assert.Same(_trailerDictionary, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 2 must return {nameof(FileTrailerSyntax.StartXRefKeyword)} property.")]
@@ -162,7 +162,7 @@ public class FileTrailerSyntaxTests
         var actualSlot = fileTrailerSyntax.GetSlot(2);
 
         // Assert
-        Assert.Equal(_startXRefKeyword, actualSlot);
+        Assert.Same(_startXRefKeyword, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 3 must return {nameof(FileTrailerSyntax.ByteOffset)} property.")]
@@ -175,7 +175,7 @@ public class FileTrailerSyntaxTests
         var actualSlot = fileTrailerSyntax.GetSlot(3);
 
         // Assert
-        Assert.Equal(_byteOffset, actualSlot);
+        Assert.Same(_byteOffset, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 4 must return null.")]

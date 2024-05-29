@@ -16,7 +16,7 @@ internal abstract partial class SyntaxList
             : base(diagnostics)
         {
             this.Children = children;
-            this.SlotCount = children.Length > byte.MaxValue ? byte.MaxValue : children.Length;
+            this.Count = children.Length > byte.MaxValue ? byte.MaxValue : children.Length;
 
             for (var i = 0; i < this.Children.Length; i++)
             {
@@ -24,7 +24,7 @@ internal abstract partial class SyntaxList
             }
         }
 
-        protected ArrayElement<GreenNode>[] Children { get; } // skipcq: CS-W1096
+        protected ArrayElement<GreenNode>[] Children { get; }
 
         /// <inheritdoc/>
         internal override GreenNode? GetSlot(int index)

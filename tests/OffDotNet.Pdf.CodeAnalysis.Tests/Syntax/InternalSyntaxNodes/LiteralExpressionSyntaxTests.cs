@@ -24,10 +24,10 @@ public class LiteralExpressionSyntaxTests
         var actualToken = literalExpression.Token;
 
         // Assert
-        Assert.Equal(keyword, actualToken);
+        Assert.Same(keyword, actualToken);
     }
 
-    [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.SlotCount)} property must be equal to 1.")]
+    [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.Count)} property must be equal to 1.")]
     public void SlotCountProperty_MustBeEqualTo1()
     {
         // Arrange
@@ -35,7 +35,7 @@ public class LiteralExpressionSyntaxTests
         var literalExpression = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression, keyword);
 
         // Act
-        var actualSlotCount = literalExpression.SlotCount;
+        var actualSlotCount = literalExpression.Count;
 
         // Assert
         Assert.Equal(1, actualSlotCount);
@@ -52,7 +52,7 @@ public class LiteralExpressionSyntaxTests
         var actualSlot = literalExpression.GetSlot(0);
 
         // Assert
-        Assert.Equal(keyword, actualSlot);
+        Assert.Same(keyword, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 1 must return null.")]

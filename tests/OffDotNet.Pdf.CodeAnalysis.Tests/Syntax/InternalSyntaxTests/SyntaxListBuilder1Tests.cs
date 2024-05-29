@@ -72,9 +72,9 @@ public class SyntaxListBuilder1Tests
         var node3 = builder[2];
 
         // Assert
-        Assert.Equal(trueKeyword, node1);
-        Assert.Equal(falseKeyword, node2);
-        Assert.Equal(nullKeyword, node3);
+        Assert.Same(trueKeyword, node1);
+        Assert.Same(falseKeyword, node2);
+        Assert.Same(nullKeyword, node3);
     }
 
     [Fact(DisplayName = $"The Add() method with null argument must not increment the {nameof(SyntaxListBuilder.Count)} property.")]
@@ -83,7 +83,7 @@ public class SyntaxListBuilder1Tests
         // Arrange
 
         // Act
-        SyntaxListBuilder<GreenNode> syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
+        var syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
         syntaxListBuilder.Add(null);
         var actualCount = syntaxListBuilder.Count;
 
@@ -98,11 +98,11 @@ public class SyntaxListBuilder1Tests
         var trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
 
         // Act
-        SyntaxListBuilder<GreenNode> syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
+        var syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
         syntaxListBuilder.Add(trueKeyword);
 
         // Assert
-        Assert.Equal(trueKeyword, syntaxListBuilder[0]);
+        Assert.Same(trueKeyword, syntaxListBuilder[0]);
     }
 
     [Fact(DisplayName = $"The Add() method must increment the {nameof(SyntaxListBuilder.Count)} property.")]
@@ -112,7 +112,7 @@ public class SyntaxListBuilder1Tests
         var trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
 
         // Act
-        SyntaxListBuilder<GreenNode> syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
+        var syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
         syntaxListBuilder.Add(trueKeyword);
         var actualCount = syntaxListBuilder.Count;
 
@@ -130,14 +130,14 @@ public class SyntaxListBuilder1Tests
         var listNode = SyntaxFactory.List(trueKeyword, falseKeyword, nullKeyword);
 
         // Act
-        SyntaxListBuilder<GreenNode> syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
+        var syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
         syntaxListBuilder.Add(listNode);
         var actualCount = syntaxListBuilder.Count;
 
         // Assert
-        Assert.Equal(trueKeyword, syntaxListBuilder[0]);
-        Assert.Equal(falseKeyword, syntaxListBuilder[1]);
-        Assert.Equal(nullKeyword, syntaxListBuilder[2]);
+        Assert.Same(trueKeyword, syntaxListBuilder[0]);
+        Assert.Same(falseKeyword, syntaxListBuilder[1]);
+        Assert.Same(nullKeyword, syntaxListBuilder[2]);
         Assert.Equal(3, actualCount);
     }
 
@@ -153,12 +153,12 @@ public class SyntaxListBuilder1Tests
         const int Length = 2;
 
         // Act
-        SyntaxListBuilder<GreenNode> syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
+        var syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
         syntaxListBuilder.AddRange(items, Offset, Length);
 
         // Assert
-        Assert.Equal(trueKeyword, syntaxListBuilder[0]);
-        Assert.Equal(falseKeyword, syntaxListBuilder[1]);
+        Assert.Same(trueKeyword, syntaxListBuilder[0]);
+        Assert.Same(falseKeyword, syntaxListBuilder[1]);
     }
 
     [Fact(DisplayName = "The AddRange() method with offset and length must add a list of nodes.")]
@@ -168,19 +168,19 @@ public class SyntaxListBuilder1Tests
         var trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         var falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
 
-        ArrayElement<GreenNode>[] items = new ArrayElement<GreenNode>[2];
+        var items = new ArrayElement<GreenNode>[2];
         items[0]._value = trueKeyword;
         items[1]._value = falseKeyword;
 
         SyntaxList<GreenNode> syntaxList = new(SyntaxFactory.List(items));
 
         // Act
-        SyntaxListBuilder<GreenNode> syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
+        var syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
         syntaxListBuilder.AddRange(syntaxList);
 
         // Assert
-        Assert.Equal(trueKeyword, syntaxListBuilder[0]);
-        Assert.Equal(falseKeyword, syntaxListBuilder[1]);
+        Assert.Same(trueKeyword, syntaxListBuilder[0]);
+        Assert.Same(falseKeyword, syntaxListBuilder[1]);
     }
 
     [Fact(DisplayName = $"The Clear() method must reset the {nameof(SyntaxListBuilder.Count)} property.")]
@@ -188,7 +188,7 @@ public class SyntaxListBuilder1Tests
     {
         // Arrange
         var trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        SyntaxListBuilder<GreenNode> syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
+        var syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
 
         // Act
         syntaxListBuilder.Add(trueKeyword);
@@ -207,12 +207,12 @@ public class SyntaxListBuilder1Tests
         // Arrange
         var trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         var falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
-        ArrayElement<GreenNode>[] items = new ArrayElement<GreenNode>[2];
+        var items = new ArrayElement<GreenNode>[2];
         items[0]._value = trueKeyword;
         items[1]._value = falseKeyword;
 
         SyntaxList<GreenNode> syntaxList = new(SyntaxFactory.List(items));
-        SyntaxListBuilder<GreenNode> syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
+        var syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
 
         // Act
         syntaxListBuilder.AddRange(syntaxList);
@@ -228,12 +228,12 @@ public class SyntaxListBuilder1Tests
         // Arrange
         var trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         var falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
-        ArrayElement<GreenNode>[] items = new ArrayElement<GreenNode>[2];
+        var items = new ArrayElement<GreenNode>[2];
         items[0]._value = trueKeyword;
         items[1]._value = falseKeyword;
 
         SyntaxList<GreenNode> syntaxList = new(SyntaxFactory.List(items));
-        SyntaxListBuilder<GreenNode> syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
+        var syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
 
         // Act
         syntaxListBuilder.AddRange(syntaxList);
@@ -247,7 +247,7 @@ public class SyntaxListBuilder1Tests
     public void ToListNodeMethod_Count0_MustReturnNull()
     {
         // Arrange
-        SyntaxListBuilder<GreenNode> syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
+        var syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
 
         // Act
         var actualListNode = syntaxListBuilder.ToListNode();
@@ -261,14 +261,14 @@ public class SyntaxListBuilder1Tests
     {
         // Arrange
         var trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        SyntaxListBuilder<GreenNode> syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
+        var syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
 
         // Act
         syntaxListBuilder.Add(trueKeyword);
         var actualListNode = syntaxListBuilder.ToListNode();
 
         // Assert
-        Assert.Equal(trueKeyword, actualListNode);
+        Assert.Same(trueKeyword, actualListNode);
     }
 
     [Fact(DisplayName = $"The ToListNode() method with {nameof(SyntaxListBuilder.Count)}=2 must return a syntax list.")]
@@ -278,7 +278,7 @@ public class SyntaxListBuilder1Tests
         var trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         var falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
 
-        SyntaxListBuilder<GreenNode> syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
+        var syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
 
         // Act
         syntaxListBuilder.Add(trueKeyword);
@@ -287,8 +287,8 @@ public class SyntaxListBuilder1Tests
 
         // Assert
         Assert.NotNull(actualListNode);
-        Assert.Equal(trueKeyword, actualListNode.GetSlot(0));
-        Assert.Equal(falseKeyword, actualListNode.GetSlot(1));
+        Assert.Same(trueKeyword, actualListNode.GetSlot(0));
+        Assert.Same(falseKeyword, actualListNode.GetSlot(1));
     }
 
     [Fact(DisplayName = "The ToListNode() method must return a syntax list.")]
@@ -298,17 +298,17 @@ public class SyntaxListBuilder1Tests
         var trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         var falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
 
-        SyntaxListBuilder<GreenNode> syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
+        var syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
 
         // Act
         syntaxListBuilder.Add(trueKeyword);
         syntaxListBuilder.Add(falseKeyword);
-        SyntaxList<GreenNode> actualListNode = syntaxListBuilder.ToList();
+        var actualListNode = syntaxListBuilder.ToList();
 
         // Assert
         Assert.Equal(2, actualListNode.Count);
-        Assert.Equal(trueKeyword, actualListNode[0]);
-        Assert.Equal(falseKeyword, actualListNode[1]);
+        Assert.Same(trueKeyword, actualListNode[0]);
+        Assert.Same(falseKeyword, actualListNode[1]);
     }
 
     [Fact(DisplayName = $"The implicit operator must convert the {nameof(SyntaxListBuilder<GreenNode>)} struct to {nameof(SyntaxListBuilder)} class.")]
@@ -318,7 +318,7 @@ public class SyntaxListBuilder1Tests
         var trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         var falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
 
-        SyntaxListBuilder<GreenNode> syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
+        var syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
 
         // Act
         syntaxListBuilder.Add(trueKeyword);
@@ -327,8 +327,8 @@ public class SyntaxListBuilder1Tests
 
         // Assert
         Assert.Equal(2, actualSyntaxListBuilder.Count);
-        Assert.Equal(trueKeyword, actualSyntaxListBuilder[0]);
-        Assert.Equal(falseKeyword, actualSyntaxListBuilder[1]);
+        Assert.Same(trueKeyword, actualSyntaxListBuilder[0]);
+        Assert.Same(falseKeyword, actualSyntaxListBuilder[1]);
     }
 
     [Fact(DisplayName = $"The implicit operator must convert the {nameof(SyntaxListBuilder<GreenNode>)} struct to {nameof(SyntaxList<GreenNode>)}.")]
@@ -338,7 +338,7 @@ public class SyntaxListBuilder1Tests
         var trueKeyword = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
         var falseKeyword = SyntaxFactory.Token(SyntaxKind.FalseKeyword);
 
-        SyntaxListBuilder<GreenNode> syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
+        var syntaxListBuilder = SyntaxListBuilder<GreenNode>.Create();
 
         // Act
         syntaxListBuilder.Add(trueKeyword);
@@ -347,7 +347,7 @@ public class SyntaxListBuilder1Tests
 
         // Assert
         Assert.Equal(2, actualSyntaxListBuilder.Count);
-        Assert.Equal(trueKeyword, actualSyntaxListBuilder[0]);
-        Assert.Equal(falseKeyword, actualSyntaxListBuilder[1]);
+        Assert.Same(trueKeyword, actualSyntaxListBuilder[0]);
+        Assert.Same(falseKeyword, actualSyntaxListBuilder[1]);
     }
 }

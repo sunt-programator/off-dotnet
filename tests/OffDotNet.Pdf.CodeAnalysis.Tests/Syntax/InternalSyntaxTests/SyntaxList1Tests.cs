@@ -26,7 +26,7 @@ public class SyntaxList1Tests
         var actualNode = syntaxList.Node;
 
         // Assert
-        Assert.Equal(actualNode, list);
+        Assert.Same(actualNode, list);
     }
 
     [Fact(DisplayName = $"The {nameof(SyntaxList<GreenNode>.Node)} property must be null if not passed in constructor.")]
@@ -55,7 +55,7 @@ public class SyntaxList1Tests
         Assert.Equal(0, actualCount);
     }
 
-    [Fact(DisplayName = $"The {nameof(SyntaxList<GreenNode>.Count)} property must be equal to {nameof(GreenNode.SlotCount)} if the node is a list")]
+    [Fact(DisplayName = $"The {nameof(SyntaxList<GreenNode>.Count)} property must be equal to {nameof(GreenNode.Count)} if the node is a list")]
     public void CountProperty_ListNode_MustReturnSlotCount()
     {
         // Arrange
@@ -114,7 +114,7 @@ public class SyntaxList1Tests
         var actualNode = syntaxList[0];
 
         // Assert
-        Assert.Equal(literalExpression1, actualNode);
+        Assert.Same(literalExpression1, actualNode);
     }
 
     [Fact(DisplayName = "The indexer must return the slot at index=1 if the provided node is a list")]
@@ -131,7 +131,7 @@ public class SyntaxList1Tests
         var actualNode = syntaxList[1];
 
         // Assert
-        Assert.Equal(literalExpression2, actualNode);
+        Assert.Same(literalExpression2, actualNode);
     }
 
     [Fact(DisplayName = "The indexer with index=0 must return the current node if the provided node is not a list")]
@@ -146,7 +146,7 @@ public class SyntaxList1Tests
         var actualNode = syntaxList[0];
 
         // Assert
-        Assert.Equal(literalExpression1, actualNode);
+        Assert.Same(literalExpression1, actualNode);
     }
 
     [Fact(DisplayName = $"The indexer with index=1 must throw an {nameof(InvalidOperationException)} if the provided node is not a list")]
@@ -245,12 +245,12 @@ public class SyntaxList1Tests
 
         // Act
         SyntaxList<GreenNode> syntaxList = new(list);
-        GreenNode[] actualNodes = syntaxList.Nodes;
+        var actualNodes = syntaxList.Nodes;
 
         // Assert
         Assert.Equal(2, actualNodes.Length);
-        Assert.Equal(literalExpression1, actualNodes[0]);
-        Assert.Equal(literalExpression2, actualNodes[1]);
+        Assert.Same(literalExpression1, actualNodes[0]);
+        Assert.Same(literalExpression2, actualNodes[1]);
     }
 
     [Fact(DisplayName = $"The {nameof(SyntaxList<GreenNode>)} method must implement the {nameof(IEquatable<GreenNode>)} interface")]

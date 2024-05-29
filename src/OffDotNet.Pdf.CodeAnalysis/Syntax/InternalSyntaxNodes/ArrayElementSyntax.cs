@@ -14,7 +14,7 @@ internal sealed class ArrayElementSyntax : CollectionElementSyntax
         : base(kind, diagnostics)
     {
         this.Expression = expression;
-        this.SlotCount = 1;
+        this.Count = 1;
         this.FullWidth = this.Expression.FullWidth;
     }
 

@@ -47,7 +47,7 @@ public class DictionaryElementSyntaxTests
         var actualKey = dictionaryElement.Key;
 
         // Assert
-        Assert.Equal(_key, actualKey);
+        Assert.Same(_key, actualKey);
     }
 
     [Fact(DisplayName = $"The {nameof(DictionaryElementSyntax.Value)} property must be assigned from constructor.")]
@@ -60,17 +60,17 @@ public class DictionaryElementSyntaxTests
         var actualValue = dictionaryElement.Value;
 
         // Assert
-        Assert.Equal(_value, actualValue);
+        Assert.Same(_value, actualValue);
     }
 
-    [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.SlotCount)} property must be equal to 2.")]
+    [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.Count)} property must be equal to 2.")]
     public void SlotCountProperty_MustBeEqualTo2()
     {
         // Arrange
         var dictionaryElement = SyntaxFactory.DictionaryElement(_key, _value);
 
         // Act
-        var actualSlotCount = dictionaryElement.SlotCount;
+        var actualSlotCount = dictionaryElement.Count;
 
         // Assert
         Assert.Equal(2, actualSlotCount);
@@ -86,7 +86,7 @@ public class DictionaryElementSyntaxTests
         var actualSlot = dictionaryElement.GetSlot(0);
 
         // Assert
-        Assert.Equal(_key, actualSlot);
+        Assert.Same(_key, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 1 must return {nameof(DictionaryElementSyntax.Value)} property.")]
@@ -99,7 +99,7 @@ public class DictionaryElementSyntaxTests
         var actualSlot = dictionaryElement.GetSlot(1);
 
         // Assert
-        Assert.Equal(_value, actualSlot);
+        Assert.Same(_value, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 2 must return null.")]

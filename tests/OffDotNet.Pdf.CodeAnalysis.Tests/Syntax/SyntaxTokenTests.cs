@@ -44,7 +44,7 @@ public class SyntaxTokenTests
         var actualNode = _token.UnderlyingNode;
 
         // Assert
-        Assert.Equal(_underlyingNode, actualNode);
+        Assert.Same(_underlyingNode, actualNode);
     }
 
     [Fact(DisplayName = $"The {nameof(SyntaxToken.Parent)} property must be set from the constructor.")]

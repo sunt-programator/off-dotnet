@@ -16,7 +16,7 @@ internal sealed class XRefSubSectionExpressionSyntax : GreenNode
         this.ObjectNumber = objectNumber;
         this.NumberOfEntries = numberOfEntries;
         this.Entries = entries;
-        this.SlotCount = 3;
+        this.Count = 3;
         this.FullWidth = this.ObjectNumber.FullWidth + this.NumberOfEntries.FullWidth + this.Entries?.FullWidth ?? 0;
     }
 

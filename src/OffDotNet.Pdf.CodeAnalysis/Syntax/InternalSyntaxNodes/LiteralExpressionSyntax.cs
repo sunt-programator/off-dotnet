@@ -14,7 +14,7 @@ internal sealed class LiteralExpressionSyntax : ExpressionSyntax
         : base(kind, diagnostics)
     {
         this.Token = token;
-        this.SlotCount = 1;
+        this.Count = 1;
         this.FullWidth = token.FullWidth;
     }
 

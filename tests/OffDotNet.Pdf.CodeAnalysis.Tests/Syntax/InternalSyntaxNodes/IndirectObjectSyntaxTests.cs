@@ -57,7 +57,7 @@ public class IndirectObjectSyntaxTests
         var actualObjectNumber = indirectObject.ObjectNumber;
 
         // Assert
-        Assert.Equal(_objectNumber, actualObjectNumber);
+        Assert.Same(_objectNumber, actualObjectNumber);
     }
 
     [Fact(DisplayName = $"The {nameof(IndirectObjectSyntax.GenerationNumber)} property must be assigned from constructor.")]
@@ -70,7 +70,7 @@ public class IndirectObjectSyntaxTests
         var actualGenerationNumber = indirectObject.GenerationNumber;
 
         // Assert
-        Assert.Equal(_generationNumber, actualGenerationNumber);
+        Assert.Same(_generationNumber, actualGenerationNumber);
     }
 
     [Fact(DisplayName = $"The {nameof(IndirectObjectSyntax.StartObjectKeyword)} property must be assigned from constructor.")]
@@ -83,7 +83,7 @@ public class IndirectObjectSyntaxTests
         var actualStartObjectKeyword = indirectObject.StartObjectKeyword;
 
         // Assert
-        Assert.Equal(_startObjectKeyword, actualStartObjectKeyword);
+        Assert.Same(_startObjectKeyword, actualStartObjectKeyword);
     }
 
     [Fact(DisplayName = $"The {nameof(IndirectObjectSyntax.Content)} property must be assigned from constructor.")]
@@ -96,7 +96,7 @@ public class IndirectObjectSyntaxTests
         var actualContent = indirectObject.Content;
 
         // Assert
-        Assert.Equal(_content, actualContent);
+        Assert.Same(_content, actualContent);
     }
 
     [Fact(DisplayName = $"The {nameof(IndirectObjectSyntax.EndObjectKeyword)} property must be assigned from constructor.")]
@@ -109,17 +109,17 @@ public class IndirectObjectSyntaxTests
         var actualEndObjectKeyword = indirectObject.EndObjectKeyword;
 
         // Assert
-        Assert.Equal(_endObjKeyword, actualEndObjectKeyword);
+        Assert.Same(_endObjKeyword, actualEndObjectKeyword);
     }
 
-    [Fact(DisplayName = $"The {nameof(IndirectObjectSyntax.SlotCount)} property must be equal to 5.")]
+    [Fact(DisplayName = $"The {nameof(IndirectObjectSyntax.Count)} property must be equal to 5.")]
     public void SlotCountProperty_MustBeEqualTo5()
     {
         // Arrange
         var indirectObject = SyntaxFactory.Object(_objectNumber, _generationNumber, _startObjectKeyword, _content, _endObjKeyword);
 
         // Act
-        var actualSlotCount = indirectObject.SlotCount;
+        var actualSlotCount = indirectObject.Count;
 
         // Assert
         Assert.Equal(5, actualSlotCount);
@@ -135,7 +135,7 @@ public class IndirectObjectSyntaxTests
         var actualSlot = indirectObject.GetSlot(0);
 
         // Assert
-        Assert.Equal(_objectNumber, actualSlot);
+        Assert.Same(_objectNumber, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 1 must return {nameof(IndirectObjectSyntax.GenerationNumber)} property.")]
@@ -148,7 +148,7 @@ public class IndirectObjectSyntaxTests
         var actualSlot = indirectObject.GetSlot(1);
 
         // Assert
-        Assert.Equal(_generationNumber, actualSlot);
+        Assert.Same(_generationNumber, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 2 must return {nameof(IndirectObjectSyntax.StartObjectKeyword)} property.")]
@@ -161,7 +161,7 @@ public class IndirectObjectSyntaxTests
         var actualSlot = indirectObject.GetSlot(2);
 
         // Assert
-        Assert.Equal(_startObjectKeyword, actualSlot);
+        Assert.Same(_startObjectKeyword, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 3 must return {nameof(IndirectObjectSyntax.Content)} property.")]
@@ -174,7 +174,7 @@ public class IndirectObjectSyntaxTests
         var actualSlot = indirectObject.GetSlot(3);
 
         // Assert
-        Assert.Equal(_content, actualSlot);
+        Assert.Same(_content, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 4 must return {nameof(IndirectObjectSyntax.EndObjectKeyword)} property.")]
@@ -187,7 +187,7 @@ public class IndirectObjectSyntaxTests
         var actualSlot = indirectObject.GetSlot(4);
 
         // Assert
-        Assert.Equal(_endObjKeyword, actualSlot);
+        Assert.Same(_endObjKeyword, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 5 must return null.")]

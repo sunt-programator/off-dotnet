@@ -21,7 +21,7 @@ internal sealed class IndirectReferenceSyntax : ExpressionSyntax
         this.ObjectNumber = objectNumber;
         this.GenerationNumber = generationNumber;
         this.ReferenceKeyword = referenceKeyword;
-        this.SlotCount = 3;
+        this.Count = 3;
         this.FullWidth = this.ObjectNumber.FullWidth + this.GenerationNumber.FullWidth + this.ReferenceKeyword.FullWidth;
     }
 

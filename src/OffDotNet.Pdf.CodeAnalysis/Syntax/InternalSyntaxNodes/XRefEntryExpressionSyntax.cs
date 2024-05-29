@@ -16,7 +16,7 @@ internal sealed class XRefEntryExpressionSyntax : GreenNode
         this.Offset = offset;
         this.GenerationNumber = generationNumber;
         this.EntryType = entryType;
-        this.SlotCount = 3;
+        this.Count = 3;
         this.FullWidth = this.Offset.FullWidth + this.GenerationNumber.FullWidth + this.EntryType.FullWidth;
     }
 

@@ -57,7 +57,7 @@ public class GreenNodeExtensionsTests
         var actualFirstTerminal = indirectReference.GetFirstTerminal();
 
         // Assert
-        Assert.Equal(objectNumberToken, actualFirstTerminal);
+        Assert.Same(objectNumberToken, actualFirstTerminal);
     }
 
     [Fact(DisplayName = "The GetLastTerminal() extensions method must return the last terminal node.")]
@@ -78,6 +78,103 @@ public class GreenNodeExtensionsTests
         var actualLastTerminal = indirectReference.GetLastTerminal();
 
         // Assert
-        Assert.Equal(referenceKeyword, actualLastTerminal);
+        Assert.Same(referenceKeyword, actualLastTerminal);
+    }
+
+    [Fact(DisplayName = "The CreateList() method must return null if the list is empty.")]
+    public void CreateList_EmptyList_ShouldReturnNull()
+    {
+        // Arrange
+        var list = new SyntaxTriviaList(default, null, 56, 10);
+
+        // Act
+        var actualList = GreenNodeExtensions.CreateList(list, static x => x.UnderlyingNode);
+
+        // Assert
+        Assert.Null(actualList);
+    }
+
+    [Fact(DisplayName = "The CreateList() method must return a new list with 1 element.")]
+    public void CreateList_OneElementList_ShouldReturnList()
+    {
+        // Arrange
+        var trivia = SyntaxListBuilder.Create()
+            .Add(SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " "))
+            .ToListNode();
+
+        var list = new SyntaxTriviaList(default, trivia, 56, 10);
+
+        // Act
+        var actualList = GreenNodeExtensions.CreateList(list, static x => x.UnderlyingNode);
+
+        // Assert
+        Assert.NotNull(actualList);
+        Assert.NotEqual(SyntaxKind.List, actualList.Kind);
+        Assert.Empty(actualList);
+    }
+
+    [Fact(DisplayName = "The CreateList() method must return a new list with 2 elements.")]
+    public void CreateList_TwoElementsList_ShouldReturnList()
+    {
+        // Arrange
+        var trivia = SyntaxListBuilder.Create()
+            .Add(SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " "))
+            .Add(SyntaxFactory.Trivia(SyntaxKind.SingleLineCommentTrivia, "% comment"))
+            .ToListNode();
+
+        var list = new SyntaxTriviaList(default, trivia, 56, 10);
+
+        // Act
+        var actualList = GreenNodeExtensions.CreateList(list, static x => x.UnderlyingNode);
+
+        // Assert
+        Assert.NotNull(actualList);
+        Assert.Equal(SyntaxKind.List, actualList.Kind);
+        Assert.Equal(2, actualList.Count);
+    }
+
+    [Fact(DisplayName = "The CreateList() method must return a new list with 3 elements.")]
+    public void CreateList_ThreeElementsList_ShouldReturnList()
+    {
+        // Arrange
+        var trivia = SyntaxListBuilder.Create()
+            .Add(SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " "))
+            .Add(SyntaxFactory.Trivia(SyntaxKind.SingleLineCommentTrivia, "% comment"))
+            .Add(SyntaxFactory.Trivia(SyntaxKind.EndOfLineTrivia, "\n"))
+            .ToListNode();
+
+        var list = new SyntaxTriviaList(default, trivia, 56, 10);
+
+        // Act
+        var actualList = GreenNodeExtensions.CreateList(list, static x => x.UnderlyingNode);
+
+        // Assert
+        Assert.NotNull(actualList);
+        Assert.Equal(SyntaxKind.List, actualList.Kind);
+        Assert.Equal(3, actualList.Count);
+    }
+
+    [Fact(DisplayName = "The CreateList() method must return a new list with more than 3 elements.")]
+    public void CreateList_MoreThanThreeElementsList_ShouldReturnList()
+    {
+        // Arrange
+        var trivia = SyntaxListBuilder.Create()
+            .Add(SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " "))
+            .Add(SyntaxFactory.Trivia(SyntaxKind.SingleLineCommentTrivia, "% comment"))
+            .Add(SyntaxFactory.Trivia(SyntaxKind.EndOfLineTrivia, "\n"))
+            .Add(SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " "))
+            .Add(SyntaxFactory.Trivia(SyntaxKind.SingleLineCommentTrivia, "% comment"))
+            .Add(SyntaxFactory.Trivia(SyntaxKind.EndOfLineTrivia, "\n"))
+            .ToListNode();
+
+        var list = new SyntaxTriviaList(default, trivia, 56, 10);
+
+        // Act
+        var actualList = GreenNodeExtensions.CreateList(list, static x => x.UnderlyingNode);
+
+        // Assert
+        Assert.NotNull(actualList);
+        Assert.Equal(SyntaxKind.List, actualList.Kind);
+        Assert.Equal(6, actualList.Count);
     }
 }

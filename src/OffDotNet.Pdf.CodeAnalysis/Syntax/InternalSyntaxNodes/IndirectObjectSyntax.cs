@@ -25,7 +25,7 @@ internal sealed class IndirectObjectSyntax : GreenNode
         this.StartObjectKeyword = startObjectKeyword;
         this.Content = content;
         this.EndObjectKeyword = endObjectKeyword;
-        this.SlotCount = 5;
+        this.Count = 5;
         this.FullWidth = this.ObjectNumber.FullWidth + this.GenerationNumber.FullWidth + this.StartObjectKeyword.FullWidth + this.Content.FullWidth + this.EndObjectKeyword.FullWidth;
     }
 

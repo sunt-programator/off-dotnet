@@ -23,7 +23,7 @@ public class ArrayElementTests
         var actualValue = arrayElement._value;
 
         // Assert
-        Assert.Equal(syntaxToken, actualValue);
+        Assert.Same(syntaxToken, actualValue);
     }
 
     [Fact(DisplayName = $"The {nameof(ArrayElement<GreenNode>)} struct must have an implicit operator")]
@@ -37,6 +37,6 @@ public class ArrayElementTests
         GreenNode actualValue = arrayElement;
 
         // Assert
-        Assert.Equal(syntaxToken, actualValue);
+        Assert.Same(syntaxToken, actualValue);
     }
 }

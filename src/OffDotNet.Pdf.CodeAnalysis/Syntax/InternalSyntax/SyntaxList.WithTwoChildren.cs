@@ -17,7 +17,7 @@ internal abstract partial class SyntaxList
         internal WithTwoChildren(GreenNode child0, GreenNode child1, DiagnosticInfo[]? diagnostics = null)
             : base(diagnostics)
         {
-            this.SlotCount = 2;
+            this.Count = 2;
             _child0 = child0;
             _child1 = child1;
             this.FullWidth = child0.FullWidth + child1.FullWidth;

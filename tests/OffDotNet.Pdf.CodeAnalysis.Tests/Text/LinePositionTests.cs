@@ -179,10 +179,10 @@ public class LinePositionTests
         // Arrange
 
         // Act
-        var compare1 = new LinePosition(1, 1) > new LinePosition(1, 1); // skipcq: CS-W1026
-        var compare2 = new LinePosition(1, 1) < new LinePosition(1, 1); // skipcq: CS-W1026
-        var compare3 = new LinePosition(1, 1) >= new LinePosition(1, 1); // skipcq: CS-W1026
-        var compare4 = new LinePosition(1, 1) <= new LinePosition(1, 1); // skipcq: CS-W1026
+        var compare1 = new LinePosition(1, 1) > new LinePosition(1, 1);
+        var compare2 = new LinePosition(1, 1) < new LinePosition(1, 1);
+        var compare3 = new LinePosition(1, 1) >= new LinePosition(1, 1);
+        var compare4 = new LinePosition(1, 1) <= new LinePosition(1, 1);
         var compare5 = new LinePosition(1, 1) > new LinePosition(2, 1);
         var compare6 = new LinePosition(1, 1) < new LinePosition(2, 1);
         var compare7 = new LinePosition(1, 1) >= new LinePosition(2, 1);

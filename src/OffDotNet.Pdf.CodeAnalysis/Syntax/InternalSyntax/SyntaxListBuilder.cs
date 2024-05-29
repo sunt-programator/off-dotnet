@@ -44,8 +44,8 @@ internal sealed class SyntaxListBuilder
             return this;
         }
 
-        this.EnsureAdditionalCapacity(item.SlotCount); // Necessary, but not sufficient (e.g. for nested lists).
-        for (var i = 0; i < item.SlotCount; i++)
+        this.EnsureAdditionalCapacity(item.Count); // Necessary, but not sufficient (e.g. for nested lists).
+        for (var i = 0; i < item.Count; i++)
         {
             this.Add(item.GetSlot(i));
         }

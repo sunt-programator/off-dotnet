@@ -28,13 +28,13 @@ internal readonly partial struct SyntaxList<TNode> : IEnumerable<TNode>, IEquata
                 return 0;
             }
 
-            return this.Node.Kind == SyntaxKind.List ? this.Node.SlotCount : 1;
+            return this.Node.Kind == SyntaxKind.List ? this.Node.Count : 1;
         }
     }
 
     public TNode[] Nodes
     {
-        get // skipcq: CS-W1096
+        get
         {
             var array = new TNode[this.Count];
 

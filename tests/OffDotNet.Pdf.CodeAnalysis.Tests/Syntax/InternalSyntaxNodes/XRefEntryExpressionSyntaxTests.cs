@@ -53,7 +53,7 @@ public class XRefEntryExpressionSyntaxTests
         var actualOffset = xRefEntryExpression.Offset;
 
         // Assert
-        Assert.Equal(_offset, actualOffset);
+        Assert.Same(_offset, actualOffset);
     }
 
     [Fact(DisplayName = $"The {nameof(XRefEntryExpressionSyntax.GenerationNumber)} property must be assigned from constructor.")]
@@ -66,7 +66,7 @@ public class XRefEntryExpressionSyntaxTests
         var actualGenerationNumber = xRefEntryExpression.GenerationNumber;
 
         // Assert
-        Assert.Equal(_generationNumber, actualGenerationNumber);
+        Assert.Same(_generationNumber, actualGenerationNumber);
     }
 
     [Fact(DisplayName = $"The {nameof(XRefEntryExpressionSyntax.EntryType)} property must be assigned from constructor.")]
@@ -79,17 +79,17 @@ public class XRefEntryExpressionSyntaxTests
         var actualEntryType = xRefEntryExpression.EntryType;
 
         // Assert
-        Assert.Equal(_entryTypeKeyword, actualEntryType);
+        Assert.Same(_entryTypeKeyword, actualEntryType);
     }
 
-    [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.SlotCount)} property must be equal to 3.")]
+    [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.Count)} property must be equal to 3.")]
     public void SlotCountProperty_MustBeEqualTo3()
     {
         // Arrange
         var xRefEntryExpression = SyntaxFactory.XRefEntry(_offset, _generationNumber, _entryTypeKeyword);
 
         // Act
-        var actualSlotCount = xRefEntryExpression.SlotCount;
+        var actualSlotCount = xRefEntryExpression.Count;
 
         // Assert
         Assert.Equal(3, actualSlotCount);
@@ -105,7 +105,7 @@ public class XRefEntryExpressionSyntaxTests
         var actualSlot = xRefEntryExpression.GetSlot(0);
 
         // Assert
-        Assert.Equal(_offset, actualSlot);
+        Assert.Same(_offset, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 1 must return {nameof(XRefEntryExpressionSyntax.GenerationNumber)} property.")]
@@ -118,7 +118,7 @@ public class XRefEntryExpressionSyntaxTests
         var actualSlot = xRefEntryExpression.GetSlot(1);
 
         // Assert
-        Assert.Equal(_generationNumber, actualSlot);
+        Assert.Same(_generationNumber, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 2 must return {nameof(XRefEntryExpressionSyntax.EntryType)} property.")]
@@ -131,7 +131,7 @@ public class XRefEntryExpressionSyntaxTests
         var actualSlot = xRefEntryExpression.GetSlot(2);
 
         // Assert
-        Assert.Equal(_entryTypeKeyword, actualSlot);
+        Assert.Same(_entryTypeKeyword, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 3 must return null.")]

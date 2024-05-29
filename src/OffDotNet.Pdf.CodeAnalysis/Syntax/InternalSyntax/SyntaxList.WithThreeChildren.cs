@@ -18,7 +18,7 @@ internal abstract partial class SyntaxList
         internal WithThreeChildren(GreenNode child1, GreenNode child2, GreenNode child3, DiagnosticInfo[]? diagnostics = null)
             : base(diagnostics)
         {
-            this.SlotCount = 3;
+            this.Count = 3;
             _child1 = child1;
             _child2 = child2;
             _child3 = child3;

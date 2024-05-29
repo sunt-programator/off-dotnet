@@ -92,15 +92,15 @@ internal static class SyntaxNodeCache
 
     private static bool CanBeCached(GreenNode? node)
     {
-        return node == null || node.SlotCount <= MaxCachedChildNum;
+        return node == null || node.Count <= MaxCachedChildNum;
     }
 
     private static int GetCacheHash(GreenNode node)
     {
-        Debug.Assert(node.SlotCount <= MaxCachedChildNum, "Caller should have checked this already");
+        Debug.Assert(node.Count <= MaxCachedChildNum, "Caller should have checked this already");
 
         int code = (ushort)node.Kind;
-        for (var i = 0; i < node.SlotCount; i++)
+        for (var i = 0; i < node.Count; i++)
         {
             var child = node.GetSlot(i);
             if (child != null)
@@ -136,7 +136,7 @@ internal static class SyntaxNodeCache
 
     private static bool IsCacheEquivalent(SyntaxKind kind, GreenNode originalNode, GreenNode? child1 = null, GreenNode? child2 = null, GreenNode? child3 = null)
     {
-        Debug.Assert(originalNode.SlotCount <= MaxCachedChildNum, "Caller should have checked this already");
+        Debug.Assert(originalNode.Count <= MaxCachedChildNum, "Caller should have checked this already");
         var result = originalNode.Kind == kind;
 
         if (child1 != null)
@@ -159,7 +159,7 @@ internal static class SyntaxNodeCache
 
     private static bool AllChildrenInCache(GreenNode node)
     {
-        for (var i = 0; i < node.SlotCount; i++)
+        for (var i = 0; i < node.Count; i++)
         {
             if (!ChildInCache(node.GetSlot(i)))
             {
@@ -172,7 +172,7 @@ internal static class SyntaxNodeCache
 
     private static bool ChildInCache(GreenNode? child)
     {
-        if (child == null || child.SlotCount == 0)
+        if (child == null || child.Count == 0)
         {
             return true; // for the purpose of this function consider that null nodes, tokens and trivia are cached somewhere else.
         }

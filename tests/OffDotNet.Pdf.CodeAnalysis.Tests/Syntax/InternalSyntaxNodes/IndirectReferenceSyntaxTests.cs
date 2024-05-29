@@ -53,7 +53,7 @@ public class IndirectReferenceSyntaxTests
         var actualObjectNumber = indirectReference.ObjectNumber;
 
         // Assert
-        Assert.Equal(_objectNumber, actualObjectNumber);
+        Assert.Same(_objectNumber, actualObjectNumber);
     }
 
     [Fact(DisplayName = $"The {nameof(IndirectReferenceSyntax.GenerationNumber)} property must be assigned from constructor.")]
@@ -66,7 +66,7 @@ public class IndirectReferenceSyntaxTests
         var actualGenerationNumber = indirectReference.GenerationNumber;
 
         // Assert
-        Assert.Equal(_generationNumber, actualGenerationNumber);
+        Assert.Same(_generationNumber, actualGenerationNumber);
     }
 
     [Fact(DisplayName = $"The {nameof(IndirectReferenceSyntax.ReferenceKeyword)} property must be assigned from constructor.")]
@@ -79,17 +79,17 @@ public class IndirectReferenceSyntaxTests
         var actualReferenceKeyword = indirectReference.ReferenceKeyword;
 
         // Assert
-        Assert.Equal(_referenceKeyword, actualReferenceKeyword);
+        Assert.Same(_referenceKeyword, actualReferenceKeyword);
     }
 
-    [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.SlotCount)} property must be equal to 3.")]
+    [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.Count)} property must be equal to 3.")]
     public void SlotCountProperty_MustBeEqualTo3()
     {
         // Arrange
         var indirectReference = SyntaxFactory.IndirectReference(_objectNumber, _generationNumber, _referenceKeyword);
 
         // Act
-        var actualSlotCount = indirectReference.SlotCount;
+        var actualSlotCount = indirectReference.Count;
 
         // Assert
         Assert.Equal(3, actualSlotCount);
@@ -105,7 +105,7 @@ public class IndirectReferenceSyntaxTests
         var actualSlot = indirectReference.GetSlot(0);
 
         // Assert
-        Assert.Equal(_objectNumber, actualSlot);
+        Assert.Same(_objectNumber, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 1 must return {nameof(IndirectReferenceSyntax.GenerationNumber)} property.")]
@@ -118,7 +118,7 @@ public class IndirectReferenceSyntaxTests
         var actualSlot = indirectReference.GetSlot(1);
 
         // Assert
-        Assert.Equal(_generationNumber, actualSlot);
+        Assert.Same(_generationNumber, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 2 must return {nameof(IndirectReferenceSyntax.ReferenceKeyword)} property.")]
@@ -131,7 +131,7 @@ public class IndirectReferenceSyntaxTests
         var actualSlot = indirectReference.GetSlot(2);
 
         // Assert
-        Assert.Equal(_referenceKeyword, actualSlot);
+        Assert.Same(_referenceKeyword, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 3 must return null.")]

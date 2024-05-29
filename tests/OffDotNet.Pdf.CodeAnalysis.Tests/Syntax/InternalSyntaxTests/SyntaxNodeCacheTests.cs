@@ -68,7 +68,7 @@ public class SyntaxNodeCacheTests
         node = SyntaxNodeCache.TryGetNode(SyntaxKind, trueKeywordToken, out var actualHash);
 
         // Assert
-        Assert.Equal(literalExpression, node);
+        Assert.Same(literalExpression, node);
         Assert.Equal(hash, actualHash);
     }
 
@@ -98,7 +98,7 @@ public class SyntaxNodeCacheTests
         node = SyntaxNodeCache.TryGetNode(SyntaxKind, literalExpression1, literalExpression2, out var actualHash);
 
         // Assert
-        Assert.Equal(list, node);
+        Assert.Same(list, node);
         Assert.Equal(hash, actualHash);
     }
 
@@ -133,7 +133,7 @@ public class SyntaxNodeCacheTests
         node = SyntaxNodeCache.TryGetNode(SyntaxKind, literalExpression1, literalExpression2, literalExpression3, out var actualHash);
 
         // Assert
-        Assert.Equal(list, node);
+        Assert.Same(list, node);
         Assert.Equal(hash, actualHash);
     }
 }

@@ -65,7 +65,7 @@ public class XRefSubSectionExpressionSyntaxTests
         var actualObjectNumber = xRefSubSectionExpression.ObjectNumber;
 
         // Assert
-        Assert.Equal(_objectNumber, actualObjectNumber);
+        Assert.Same(_objectNumber, actualObjectNumber);
     }
 
     [Fact(DisplayName = $"The {nameof(XRefSubSectionExpressionSyntax.NumberOfEntries)} property must be assigned from constructor.")]
@@ -78,7 +78,7 @@ public class XRefSubSectionExpressionSyntaxTests
         var actualNumberOfEntries = xRefSubSectionExpression.NumberOfEntries;
 
         // Assert
-        Assert.Equal(_numberOfEntries, actualNumberOfEntries);
+        Assert.Same(_numberOfEntries, actualNumberOfEntries);
     }
 
     [Fact(DisplayName = $"The {nameof(XRefSubSectionExpressionSyntax.Entries)} property must be assigned from constructor.")]
@@ -91,17 +91,17 @@ public class XRefSubSectionExpressionSyntaxTests
         var actualEntries = xRefSubSectionExpression.Entries;
 
         // Assert
-        Assert.Equal(_entries.Node, actualEntries);
+        Assert.Same(_entries.Node, actualEntries);
     }
 
-    [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.SlotCount)} property must be equal to 3.")]
+    [Fact(DisplayName = $"The {nameof(LiteralExpressionSyntax.Count)} property must be equal to 3.")]
     public void SlotCountProperty_MustBeEqualTo3()
     {
         // Arrange
         var xRefSubSectionExpression = SyntaxFactory.XRefSubSection(_objectNumber, _numberOfEntries, _entries);
 
         // Act
-        var actualSlotCount = xRefSubSectionExpression.SlotCount;
+        var actualSlotCount = xRefSubSectionExpression.Count;
 
         // Assert
         Assert.Equal(3, actualSlotCount);
@@ -117,7 +117,7 @@ public class XRefSubSectionExpressionSyntaxTests
         var actualSlot = xRefSubSectionExpression.GetSlot(0);
 
         // Assert
-        Assert.Equal(_objectNumber, actualSlot);
+        Assert.Same(_objectNumber, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 1 must return {nameof(XRefSubSectionExpressionSyntax.NumberOfEntries)} property.")]
@@ -130,7 +130,7 @@ public class XRefSubSectionExpressionSyntaxTests
         var actualSlot = xRefSubSectionExpression.GetSlot(1);
 
         // Assert
-        Assert.Equal(_numberOfEntries, actualSlot);
+        Assert.Same(_numberOfEntries, actualSlot);
     }
 
     [Fact(DisplayName = $"The GetSlot() method with index 2 must return {nameof(XRefSubSectionExpressionSyntax.Entries)} property.")]
@@ -143,7 +143,7 @@ public class XRefSubSectionExpressionSyntaxTests
         var actualSlot = xRefSubSectionExpression.GetSlot(2);
 
         // Assert
-        Assert.Equal(_entries.Node, actualSlot);
+        Assert.Same(_entries.Node, actualSlot);
     }
 
     [Fact(DisplayName = "The GetSlot() method with index 3 must return null.")]
@@ -225,7 +225,7 @@ public class XRefSubSectionExpressionSyntaxTests
         var actualXRefSubSectionExpression = (XRefSubSectionExpressionSyntax)xRefSubSectionExpression.SetDiagnostics(diagnostics);
 
         // Assert
-        Assert.NotEqual(xRefSubSectionExpression, actualXRefSubSectionExpression);
+        Assert.NotSame(xRefSubSectionExpression, actualXRefSubSectionExpression);
         Assert.Equal(diagnostics, actualXRefSubSectionExpression.GetDiagnostics());
         Assert.True(actualXRefSubSectionExpression.ContainsFlags(NodeFlags.ContainsDiagnostics));
     }

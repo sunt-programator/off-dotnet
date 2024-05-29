@@ -15,7 +15,7 @@ internal sealed class DictionaryElementSyntax : CollectionElementSyntax
     {
         this.Key = key;
         this.Value = value;
-        this.SlotCount = 2;
+        this.Count = 2;
         this.FullWidth = this.Key.FullWidth + this.Value.FullWidth;
     }
 

@@ -23,7 +23,7 @@ internal sealed class FileTrailerSyntax : GreenNode
         this.TrailerDictionary = trailerDictionary;
         this.StartXRefKeyword = startXRefKeyword;
         this.ByteOffset = byteOffset;
-        this.SlotCount = 4;
+        this.Count = 4;
         this.FullWidth = this.TrailerKeyword.FullWidth + this.TrailerDictionary.FullWidth + this.StartXRefKeyword.FullWidth + this.ByteOffset.FullWidth;
     }
 

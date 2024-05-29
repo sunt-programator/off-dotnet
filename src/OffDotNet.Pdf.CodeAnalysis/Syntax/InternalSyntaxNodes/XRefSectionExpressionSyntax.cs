@@ -15,7 +15,7 @@ internal sealed class XRefSectionExpressionSyntax : GreenNode
     {
         this.XRefKeyword = xRefKeyword;
         this.SubSections = subSections;
-        this.SlotCount = 2;
+        this.Count = 2;
         this.FullWidth = this.XRefKeyword.FullWidth + this.SubSections?.FullWidth ?? 0;
     }
 
