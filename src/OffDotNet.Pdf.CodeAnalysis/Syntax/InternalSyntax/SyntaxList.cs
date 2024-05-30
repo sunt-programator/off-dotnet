@@ -13,4 +13,11 @@ internal abstract partial class SyntaxList : GreenNode
         : base(SyntaxKind.List, diagnostics)
     {
     }
+
+    /// <summary>Represents the enumerators for the green node.</summary>
+    /// <returns>The enumerator for the green node.</returns>
+    public override Enumerator GetEnumerator()
+    {
+        return new Enumerator(this);
+    }
 }

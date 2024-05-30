@@ -13,7 +13,7 @@ using Common;
 public readonly struct PdfNull : IPdfObject
 {
     private const string LiteralValue = "null";
-    private static readonly int s_hashCode = System.HashCode.Combine(nameof(PdfNull), LiteralValue);
+    private static readonly int s_hashCode = HashCode.Combine(nameof(PdfNull), LiteralValue);
     private static readonly ReadOnlyMemory<byte> s_bytesArray = Encoding.ASCII.GetBytes(LiteralValue);
 
     /// <inheritdoc/>

@@ -5,12 +5,12 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntaxNodes;
 
-using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
-using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using Diagnostic;
+using InternalSyntax;
 
 internal sealed class DictionaryExpressionSyntax : CollectionExpressionSyntax
 {
-    internal DictionaryExpressionSyntax(SyntaxKind kind, InternalSyntax.SyntaxToken openToken, GreenNode? elements, InternalSyntax.SyntaxToken closeToken, DiagnosticInfo[]? diagnostics = null)
+    internal DictionaryExpressionSyntax(SyntaxKind kind, SyntaxToken openToken, GreenNode? elements, SyntaxToken closeToken, DiagnosticInfo[]? diagnostics = null)
         : base(kind, openToken, elements, closeToken, diagnostics)
     {
     }

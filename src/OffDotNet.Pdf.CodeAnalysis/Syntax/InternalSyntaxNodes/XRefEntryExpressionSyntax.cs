@@ -5,12 +5,12 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntaxNodes;
 
-using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
-using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using Diagnostic;
+using InternalSyntax;
 
 internal sealed class XRefEntryExpressionSyntax : GreenNode
 {
-    internal XRefEntryExpressionSyntax(SyntaxKind kind, LiteralExpressionSyntax offset, LiteralExpressionSyntax generationNumber, InternalSyntax.SyntaxToken entryType, DiagnosticInfo[]? diagnostics = null)
+    internal XRefEntryExpressionSyntax(SyntaxKind kind, LiteralExpressionSyntax offset, LiteralExpressionSyntax generationNumber, SyntaxToken entryType, DiagnosticInfo[]? diagnostics = null)
         : base(kind, diagnostics)
     {
         this.Offset = offset;
@@ -24,7 +24,7 @@ internal sealed class XRefEntryExpressionSyntax : GreenNode
 
     public LiteralExpressionSyntax GenerationNumber { get; }
 
-    public InternalSyntax.SyntaxToken EntryType { get; }
+    public SyntaxToken EntryType { get; }
 
     /// <inheritdoc/>
     internal override GreenNode? GetSlot(int index)

@@ -5,16 +5,16 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntaxNodes;
 
-using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
-using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using Diagnostic;
+using InternalSyntax;
 
 internal sealed class FileTrailerSyntax : GreenNode
 {
     internal FileTrailerSyntax(
         SyntaxKind kind,
-        InternalSyntax.SyntaxToken trailerKeyword,
+        SyntaxToken trailerKeyword,
         DictionaryExpressionSyntax trailerDictionary,
-        InternalSyntax.SyntaxToken startXRefKeyword,
+        SyntaxToken startXRefKeyword,
         LiteralExpressionSyntax byteOffset,
         DiagnosticInfo[]? diagnostics = null)
         : base(kind, diagnostics)
@@ -27,11 +27,11 @@ internal sealed class FileTrailerSyntax : GreenNode
         this.FullWidth = this.TrailerKeyword.FullWidth + this.TrailerDictionary.FullWidth + this.StartXRefKeyword.FullWidth + this.ByteOffset.FullWidth;
     }
 
-    public InternalSyntax.SyntaxToken TrailerKeyword { get; }
+    public SyntaxToken TrailerKeyword { get; }
 
     public DictionaryExpressionSyntax TrailerDictionary { get; }
 
-    public InternalSyntax.SyntaxToken StartXRefKeyword { get; }
+    public SyntaxToken StartXRefKeyword { get; }
 
     public LiteralExpressionSyntax ByteOffset { get; }
 

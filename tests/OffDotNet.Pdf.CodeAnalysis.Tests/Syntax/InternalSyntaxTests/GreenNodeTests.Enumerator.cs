@@ -16,6 +16,7 @@ using SyntaxTrivia = CodeAnalysis.Syntax.SyntaxTrivia;
 [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "Test file")]
 [SuppressMessage("ReSharper", "GenericEnumeratorNotDisposed", Justification = "Test file")]
 [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute", Justification = "Test file")]
+[SuppressMessage("ReSharper", "NotDisposedResourceIsReturned", Justification = "Test file")]
 public class GreenNodeTestsEnumerator
 {
     private readonly GreenNode _greenNodeList = SyntaxFactory.List(
@@ -110,20 +111,6 @@ public class GreenNodeTestsEnumerator
         Assert.True(actual3);
     }
 
-    [Fact(DisplayName = "The MoveNext() method should return false if the underlying node is a single node")]
-    public void Enumerator_MoveNextMethod_ShouldReturnFalse_IfUnderlyingNodeIsSingleNode()
-    {
-        // Arrange
-        var greenNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        var enumerator = greenNode.GetEnumerator();
-
-        // Act
-        var actual = enumerator.MoveNext();
-
-        // Assert
-        Assert.False(actual);
-    }
-
     [Fact(DisplayName = $"The {nameof(GreenNode.Enumerator.Current)} property must return the current syntax trivia when the underlying node is a list")]
     public void Enumerator_CurrentProperty_MustReturnCurrentSyntaxTrivia_WhenUnderlyingNodeIsList()
     {
@@ -152,16 +139,16 @@ public class GreenNodeTestsEnumerator
     {
         // Arrange
         var greenNode = SyntaxFactory.Token(SyntaxKind.TrueKeyword);
-        var enumerator = greenNode.GetEnumerator();
 
         // Act
-        enumerator.MoveNext();
-        void Action1() => _ = enumerator.Current;
-        void Action2() => _ = (GreenNode)(enumerator as IEnumerator).Current;
+        void Action1() => _ = greenNode.GetEnumerator();
+        void Action2() => _ = ((IEnumerable<GreenNode>)greenNode).GetEnumerator();
+        void Action3() => _ = ((IEnumerable)greenNode).GetEnumerator();
 
         // Assert
         Assert.Throws<InvalidOperationException>(Action1);
         Assert.Throws<InvalidOperationException>(Action2);
+        Assert.Throws<InvalidOperationException>(Action3);
     }
 
     [Fact(DisplayName = "The Reset() method should reset the enumerator")]

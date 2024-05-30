@@ -142,7 +142,7 @@ public class SourceLocationTests
         Assert.Equal(expectedHashCode, actualHashCode);
     }
 
-    [Fact(DisplayName = $"The ToString() method must include the {nameof(SourceLocation.Kind)}, {nameof(CodeAnalysis.Syntax.AbstractSyntaxTree.FilePath)} and {nameof(SourceLocation.SourceSpan)} properties.")]
+    [Fact(DisplayName = $"The ToString() method must include the {nameof(SourceLocation.Kind)}, {nameof(AbstractSyntaxTree.FilePath)} and {nameof(SourceLocation.SourceSpan)} properties.")]
     public void ToStringMethod_MustIncludeKindAndFileLinePositionSpan()
     {
         // Arrange

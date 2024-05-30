@@ -10,8 +10,4 @@ using System.Diagnostics;
 [DebuggerDisplay("Count = {Count}")]
 internal abstract class AbstractSyntaxListBuilder<T>
 {
-    private const int DefaultCapacity = 4;
-    private ArrayElement<T?>[] _nodes;
-    
-    
 }

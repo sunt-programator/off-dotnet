@@ -98,11 +98,10 @@ public class GreenNodeExtensionsTests
     public void CreateList_OneElementList_ShouldReturnList()
     {
         // Arrange
-        var trivia = SyntaxListBuilder.Create()
-            .Add(SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " "))
-            .ToListNode();
+        var triviaGreenNode = SyntaxFactory.Trivia(SyntaxKind.WhitespaceTrivia, " ");
+        var triviaListGreenNode = SyntaxListBuilder.Create().Add(triviaGreenNode).ToListNode();
 
-        var list = new SyntaxTriviaList(default, trivia, 56, 10);
+        var list = new SyntaxTriviaList(default, triviaListGreenNode, 56, 10);
 
         // Act
         var actualList = GreenNodeExtensions.CreateList(list, static x => x.UnderlyingNode);
@@ -110,7 +109,7 @@ public class GreenNodeExtensionsTests
         // Assert
         Assert.NotNull(actualList);
         Assert.NotEqual(SyntaxKind.List, actualList.Kind);
-        Assert.Empty(actualList);
+        Assert.Same(triviaGreenNode, actualList);
     }
 
     [Fact(DisplayName = "The CreateList() method must return a new list with 2 elements.")]

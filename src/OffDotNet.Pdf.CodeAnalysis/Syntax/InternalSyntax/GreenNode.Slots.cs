@@ -6,6 +6,7 @@
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 using System.Collections;
+using InternalUtilities;
 
 /// <summary>
 /// Additional class containing slot-related methods and properties for <see cref="GreenNode"/>.
@@ -55,24 +56,15 @@ internal abstract partial class GreenNode : IReadOnlyList<GreenNode>
 
     /// <summary>Represents the enumerators for the green node.</summary>
     /// <returns>The enumerator for the green node.</returns>
-    public Enumerator GetEnumerator()
-    {
-        return new Enumerator(this);
-    }
+    public virtual Enumerator GetEnumerator() => throw ExceptionUtilities.Unreachable();
 
     /// <summary>Represents the enumerators for the green node.</summary>
     /// <returns>The enumerator for the green node.</returns>
-    IEnumerator<GreenNode> IEnumerable<GreenNode>.GetEnumerator()
-    {
-        return new EnumeratorImpl(this);
-    }
+    IEnumerator<GreenNode> IEnumerable<GreenNode>.GetEnumerator() => GetEnumerator();
 
     /// <summary>Represents the enumerators for the green node.</summary>
     /// <returns>The enumerator for the green node.</returns>
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return new EnumeratorImpl(this);
-    }
+    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<GreenNode>)this).GetEnumerator();
 
     /// <summary>Gets the slot at the specified index within a <see cref="GreenNode"/>.</summary>
     /// <param name="index">The index of the slot.</param>

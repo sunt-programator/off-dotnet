@@ -7,7 +7,7 @@ namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 
 using System.Diagnostics.CodeAnalysis;
 using Collections;
-using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntaxNodes;
+using InternalSyntaxNodes;
 
 internal static class SyntaxFactory
 {

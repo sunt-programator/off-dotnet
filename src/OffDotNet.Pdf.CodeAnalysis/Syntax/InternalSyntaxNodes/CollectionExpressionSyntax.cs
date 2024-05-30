@@ -5,12 +5,12 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntaxNodes;
 
-using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
-using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using Diagnostic;
+using InternalSyntax;
 
 internal abstract class CollectionExpressionSyntax : ExpressionSyntax
 {
-    protected CollectionExpressionSyntax(SyntaxKind kind, InternalSyntax.SyntaxToken openToken, GreenNode? elements, InternalSyntax.SyntaxToken closeToken, DiagnosticInfo[]? diagnostics = null)
+    protected CollectionExpressionSyntax(SyntaxKind kind, SyntaxToken openToken, GreenNode? elements, SyntaxToken closeToken, DiagnosticInfo[]? diagnostics = null)
         : base(kind, diagnostics)
     {
         this.OpenToken = openToken;
@@ -20,11 +20,11 @@ internal abstract class CollectionExpressionSyntax : ExpressionSyntax
         this.FullWidth = this.OpenToken.FullWidth + this.Elements?.FullWidth ?? 0 + this.CloseToken.FullWidth;
     }
 
-    public InternalSyntax.SyntaxToken OpenToken { get; }
+    public SyntaxToken OpenToken { get; }
 
     public GreenNode? Elements { get; }
 
-    public InternalSyntax.SyntaxToken CloseToken { get; }
+    public SyntaxToken CloseToken { get; }
 
     /// <inheritdoc/>
     internal override GreenNode? GetSlot(int index)

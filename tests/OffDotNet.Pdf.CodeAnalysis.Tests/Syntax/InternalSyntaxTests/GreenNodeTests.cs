@@ -108,8 +108,8 @@ public class GreenNodeTests
 
         // Assert
         Assert.IsType<GreenNode.Enumerator>(enumerator1);
-        Assert.IsType<GreenNode.EnumeratorImpl>(enumerator2);
-        Assert.IsType<GreenNode.EnumeratorImpl>(enumerator3);
+        Assert.IsType<GreenNode.Enumerator>(enumerator2);
+        Assert.IsType<GreenNode.Enumerator>(enumerator3);
     }
 
     [Fact(DisplayName = $"The Indexer must throw a {nameof(ArgumentOutOfRangeException)} if the node is not a list")]

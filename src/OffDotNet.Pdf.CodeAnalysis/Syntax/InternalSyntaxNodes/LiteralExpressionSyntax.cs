@@ -5,12 +5,12 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntaxNodes;
 
-using OffDotNet.Pdf.CodeAnalysis.Diagnostic;
-using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
+using Diagnostic;
+using InternalSyntax;
 
 internal sealed class LiteralExpressionSyntax : ExpressionSyntax
 {
-    internal LiteralExpressionSyntax(SyntaxKind kind, InternalSyntax.SyntaxToken token, DiagnosticInfo[]? diagnostics = null)
+    internal LiteralExpressionSyntax(SyntaxKind kind, SyntaxToken token, DiagnosticInfo[]? diagnostics = null)
         : base(kind, diagnostics)
     {
         this.Token = token;
@@ -18,7 +18,7 @@ internal sealed class LiteralExpressionSyntax : ExpressionSyntax
         this.FullWidth = token.FullWidth;
     }
 
-    public InternalSyntax.SyntaxToken Token { get; }
+    public SyntaxToken Token { get; }
 
     /// <inheritdoc/>
     internal override GreenNode? GetSlot(int index)
