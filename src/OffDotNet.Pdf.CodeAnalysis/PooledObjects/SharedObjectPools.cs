@@ -7,6 +7,7 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.PooledObjects;
 
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Caching;
@@ -45,10 +46,7 @@ internal static class SharedObjectPools
     static SharedObjectPools()
     {
         var defaultObjectPoolProvider = new DefaultObjectPoolProvider();
-        var defaultStringBuilderPoolProvider = new DefaultObjectPoolProvider
-        {
-            MaximumRetained = 32,
-        };
+        var defaultStringBuilderPoolProvider = new DefaultObjectPoolProvider { MaximumRetained = 32, };
 
 #if DEBUG
         var objectPoolProvider = new LeakTrackingObjectPoolProvider(defaultObjectPoolProvider);

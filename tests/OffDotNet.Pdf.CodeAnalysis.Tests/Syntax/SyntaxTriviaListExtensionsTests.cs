@@ -5,6 +5,7 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Tests.Syntax;
 
+using System.Collections.Immutable;
 using OffDotNet.Pdf.CodeAnalysis.Syntax;
 using OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax;
 using SyntaxFactory = OffDotNet.Pdf.CodeAnalysis.Syntax.InternalSyntax.SyntaxFactory;
@@ -32,184 +33,97 @@ public class SyntaxTriviaListExtensionsTests
             .ToListNode()!;
     }
 
-    [Fact(DisplayName = "The IndexOf(SyntaxTrivia) must return -1 when the list is empty.")]
-    public void IndexOfMethod_WithEmptyList_MustReturnMinusOne()
+    [Fact(DisplayName = $"The ToSyntaxTriviaList() method must return a default {nameof(SyntaxTriviaList)} when the list is empty.")]
+    public void ToListMethod_WithEmptyList_MustReturnDefaultSyntaxTriviaList()
     {
         // Arrange
-        var list = SyntaxTriviaList.Empty;
+        var builder = ImmutableArray.CreateBuilder<SyntaxTrivia>();
 
         // Act
-        var index = list.IndexOf(default(SyntaxTrivia));
+        var result = builder.ToSyntaxTriviaList();
 
         // Assert
-        Assert.Equal(-1, index);
+        Assert.Equal(default, result);
     }
 
-    [Fact(DisplayName = "The IndexOf(SyntaxTrivia) must return -1 when the trivia is not found.")]
-    public void IndexOfMethod_WithNotFoundTrivia_MustReturnMinusOne()
+    [Fact(DisplayName = $"The ToSyntaxTriviaList() method must return a {nameof(SyntaxTriviaList)} with one element when the list has one element.")]
+    public void ToListMethod_WithOneElement_MustReturnSyntaxTriviaListWithOneElement()
     {
         // Arrange
-        var list = new SyntaxTriviaList(_syntaxToken, _triviaList, 56, 10);
-        var triviaToFind = new SyntaxTrivia(_syntaxToken, _triviaList.GetSlot(0)!, position: 999, index: 999);
+        var builder = ImmutableArray.CreateBuilder<SyntaxTrivia>();
+        builder.Add(new SyntaxTrivia(_syntaxToken, _triviaList.GetSlot(0)!, 56, 10));
 
         // Act
-        var index = list.IndexOf(triviaToFind);
+        var result = builder.ToSyntaxTriviaList();
 
         // Assert
-        Assert.Equal(-1, index);
+        Assert.Single(result);
+        Assert.Equal(SyntaxKind.TrueKeyword, result[0].Kind);
+        Assert.Equal(0, result.Position);
+        Assert.Equal(0, result.Index);
     }
 
-    [Fact(DisplayName = "The IndexOf(SyntaxTrivia) must return the index of the trivia if it is found.")]
-    public void IndexOfMethod_WithFoundTrivia_MustReturnIndex()
+    [Fact(DisplayName = $"The ToSyntaxTriviaList() method must return a {nameof(SyntaxTriviaList)} with 2 elements when the list has 2 elements.")]
+    public void ToListMethod_WithTwoElements_MustReturnSyntaxTriviaListWithTwoElements()
     {
         // Arrange
-        var list = new SyntaxTriviaList(_syntaxToken, _triviaList, 56, 10);
-        var triviaToFind = new SyntaxTrivia(_syntaxToken, _triviaList.GetSlot(0)!, position: 56, index: 10);
+        var builder = ImmutableArray.CreateBuilder<SyntaxTrivia>();
+        builder.Add(new SyntaxTrivia(_syntaxToken, _triviaList.GetSlot(0)!, 56, 10));
+        builder.Add(new SyntaxTrivia(_syntaxToken, _triviaList.GetSlot(1)!, 70, 11));
 
         // Act
-        var index = list.IndexOf(triviaToFind);
-
-        // Assert
-        Assert.Equal(0, index);
-    }
-
-    [Fact(DisplayName = "The IndexOf(SyntaxKind) method must return -1 when the list is empty.")]
-    public void IndexOfMethod_WithSyntaxKindArgument_WithEmptyList_MustReturnMinusOne()
-    {
-        // Arrange
-        var list = SyntaxTriviaList.Empty;
-
-        // Act
-        var index = list.IndexOf(SyntaxKind.WhitespaceTrivia);
-
-        // Assert
-        Assert.Equal(-1, index);
-    }
-
-    [Fact(DisplayName = "The IndexOf(SyntaxKind) method must return -1 when the trivia with the specified kind is not found.")]
-    public void IndexOfMethod_WithSyntaxKindArgument_WithNotFoundTrivia_MustReturnMinusOne()
-    {
-        // Arrange
-        var list = new SyntaxTriviaList(_syntaxToken, _triviaList, 56, 10);
-
-        // Act
-        var index = list.IndexOf(SyntaxKind.BadToken);
-
-        // Assert
-        Assert.Equal(-1, index);
-    }
-
-    [Fact(DisplayName = "The IndexOf(SyntaxKind) method must return the index of the first trivia with the specified kind.")]
-    public void IndexOfMethod_WithSyntaxKindArgument_WithFoundTrivia_MustReturnIndex()
-    {
-        // Arrange
-        var list = new SyntaxTriviaList(_syntaxToken, _triviaList, 56, 10);
-
-        // Act
-        var index = list.IndexOf(SyntaxKind.TrueKeyword);
-
-        // Assert
-        Assert.Equal(0, index);
-    }
-
-    [Theory(DisplayName = $"The RemoveAt(int) method must throw an {nameof(ArgumentOutOfRangeException)} when the index is out of range.")]
-    [InlineData(-1)]
-    [InlineData(-10)]
-    [InlineData(3)]
-    [InlineData(10)]
-    public void RemoveAtMethod_OutOfRangeIndex_MustThrowArgumentOutOfRangeException(int index)
-    {
-        // Arrange
-        var list = new SyntaxTriviaList(_syntaxToken, _triviaList, 56, 10);
-
-        // Act
-        void Act() => list.RemoveAt(index);
-
-        // Assert
-        Assert.Throws<ArgumentOutOfRangeException>(Act);
-    }
-
-    [Fact(DisplayName = "The RemoveAt(int) method must remove the trivia at the specified index.")]
-    public void RemoveAtMethod_WithValidIndex_MustRemoveTrivia()
-    {
-        // Arrange
-        var list = new SyntaxTriviaList(_syntaxToken, _triviaList, 56, 10);
-
-        // Act
-        var result = list.RemoveAt(1);
+        var result = builder.ToSyntaxTriviaList();
 
         // Assert
         Assert.Equal(2, result.Count);
         Assert.Equal(SyntaxKind.TrueKeyword, result[0].Kind);
-        Assert.Equal(SyntaxKind.NullKeyword, result[1].Kind);
-        Assert.Equal(56, result.Position);
-        Assert.Equal(10, result.Index);
+        Assert.Equal(SyntaxKind.FalseKeyword, result[1].Kind);
+        Assert.Equal(0, result.Position);
+        Assert.Equal(0, result.Index);
     }
 
-    [Fact(DisplayName = "The RemoveAt(SyntaxTrivia) method must remove the trivia from the list if it is found.")]
-    public void RemoveAtMethod_WithFoundTrivia_MustRemoveTrivia()
+    [Fact(DisplayName = $"The ToSyntaxTriviaList() method must return a {nameof(SyntaxTriviaList)} with 3 elements when the list has 3 elements.")]
+    public void ToListMethod_WithThreeElements_MustReturnSyntaxTriviaListWithThreeElements()
     {
         // Arrange
-        var list = new SyntaxTriviaList(_syntaxToken, _triviaList, 56, 10);
-        var triviaToRemove = new SyntaxTrivia(_syntaxToken, _triviaList.GetSlot(1)!, position: 70, index: 11);
+        var builder = ImmutableArray.CreateBuilder<SyntaxTrivia>();
+        builder.Add(new SyntaxTrivia(_syntaxToken, _triviaList.GetSlot(0)!, 56, 10));
+        builder.Add(new SyntaxTrivia(_syntaxToken, _triviaList.GetSlot(1)!, 70, 11));
+        builder.Add(new SyntaxTrivia(_syntaxToken, _triviaList.GetSlot(2)!, 80, 12));
 
         // Act
-        var result = list.RemoveAt(triviaToRemove);
-
-        // Assert
-        Assert.Equal(2, result.Count);
-        Assert.Equal(SyntaxKind.TrueKeyword, result[0].Kind);
-        Assert.Equal(SyntaxKind.NullKeyword, result[1].Kind);
-        Assert.Equal(56, result.Position);
-        Assert.Equal(10, result.Index);
-    }
-
-    [Fact(DisplayName = "The RemoveAt(SyntaxTrivia) method must return the original list if the trivia is not found.")]
-    public void RemoveAtMethod_WithNotFoundTrivia_MustReturnOriginalList()
-    {
-        // Arrange
-        var list = new SyntaxTriviaList(_syntaxToken, _triviaList, 56, 10);
-
-        // Act
-        var result = list.RemoveAt(default(SyntaxTrivia));
+        var result = builder.ToSyntaxTriviaList();
 
         // Assert
         Assert.Equal(3, result.Count);
         Assert.Equal(SyntaxKind.TrueKeyword, result[0].Kind);
         Assert.Equal(SyntaxKind.FalseKeyword, result[1].Kind);
         Assert.Equal(SyntaxKind.NullKeyword, result[2].Kind);
-        Assert.Equal(56, result.Position);
-        Assert.Equal(10, result.Index);
+        Assert.Equal(0, result.Position);
+        Assert.Equal(0, result.Index);
     }
 
-    [Theory(DisplayName =
-        $"The InsertRange(int, IEnumerable<SyntaxTrivia>) method must throw an {nameof(ArgumentOutOfRangeException)} when the index is out of range.")]
-    [InlineData(-1)]
-    [InlineData(-10)]
-    [InlineData(4)]
-    [InlineData(10)]
-    public void InsertRangeMethod_OutOfRangeIndex_MustThrowArgumentOutOfRangeException(int index)
+    [Fact(DisplayName =
+        $"The ToSyntaxTriviaList() method must return a {nameof(SyntaxTriviaList)} with more than 3 elements when the list has more than 3 elements.")]
+    public void ToListMethod_WithMoreThanThreeElements_MustReturnSyntaxTriviaListWithMoreThanThreeElements()
     {
         // Arrange
-        var list = new SyntaxTriviaList(_syntaxToken, _triviaList, 56, 10);
+        var builder = ImmutableArray.CreateBuilder<SyntaxTrivia>();
+        builder.Add(new SyntaxTrivia(_syntaxToken, _triviaList.GetSlot(0)!, 56, 10));
+        builder.Add(new SyntaxTrivia(_syntaxToken, _triviaList.GetSlot(1)!, 70, 11));
+        builder.Add(new SyntaxTrivia(_syntaxToken, _triviaList.GetSlot(2)!, 80, 12));
+        builder.Add(new SyntaxTrivia(_syntaxToken, _triviaList.GetSlot(0)!, 90, 13));
 
         // Act
-        void Act() => list.InsertRange(index, []);
+        var result = builder.ToSyntaxTriviaList();
 
         // Assert
-        Assert.Throws<ArgumentOutOfRangeException>(Act);
-    }
-
-    [Fact(DisplayName = "The InsertRange(int, IEnumerable<SyntaxTrivia>) must return the same list when the trivia collection is empty.")]
-    public void InsertRangeMethod_WithEmptyCollection_MustReturnSameList()
-    {
-        // Arrange
-        var list = new SyntaxTriviaList(_syntaxToken, _triviaList, 56, 10);
-
-        // Act
-        var result = list.InsertRange(1, []);
-
-        // Assert
-        Assert.Equal(list, result);
+        Assert.Equal(4, result.Count);
+        Assert.Equal(SyntaxKind.TrueKeyword, result[0].Kind);
+        Assert.Equal(SyntaxKind.FalseKeyword, result[1].Kind);
+        Assert.Equal(SyntaxKind.NullKeyword, result[2].Kind);
+        Assert.Equal(SyntaxKind.TrueKeyword, result[3].Kind);
+        Assert.Equal(0, result.Position);
+        Assert.Equal(0, result.Index);
     }
 }

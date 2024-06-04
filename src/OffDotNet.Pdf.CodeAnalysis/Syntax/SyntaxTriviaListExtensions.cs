@@ -5,85 +5,51 @@
 
 namespace OffDotNet.Pdf.CodeAnalysis.Syntax;
 
+using System.Collections.Immutable;
+using Collections;
 using InternalSyntax;
 
 /// <summary>Contains extension methods for the <see cref="SyntaxTriviaList"/> class.</summary>
 public static class SyntaxTriviaListExtensions
 {
-    /// <summary>Returns the index of the specified trivia in the list.</summary>
-    /// <param name="list">The list of trivia.</param>
-    /// <param name="trivia">The trivia to search for.</param>
-    /// <returns>The index of the trivia in the list, or -1 if the trivia is not found.</returns>
-    public static int IndexOf(this SyntaxTriviaList list, SyntaxTrivia trivia)
+    /// <summary>Converts the specified <see cref="ImmutableArray{SyntaxTrivia}.Builder"/> to a <see cref="SyntaxTriviaList"/>.</summary>
+    /// <param name="builder">The builder to convert.</param>
+    /// <returns>The converted <see cref="SyntaxTriviaList"/>.</returns>
+    public static SyntaxTriviaList ToSyntaxTriviaList(this ImmutableArray<SyntaxTrivia>.Builder builder)
     {
-        for (var i = 0; i < list.Count; i++)
+        switch (builder.Count)
         {
-            if (list[i] == trivia)
-            {
-                return i;
-            }
+            case 0: return [];
+            case 1: return new SyntaxTriviaList(default, builder[0].UnderlyingNode, position: 0, index: 0);
+            case 2:
+                return new SyntaxTriviaList(
+                    default,
+                    InternalSyntax.SyntaxFactory.List(builder[0].UnderlyingNode, builder[1].UnderlyingNode),
+                    position: 0,
+                    index: 0);
+            case 3:
+                return new SyntaxTriviaList(
+                    default,
+                    InternalSyntax.SyntaxFactory.List(
+                        builder[0].UnderlyingNode,
+                        builder[1].UnderlyingNode,
+                        builder[2].UnderlyingNode),
+                    position: 0,
+                    index: 0);
+            default:
+                {
+                    var tmp = new ArrayElement<GreenNode>[builder.Count];
+                    for (var i = 0; i < builder.Count; i++)
+                    {
+                        tmp[i]._value = builder[i].UnderlyingNode;
+                    }
+
+                    return new SyntaxTriviaList(
+                        default,
+                        InternalSyntax.SyntaxFactory.List(tmp),
+                        position: 0,
+                        index: 0);
+                }
         }
-
-        return -1;
-    }
-
-    /// <summary>Returns the index of the first trivia with the specified kind in the list.</summary>
-    /// <param name="list">The list of trivia.</param>
-    /// <param name="kind">The kind of trivia to search for.</param>
-    /// <returns>The index of the trivia in the list, or -1 if the trivia is not found.</returns>
-    public static int IndexOf(this SyntaxTriviaList list, SyntaxKind kind)
-    {
-        for (var i = 0; i < list.Count; i++)
-        {
-            if (list[i].Kind == kind)
-            {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    /// <summary>Removes the trivia at the specified index from the list.</summary>
-    /// <param name="list">The list of trivia.</param>
-    /// <param name="index">The index of the trivia to remove.</param>
-    /// <returns>A new list of trivia with the specified trivia removed.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown when the index is negative or greater than or equal to the number of trivia in the list.</exception>
-    public static SyntaxTriviaList RemoveAt(this SyntaxTriviaList list, int index)
-    {
-        if (index < 0 || index >= list.Count)
-        {
-            throw new ArgumentOutOfRangeException(nameof(index));
-        }
-
-        var list1 = list.ToList();
-        list1.RemoveAt(index);
-        return new SyntaxTriviaList(list.Token, GreenNodeExtensions.CreateList(list1, static x => x.UnderlyingNode), list.Position, list.Index);
-    }
-
-    /// <summary>Removes the specified trivia from the list if it is found.</summary>
-    /// <param name="list">The list of trivia.</param>
-    /// <param name="trivia">The trivia to remove.</param>
-    /// <returns>A new list of trivia with the specified trivia removed.</returns>
-    public static SyntaxTriviaList RemoveAt(this SyntaxTriviaList list, SyntaxTrivia trivia)
-    {
-        var index = list.IndexOf(trivia);
-        return index > -1 ? list.RemoveAt(index) : list;
-    }
-
-    public static SyntaxTriviaList InsertRange(this SyntaxTriviaList list, int index, IEnumerable<SyntaxTrivia> trivia)
-    {
-        var count = list.Count;
-        if (index < 0 || index > count)
-        {
-            throw new ArgumentOutOfRangeException(nameof(index));
-        }
-
-        if (trivia.TryGetNonEnumeratedCount(out var enumerableCount) && enumerableCount == 0)
-        {
-            return list;
-        }
-
-        return default;
     }
 }
