@@ -1,4 +1,9 @@
 <Project>
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)GlobalUsings.cs"/>
   </ItemGroup>

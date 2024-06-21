@@ -9,6 +9,11 @@
     "project": "OffDotNet.CodeAnalysis.csproj",
     "test-projects": [
       "./tests/OffDotNet.CodeAnalysis.Tests/OffDotNet.CodeAnalysis.Tests.csproj"
+    ],
+    "ignore-methods": [
+      "Debug.Assert",
+      "*.Return",
+      "*.Dispose"
     ]
   }
 }

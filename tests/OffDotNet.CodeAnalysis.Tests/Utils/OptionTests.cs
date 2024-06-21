@@ -7,8 +7,10 @@ namespace OffDotNet.CodeAnalysis.Tests.Utils;
 
 using OffDotNet.CodeAnalysis.Utils;
 
+[WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
 public class OptionTests
 {
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = $"ToString() method should return 'None' for the default instance of {nameof(Option<int>)}")]
     public void ToString_ShouldReturnNoneForDefaultInstance()
     {
@@ -22,6 +24,7 @@ public class OptionTests
         Assert.Equal("None", actual);
     }
 
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = "ToString() method should return 'Some(42)' if the value is set to 42")]
     public void ToString_ShouldReturnSomeValueIfSet()
     {
@@ -36,6 +39,7 @@ public class OptionTests
         Assert.Equal($"Some({Expected})", actual);
     }
 
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = $"{nameof(Option<int>.None)} property should return a default instance of {nameof(Option<int>)}")]
     public void None_ShouldReturnDefaultInstance()
     {
@@ -50,6 +54,7 @@ public class OptionTests
         Assert.Equal(default, value);
     }
 
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = $"{nameof(Option<int>.Some)} method should return an instance of {nameof(Option<int>)} with the specified value")]
     public void Some_ShouldReturnInstanceWithValue()
     {
@@ -65,6 +70,7 @@ public class OptionTests
         Assert.Equal(Expected, value);
     }
 
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = $"{nameof(Option<int>.IsSome)} method should return false for the default instance of {nameof(Option<int>)}")]
     public void IsSome_ShouldReturnFalseForDefaultInstance()
     {
@@ -79,6 +85,7 @@ public class OptionTests
         Assert.Equal(default, value);
     }
 
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = $"{nameof(Option<int>.IsSome)} method should return true for the instance of {nameof(Option<int>)} with value set")]
     public void IsSome_ShouldReturnTrueForInstanceWithValueSet()
     {

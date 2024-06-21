@@ -7,8 +7,10 @@ namespace OffDotNet.CodeAnalysis.Tests.Utils;
 
 using OffDotNet.CodeAnalysis.Utils;
 
+[WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
 public class OptionExtensionsTests
 {
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = "Match() method should return the result of the first function if the option has a value")]
     public void Match_ShouldReturnFirstFunctionResultIfOptionHasValue()
     {
@@ -25,6 +27,7 @@ public class OptionExtensionsTests
         Assert.Equal(Expected * 2, actual);
     }
 
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = "Match() method should return the result of the second function if the option has no value")]
     public void Match_ShouldReturnSecondFunctionResultIfOptionHasNoValue()
     {
@@ -40,6 +43,7 @@ public class OptionExtensionsTests
         Assert.Equal(0, actual);
     }
 
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = "Bind() method should return None if the option has no value")]
     public void Bind_ShouldReturnNoneIfOptionHasNoValue()
     {
@@ -53,6 +57,7 @@ public class OptionExtensionsTests
         Assert.False(actual.IsSome(out _));
     }
 
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = "Bind() method should transform the value of the option if it has a value")]
     public void Bind_ShouldTransformValueIfOptionHasValue()
     {
@@ -68,6 +73,7 @@ public class OptionExtensionsTests
         Assert.Equal(Expected * 2, actualValue);
     }
 
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = "Select() method should return None if the option has no value")]
     public void Select_ShouldReturnNoneIfOptionHasNoValue()
     {
@@ -81,6 +87,7 @@ public class OptionExtensionsTests
         Assert.False(actual.IsSome(out _));
     }
 
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = "Select() method should transform the value of the option if it has a value")]
     public void Select_ShouldTransformValueIfOptionHasValue()
     {
@@ -96,6 +103,7 @@ public class OptionExtensionsTests
         Assert.Equal(Expected * 2, actualValue);
     }
 
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = "Where() method should return None if the option has no value")]
     public void Where_ShouldReturnNoneIfOptionHasNoValue()
     {
@@ -109,6 +117,7 @@ public class OptionExtensionsTests
         Assert.False(actual.IsSome(out _));
     }
 
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = "Where() method should return None if the predicate returns false")]
     public void Where_ShouldReturnNoneIfPredicateReturnsFalse()
     {
@@ -123,6 +132,7 @@ public class OptionExtensionsTests
         Assert.False(actual.IsSome(out _));
     }
 
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = "Where() method should return the option if the predicate returns true")]
     public void Where_ShouldReturnOptionIfPredicateReturnsTrue()
     {
@@ -138,6 +148,7 @@ public class OptionExtensionsTests
         Assert.Equal(Expected, actualValue);
     }
 
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = "GetValueOrDefault() method should return the default value if the option has no value")]
     public void DefaultValue_ShouldReturnDefaultValueIfOptionHasNoValue()
     {
@@ -152,6 +163,7 @@ public class OptionExtensionsTests
         Assert.Equal(Expected, actual);
     }
 
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = "GetValueOrDefault() method should return the value of the option if it has a value")]
     public void DefaultValue_ShouldReturnValueIfOptionHasValue()
     {
