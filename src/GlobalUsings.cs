@@ -4,4 +4,8 @@
 // </copyright>
 
 #pragma warning disable SA1200
+global using System.Buffers;
+global using System.Diagnostics;
+global using System.Runtime.InteropServices;
+global using System.Text;
 #pragma warning restore SA1200

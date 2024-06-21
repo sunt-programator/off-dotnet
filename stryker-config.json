@@ -6,9 +6,14 @@
       "name": "github.com/sunt-programator/off-dotnet",
       "version": "main"
     },
-    "project": "OffDotNet.Pdf.Core.csproj",
+    "project": "OffDotNet.CodeAnalysis.csproj",
     "test-projects": [
-      "./tests/OffDotNet.Pdf.Core.Tests/OffDotNet.Pdf.Core.Tests.csproj"
+      "./tests/OffDotNet.CodeAnalysis.Tests/OffDotNet.CodeAnalysis.Tests.csproj"
+    ],
+    "ignore-methods": [
+      "Debug.Assert",
+      "*.Return",
+      "*.Dispose"
     ]
   }
 }
