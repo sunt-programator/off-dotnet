@@ -24,6 +24,19 @@ public class TextCursorTests
         Assert.IsAssignableFrom<IDisposable>(cursor);
     }
 
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/339")]
+    [Fact(DisplayName = $"Class should implement {nameof(ITextCursor)} interface")]
+    public void Class_ShouldImplementITextCursorInterface()
+    {
+        // Arrange
+
+        // Act
+        var cursor = new TextCursor(string.Empty);
+
+        // Assert
+        Assert.IsAssignableFrom<ITextCursor>(cursor);
+    }
+
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = "Dispose() method should not throw any exception")]
     public void Dispose_ShouldNotThrowAnyException()
