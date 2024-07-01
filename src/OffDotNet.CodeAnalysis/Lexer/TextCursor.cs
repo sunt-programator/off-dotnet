@@ -10,7 +10,7 @@ using Utils;
 /// <summary>
 /// Represents a text cursor for navigating and processing text data.
 /// </summary>
-internal sealed class TextCursor : IDisposable
+internal sealed class TextCursor : ITextCursor
 {
     private readonly IMemoryOwner<byte> _textOwner;
     private int _position;
