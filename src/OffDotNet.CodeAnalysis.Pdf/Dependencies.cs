@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace OffDotNet.CodeAnalysis;
+namespace OffDotNet.CodeAnalysis.Pdf;
 
-using Lexer;
 using Microsoft.Extensions.DependencyInjection;
+using OffDotNet.CodeAnalysis.Lexer;
 
 /// <summary>
 /// Provides extension methods for registering code analysis services.
@@ -18,9 +18,10 @@ public static class Dependencies
     /// </summary>
     /// <param name="services">The service collection to which the services will be added.</param>
     /// <returns>The same service collection so that multiple calls can be chained.</returns>
-    public static IServiceCollection AddCoreCodeAnalysis(this IServiceCollection services)
+    public static IServiceCollection AddPdfCodeAnalysis(this IServiceCollection services)
     {
-        services.AddSingleton<ICursorFactory, CursorFactory>();
+        services.AddCoreCodeAnalysis();
+        services.AddSingleton<ILexer, Lexer.Lexer>();
         return services;
     }
 }
