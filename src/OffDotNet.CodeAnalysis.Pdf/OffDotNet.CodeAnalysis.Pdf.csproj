@@ -1,0 +1,6 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <ProjectReference Include="..\OffDotNet.CodeAnalysis\OffDotNet.CodeAnalysis.csproj" />
+  </ItemGroup>
+</Project>

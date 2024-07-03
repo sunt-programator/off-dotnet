@@ -255,6 +255,9 @@ dotnet_diagnostic.IDE0060.severity = warning
 # Nullable are treated as errors
 dotnet_diagnostic.CS8625.severity = error
 
+# SA1500: Braces for multi-line statements should not share line
+dotnet_diagnostic.SA1500.severity = none
+
 [tests/**/*.{cs,vb}]
 
 # SA1600: Elements should be documented

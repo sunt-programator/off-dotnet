@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\OffDotNet.CodeAnalysis.Pdf\OffDotNet.CodeAnalysis.Pdf.csproj" />
+    <ProjectReference Include="..\OffDotNet.CodeAnalysis.Tests\OffDotNet.CodeAnalysis.Tests.csproj" />
+  </ItemGroup>
+</Project>
