@@ -400,7 +400,7 @@ public class AbstractNodeTests
     public void ValueProperty_ShouldReturnThePopulatedValue()
     {
         // Arrange
-        var rawNode = new MockTerminalNode(0);
+        var rawNode = new MockSyntaxNode(0);
         object expected = "Node0";
 
         // Act
@@ -430,7 +430,7 @@ public class AbstractNodeTests
     public void ValueTextProperty_ShouldReturnThePopulatedValue()
     {
         // Arrange
-        var rawNode = new MockTerminalNode(0);
+        var rawNode = new MockSyntaxNode(0);
         const string Expected = "Node0";
 
         // Act
@@ -438,6 +438,51 @@ public class AbstractNodeTests
 
         // Assert
         Assert.Equal(Expected, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/339")]
+    [Fact(DisplayName = $"{nameof(ToString)} method should return the text when the node is a trivia node")]
+    public void ToStringMethod_WithTriviaNode_ShouldReturnTheText()
+    {
+        // Arrange
+        const string Text = "RawKind0";
+        var rawNode = new MockTriviaNode(0, 2);
+
+        // Act
+        var actual = rawNode.ToString();
+
+        // Assert
+        Assert.Equal(Text, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/339")]
+    [Fact(DisplayName = $"{nameof(ToString)} method should return the text when the node is a token node")]
+    public void ToStringMethod_WithTokenNode_ShouldReturnTheText()
+    {
+        // Arrange
+        const string Text = "RawKind0";
+        var rawNode = new MockSyntaxNode(0, 2);
+
+        // Act
+        var actual = rawNode.ToString();
+
+        // Assert
+        Assert.Equal(Text, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/339")]
+    [Fact(DisplayName = $"{nameof(AbstractNode.ToFullString)} method should return the text when the node is a token node and has leading & trailing trivia")]
+    public void ToFullStringMethod_WithTokenNodeAndLeadingTrivia_ShouldReturnTheText()
+    {
+        // Arrange
+        const string Text = "<leading>RawKind0<trailing>";
+        var rawNode = new MockSyntaxNode(0, 2);
+
+        // Act
+        var actual = rawNode.ToFullString();
+
+        // Assert
+        Assert.Equal(Text, actual);
     }
 }
 
@@ -485,8 +530,8 @@ internal class MockAbstractNodeWithTwoSlots : AbstractNode
     {
         return index switch
         {
-            0 => Option<AbstractNode>.Some(new MockTerminalNode(1, 14)),
-            1 => Option<AbstractNode>.Some(new MockTerminalNode(2, 10)),
+            0 => Option<AbstractNode>.Some(new MockSyntaxNode(1, 14)),
+            1 => Option<AbstractNode>.Some(new MockSyntaxNode(2, 10)),
             _ => Option<AbstractNode>.None,
         };
     }
@@ -521,15 +566,15 @@ internal class MockAbstractNodeWithManySlots : AbstractNode
 }
 
 [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "Test classes are small.")]
-internal class MockTerminalNode : AbstractNode
+internal class MockSyntaxNode : AbstractNode
 {
-    public MockTerminalNode(ushort rawKind)
+    public MockSyntaxNode(ushort rawKind)
         : base(rawKind)
     {
         KindText = $"RawKind{rawKind}";
     }
 
-    public MockTerminalNode(ushort rawKind, int fullWidth)
+    public MockSyntaxNode(ushort rawKind, int fullWidth)
         : base(rawKind, fullWidth)
     {
         KindText = $"RawKind{rawKind}";
@@ -541,9 +586,53 @@ internal class MockTerminalNode : AbstractNode
 
     public override string ValueText => $"Node{RawKind}";
 
+    public override bool IsToken => true;
+
     public override int LeadingTriviaWidth => FullWidth;
 
     public override int TrailingTriviaWidth => FullWidth;
 
     internal override Option<AbstractNode> GetSlot(int index) => Option<AbstractNode>.None;
+
+    protected override void WriteTokenTo(TextWriter writer, bool leading, bool trailing)
+    {
+        if (leading)
+        {
+            writer.Write("<leading>");
+        }
+
+        writer.Write(KindText);
+
+        if (trailing)
+        {
+            writer.Write("<trailing>");
+        }
+    }
+}
+
+[SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "Test classes are small.")]
+internal class MockTriviaNode : AbstractNode
+{
+    public MockTriviaNode(ushort rawKind)
+        : base(rawKind)
+    {
+        KindText = $"RawKind{rawKind}";
+    }
+
+    public MockTriviaNode(ushort rawKind, int fullWidth)
+        : base(rawKind, fullWidth)
+    {
+        KindText = $"RawKind{rawKind}";
+    }
+
+    public override string KindText { get; }
+
+    public override bool IsTrivia => true;
+
+    internal override Option<AbstractNode> GetSlot(int index) => Option<AbstractNode>.None;
+
+    protected override void WriteTriviaTo(TextWriter writer)
+    {
+        writer.Write(KindText);
+    }
 }
