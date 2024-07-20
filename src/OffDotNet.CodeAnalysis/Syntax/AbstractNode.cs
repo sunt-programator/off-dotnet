@@ -20,7 +20,7 @@ internal abstract class AbstractNode
     internal const int ListKind = 1;
 
     /// <summary>Indicates that the slot count is too large.</summary>
-    protected const int SlotCountTooLarge = 0b0000000000001111;
+    private const int SlotCountTooLarge = 0b0000000000001111;
 
     private readonly NodeFlagsAndSlotCount _nodeFlagsAndSlotCount;
 
@@ -62,7 +62,7 @@ internal abstract class AbstractNode
     public bool HasTrailingTrivia => TrailingTriviaWidth != 0;
 
     /// <summary>Gets the full width of the node.</summary>
-    public int FullWidth { get; }
+    public int FullWidth { get; protected init; }
 
     /// <summary>Gets the width of the node, excluding leading and trailing trivia.</summary>
     public virtual int Width => FullWidth - LeadingTriviaWidth - TrailingTriviaWidth;
@@ -155,32 +155,12 @@ internal abstract class AbstractNode
     /// <returns>The slot at the specified index.</returns>
     internal abstract Option<AbstractNode> GetSlot(int index);
 
-    /// <summary>Gets the number of slots in the node.</summary>
-    /// <returns>The number of slots.</returns>
-    protected virtual int GetSlotCount() => 0;
-
-    /// <summary>Writes the trivia of the node to the specified writer.</summary>
-    /// <param name="writer">The writer to which the trivia will be written.</param>
-    protected virtual void WriteTriviaTo(TextWriter writer)
-    {
-        Debug.Fail("Should not get here.");
-    }
-
-    /// <summary>Writes the token of the node to the specified writer.</summary>
-    /// <param name="writer">The writer to which the token will be written.</param>
-    /// <param name="leading">Indicates whether to include leading trivia.</param>
-    /// <param name="trailing">Indicates whether to include trailing trivia.</param>
-    protected virtual void WriteTokenTo(TextWriter writer, bool leading, bool trailing)
-    {
-        Debug.Fail("Should not get here.");
-    }
-
     /// <summary>Writes the node to the specified writer.</summary>
     /// <param name="writer">The writer to which the node will be written.</param>
     /// <param name="leading">Indicates whether to include leading trivia.</param>
     /// <param name="trailing">Indicates whether to include trailing trivia.</param>
     [SuppressMessage("Minor Code Smell", "S3626:Jump statements should not be redundant", Justification = "False positive.")]
-    protected void WriteTo(TextWriter writer, bool leading, bool trailing)
+    protected internal void WriteTo(TextWriter writer, bool leading, bool trailing)
     {
         var stack = SharedObjectPools.AbstractNodesCache.Get();
         stack.Push((this, leading, trailing));
@@ -209,6 +189,26 @@ internal abstract class AbstractNode
                 // TODO: handle nested nodes
             }
         }
+    }
+
+    /// <summary>Gets the number of slots in the node.</summary>
+    /// <returns>The number of slots.</returns>
+    protected virtual int GetSlotCount() => 0;
+
+    /// <summary>Writes the trivia of the node to the specified writer.</summary>
+    /// <param name="writer">The writer to which the trivia will be written.</param>
+    protected virtual void WriteTriviaTo(TextWriter writer)
+    {
+        Debug.Fail("Should not get here.");
+    }
+
+    /// <summary>Writes the token of the node to the specified writer.</summary>
+    /// <param name="writer">The writer to which the token will be written.</param>
+    /// <param name="leading">Indicates whether to include leading trivia.</param>
+    /// <param name="trailing">Indicates whether to include trailing trivia.</param>
+    protected virtual void WriteTokenTo(TextWriter writer, bool leading, bool trailing)
+    {
+        Debug.Fail("Should not get here.");
     }
 
     /// <summary>Gets the first terminal node in the tree.</summary>

@@ -5,8 +5,12 @@
 
 namespace OffDotNet.CodeAnalysis.Pdf.Syntax;
 
-public static class SyntaxKindFacts
+/// <summary>Provides utility methods for <see cref="SyntaxKind"/>.</summary>
+internal static class SyntaxKindFacts
 {
+    /// <summary>Determines whether the specified <see cref="SyntaxKind"/> is trivia.</summary>
+    /// <param name="kind">The syntax kind to check.</param>
+    /// <returns><c>true</c> if the specified syntax kind is trivia; otherwise, <c>false</c>.</returns>
     public static bool IsTrivia(this SyntaxKind kind)
     {
         switch (kind)
