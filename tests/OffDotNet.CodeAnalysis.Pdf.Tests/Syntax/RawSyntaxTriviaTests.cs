@@ -7,6 +7,7 @@ namespace OffDotNet.CodeAnalysis.Pdf.Tests.Syntax;
 
 using OffDotNet.CodeAnalysis.Pdf.Syntax;
 using OffDotNet.CodeAnalysis.Syntax;
+using Utils;
 
 [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/339")]
 public class RawSyntaxTriviaTests
@@ -18,7 +19,7 @@ public class RawSyntaxTriviaTests
         // Arrange
 
         // Act
-        var actual = new RawSyntaxTrivia(SyntaxKind.WhitespaceTrivia, " "u8);
+        var actual = RawSyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, " "u8);
 
         // Assert
         Assert.IsAssignableFrom<AbstractNode>(actual);
@@ -31,7 +32,7 @@ public class RawSyntaxTriviaTests
         // Arrange
 
         // Act
-        var actual = new RawSyntaxTrivia(SyntaxKind.WhitespaceTrivia, " "u8);
+        var actual = RawSyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, " "u8);
 
         // Assert
         Assert.IsAssignableFrom<RawSyntaxNode>(actual);
@@ -45,7 +46,7 @@ public class RawSyntaxTriviaTests
     public void RawKindProperty_ShouldReturnTheValuePassedToTheConstructor(SyntaxKind rawKind)
     {
         // Arrange
-        var rawNode = new RawSyntaxTrivia(rawKind, " "u8);
+        var rawNode = RawSyntaxTrivia.Create(rawKind, " "u8);
 
         // Act
         var kind = rawNode.RawKind;
@@ -59,7 +60,7 @@ public class RawSyntaxTriviaTests
     public void IsTokenProperty_ShouldReturnFalseByDefault()
     {
         // Arrange
-        var rawNode = new RawSyntaxTrivia(SyntaxKind.WhitespaceTrivia, " "u8);
+        var rawNode = RawSyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, " "u8);
 
         // Act
         var isToken = rawNode.IsToken;
@@ -73,7 +74,7 @@ public class RawSyntaxTriviaTests
     public void IsTriviaProperty_ShouldReturnFalseByDefault()
     {
         // Arrange
-        var rawNode = new RawSyntaxTrivia(SyntaxKind.WhitespaceTrivia, " "u8);
+        var rawNode = RawSyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, " "u8);
 
         // Act
         var isTrivia = rawNode.IsTrivia;
@@ -91,7 +92,7 @@ public class RawSyntaxTriviaTests
     {
         // Arrange
         ReadOnlySpan<byte> textSpan = Encoding.ASCII.GetBytes(text);
-        var rawNode = new RawSyntaxTrivia(SyntaxKind.EndOfLineTrivia, textSpan);
+        var rawNode = RawSyntaxTrivia.Create(SyntaxKind.EndOfLineTrivia, textSpan);
 
         // Act
         var width = rawNode.FullWidth;
@@ -108,7 +109,7 @@ public class RawSyntaxTriviaTests
     public void KindProperty_ShouldReturnTheValuePassedToTheConstructor(SyntaxKind kind)
     {
         // Arrange
-        var rawNode = new RawSyntaxTrivia(kind, " "u8);
+        var rawNode = RawSyntaxTrivia.Create(kind, " "u8);
 
         // Act
         var actual = rawNode.Kind;
@@ -125,7 +126,7 @@ public class RawSyntaxTriviaTests
     public void KindTextProperty_ShouldReturnTheNameOfTheSyntaxKind(SyntaxKind kind, string expected)
     {
         // Arrange
-        var rawNode = new RawSyntaxTrivia(kind, " "u8);
+        var rawNode = RawSyntaxTrivia.Create(kind, " "u8);
 
         // Act
         var kindText = rawNode.KindText;
@@ -139,7 +140,7 @@ public class RawSyntaxTriviaTests
     public void LanguageProperty_ShouldReturnPDF()
     {
         // Arrange
-        var rawNode = new RawSyntaxTrivia(SyntaxKind.WhitespaceTrivia, " "u8);
+        var rawNode = RawSyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, " "u8);
 
         // Act
         var language = rawNode.Language;
@@ -154,10 +155,97 @@ public class RawSyntaxTriviaTests
     {
         // Arrange
         var text = " "u8;
-        var rawNode = new RawSyntaxTrivia(SyntaxKind.WhitespaceTrivia, text);
+        var rawNode = RawSyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, text);
 
         // Act
         var actual = rawNode.Text;
+
+        // Assert
+        Assert.Equal(" ", actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/339")]
+    [Fact(DisplayName = $"{nameof(RawSyntaxTrivia.GetSlot)} method should return None")]
+    public void GetSlotMethod_ShouldReturnNone()
+    {
+        // Arrange
+        var rawNode = RawSyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, " "u8);
+
+        // Act
+        var actual = rawNode.GetSlot(0);
+
+        // Assert
+        Assert.Equal(Option<AbstractNode>.None, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/339")]
+    [Fact(DisplayName = $"{nameof(RawSyntaxTrivia.LeadingTriviaWidth)} property should return 0")]
+    public void LeadingTriviaWidthProperty_ShouldReturn0()
+    {
+        // Arrange
+        var rawNode = RawSyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, " "u8);
+
+        // Act
+        var actual = rawNode.LeadingTriviaWidth;
+
+        // Assert
+        Assert.Equal(0, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/339")]
+    [Fact(DisplayName = $"{nameof(RawSyntaxTrivia.TrailingTriviaWidth)} property should return 0")]
+    public void TrailingTriviaWidthProperty_ShouldReturn0()
+    {
+        // Arrange
+        var rawNode = RawSyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, " "u8);
+
+        // Act
+        var actual = rawNode.TrailingTriviaWidth;
+
+        // Assert
+        Assert.Equal(0, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/339")]
+    [Fact(DisplayName = $"{nameof(RawSyntaxTrivia.Width)} property should be the same as {nameof(RawSyntaxTrivia.FullWidth)}")]
+    public void WidthProperty_ShouldBeTheSameAsFullWidth()
+    {
+        // Arrange
+        const int ExpectedWidth = 1;
+        var rawNode = RawSyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, " "u8);
+
+        // Act
+        var width = rawNode.Width;
+
+        // Assert
+        Assert.Equal(ExpectedWidth, width);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/339")]
+    [Fact(DisplayName = $"{nameof(RawSyntaxTrivia.ToString)} method should return the value of the {nameof(RawSyntaxTrivia.Text)} property")]
+    public void ToStringMethod_ShouldReturnTheValueOfTheTextProperty()
+    {
+        // Arrange
+        var text = " "u8;
+        var rawNode = RawSyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, text);
+
+        // Act
+        var actual = rawNode.ToString();
+
+        // Assert
+        Assert.Equal(" ", actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/339")]
+    [Fact(DisplayName = $"{nameof(RawSyntaxTrivia.ToFullString)} method should return the value of the {nameof(RawSyntaxTrivia.Text)} property")]
+    public void ToFullStringMethod_ShouldReturnTheValueOfTheTextProperty()
+    {
+        // Arrange
+        var text = " "u8;
+        var rawNode = RawSyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, text);
+
+        // Act
+        var actual = rawNode.ToFullString();
 
         // Assert
         Assert.Equal(" ", actual);
