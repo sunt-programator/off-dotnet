@@ -10,9 +10,9 @@
       },
       "Microsoft.Extensions.ObjectPool": {
         "type": "Direct",
-        "requested": "[8.0.6, )",
-        "resolved": "8.0.6",
-        "contentHash": "p/wKtBfxVIP0RVQ9Pmtb3In8rnxWmxetZTiUzREtomnhi+y12I+JJMjAY3eiCd2Mhx+0U060ahP+9Ve/cjEmoA=="
+        "requested": "[8.0.7, )",
+        "resolved": "8.0.7",
+        "contentHash": "2yLweyqmpuuFSRo+I3sLHMxmnAgNcI537kBJiyv49U2ZEqo00jZcG8lrnD8uCiOJp9IklYyTZULtbsXoFVzsjQ=="
       },
       "Roslynator.Analyzers": {
         "type": "Direct",
@@ -22,9 +22,9 @@
       },
       "SonarAnalyzer.CSharp": {
         "type": "Direct",
-        "requested": "[9.28.0.94264, )",
-        "resolved": "9.28.0.94264",
-        "contentHash": "P5ri/HgukP7KPoN/Lo0njq0d5IdUMpiqHoDVT3QRauwwCWXk0ACmC3FNtMR0l4X4TzfqmIZV+SeSLIDijNp6sQ=="
+        "requested": "[9.29.0.95321, )",
+        "resolved": "9.29.0.95321",
+        "contentHash": "dAvGL7gavcUYk83p1StVzvMFcbwN4hr08hjthsRr/wR/uPFgjd7LUn7QGN/1iH92aA7P72x06RRNtdUAqmVHdw=="
       },
       "StyleCop.Analyzers": {
         "type": "Direct",
@@ -44,7 +44,7 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[8.0.1, )",
-          "Microsoft.Extensions.ObjectPool": "[8.0.6, )"
+          "Microsoft.Extensions.ObjectPool": "[8.0.7, )"
         }
       }
     }
