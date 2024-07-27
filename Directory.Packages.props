@@ -1,6 +1,8 @@
 <Project>
   <ItemGroup>
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Localization" Version="8.0.7" />
+    <PackageVersion Include="Microsoft.Extensions.Localization.Abstractions" Version="8.0.7" />
     <PackageVersion Include="Microsoft.Extensions.ObjectPool" Version="8.0.7" />
   </ItemGroup>
   <!-- Analyzers -->
@@ -9,7 +11,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
-    <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.29.0.95321">
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.30.0.95878">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
