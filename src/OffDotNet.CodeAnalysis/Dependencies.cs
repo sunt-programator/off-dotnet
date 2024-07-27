@@ -7,6 +7,7 @@ namespace OffDotNet.CodeAnalysis;
 
 using Lexer;
 using Microsoft.Extensions.DependencyInjection;
+using OffDotNet.CodeAnalysis.Diagnostics;
 
 /// <summary>
 /// Provides extension methods for registering code analysis services.
@@ -20,7 +21,9 @@ public static class Dependencies
     /// <returns>The same service collection so that multiple calls can be chained.</returns>
     public static IServiceCollection AddCoreCodeAnalysis(this IServiceCollection services)
     {
+        services.AddLocalization(options => options.ResourcesPath = "Resources");
         services.AddSingleton<ICursorFactory, CursorFactory>();
+        services.AddSingleton<IMessageProvider, AbstractMessageProvider>();
         return services;
     }
 }

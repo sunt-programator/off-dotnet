@@ -5,7 +5,10 @@
 
 namespace OffDotNet.CodeAnalysis.Pdf;
 
+using Configurations;
+using Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
+using OffDotNet.CodeAnalysis.Diagnostics;
 using OffDotNet.CodeAnalysis.Lexer;
 
 /// <summary>
@@ -20,8 +23,11 @@ public static class Dependencies
     /// <returns>The same service collection so that multiple calls can be chained.</returns>
     public static IServiceCollection AddPdfCodeAnalysis(this IServiceCollection services)
     {
+        services.AddOptions<RootConfigurations>(RootConfigurations.SectionName).ValidateOnStart();
+
         services.AddCoreCodeAnalysis();
         services.AddSingleton<ILexer, Lexer.Lexer>();
+        services.AddSingleton<IMessageProvider, MessageProvider>();
         return services;
     }
 }

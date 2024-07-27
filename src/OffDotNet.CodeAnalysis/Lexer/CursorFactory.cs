@@ -5,6 +5,8 @@
 
 namespace OffDotNet.CodeAnalysis.Lexer;
 
+using Microsoft.Extensions.Localization;
+
 /// <summary>
 /// Factory class for creating instances of <see cref="ITextCursor"/>.
 /// </summary>
