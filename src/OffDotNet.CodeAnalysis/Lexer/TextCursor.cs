@@ -7,80 +7,44 @@ namespace OffDotNet.CodeAnalysis.Lexer;
 
 using Utils;
 
-/// <summary>
-/// Represents a text cursor for navigating and processing text data.
-/// </summary>
+/// <summary>Represents a text cursor for navigating and processing text data.</summary>
 internal sealed class TextCursor : ITextCursor
 {
-    private readonly IMemoryOwner<byte> _textOwner;
     private int _position;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="TextCursor"/> class with a read-only byte span.
-    /// </summary>
+    /// <summary>Initializes a new instance of the <see cref="TextCursor"/> class with a read-only byte span.</summary>
     /// <param name="text">The text represented as a read-only byte span.</param>
-    public TextCursor(in ReadOnlySpan<byte> text)
+    public TextCursor(ISourceText text)
     {
+        SourceText = text;
         Length = text.Length;
         _position = 0;
-        _textOwner = MemoryPool<byte>.Shared.Rent(text.Length);
-
-        text.CopyTo(_textOwner.Memory.Span);
     }
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="TextCursor"/> class with a read-only character span.
-    /// </summary>
-    /// <param name="text">The text represented as a read-only character span.</param>
-    public TextCursor(in ReadOnlySpan<char> text)
-    {
-        _position = 0;
+    /// <summary>Gets the source text.</summary>
+    public ISourceText SourceText { get; }
 
-        var maxByteCount = Encoding.ASCII.GetMaxByteCount(text.Length);
-        _textOwner = MemoryPool<byte>.Shared.Rent(maxByteCount);
-        Length = Encoding.ASCII.GetBytes(text, _textOwner.Memory.Span);
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="TextCursor"/> class with a string.
-    /// </summary>
-    /// <param name="text">The text represented as a string.</param>
-    public TextCursor(string text)
-        : this(text.AsSpan())
-    {
-    }
-
-    /// <summary>
-    /// Gets the current byte at the cursor position.
-    /// </summary>
+    /// <summary>Gets the current byte at the cursor position.</summary>
     public Option<byte> Current => Peek();
 
-    /// <summary>
-    /// Gets the length of the text.
-    /// </summary>
+    /// <summary>Gets the length of the text.</summary>
     public int Length { get; }
 
-    /// <summary>
-    /// Gets a value indicating whether the cursor is at the end of the text.
-    /// </summary>
+    /// <summary>Gets a value indicating whether the cursor is at the end of the text.</summary>
     public bool IsAtEnd => _position >= Length;
 
-    /// <summary>
-    /// Peeks at the byte at the specified delta from the current position.
-    /// </summary>
+    /// <summary>Peeks at the byte at the specified delta from the current position.</summary>
     /// <param name="delta">The delta from the current position.</param>
     /// <returns>The byte at the specified delta if available; otherwise, <see cref="Option{T}.None"/>.</returns>
     public Option<byte> Peek(int delta = 0)
     {
         Debug.Assert(delta >= 0, "Delta should be positive");
         return !IsAtEnd
-            ? Option<byte>.Some(_textOwner.Memory.Span[_position + delta])
+            ? Option<byte>.Some(SourceText[_position + delta])
             : Option<byte>.None;
     }
 
-    /// <summary>
-    /// Advances the cursor by the specified delta.
-    /// </summary>
+    /// <summary>Advances the cursor by the specified delta.</summary>
     /// <param name="delta">The delta by which to advance the cursor.</param>
     public void Advance(int delta = 1)
     {
@@ -88,9 +52,7 @@ internal sealed class TextCursor : ITextCursor
         _position += delta;
     }
 
-    /// <summary>
-    /// Advances the cursor while the specified predicate is true.
-    /// </summary>
+    /// <summary>Advances the cursor while the specified predicate is true.</summary>
     /// <param name="predicate">The predicate to test each byte against.</param>
     public void Advance(Predicate<byte> predicate)
     {
@@ -100,9 +62,7 @@ internal sealed class TextCursor : ITextCursor
         }
     }
 
-    /// <summary>
-    /// Tries to advance the cursor if the current byte matches the specified byte.
-    /// </summary>
+    /// <summary>Tries to advance the cursor if the current byte matches the specified byte.</summary>
     /// <param name="b">The byte to match against.</param>
     /// <returns>True if the cursor was advanced; otherwise, false.</returns>
     public bool TryAdvance(byte b)
@@ -116,9 +76,7 @@ internal sealed class TextCursor : ITextCursor
         return true;
     }
 
-    /// <summary>
-    /// Tries to advance the cursor if the subsequent bytes match the specified subtext.
-    /// </summary>
+    /// <summary>Tries to advance the cursor if the subsequent bytes match the specified subtext.</summary>
     /// <param name="subtext">The subtext to match against.</param>
     /// <returns>True if the cursor was advanced; otherwise, false.</returns>
     public bool TryAdvance(ReadOnlySpan<byte> subtext)
@@ -147,11 +105,8 @@ internal sealed class TextCursor : ITextCursor
         return true;
     }
 
-    /// <summary>
-    /// Releases the resources used by the <see cref="TextCursor"/> class.
-    /// </summary>
+    /// <summary>Releases the resources used by the <see cref="TextCursor"/> class.</summary>
     public void Dispose()
     {
-        _textOwner.Dispose();
     }
 }
