@@ -8,6 +8,25 @@ namespace OffDotNet.CodeAnalysis.Lexer;
 using Utils;
 
 /// <summary>Represents a text cursor for navigating and processing text data.</summary>
+/// <example>
+/// <code>
+/// SLIDING                    position
+/// WINDOW                        |
+///            -------- + --------
+///           |                   |
+///         basis   =======>>   offset
+///           |                   |
+///        -------------------------------
+/// SRC:  | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+///        -------------------------------
+///               |           |
+///             basis ==>>  offset
+///               |           |
+///                ---- + ----
+/// LEXEME                    |
+/// SUB-WINDOW             position
+/// </code>
+/// </example>
 public interface ITextCursor : IDisposable
 {
     /// <summary>
