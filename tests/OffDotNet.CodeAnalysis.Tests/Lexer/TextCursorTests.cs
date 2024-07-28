@@ -12,6 +12,20 @@ using OffDotNet.CodeAnalysis.Utils;
 public class TextCursorTests
 {
     private readonly ISourceText _sourceText = Substitute.For<ISourceText>();
+    private readonly byte[] _text = "CDEF"u8.ToArray();
+
+    public TextCursorTests()
+    {
+        _sourceText.Length.Returns(_text.Length);
+        _sourceText[0].Returns(_text[0]);
+        _sourceText[1].Returns(_text[1]);
+        _sourceText[2].Returns(_text[2]);
+        _sourceText[3].Returns(_text[3]);
+
+        _sourceText
+            .When(x => x.CopyTo(0, Arg.Any<byte[]>(), 0, _text.Length))
+            .Do(x => _text.CopyTo(x.ArgAt<byte[]>(1), 0));
+    }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = $"Class should implement {nameof(IDisposable)} interface")]
@@ -20,7 +34,7 @@ public class TextCursorTests
         // Arrange
 
         // Act
-        var cursor = new TextCursor(_sourceText);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Assert
         Assert.IsAssignableFrom<IDisposable>(cursor);
@@ -33,7 +47,7 @@ public class TextCursorTests
         // Arrange
 
         // Act
-        var cursor = new TextCursor(_sourceText);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Assert
         Assert.IsAssignableFrom<ITextCursor>(cursor);
@@ -44,7 +58,7 @@ public class TextCursorTests
     public void Dispose_ShouldNotThrowAnyException()
     {
         // Arrange
-        var cursor = new TextCursor(_sourceText);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         cursor.Dispose();
@@ -55,16 +69,11 @@ public class TextCursorTests
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = "Constructor should copy the input text")]
-    public void Constructor_WithReadOnlySpanByteParameter_ShouldCopyInputText()
+    public void Constructor_ShouldCopyInputText()
     {
         // Arrange
-        const int TextLength = 4;
-        const byte Expected = (byte)'A';
-
-        _sourceText[0].Returns(Expected);
-        _sourceText.Length.Returns(TextLength);
-
-        var cursor = new TextCursor(_sourceText);
+        const byte Expected = (byte)'C';
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         var actual = cursor.Current;
@@ -79,7 +88,8 @@ public class TextCursorTests
     {
         // Arrange
         var expected = Option<byte>.None;
-        var cursor = new TextCursor(_sourceText);
+        _sourceText.Length.Returns(0);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         var current = cursor.Current;
@@ -89,35 +99,12 @@ public class TextCursorTests
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
-    [Fact(DisplayName = $"{nameof(TextCursor.Current)} property should return the first character of the input string")]
-    public void Current_ShouldReturnFirstCharacterOfInputString()
-    {
-        // Arrange
-        const int TextLength = 4;
-        const byte Expected = (byte)'C';
-
-        _sourceText[0].Returns(Expected);
-        _sourceText.Length.Returns(TextLength);
-
-        var cursor = new TextCursor(_sourceText);
-
-        // Act
-        var actual = cursor.Current;
-
-        // Assert
-        Assert.Equal(Expected, actual.GetValueOrDefault<byte>(0x0));
-    }
-
-    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = $"{nameof(TextCursor.Current)} property should return none when the cursor is at the end of the input string")]
     public void Current_ShouldReturnNone_WhenCursorIsAtTheEnd()
     {
         // Arrange
-        const int TextLength = 4;
-        _sourceText.Length.Returns(TextLength);
-
-        var cursor = new TextCursor(_sourceText);
-        cursor.Advance(TextLength);
+        ITextCursor cursor = new TextCursor(_sourceText);
+        cursor.Advance(_text.Length);
 
         // Act
         var current = cursor.Current;
@@ -132,7 +119,8 @@ public class TextCursorTests
     {
         // Arrange
         const bool Expected = true;
-        var cursor = new TextCursor(_sourceText);
+        _sourceText.Length.Returns(0);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         var isAtEnd = cursor.IsAtEnd;
@@ -147,11 +135,7 @@ public class TextCursorTests
     {
         // Arrange
         const bool Expected = false;
-        const int TextLength = 4;
-
-        _sourceText.Length.Returns(TextLength);
-
-        var cursor = new TextCursor(_sourceText);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         var isAtEnd = cursor.IsAtEnd;
@@ -166,12 +150,8 @@ public class TextCursorTests
     {
         // Arrange
         const bool Expected = true;
-        const int TextLength = 4;
-
-        _sourceText.Length.Returns(TextLength);
-
-        var cursor = new TextCursor(_sourceText);
-        cursor.Advance(TextLength);
+        ITextCursor cursor = new TextCursor(_sourceText);
+        cursor.Advance(_text.Length);
 
         // Act
         var isAtEnd = cursor.IsAtEnd;
@@ -181,30 +161,13 @@ public class TextCursorTests
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
-    [Fact(DisplayName = $"{nameof(TextCursor.Length)} property should return the length of the input string")]
-    public void Length_ShouldReturnLengthOfInputString()
-    {
-        // Arrange
-        const int Expected = 4;
-
-        _sourceText.Length.Returns(Expected);
-
-        var cursor = new TextCursor(_sourceText);
-
-        // Act
-        var length = cursor.Length;
-
-        // Assert
-        Assert.Equal(Expected, length);
-    }
-
-    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = $"{nameof(TextCursor.Peek)} method should return none when the input string is empty")]
     public void Peek_ShouldReturnNone_WhenInputStringIsEmpty()
     {
         // Arrange
         var expected = Option<byte>.None;
-        var cursor = new TextCursor(_sourceText);
+        _sourceText.Length.Returns(0);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         var peek = cursor.Peek();
@@ -218,13 +181,8 @@ public class TextCursorTests
     public void Peek_ShouldReturnFirstCharacterOfInputString()
     {
         // Arrange
-        const int TextLength = 4;
         const byte Expected = (byte)'C';
-
-        _sourceText[0].Returns(Expected);
-        _sourceText.Length.Returns(TextLength);
-
-        var cursor = new TextCursor(_sourceText);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         var actual = cursor.Peek();
@@ -239,13 +197,8 @@ public class TextCursorTests
     {
         // Arrange
         const int Index = 2;
-        const int TextLength = 4;
         const byte Expected = (byte)'E';
-
-        _sourceText[Index].Returns(Expected);
-        _sourceText.Length.Returns(TextLength);
-
-        var cursor = new TextCursor(_sourceText);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         var actual = cursor.Peek(Index);
@@ -259,12 +212,8 @@ public class TextCursorTests
     public void Peek_ShouldReturnNone_WhenCursorIsAtTheEnd()
     {
         // Arrange
-        const int TextLength = 4;
-
-        _sourceText.Length.Returns(TextLength);
-
-        var cursor = new TextCursor(_sourceText);
-        cursor.Advance(TextLength);
+        ITextCursor cursor = new TextCursor(_sourceText);
+        cursor.Advance(_text.Length);
 
         // Act
         var peek = cursor.Peek();
@@ -278,13 +227,8 @@ public class TextCursorTests
     public void Advance_ShouldAdvanceCursorByOnePosition()
     {
         // Arrange
-        const int TextLength = 4;
         const byte Expected = (byte)'D';
-
-        _sourceText.Length.Returns(TextLength);
-        _sourceText[1].Returns(Expected);
-
-        var cursor = new TextCursor(_sourceText);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         cursor.Advance();
@@ -299,14 +243,9 @@ public class TextCursorTests
     public void Advance_ShouldAdvanceCursorByNPositions()
     {
         // Arrange
-        const int TextLength = 4;
         const int Index = 2;
         const byte Expected = (byte)'E';
-
-        _sourceText.Length.Returns(TextLength);
-        _sourceText[Index].Returns(Expected);
-
-        var cursor = new TextCursor(_sourceText);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         cursor.Advance(Index);
@@ -322,15 +261,7 @@ public class TextCursorTests
     {
         // Arrange
         const byte Expected = (byte)'E';
-        var text = "CDEF"u8.ToArray();
-
-        _sourceText.Length.Returns(text.Length);
-        _sourceText[0].Returns(text[0]);
-        _sourceText[1].Returns(text[1]);
-        _sourceText[2].Returns(text[2]);
-        _sourceText[3].Returns(text[3]);
-
-        var cursor = new TextCursor(_sourceText);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         cursor.Advance(static x => x is (byte)'C' or (byte)'D');
@@ -346,15 +277,7 @@ public class TextCursorTests
     {
         // Arrange
         const byte Expected = (byte)'C';
-        var text = "CDEF"u8.ToArray();
-
-        _sourceText.Length.Returns(text.Length);
-        _sourceText[0].Returns(text[0]);
-        _sourceText[1].Returns(text[1]);
-        _sourceText[2].Returns(text[2]);
-        _sourceText[3].Returns(text[3]);
-
-        var cursor = new TextCursor(_sourceText);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         cursor.Advance(static x => x is (byte)'A' or (byte)'B');
@@ -370,15 +293,7 @@ public class TextCursorTests
     {
         // Arrange
         const byte Expected = (byte)'C';
-        var text = "CDEF"u8.ToArray();
-
-        _sourceText.Length.Returns(text.Length);
-        _sourceText[0].Returns(text[0]);
-        _sourceText[1].Returns(text[1]);
-        _sourceText[2].Returns(text[2]);
-        _sourceText[3].Returns(text[3]);
-
-        var cursor = new TextCursor(_sourceText);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         var result = cursor.TryAdvance((byte)'A');
@@ -395,15 +310,7 @@ public class TextCursorTests
     {
         // Arrange
         const byte Expected = (byte)'D';
-        var text = "CDEF"u8.ToArray();
-
-        _sourceText.Length.Returns(text.Length);
-        _sourceText[0].Returns(text[0]);
-        _sourceText[1].Returns(text[1]);
-        _sourceText[2].Returns(text[2]);
-        _sourceText[3].Returns(text[3]);
-
-        var cursor = new TextCursor(_sourceText);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         var result = cursor.TryAdvance((byte)'C');
@@ -420,15 +327,7 @@ public class TextCursorTests
     {
         // Arrange
         const byte Expected = (byte)'C';
-        var text = "CDEF"u8.ToArray();
-
-        _sourceText.Length.Returns(text.Length);
-        _sourceText[0].Returns(text[0]);
-        _sourceText[1].Returns(text[1]);
-        _sourceText[2].Returns(text[2]);
-        _sourceText[3].Returns(text[3]);
-
-        var cursor = new TextCursor(_sourceText);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         var result = cursor.TryAdvance(ReadOnlySpan<byte>.Empty);
@@ -449,15 +348,7 @@ public class TextCursorTests
     {
         // Arrange
         const byte Expected = (byte)'C';
-        var text = "CDEF"u8.ToArray();
-
-        _sourceText.Length.Returns(text.Length);
-        _sourceText[0].Returns(text[0]);
-        _sourceText[1].Returns(text[1]);
-        _sourceText[2].Returns(text[2]);
-        _sourceText[3].Returns(text[3]);
-
-        var cursor = new TextCursor(_sourceText);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         var result = cursor.TryAdvance(Encoding.ASCII.GetBytes(subtext));
@@ -477,15 +368,7 @@ public class TextCursorTests
     public void TryAdvance_WithSubText_ShouldReturnTrue_IfSubTextIsFound(string subtext, byte nextChar)
     {
         // Arrange
-        var text = "CDEF"u8.ToArray();
-
-        _sourceText.Length.Returns(text.Length);
-        _sourceText[0].Returns(text[0]);
-        _sourceText[1].Returns(text[1]);
-        _sourceText[2].Returns(text[2]);
-        _sourceText[3].Returns(text[3]);
-
-        var cursor = new TextCursor(_sourceText);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         var result = cursor.TryAdvance(Encoding.ASCII.GetBytes(subtext));
@@ -501,12 +384,272 @@ public class TextCursorTests
     public void SourceText_ShouldReturnSourceText()
     {
         // Arrange
-        var cursor = new TextCursor(_sourceText);
+        ITextCursor cursor = new TextCursor(_sourceText);
 
         // Act
         var actual = cursor.SourceText;
 
         // Assert
         Assert.Same(_sourceText, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(TextCursor.Basis)} property should return 0 by default")]
+    public void Basis_ShouldReturnZero_ByDefault()
+    {
+        // Arrange
+        ITextCursor cursor = new TextCursor(_sourceText);
+
+        // Act
+        var actual = cursor.Basis;
+
+        // Assert
+        Assert.Equal(0, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(TextCursor.Offset)} property should return 0 by default")]
+    public void Offset_ShouldReturnZero_ByDefault()
+    {
+        // Arrange
+        ITextCursor cursor = new TextCursor(_sourceText);
+
+        // Act
+        var actual = cursor.Offset;
+
+        // Assert
+        Assert.Equal(0, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(TextCursor.Position)} property should return 0 by default")]
+    public void Position_ShouldReturnZero_ByDefault()
+    {
+        // Arrange
+        ITextCursor cursor = new TextCursor(_sourceText);
+
+        // Act
+        var actual = cursor.Position;
+
+        // Assert
+        Assert.Equal(0, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(TextCursor.IsLexemeMode)} property should return false by default")]
+    public void IsLexemeMode_ShouldReturnFalse_ByDefault()
+    {
+        // Arrange
+        ITextCursor cursor = new TextCursor(_sourceText);
+
+        // Act
+        var actual = cursor.IsLexemeMode;
+
+        // Assert
+        Assert.False(actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(TextCursor.LexemeBasis)} property should return 0 by default")]
+    public void LexemeBasis_ShouldReturnZero_ByDefault()
+    {
+        // Arrange
+        ITextCursor cursor = new TextCursor(_sourceText);
+
+        // Act
+        var actual = cursor.LexemeBasis;
+
+        // Assert
+        Assert.Equal(0, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(TextCursor.LexemePosition)} property should return 0 by default")]
+    public void LexemePosition_ShouldReturnZero_ByDefault()
+    {
+        // Arrange
+        ITextCursor cursor = new TextCursor(_sourceText);
+
+        // Act
+        var actual = cursor.LexemePosition;
+
+        // Assert
+        Assert.Equal(0, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(TextCursor.LexemeWidth)} property should return 0 by default")]
+    public void LexemeWidth_ShouldReturnZero_ByDefault()
+    {
+        // Arrange
+        ITextCursor cursor = new TextCursor(_sourceText);
+
+        // Act
+        var actual = cursor.LexemeWidth;
+
+        // Assert
+        Assert.Equal(0, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(TextCursor.WindowCount)} property should return 0 by default")]
+    public void WindowCount_ShouldReturnZero_ByDefault()
+    {
+        // Arrange
+        ITextCursor cursor = new TextCursor(_sourceText);
+
+        // Act
+        var actual = cursor.WindowCount;
+
+        // Assert
+        Assert.Equal(0, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(TextCursor.Offset)} property should correspond to the number of characters advanced")]
+    public void Offset_ShouldCorrespondToNumberOfCharactersAdvanced()
+    {
+        // Arrange
+        const int Expected = 3;
+        var text = "CDEF"u8.ToArray();
+
+        _sourceText.Length.Returns(text.Length);
+        _sourceText[0].Returns(text[0]);
+        _sourceText[1].Returns(text[1]);
+        _sourceText[2].Returns(text[2]);
+        _sourceText[3].Returns(text[3]);
+
+        ITextCursor cursor = new TextCursor(_sourceText);
+
+        // Act
+        cursor.Advance(3);
+        var actual = cursor.Offset;
+
+        // Assert
+        Assert.Equal(Expected, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(TextCursor.Position)} property should correspond to the number of characters advanced")]
+    public void Position_ShouldCorrespondToNumberOfCharactersAdvanced()
+    {
+        // Arrange
+        const int Expected = 3;
+        var text = "CDEF"u8.ToArray();
+
+        _sourceText.Length.Returns(text.Length);
+        _sourceText[0].Returns(text[0]);
+        _sourceText[1].Returns(text[1]);
+        _sourceText[2].Returns(text[2]);
+        _sourceText[3].Returns(text[3]);
+
+        ITextCursor cursor = new TextCursor(_sourceText);
+
+        // Act
+        cursor.Advance(3);
+        var actual = cursor.Position;
+
+        // Assert
+        Assert.Equal(Expected, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(TextCursor.StartLexemeMode)} method should set the lexeme basis to the current offset")]
+    public void StartLexemeMode_ShouldSetLexemeBasisToCurrentOffset()
+    {
+        // Arrange
+        const int Expected = 3;
+        var text = "CDEF"u8.ToArray();
+
+        _sourceText.Length.Returns(text.Length);
+        _sourceText[0].Returns(text[0]);
+        _sourceText[1].Returns(text[1]);
+        _sourceText[2].Returns(text[2]);
+        _sourceText[3].Returns(text[3]);
+
+        ITextCursor cursor = new TextCursor(_sourceText);
+
+        // Act
+        cursor.Advance(3);
+        cursor.StartLexemeMode();
+        var actual = cursor.LexemeBasis;
+
+        // Assert
+        Assert.Equal(Expected, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(TextCursor.StartLexemeMode)} method should set the {nameof(TextCursor.IsLexemeMode)} property to true")]
+    public void StartLexemeMode_ShouldSetIsLexemeModeToTrue()
+    {
+        // Arrange
+        var text = "CDEF"u8.ToArray();
+
+        _sourceText.Length.Returns(text.Length);
+        _sourceText[0].Returns(text[0]);
+        _sourceText[1].Returns(text[1]);
+        _sourceText[2].Returns(text[2]);
+        _sourceText[3].Returns(text[3]);
+
+        ITextCursor cursor = new TextCursor(_sourceText);
+
+        // Act
+        cursor.Advance(3);
+        cursor.StartLexemeMode();
+        var actual = cursor.IsLexemeMode;
+
+        // Assert
+        Assert.True(actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(TextCursor.StopLexemeMode)} method should set the {nameof(TextCursor.IsLexemeMode)} property to false")]
+    public void StopLexemeMode_ShouldSetIsLexemeModeToFalse()
+    {
+        // Arrange
+        var text = "CDEF"u8.ToArray();
+
+        _sourceText.Length.Returns(text.Length);
+        _sourceText[0].Returns(text[0]);
+        _sourceText[1].Returns(text[1]);
+        _sourceText[2].Returns(text[2]);
+        _sourceText[3].Returns(text[3]);
+
+        ITextCursor cursor = new TextCursor(_sourceText);
+
+        // Act
+        cursor.Advance(3);
+        cursor.StartLexemeMode();
+        cursor.StopLexemeMode();
+        var actual = cursor.IsLexemeMode;
+
+        // Assert
+        Assert.False(actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(TextCursor.StopLexemeMode)} method should set the {nameof(TextCursor.LexemeBasis)} property to 0")]
+    public void StopLexemeMode_ShouldSetLexemeBasisToZero()
+    {
+        // Arrange
+        const int Expected = 0;
+        var text = "CDEF"u8.ToArray();
+
+        _sourceText.Length.Returns(text.Length);
+        _sourceText[0].Returns(text[0]);
+        _sourceText[1].Returns(text[1]);
+        _sourceText[2].Returns(text[2]);
+        _sourceText[3].Returns(text[3]);
+
+        ITextCursor cursor = new TextCursor(_sourceText);
+
+        // Act
+        cursor.Advance(3);
+        cursor.StartLexemeMode();
+        cursor.StopLexemeMode();
+        var actual = cursor.LexemeBasis;
+
+        // Assert
+        Assert.Equal(Expected, actual);
     }
 }

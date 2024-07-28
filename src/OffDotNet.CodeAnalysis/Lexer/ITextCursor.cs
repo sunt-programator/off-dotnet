@@ -29,20 +29,42 @@ using Utils;
 /// </example>
 public interface ITextCursor : IDisposable
 {
+    /// <summary>Gets the source text.</summary>
+    ISourceText SourceText { get; }
+
     /// <summary>
     /// Gets the current byte at the cursor position.
     /// </summary>
     Option<byte> Current { get; }
 
     /// <summary>
-    /// Gets the length of the text.
-    /// </summary>
-    int Length { get; }
-
-    /// <summary>
     /// Gets a value indicating whether the cursor is at the end of the text.
     /// </summary>
     bool IsAtEnd { get; }
+
+    /// <summary>Gets the start offset inside the window (relative to the <see cref="ISourceText"/> start).</summary>
+    int Basis { get; }
+
+    /// <summary>Gets the end offset inside the window (relative to the <see cref="Basis"/>).</summary>
+    int Offset { get; }
+
+    /// <summary>Gets the absolute position in the <see cref="ISourceText"/>.</summary>
+    int Position => Basis + Offset;
+
+    /// <summary>Gets a value indicating whether the window is in parsing lexeme mode.</summary>
+    bool IsLexemeMode { get; }
+
+    /// <summary>Gets the lexeme start offset relative to the <see cref="Basis">window start</see>.</summary>
+    int LexemeBasis { get; }
+
+    /// <summary>Gets the absolute position of the lexeme in the <see cref="ISourceText"/>.</summary>
+    int LexemePosition => Basis + LexemeBasis;
+
+    /// <summary>Gets the width of the lexeme.</summary>
+    int LexemeWidth => Offset - LexemeBasis;
+
+    /// <summary>Gets the number of characters in the window.</summary>
+    int WindowCount { get; }
 
     /// <summary>
     /// Peeks at the byte at the specified delta from the current position.
@@ -76,4 +98,10 @@ public interface ITextCursor : IDisposable
     /// <param name="subtext">The subtext to match against.</param>
     /// <returns>True if the cursor was advanced; otherwise, false.</returns>
     bool TryAdvance(ReadOnlySpan<byte> subtext);
+
+    /// <summary>Starts parsing a lexeme and sets the <see cref="LexemeBasis"/> to the current <see cref="Offset"/> value.</summary>
+    public void StartLexemeMode();
+
+    /// <summary>Stops parsing a lexeme.</summary>
+    public void StopLexemeMode();
 }
