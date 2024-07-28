@@ -11,6 +11,8 @@ using OffDotNet.CodeAnalysis.Utils;
 [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
 public class TextCursorTests
 {
+    private readonly ISourceText _sourceText = Substitute.For<ISourceText>();
+
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
     [Fact(DisplayName = $"Class should implement {nameof(IDisposable)} interface")]
     public void Class_ShouldImplementIDisposableInterface()
@@ -18,7 +20,7 @@ public class TextCursorTests
         // Arrange
 
         // Act
-        var cursor = new TextCursor(string.Empty);
+        var cursor = new TextCursor(_sourceText);
 
         // Assert
         Assert.IsAssignableFrom<IDisposable>(cursor);
@@ -31,7 +33,7 @@ public class TextCursorTests
         // Arrange
 
         // Act
-        var cursor = new TextCursor(string.Empty);
+        var cursor = new TextCursor(_sourceText);
 
         // Assert
         Assert.IsAssignableFrom<ITextCursor>(cursor);
@@ -42,7 +44,7 @@ public class TextCursorTests
     public void Dispose_ShouldNotThrowAnyException()
     {
         // Arrange
-        var cursor = new TextCursor(string.Empty);
+        var cursor = new TextCursor(_sourceText);
 
         // Act
         cursor.Dispose();
@@ -52,29 +54,17 @@ public class TextCursorTests
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
-    [Fact(DisplayName = $"Constructor with {nameof(ReadOnlySpan<byte>)} parameter should copy the input text")]
+    [Fact(DisplayName = "Constructor should copy the input text")]
     public void Constructor_WithReadOnlySpanByteParameter_ShouldCopyInputText()
     {
         // Arrange
-        var text = "ABCD"u8.ToArray();
-        var expected = text[0];
-        var cursor = new TextCursor(text);
-
-        // Act
-        var actual = cursor.Current;
-
-        // Assert
-        Assert.Equal(expected, actual.GetValueOrDefault<byte>(0x0));
-    }
-
-    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
-    [Fact(DisplayName = $"Constructor with {nameof(ReadOnlySpan<char>)} parameter should copy the input text")]
-    public void Constructor_WithReadOnlySpanCharParameter_ShouldCopyInputText()
-    {
-        // Arrange
-        const string Text = "ABCD";
+        const int TextLength = 4;
         const byte Expected = (byte)'A';
-        var cursor = new TextCursor(Text.AsSpan());
+
+        _sourceText[0].Returns(Expected);
+        _sourceText.Length.Returns(TextLength);
+
+        var cursor = new TextCursor(_sourceText);
 
         // Act
         var actual = cursor.Current;
@@ -89,7 +79,7 @@ public class TextCursorTests
     {
         // Arrange
         var expected = Option<byte>.None;
-        var cursor = new TextCursor(string.Empty);
+        var cursor = new TextCursor(_sourceText);
 
         // Act
         var current = cursor.Current;
@@ -103,15 +93,19 @@ public class TextCursorTests
     public void Current_ShouldReturnFirstCharacterOfInputString()
     {
         // Arrange
-        var text = "CDEF"u8.ToArray();
-        var expected = text[0];
-        var cursor = new TextCursor(text);
+        const int TextLength = 4;
+        const byte Expected = (byte)'C';
+
+        _sourceText[0].Returns(Expected);
+        _sourceText.Length.Returns(TextLength);
+
+        var cursor = new TextCursor(_sourceText);
 
         // Act
         var actual = cursor.Current;
 
         // Assert
-        Assert.Equal(expected, actual.GetValueOrDefault<byte>(0x0));
+        Assert.Equal(Expected, actual.GetValueOrDefault<byte>(0x0));
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -119,9 +113,11 @@ public class TextCursorTests
     public void Current_ShouldReturnNone_WhenCursorIsAtTheEnd()
     {
         // Arrange
-        var text = "CDEF"u8.ToArray();
-        var cursor = new TextCursor(text);
-        cursor.Advance(4);
+        const int TextLength = 4;
+        _sourceText.Length.Returns(TextLength);
+
+        var cursor = new TextCursor(_sourceText);
+        cursor.Advance(TextLength);
 
         // Act
         var current = cursor.Current;
@@ -136,7 +132,7 @@ public class TextCursorTests
     {
         // Arrange
         const bool Expected = true;
-        var cursor = new TextCursor(string.Empty);
+        var cursor = new TextCursor(_sourceText);
 
         // Act
         var isAtEnd = cursor.IsAtEnd;
@@ -151,7 +147,11 @@ public class TextCursorTests
     {
         // Arrange
         const bool Expected = false;
-        var cursor = new TextCursor("ABCD");
+        const int TextLength = 4;
+
+        _sourceText.Length.Returns(TextLength);
+
+        var cursor = new TextCursor(_sourceText);
 
         // Act
         var isAtEnd = cursor.IsAtEnd;
@@ -166,8 +166,12 @@ public class TextCursorTests
     {
         // Arrange
         const bool Expected = true;
-        var cursor = new TextCursor("ABCD");
-        cursor.Advance(4);
+        const int TextLength = 4;
+
+        _sourceText.Length.Returns(TextLength);
+
+        var cursor = new TextCursor(_sourceText);
+        cursor.Advance(TextLength);
 
         // Act
         var isAtEnd = cursor.IsAtEnd;
@@ -182,7 +186,10 @@ public class TextCursorTests
     {
         // Arrange
         const int Expected = 4;
-        var cursor = new TextCursor("ABCD");
+
+        _sourceText.Length.Returns(Expected);
+
+        var cursor = new TextCursor(_sourceText);
 
         // Act
         var length = cursor.Length;
@@ -197,7 +204,7 @@ public class TextCursorTests
     {
         // Arrange
         var expected = Option<byte>.None;
-        var cursor = new TextCursor(string.Empty);
+        var cursor = new TextCursor(_sourceText);
 
         // Act
         var peek = cursor.Peek();
@@ -211,15 +218,19 @@ public class TextCursorTests
     public void Peek_ShouldReturnFirstCharacterOfInputString()
     {
         // Arrange
-        var text = "CDEF"u8.ToArray();
-        var expected = text[0];
-        var cursor = new TextCursor(text);
+        const int TextLength = 4;
+        const byte Expected = (byte)'C';
+
+        _sourceText[0].Returns(Expected);
+        _sourceText.Length.Returns(TextLength);
+
+        var cursor = new TextCursor(_sourceText);
 
         // Act
         var actual = cursor.Peek();
 
         // Assert
-        Assert.Equal(expected, actual.GetValueOrDefault<byte>(0x0));
+        Assert.Equal(Expected, actual.GetValueOrDefault<byte>(0x0));
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -227,15 +238,20 @@ public class TextCursorTests
     public void Peek_ShouldReturnNthCharacterOfInputString()
     {
         // Arrange
-        var text = "CDEF"u8.ToArray();
-        var expected = text[2];
-        var cursor = new TextCursor(text);
+        const int Index = 2;
+        const int TextLength = 4;
+        const byte Expected = (byte)'E';
+
+        _sourceText[Index].Returns(Expected);
+        _sourceText.Length.Returns(TextLength);
+
+        var cursor = new TextCursor(_sourceText);
 
         // Act
-        var actual = cursor.Peek(2);
+        var actual = cursor.Peek(Index);
 
         // Assert
-        Assert.Equal(expected, actual.GetValueOrDefault<byte>(0x0));
+        Assert.Equal(Expected, actual.GetValueOrDefault<byte>(0x0));
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -243,9 +259,12 @@ public class TextCursorTests
     public void Peek_ShouldReturnNone_WhenCursorIsAtTheEnd()
     {
         // Arrange
-        var text = "CDEF"u8.ToArray();
-        var cursor = new TextCursor(text);
-        cursor.Advance(4);
+        const int TextLength = 4;
+
+        _sourceText.Length.Returns(TextLength);
+
+        var cursor = new TextCursor(_sourceText);
+        cursor.Advance(TextLength);
 
         // Act
         var peek = cursor.Peek();
@@ -259,16 +278,20 @@ public class TextCursorTests
     public void Advance_ShouldAdvanceCursorByOnePosition()
     {
         // Arrange
-        var text = "CDEF"u8.ToArray();
-        var expected = text[1];
-        var cursor = new TextCursor(text);
+        const int TextLength = 4;
+        const byte Expected = (byte)'D';
+
+        _sourceText.Length.Returns(TextLength);
+        _sourceText[1].Returns(Expected);
+
+        var cursor = new TextCursor(_sourceText);
 
         // Act
         cursor.Advance();
         var actual = cursor.Current;
 
         // Assert
-        Assert.Equal(expected, actual.GetValueOrDefault<byte>(0x0));
+        Assert.Equal(Expected, actual.GetValueOrDefault<byte>(0x0));
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -276,16 +299,21 @@ public class TextCursorTests
     public void Advance_ShouldAdvanceCursorByNPositions()
     {
         // Arrange
-        var text = "CDEF"u8.ToArray();
-        var expected = text[2];
-        var cursor = new TextCursor(text);
+        const int TextLength = 4;
+        const int Index = 2;
+        const byte Expected = (byte)'E';
+
+        _sourceText.Length.Returns(TextLength);
+        _sourceText[Index].Returns(Expected);
+
+        var cursor = new TextCursor(_sourceText);
 
         // Act
-        cursor.Advance(2);
+        cursor.Advance(Index);
         var actual = cursor.Current;
 
         // Assert
-        Assert.Equal(expected, actual.GetValueOrDefault<byte>(0x0));
+        Assert.Equal(Expected, actual.GetValueOrDefault<byte>(0x0));
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -293,15 +321,23 @@ public class TextCursorTests
     public void Advance_WithPredicate_ShouldAdvanceCursor_IfPredicateIsTrue()
     {
         // Arrange
+        const byte Expected = (byte)'E';
         var text = "CDEF"u8.ToArray();
-        var cursor = new TextCursor(text);
+
+        _sourceText.Length.Returns(text.Length);
+        _sourceText[0].Returns(text[0]);
+        _sourceText[1].Returns(text[1]);
+        _sourceText[2].Returns(text[2]);
+        _sourceText[3].Returns(text[3]);
+
+        var cursor = new TextCursor(_sourceText);
 
         // Act
         cursor.Advance(static x => x is (byte)'C' or (byte)'D');
         var peek = cursor.Current;
 
         // Assert
-        Assert.Equal((byte)'E', peek.GetValueOrDefault<byte>(0x0));
+        Assert.Equal(Expected, peek.GetValueOrDefault<byte>(0x0));
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -309,15 +345,23 @@ public class TextCursorTests
     public void Advance_WithPredicate_ShouldNotAdvanceCursor_IfPredicateIsFalse()
     {
         // Arrange
+        const byte Expected = (byte)'C';
         var text = "CDEF"u8.ToArray();
-        var cursor = new TextCursor(text);
+
+        _sourceText.Length.Returns(text.Length);
+        _sourceText[0].Returns(text[0]);
+        _sourceText[1].Returns(text[1]);
+        _sourceText[2].Returns(text[2]);
+        _sourceText[3].Returns(text[3]);
+
+        var cursor = new TextCursor(_sourceText);
 
         // Act
         cursor.Advance(static x => x is (byte)'A' or (byte)'B');
         var peek = cursor.Current;
 
         // Assert
-        Assert.Equal((byte)'C', peek.GetValueOrDefault<byte>(0x0));
+        Assert.Equal(Expected, peek.GetValueOrDefault<byte>(0x0));
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -325,8 +369,16 @@ public class TextCursorTests
     public void TryAdvance_ShouldReturnFalse_IfCharacterAtCurrentPositionIsNotTheExpectedOne()
     {
         // Arrange
+        const byte Expected = (byte)'C';
         var text = "CDEF"u8.ToArray();
-        var cursor = new TextCursor(text);
+
+        _sourceText.Length.Returns(text.Length);
+        _sourceText[0].Returns(text[0]);
+        _sourceText[1].Returns(text[1]);
+        _sourceText[2].Returns(text[2]);
+        _sourceText[3].Returns(text[3]);
+
+        var cursor = new TextCursor(_sourceText);
 
         // Act
         var result = cursor.TryAdvance((byte)'A');
@@ -334,7 +386,7 @@ public class TextCursorTests
 
         // Assert
         Assert.False(result);
-        Assert.Equal((byte)'C', peek.GetValueOrDefault<byte>(0x0));
+        Assert.Equal(Expected, peek.GetValueOrDefault<byte>(0x0));
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -342,8 +394,16 @@ public class TextCursorTests
     public void TryAdvance_ShouldReturnTrue_IfCharacterAtCurrentPositionIsTheExpectedOne()
     {
         // Arrange
+        const byte Expected = (byte)'D';
         var text = "CDEF"u8.ToArray();
-        var cursor = new TextCursor(text);
+
+        _sourceText.Length.Returns(text.Length);
+        _sourceText[0].Returns(text[0]);
+        _sourceText[1].Returns(text[1]);
+        _sourceText[2].Returns(text[2]);
+        _sourceText[3].Returns(text[3]);
+
+        var cursor = new TextCursor(_sourceText);
 
         // Act
         var result = cursor.TryAdvance((byte)'C');
@@ -351,7 +411,7 @@ public class TextCursorTests
 
         // Assert
         Assert.True(result);
-        Assert.Equal((byte)'D', peek.GetValueOrDefault<byte>(0x0));
+        Assert.Equal(Expected, peek.GetValueOrDefault<byte>(0x0));
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -359,8 +419,16 @@ public class TextCursorTests
     public void TryAdvance_WithEmptySubText_ShouldReturnFalse()
     {
         // Arrange
+        const byte Expected = (byte)'C';
         var text = "CDEF"u8.ToArray();
-        var cursor = new TextCursor(text);
+
+        _sourceText.Length.Returns(text.Length);
+        _sourceText[0].Returns(text[0]);
+        _sourceText[1].Returns(text[1]);
+        _sourceText[2].Returns(text[2]);
+        _sourceText[3].Returns(text[3]);
+
+        var cursor = new TextCursor(_sourceText);
 
         // Act
         var result = cursor.TryAdvance(ReadOnlySpan<byte>.Empty);
@@ -368,7 +436,7 @@ public class TextCursorTests
 
         // Assert
         Assert.False(result);
-        Assert.Equal((byte)'C', peek.GetValueOrDefault<byte>(0x0));
+        Assert.Equal(Expected, peek.GetValueOrDefault<byte>(0x0));
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -380,8 +448,16 @@ public class TextCursorTests
     public void TryAdvance_WithSubText_ShouldReturnFalse_IfSubTextIsNotFound(string subtext)
     {
         // Arrange
+        const byte Expected = (byte)'C';
         var text = "CDEF"u8.ToArray();
-        var cursor = new TextCursor(text);
+
+        _sourceText.Length.Returns(text.Length);
+        _sourceText[0].Returns(text[0]);
+        _sourceText[1].Returns(text[1]);
+        _sourceText[2].Returns(text[2]);
+        _sourceText[3].Returns(text[3]);
+
+        var cursor = new TextCursor(_sourceText);
 
         // Act
         var result = cursor.TryAdvance(Encoding.ASCII.GetBytes(subtext));
@@ -389,7 +465,7 @@ public class TextCursorTests
 
         // Assert
         Assert.False(result);
-        Assert.Equal((byte)'C', peek.GetValueOrDefault<byte>(0x0));
+        Assert.Equal(Expected, peek.GetValueOrDefault<byte>(0x0));
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -402,7 +478,14 @@ public class TextCursorTests
     {
         // Arrange
         var text = "CDEF"u8.ToArray();
-        var cursor = new TextCursor(text);
+
+        _sourceText.Length.Returns(text.Length);
+        _sourceText[0].Returns(text[0]);
+        _sourceText[1].Returns(text[1]);
+        _sourceText[2].Returns(text[2]);
+        _sourceText[3].Returns(text[3]);
+
+        var cursor = new TextCursor(_sourceText);
 
         // Act
         var result = cursor.TryAdvance(Encoding.ASCII.GetBytes(subtext));
@@ -411,5 +494,19 @@ public class TextCursorTests
         // Assert
         Assert.True(result);
         Assert.Equal(nextChar, peek.GetValueOrDefault<byte>(0x0));
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(TextCursor.SourceText)} property should return the source text")]
+    public void SourceText_ShouldReturnSourceText()
+    {
+        // Arrange
+        var cursor = new TextCursor(_sourceText);
+
+        // Act
+        var actual = cursor.SourceText;
+
+        // Assert
+        Assert.Same(_sourceText, actual);
     }
 }
