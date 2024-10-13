@@ -17,9 +17,6 @@ internal static class SharedObjectPools
     /// <summary>The string builder pool.</summary>
     internal static readonly ObjectPool<StringBuilder> StringBuilderPool;
 
-    /// <summary>The sliding window pool.</summary>
-    internal static readonly ObjectPool<byte[]> WindowPool;
-
     static SharedObjectPools()
     {
         var defaultObjectPoolProvider = new DefaultObjectPoolProvider();
@@ -33,11 +30,9 @@ internal static class SharedObjectPools
         var stringBuilderPoolProvider = defaultStringBuilderPoolProvider;
 #endif
 
-        var arrayPooledObject = new ArrayPooledObjectPolicy<byte>(initialCapacity: 2048, maximumRetainedCapacity: 2048);
         var stackPooledObjectPolicy = new StackPooledObjectPolicy<AbstractNodesCacheTuple>(initialCapacity: 2, maximumRetainedCapacity: 16);
 
         StringBuilderPool = stringBuilderPoolProvider.CreateStringBuilderPool();
         AbstractNodesCache = objectPoolProvider.Create(stackPooledObjectPolicy);
-        WindowPool = objectPoolProvider.Create(arrayPooledObject);
     }
 }

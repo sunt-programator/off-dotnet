@@ -80,12 +80,12 @@ internal abstract class AbstractNode
     public virtual Option<AbstractNode> TrailingTrivia => default;
 
     /// <summary>Gets the width of the leading trivia.</summary>
-    public virtual int LeadingTriviaWidth => this.FullWidth != 0 && this.GetFirstTerminal().IsSome(out var firstTerminal)
+    public virtual int LeadingTriviaWidth => this.FullWidth != 0 && this.GetFirstTerminal().TryGetValue(out var firstTerminal)
         ? firstTerminal.LeadingTriviaWidth
         : 0;
 
     /// <summary>Gets the width of the trailing trivia.</summary>
-    public virtual int TrailingTriviaWidth => this.FullWidth != 0 && this.GetLastTerminal().IsSome(out var lastTerminal)
+    public virtual int TrailingTriviaWidth => this.FullWidth != 0 && this.GetLastTerminal().TryGetValue(out var lastTerminal)
         ? lastTerminal.TrailingTriviaWidth
         : 0;
 
@@ -113,7 +113,7 @@ internal abstract class AbstractNode
         var offset = 0;
         for (var i = 0; i < index; i++)
         {
-            if (this.GetSlot(i).IsSome(out var slot))
+            if (this.GetSlot(i).TryGetValue(out var slot))
             {
                 offset += slot.FullWidth;
             }
@@ -220,12 +220,12 @@ internal abstract class AbstractNode
         do
         {
             Option<AbstractNode> firstChild = default;
-            _ = node.IsSome(out var nodeValue);
+            _ = node.TryGetValue(out var nodeValue);
             Debug.Assert(nodeValue != null, "Node is null.");
 
             for (int i = 0, n = nodeValue.SlotCount; i < n; i++)
             {
-                if (nodeValue.GetSlot(i).IsSome(out var child))
+                if (nodeValue.GetSlot(i).TryGetValue(out var child))
                 {
                     firstChild = child;
                     break;
@@ -233,7 +233,7 @@ internal abstract class AbstractNode
             }
 
             node = firstChild;
-        } while (node.IsSome(out var nd) && nd._nodeFlagsAndSlotCount.SmallSlotCount > 0);
+        } while (node.TryGetValue(out var nd) && nd._nodeFlagsAndSlotCount.SmallSlotCount > 0);
 
         return node;
     }
@@ -247,12 +247,12 @@ internal abstract class AbstractNode
         do
         {
             Option<AbstractNode> lastChild = default;
-            _ = node.IsSome(out var nodeValue);
+            _ = node.TryGetValue(out var nodeValue);
             Debug.Assert(nodeValue != null, "Node is null.");
 
             for (var i = nodeValue.SlotCount - 1; i >= 0; i--)
             {
-                if (nodeValue.GetSlot(i).IsSome(out var child))
+                if (nodeValue.GetSlot(i).TryGetValue(out var child))
                 {
                     lastChild = child;
                     break;
@@ -260,7 +260,7 @@ internal abstract class AbstractNode
             }
 
             node = lastChild;
-        } while (node.IsSome(out var nd) && nd._nodeFlagsAndSlotCount.SmallSlotCount > 0);
+        } while (node.TryGetValue(out var nd) && nd._nodeFlagsAndSlotCount.SmallSlotCount > 0);
 
         return node;
     }

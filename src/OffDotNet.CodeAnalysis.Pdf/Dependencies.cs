@@ -3,9 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using OffDotNet.CodeAnalysis.Pdf.Configs;
+
 namespace OffDotNet.CodeAnalysis.Pdf;
 
-using Configurations;
 using Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using OffDotNet.CodeAnalysis.Diagnostics;

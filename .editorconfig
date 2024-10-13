@@ -171,6 +171,9 @@ dotnet_diagnostic.SA1308.severity = none
 # SA1311: Static readonly fields should begin with upper-case letter
 dotnet_diagnostic.SA1311.severity = none
 
+# SA1503: Braces should not be omitted
+dotnet_diagnostic.SA1503.severity = none
+
 # CSharp code style settings:
 [*.cs]
 # Newline settings

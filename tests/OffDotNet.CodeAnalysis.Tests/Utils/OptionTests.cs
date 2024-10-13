@@ -47,7 +47,7 @@ public class OptionTests
         var option = Option<int>.None;
 
         // Act
-        var actual = option.IsSome(out var value);
+        var actual = option.TryGetValue(out var value);
 
         // Assert
         Assert.False(actual);
@@ -63,7 +63,7 @@ public class OptionTests
         var option = Option<int>.Some(Expected);
 
         // Act
-        var actual = option.IsSome(out var value);
+        var actual = option.TryGetValue(out var value);
 
         // Assert
         Assert.True(actual);
@@ -71,14 +71,14 @@ public class OptionTests
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
-    [Fact(DisplayName = $"{nameof(Option<int>.IsSome)} method should return false for the default instance of {nameof(Option<int>)}")]
-    public void IsSome_ShouldReturnFalseForDefaultInstance()
+    [Fact(DisplayName = $"{nameof(Option<int>.TryGetValue)} method should return false for the default instance of {nameof(Option<int>)}")]
+    public void TryGetValue_ShouldReturnFalseForDefaultInstance()
     {
         // Arrange
         var option = default(Option<int>);
 
         // Act
-        var actual = option.IsSome(out var value);
+        var actual = option.TryGetValue(out var value);
 
         // Assert
         Assert.False(actual);
@@ -86,7 +86,37 @@ public class OptionTests
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
-    [Fact(DisplayName = $"{nameof(Option<int>.IsSome)} method should return true for the instance of {nameof(Option<int>)} with value set")]
+    [Fact(DisplayName = $"{nameof(Option<int>.TryGetValue)} method should return true for the instance of {nameof(Option<int>)} with value set")]
+    public void TryGetValue_ShouldReturnTrueForInstanceWithValueSet()
+    {
+        // Arrange
+        const int Expected = 42;
+        Option<int> option = Expected;
+
+        // Act
+        var actual = option.TryGetValue(out var value);
+
+        // Assert
+        Assert.True(actual);
+        Assert.Equal(Expected, value);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(Option<int>.IsSome)} property should return false for the default instance of {nameof(Option<int>)}")]
+    public void IsSome_ShouldReturnFalseForDefaultInstance()
+    {
+        // Arrange
+        var option = default(Option<int>);
+
+        // Act
+        var actual = option.IsSome;
+
+        // Assert
+        Assert.False(actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(Option<int>.IsSome)} property should return true for the instance of {nameof(Option<int>)} with value set")]
     public void IsSome_ShouldReturnTrueForInstanceWithValueSet()
     {
         // Arrange
@@ -94,10 +124,9 @@ public class OptionTests
         Option<int> option = Expected;
 
         // Act
-        var actual = option.IsSome(out var value);
+        var actual = option.IsSome;
 
         // Assert
         Assert.True(actual);
-        Assert.Equal(Expected, value);
     }
 }
