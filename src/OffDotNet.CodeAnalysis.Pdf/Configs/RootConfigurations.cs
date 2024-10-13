@@ -3,11 +3,15 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace OffDotNet.CodeAnalysis.Pdf.Configurations;
+namespace OffDotNet.CodeAnalysis.Pdf.Configs;
+
+using OffDotNet.CodeAnalysis.Configs;
 
 public sealed record RootConfigurations
 {
     public const string SectionName = "OffDotNet";
 
     public required DiagnosticOptions Diagnostic { get; init; }
+
+    public required TextCursorOptions TextCursor { get; init; }
 }

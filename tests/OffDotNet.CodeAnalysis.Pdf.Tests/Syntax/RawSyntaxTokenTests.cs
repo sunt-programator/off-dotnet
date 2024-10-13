@@ -139,7 +139,7 @@ public class RawSyntaxTokenTests
 
         // Act
         var actual = rawNode.Value;
-        var isSome = actual.IsSome(out var value);
+        var isSome = actual.TryGetValue(out var value);
 
         // Assert
         Assert.True(isSome);
@@ -156,7 +156,7 @@ public class RawSyntaxTokenTests
 
         // Act
         var actual = rawNode.Value;
-        var isSome = actual.IsSome(out var value);
+        var isSome = actual.TryGetValue(out var value);
 
         // Assert
         Assert.True(isSome);
@@ -249,7 +249,7 @@ public class RawSyntaxTokenTests
 
         // Act
         var actual = rawNode.LeadingTrivia;
-        var isSome = actual.IsSome(out var value);
+        var isSome = actual.TryGetValue(out var value);
 
         // Assert
         Assert.True(isSome);
@@ -280,7 +280,7 @@ public class RawSyntaxTokenTests
 
         // Act
         var actual = rawNode.TrailingTrivia;
-        var isSome = actual.IsSome(out var value);
+        var isSome = actual.TryGetValue(out var value);
 
         // Assert
         Assert.True(isSome);
@@ -523,7 +523,7 @@ public class RawSyntaxTokenTests
 
         // Act
         var actual = rawNode.Value;
-        var isSome = actual.IsSome(out var value);
+        var isSome = actual.TryGetValue(out var value);
 
         // Assert
         Assert.True(isSome);

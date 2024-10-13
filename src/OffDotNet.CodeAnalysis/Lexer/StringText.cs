@@ -18,8 +18,8 @@ internal sealed class StringText : ISourceText
 
     public byte this[int position] => Source.Span[position];
 
-    public void CopyTo(int sourceIndex, byte[] destination, int destinationIndex, int count)
+    public void CopyTo(int sourceIndex, Span<byte> destination, int destinationIndex, int count)
     {
-        Source.Span.Slice(sourceIndex, count).CopyTo(destination.AsSpan(destinationIndex));
+        Source.Span.Slice(sourceIndex, count).CopyTo(destination[destinationIndex..]);
     }
 }

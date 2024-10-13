@@ -1,0 +1,47 @@
+﻿<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path=".netconfig" />
+    <File Path="README.md" />
+    <File Path="Directory.Build.targets" />
+    <File Path="stryker-config.json" />
+    <File Path="LICENSE" />
+    <File Path="Directory.Build.props" />
+    <File Path="stylecop.json" />
+    <File Path="Directory.Packages.props" />
+    <File Path=".deepsource.toml" />
+  </Folder>
+  <Folder Name="/Solution Items/.config/">
+    <File Path=".config\dotnet-tools.json" />
+  </Folder>
+  <Folder Name="/Solution Items/.github/">
+    <File Path=".github\CODEOWNERS" />
+    <File Path=".github\dependabot.yml" />
+  </Folder>
+  <Folder Name="/Solution Items/.github/workflows/">
+    <File Path=".github\workflows\dotnet.yml" />
+    <File Path=".github\workflows\codeql.yml" />
+    <File Path=".github\workflows\dependency-review.yml" />
+    <File Path=".github\workflows\scorecard.yml" />
+  </Folder>
+  <Folder Name="/Solution Items/tools/">
+    <File Path="tools\code-coverage.bat" />
+    <File Path="tools\code-coverage.ps1" />
+    <File Path="tools\mutation-testing.bat" />
+    <File Path="tools\mutation-testing.ps1" />
+    <File Path="tools\benchmarks.bat" />
+    <File Path="tools\benchmarks.ps1" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src\OffDotNet.CodeAnalysis.Pdf\OffDotNet.CodeAnalysis.Pdf.csproj" Type="Classic C#" />
+    <Project Path="src\OffDotNet.CodeAnalysis\OffDotNet.CodeAnalysis.csproj" Type="Classic C#" />
+    <File Path="src\Directory.Build.props" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests\OffDotNet.CodeAnalysis.Pdf.Tests\OffDotNet.CodeAnalysis.Pdf.Tests.csproj" Type="Classic C#" />
+    <Project Path="tests\OffDotNet.CodeAnalysis.Tests\OffDotNet.CodeAnalysis.Tests.csproj" Type="Classic C#" />
+    <File Path="tests\Directory.Build.props" />
+  </Folder>
+</Solution>

@@ -361,7 +361,7 @@ public class AbstractNodeTests
         var rawNode = new MockAbstractNode(0);
 
         // Act
-        var actual = rawNode.LeadingTrivia.IsSome(out _);
+        var actual = rawNode.LeadingTrivia.TryGetValue(out _);
 
         // Assert
         Assert.False(actual);
@@ -375,7 +375,7 @@ public class AbstractNodeTests
         var rawNode = new MockAbstractNode(0);
 
         // Act
-        var actual = rawNode.TrailingTrivia.IsSome(out _);
+        var actual = rawNode.TrailingTrivia.TryGetValue(out _);
 
         // Assert
         Assert.False(actual);
@@ -389,7 +389,7 @@ public class AbstractNodeTests
         var rawNode = new MockAbstractNode(0);
 
         // Act
-        var actual = rawNode.Value.IsSome(out _);
+        var actual = rawNode.Value.TryGetValue(out _);
 
         // Assert
         Assert.False(actual);
@@ -407,7 +407,7 @@ public class AbstractNodeTests
         var actual = rawNode.Value;
 
         // Assert
-        Assert.True(actual.IsSome(out var actualValue));
+        Assert.True(actual.TryGetValue(out var actualValue));
         Assert.Equal(expected, actualValue);
     }
 

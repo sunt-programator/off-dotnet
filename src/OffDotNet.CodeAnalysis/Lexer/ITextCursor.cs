@@ -43,28 +43,31 @@ public interface ITextCursor : IDisposable
     bool IsAtEnd { get; }
 
     /// <summary>Gets the start offset inside the window (relative to the <see cref="ISourceText"/> start).</summary>
-    int Basis { get; }
+    int WindowStart { get; }
 
-    /// <summary>Gets the end offset inside the window (relative to the <see cref="Basis"/>).</summary>
+    /// <summary>Gets the end offset inside the window (relative to the <see cref="WindowStart"/>).</summary>
     int Offset { get; }
 
     /// <summary>Gets the absolute position in the <see cref="ISourceText"/>.</summary>
-    int Position => Basis + Offset;
+    int Position => WindowStart + Offset;
 
     /// <summary>Gets a value indicating whether the window is in parsing lexeme mode.</summary>
     bool IsLexemeMode { get; }
 
-    /// <summary>Gets the lexeme start offset relative to the <see cref="Basis">window start</see>.</summary>
-    int LexemeBasis { get; }
+    /// <summary>Gets the lexeme start offset relative to the <see cref="WindowStart">window start</see>.</summary>
+    int LexemeStart { get; }
 
     /// <summary>Gets the absolute position of the lexeme in the <see cref="ISourceText"/>.</summary>
-    int LexemePosition => Basis + LexemeBasis;
+    int LexemePosition => WindowStart + LexemeStart;
 
     /// <summary>Gets the width of the lexeme.</summary>
-    int LexemeWidth => Offset - LexemeBasis;
+    int LexemeWidth => Offset - LexemeStart;
+
+    /// <summary>Gets the text window.</summary>
+    ReadOnlyMemory<byte> Window { get; }
 
     /// <summary>Gets the number of characters in the window.</summary>
-    int WindowCount { get; }
+    int WindowSize { get; }
 
     /// <summary>
     /// Peeks at the byte at the specified delta from the current position.
@@ -99,7 +102,12 @@ public interface ITextCursor : IDisposable
     /// <returns>True if the cursor was advanced; otherwise, false.</returns>
     bool TryAdvance(ReadOnlySpan<byte> subtext);
 
-    /// <summary>Starts parsing a lexeme and sets the <see cref="LexemeBasis"/> to the current <see cref="Offset"/> value.</summary>
+    /// <summary>Slides the text window to the specified start position and size.</summary>
+    /// <param name="windowStart">The start position of the window.</param>
+    /// <param name="windowSize">The size of the window.</param>
+    void SlideTextWindow(int windowStart = -1, int windowSize = -1);
+
+    /// <summary>Starts parsing a lexeme and sets the <see cref="LexemeStart"/> to the current <see cref="Offset"/> value.</summary>
     public void StartLexemeMode();
 
     /// <summary>Stops parsing a lexeme.</summary>

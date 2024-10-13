@@ -139,14 +139,14 @@ internal sealed class RawSyntaxToken : RawSyntaxNode
     /// <param name="trailing">Whether to include trailing trivia.</param>
     protected override void WriteTokenTo(TextWriter writer, bool leading, bool trailing)
     {
-        if (leading && LeadingTrivia.IsSome(out var leadingTrivia))
+        if (leading && LeadingTrivia.TryGetValue(out var leadingTrivia))
         {
             leadingTrivia.WriteTo(writer, leading: true, trailing: false);
         }
 
         writer.Write(this.Text);
 
-        if (trailing && TrailingTrivia.IsSome(out var trailingTrivia))
+        if (trailing && TrailingTrivia.TryGetValue(out var trailingTrivia))
         {
             trailingTrivia.WriteTo(writer, leading: false, trailing: true);
         }

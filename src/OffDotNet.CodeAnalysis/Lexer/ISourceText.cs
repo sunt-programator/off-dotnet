@@ -13,5 +13,5 @@ public interface ISourceText
 
     byte this[int position] { get; }
 
-    void CopyTo(int sourceIndex, byte[] destination, int destinationIndex, int count);
+    void CopyTo(int sourceIndex, Span<byte> destination, int destinationIndex, int count);
 }
