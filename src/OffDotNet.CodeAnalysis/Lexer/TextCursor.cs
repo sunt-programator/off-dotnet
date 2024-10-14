@@ -88,16 +88,21 @@ internal sealed class TextCursor : ITextCursor
     public Option<byte> Peek(int delta = 0)
     {
         Debug.Assert(delta >= 0, "Delta should be positive");
-        return !IsAtEnd
-            ? Option<byte>.Some(_characterWindowMemoryOwner.Memory.Span[Offset + delta])
-            : Option<byte>.None;
+        var windowStart = WindowStart;
+        var offset = Offset;
+
+        Advance(delta);
+        var b = !HasMoreBytes() ? Option<byte>.None : _characterWindowMemoryOwner.Memory.Span[Offset];
+
+        SlideTextWindow(windowStart);
+        Advance(offset);
+        return b;
     }
 
     /// <summary>Advances the cursor by the specified delta.</summary>
     /// <param name="delta">The delta by which to advance the cursor.</param>
     public void Advance(int delta = 1)
     {
-        Debug.Assert(delta > 0, "Delta should greater than 0");
         Offset += delta;
     }
 
@@ -152,6 +157,10 @@ internal sealed class TextCursor : ITextCursor
             return;
 
         if (windowStart >= SourceText.Length)
+            return;
+
+        // do not slide the window if the window start and size are the same
+        if (windowStart == WindowStart && windowSize == WindowSize)
             return;
 
         if (windowSize >= 0)

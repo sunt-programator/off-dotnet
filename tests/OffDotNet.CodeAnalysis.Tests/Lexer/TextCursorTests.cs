@@ -779,7 +779,7 @@ public class TextCursorTests
     {
         // Arrange
         const int TextLength = 256;
-        const int Position = 0;
+        const int WindowStart = 0;
         const int DefaultWindowSize = 2048;
         const int WindowSize = 48;
         const int ExpectedWindowSize = 64;
@@ -789,7 +789,7 @@ public class TextCursorTests
         ITextCursor cursor = new TextCursor(sourceText, _options);
 
         // Act
-        cursor.SlideTextWindow(Position, WindowSize);
+        cursor.SlideTextWindow(WindowStart, WindowSize);
         var character = cursor.Peek(delta: 0);
 
         // Assert
@@ -803,7 +803,7 @@ public class TextCursorTests
     {
         // Arrange
         const int TextLength = 256;
-        const int Position = 0;
+        const int WindowStart = 0;
         const int DefaultWindowSize = 16;
         const int WindowSize = 48;
         const int ExpectedWindowSize = 64;
@@ -813,7 +813,7 @@ public class TextCursorTests
         ITextCursor cursor = new TextCursor(sourceText, _options);
 
         // Act
-        cursor.SlideTextWindow(Position, WindowSize);
+        cursor.SlideTextWindow(WindowStart, WindowSize);
         var character = cursor.Peek(delta: 0);
 
         // Assert
@@ -827,7 +827,7 @@ public class TextCursorTests
     {
         // Arrange
         const int TextLength = 256;
-        const int Position = 0;
+        const int WindowStart = 0;
         const int DefaultWindowSize = 16;
         const int WindowSize = 48;
         const int ExpectedWindowSize = 64;
@@ -837,12 +837,12 @@ public class TextCursorTests
         ITextCursor cursor = new TextCursor(sourceText, _options);
 
         // Act
-        cursor.SlideTextWindow(Position);
-        cursor.SlideTextWindow(Position, WindowSize);
+        cursor.SlideTextWindow(WindowStart);
+        cursor.SlideTextWindow(WindowStart, WindowSize);
 
         // Assert
         Assert.Equal(ExpectedWindowSize, cursor.WindowSize);
-        Assert.Equal(sourceText.Source[Position..ExpectedWindowSize], cursor.Window[..ExpectedWindowSize]);
+        Assert.Equal(sourceText.Source[WindowStart..ExpectedWindowSize], cursor.Window[..ExpectedWindowSize]);
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -851,7 +851,7 @@ public class TextCursorTests
     {
         // Arrange
         const int TextLength = 256;
-        const int Position = 0;
+        const int WindowStart = 0;
         const int DefaultWindowSize = 128;
         const int WindowSize = 48;
         const int ExpectedWindowSize = 64;
@@ -861,12 +861,12 @@ public class TextCursorTests
         ITextCursor cursor = new TextCursor(sourceText, _options);
 
         // Act
-        cursor.SlideTextWindow(Position);
-        cursor.SlideTextWindow(Position, WindowSize);
+        cursor.SlideTextWindow(WindowStart);
+        cursor.SlideTextWindow(WindowStart, WindowSize);
 
         // Assert
         Assert.Equal(ExpectedWindowSize, cursor.WindowSize);
-        Assert.Equal(sourceText.Source[Position..ExpectedWindowSize], cursor.Window[..ExpectedWindowSize]);
+        Assert.Equal(sourceText.Source[WindowStart..ExpectedWindowSize], cursor.Window[..ExpectedWindowSize]);
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -875,7 +875,7 @@ public class TextCursorTests
     {
         // Arrange
         const int TextLength = 256;
-        const int Position = 0;
+        const int WindowStart = 0;
         const int DefaultWindowSize = 128;
         const int WindowSize = 48;
         const int ExpectedOffset = 0;
@@ -887,7 +887,7 @@ public class TextCursorTests
         // Act
         cursor.Peek();
         cursor.Advance(5);
-        cursor.SlideTextWindow(Position, WindowSize);
+        cursor.SlideTextWindow(WindowStart, WindowSize);
 
         // Assert
         Assert.Equal(ExpectedOffset, cursor.Offset);
@@ -899,7 +899,7 @@ public class TextCursorTests
     {
         // Arrange
         const int TextLength = 256;
-        const int Position = 0;
+        const int WindowStart = 0;
         const int DefaultWindowSize = 128;
         const int WindowSize = 48;
         const int ExpectedLexemeStart = 0;
@@ -911,11 +911,59 @@ public class TextCursorTests
         // Act
         cursor.Peek();
         cursor.Advance(5);
-        cursor.SlideTextWindow(Position, WindowSize);
+        cursor.SlideTextWindow(WindowStart, WindowSize);
 
         // Assert
         Assert.Equal(ExpectedLexemeStart, cursor.LexemeStart);
         Assert.False(cursor.IsLexemeMode);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(TextCursor.SlideTextWindow)} method should not slide the window if the start position and size are the same")]
+    public void SlideTextWindow_WhenStartAndSizeAreTheSame_ShouldNotSlideWindow()
+    {
+        // Arrange
+        const int TextLength = 256;
+        const int WindowStart = 0;
+        const int DefaultWindowSize = 128;
+        const int WindowSize = 128;
+
+        var sourceText = GetSourceText(GenerateIncrementingString(TextLength));
+        _options.Value.Returns(new TextCursorOptions { WindowSize = DefaultWindowSize });
+        ITextCursor cursor = new TextCursor(sourceText, _options);
+
+        // Act
+        cursor.SlideTextWindow(WindowStart, WindowSize);
+        cursor.SlideTextWindow();
+
+        // Assert
+        Assert.Equal(DefaultWindowSize, cursor.WindowSize);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Theory(DisplayName = $"{nameof(TextCursor.Peek)} method should restore the {nameof(TextCursor.WindowStart)} if the delta is outside window")]
+    [InlineData(16, (byte)'s')]
+    [InlineData(17, (byte)'t')]
+    [InlineData(18, (byte)'u')]
+    [InlineData(19, (byte)'v')]
+    public void Peek_CustomWindowStart_WhenDeltaIsOutsideWindow_ShouldRestoreWindowStart(int peekDelta, byte expectedByte)
+    {
+        // Arrange
+        const int TextLength = 256;
+        const int WindowStart = 2;
+        const int DefaultWindowSize = 16;
+
+        var sourceText = GetSourceText(GenerateIncrementingString(TextLength));
+        _options.Value.Returns(new TextCursorOptions { WindowSize = DefaultWindowSize });
+        ITextCursor cursor = new TextCursor(sourceText, _options);
+
+        // Act
+        cursor.SlideTextWindow(WindowStart);
+        var actual = cursor.Peek(peekDelta);
+
+        // Assert
+        Assert.Equal(WindowStart, cursor.WindowStart);
+        Assert.Equal(expectedByte, actual);
     }
 
     private static ISourceText GetSourceText(string text) => new StringText(Encoding.ASCII.GetBytes(text));
