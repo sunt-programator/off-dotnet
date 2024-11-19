@@ -870,15 +870,17 @@ public class TextCursorTests
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
-    [Fact(DisplayName = $"{nameof(TextCursor.SlideTextWindow)} method should set {nameof(TextCursor.Offset)} to 0 when sliding the window")]
-    public void SlideTextWindow_WhenSliding_ShouldSetOffsetToZero()
+    [Theory(DisplayName = $"{nameof(TextCursor.SlideTextWindow)} method should adjust {nameof(TextCursor.Offset)} when sliding the window")]
+    [InlineData(5, 0)]
+    [InlineData(16, 0)]
+    [InlineData(17, 0)]
+    public void SlideTextWindow_WhenSliding_ShouldSetOffset(int advanceDelta, int expectedOffset)
     {
         // Arrange
         const int TextLength = 256;
         const int WindowStart = 0;
         const int DefaultWindowSize = 128;
-        const int WindowSize = 48;
-        const int ExpectedOffset = 0;
+        const int WindowSize = 16;
 
         var sourceText = GetSourceText(GenerateIncrementingString(TextLength));
         _options.Value.Returns(new TextCursorOptions { WindowSize = DefaultWindowSize });
@@ -886,23 +888,25 @@ public class TextCursorTests
 
         // Act
         cursor.Peek();
-        cursor.Advance(5);
+        cursor.Advance(advanceDelta);
         cursor.SlideTextWindow(WindowStart, WindowSize);
 
         // Assert
-        Assert.Equal(ExpectedOffset, cursor.Offset);
+        Assert.Equal(expectedOffset, cursor.Offset);
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
-    [Fact(DisplayName = $"{nameof(TextCursor.SlideTextWindow)} method should set {nameof(TextCursor.LexemeStart)} to 0 when sliding the window")]
-    public void SlideTextWindow_WhenSliding_ShouldSetLexemeStartToZero()
+    [Theory(DisplayName = $"{nameof(TextCursor.SlideTextWindow)} method should adjust {nameof(TextCursor.LexemeStart)} when sliding the window")]
+    [InlineData(5, 5, true)]
+    [InlineData(16, 0, false)]
+    [InlineData(17, 0, false)]
+    public void SlideTextWindow_WhenSliding_ShouldSetLexemeStartToZero(int advanceDelta, int expectedLexemeStart, bool expectedLexemeMode)
     {
         // Arrange
         const int TextLength = 256;
         const int WindowStart = 0;
         const int DefaultWindowSize = 128;
-        const int WindowSize = 48;
-        const int ExpectedLexemeStart = 0;
+        const int WindowSize = 16;
 
         var sourceText = GetSourceText(GenerateIncrementingString(TextLength));
         _options.Value.Returns(new TextCursorOptions { WindowSize = DefaultWindowSize });
@@ -910,12 +914,13 @@ public class TextCursorTests
 
         // Act
         cursor.Peek();
-        cursor.Advance(5);
+        cursor.Advance(advanceDelta);
+        cursor.StartLexemeMode();
         cursor.SlideTextWindow(WindowStart, WindowSize);
 
         // Assert
-        Assert.Equal(ExpectedLexemeStart, cursor.LexemeStart);
-        Assert.False(cursor.IsLexemeMode);
+        Assert.Equal(expectedLexemeStart, cursor.LexemeStart);
+        Assert.Equal(expectedLexemeMode, cursor.IsLexemeMode);
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -964,6 +969,31 @@ public class TextCursorTests
         // Assert
         Assert.Equal(WindowStart, cursor.WindowStart);
         Assert.Equal(expectedByte, actual);
+    }
+
+    [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+    [Fact(DisplayName = $"{nameof(TextCursor.WindowSize)} property should be increased " +
+                        $"when {nameof(TextCursor.IsLexemeMode)} is true and {nameof(TextCursor.Offset)} is outside the window")]
+    public void WindowSize_WhenLexemeModeIsTrue_WhenOffsetIsOutsideWindow_ShouldIncreaseWindowSize()
+    {
+        // Arrange
+        const int TextLength = 256;
+        const int DefaultWindowSize = 16;
+        const int ExpectedWindowSize = 32;
+        const byte ExpectedByte = (byte)'q';
+
+        var sourceText = GetSourceText(GenerateIncrementingString(TextLength));
+        _options.Value.Returns(new TextCursorOptions { WindowSize = DefaultWindowSize });
+        ITextCursor cursor = new TextCursor(sourceText, _options);
+
+        // Act
+        cursor.StartLexemeMode();
+        var actual = cursor.Peek(DefaultWindowSize);
+
+        // Assert
+        Assert.True(cursor.IsLexemeMode);
+        Assert.Equal(ExpectedWindowSize, cursor.WindowSize);
+        Assert.Equal(ExpectedByte, actual);
     }
 
     private static ISourceText GetSourceText(string text) => new StringText(Encoding.ASCII.GetBytes(text));

@@ -12,21 +12,21 @@ using Utils;
 /// <summary>Represents a text cursor for navigating and processing text data.</summary>
 /// <example>
 /// <code>
-/// SLIDING                    position
-/// WINDOW                        |
-///            -------- + --------
-///           |                   |
-///         basis   =======>>   offset
-///           |                   |
+/// SLIDING                        position
+/// WINDOW                            |
+///                ------  size ------
+///               |                   |
+///             start   =======>>   offset
+///               |                   |
 ///        -------------------------------
-/// SRC:  | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+/// TXT:  | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
 ///        -------------------------------
-///               |           |
-///             basis ==>>  offset
-///               |           |
-///                ---- + ----
-/// LEXEME                    |
-/// SUB-WINDOW             position
+///               |          |        |
+///               |        start      |
+///               |          |        |
+///               - position | width -
+/// LEXEME
+/// SUB-WINDOW
 /// </code>
 /// </example>
 internal sealed class TextCursor : ITextCursor
@@ -83,19 +83,24 @@ internal sealed class TextCursor : ITextCursor
     public int WindowSize { get; private set; }
 
     /// <summary>Peeks at the byte at the specified delta from the current position.</summary>
+    /// <returns>The byte at the specified delta if available; otherwise, <see cref="Option{T}.None"/>.</returns>
+    public Option<byte> Peek()
+    {
+        return !HasMoreBytes() ? Option<byte>.None : _characterWindowMemoryOwner.Memory.Span[Offset];
+    }
+
+    /// <summary>Peeks at the byte at the specified delta from the current position.</summary>
     /// <param name="delta">The delta from the current position.</param>
     /// <returns>The byte at the specified delta if available; otherwise, <see cref="Option{T}.None"/>.</returns>
-    public Option<byte> Peek(int delta = 0)
+    public Option<byte> Peek(int delta)
     {
         Debug.Assert(delta >= 0, "Delta should be positive");
-        var windowStart = WindowStart;
-        var offset = Offset;
+        var position = Position;
 
         Advance(delta);
         var b = !HasMoreBytes() ? Option<byte>.None : _characterWindowMemoryOwner.Memory.Span[Offset];
 
-        SlideTextWindow(windowStart);
-        Advance(offset);
+        SlideTextWindow(position);
         return b;
     }
 
@@ -153,38 +158,9 @@ internal sealed class TextCursor : ITextCursor
     /// <param name="windowSize">The size of the window.</param>
     public void SlideTextWindow(int windowStart = -1, int windowSize = -1)
     {
-        if (windowStart < 0)
-            return;
-
-        if (windowStart >= SourceText.Length)
-            return;
-
-        // do not slide the window if the window start and size are the same
-        if (windowStart == WindowStart && windowSize == WindowSize)
-            return;
-
-        if (windowSize >= 0)
-        {
-            var oldCharacterWindowMemoryOwner = _characterWindowMemoryOwner;
-
-            // the new memory owner size is not guaranteed to match the requested window size as it is rounded up to the nearest power of 2
-            _characterWindowMemoryOwner = MemoryPool<byte>.Shared.Rent(windowSize);
-            var newWindowSize = Math.Min(windowSize, WindowSize);
-            oldCharacterWindowMemoryOwner.Memory.Span[..newWindowSize].CopyTo(_characterWindowMemoryOwner.Memory.Span);
-            oldCharacterWindowMemoryOwner.Dispose();
-        }
-
-        var count = Math.Min(SourceText.Length - windowStart, _characterWindowMemoryOwner.Memory.Span.Length);
-
-        if (count > 0)
-        {
-            SourceText.CopyTo(windowStart, _characterWindowMemoryOwner.Memory.Span, 0, count);
-        }
-
-        Offset = 0;
-        WindowStart = windowStart;
-        WindowSize = count;
-        StopLexemeMode();
+        ChangeWindowSize(windowSize);
+        ChangeWindowStart(windowStart);
+        AdjustTextWindowCursors(windowStart);
     }
 
     /// <summary>Starts parsing a lexeme and sets the <see cref="LexemeStart"/> to the current <see cref="Offset"/> value.</summary>
@@ -215,7 +191,79 @@ internal sealed class TextCursor : ITextCursor
         if (Position >= SourceText.Length)
             return false;
 
-        SlideTextWindow(Position);
+        if (IsLexemeMode)
+        {
+            // grow the window to include the entire lexeme
+            var offset = Offset;
+            var size = WindowSize == 0 ? _characterWindowMemoryOwner.Memory.Span.Length : WindowSize;
+            var windowSize = size * 2;
+
+            SlideTextWindow(WindowStart, windowSize);
+            Offset = offset;
+        }
+        else
+        {
+            SlideTextWindow(Position);
+        }
+
         return WindowSize > 0;
+    }
+
+    private void ChangeWindowSize(int windowSize)
+    {
+        if (windowSize < 0)
+            return;
+
+        if (windowSize == WindowSize)
+            return;
+
+        // the new memory owner size is not guaranteed to match the requested window size as it is rounded up to the nearest power of 2
+        var newCharacterWindowMemoryOwner = MemoryPool<byte>.Shared.Rent(windowSize);
+        var oldCharacterWindowMemoryOwner = _characterWindowMemoryOwner;
+
+        var newWindowSize = Math.Min(windowSize, WindowSize);
+        oldCharacterWindowMemoryOwner.Memory.Span[..newWindowSize].CopyTo(newCharacterWindowMemoryOwner.Memory.Span);
+        oldCharacterWindowMemoryOwner.Dispose();
+
+        _characterWindowMemoryOwner = newCharacterWindowMemoryOwner;
+    }
+
+    private void ChangeWindowStart(int windowStart)
+    {
+        if (windowStart < 0)
+            return;
+
+        if (windowStart >= SourceText.Length)
+            return;
+
+        var windowSpan = _characterWindowMemoryOwner.Memory.Span;
+        var count = Math.Min(SourceText.Length - windowStart, windowSpan.Length);
+
+        if (count > 0)
+        {
+            SourceText.CopyTo(windowStart, windowSpan, 0, count);
+        }
+
+        WindowStart = windowStart;
+        WindowSize = count;
+    }
+
+    private void AdjustTextWindowCursors(int windowStart)
+    {
+        var windowStartChanged = windowStart != WindowStart;
+        var relative = windowStart - WindowStart;
+        var isRelativeWithinBounds = relative >= 0 && relative <= WindowSize;
+
+        if (windowStartChanged || Offset >= WindowSize)
+        {
+            Offset = 0;
+            StopLexemeMode();
+            return;
+        }
+
+        if (isRelativeWithinBounds && relative != Offset)
+        {
+            Offset = relative;
+        }
     }
 }

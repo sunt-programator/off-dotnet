@@ -63,7 +63,20 @@ public readonly struct Option<T>
 
     /// <summary>Returns a string that represents the current option.</summary>
     /// <returns>A string that represents the current option.</returns>
-    public override string ToString() => IsSome ? $"Some({_value})" : "None";
+    public override string ToString()
+    {
+        if (!IsSome)
+        {
+            return "None";
+        }
+
+        if (_value is byte b)
+        {
+            return $"Some('{Convert.ToChar(b)}' | 0x{b:X})";
+        }
+
+        return $"Some({_value})";
+    }
 
     private string DebuggerDisplay() => ToString();
 }
