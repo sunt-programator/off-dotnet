@@ -79,7 +79,7 @@
       },
       "Microsoft.Extensions.Localization": {
         "type": "CentralTransitive",
-        "requested": "[8.0.10, )",
+        "requested": "[9.0.0, )",
         "resolved": "9.0.0",
         "contentHash": "Up8Juy8Bh+vL+fXmMWsoSg/G6rszmLFiF44aI2tpOMJE7Ln4D9s37YxOOm81am4Z+V7g8Am3AgVwHYJzi+cL/g==",
         "dependencies": {
