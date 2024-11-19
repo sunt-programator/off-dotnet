@@ -19,7 +19,6 @@ using System.Runtime.InteropServices;
 public readonly struct Option<T>
     where T : notnull
 {
-    private readonly bool _isSome;
     private readonly T _value;
 
     /// <summary>Initializes a new instance of the <see cref="Option{T}"/> struct with no value.</summary>
@@ -31,11 +30,14 @@ public readonly struct Option<T>
     private Option(T value)
     {
         _value = value;
-        _isSome = true;
+        IsSome = true;
     }
 
     /// <summary>Gets an option with no value.</summary>
     public static Option<T> None => new();
+
+    /// <summary>Gets a value indicating whether the option has a value.</summary>
+    public bool IsSome { get; }
 
     public static implicit operator Option<T>(T value) => new(value);
 
@@ -47,9 +49,9 @@ public readonly struct Option<T>
     /// <summary>Determines whether the option has a value and returns that value if it exists.</summary>
     /// <param name="value">The returned value if the option has a value.</param>
     /// <returns><see langword="true"/> if the option has a value; otherwise, <see langword="false"/>.</returns>
-    public bool IsSome([MaybeNullWhen(false)] out T value)
+    public bool TryGetValue([MaybeNullWhen(false)] out T value)
     {
-        if (_isSome)
+        if (IsSome)
         {
             value = _value;
             return true;
@@ -61,7 +63,20 @@ public readonly struct Option<T>
 
     /// <summary>Returns a string that represents the current option.</summary>
     /// <returns>A string that represents the current option.</returns>
-    public override string ToString() => _isSome ? $"Some({_value})" : "None";
+    public override string ToString()
+    {
+        if (!IsSome)
+        {
+            return "None";
+        }
+
+        if (_value is byte b)
+        {
+            return $"Some('{Convert.ToChar(b)}' | 0x{b:X})";
+        }
+
+        return $"Some({_value})";
+    }
 
     private string DebuggerDisplay() => ToString();
 }

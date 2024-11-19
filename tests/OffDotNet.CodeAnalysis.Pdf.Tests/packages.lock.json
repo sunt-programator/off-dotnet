@@ -198,6 +198,23 @@
           "Microsoft.Extensions.ObjectPool": "[9.0.0, )"
         }
       },
+      "offdotnet.codeanalysis.pdf": {
+        "type": "Project",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "[9.0.0, )",
+          "Microsoft.Extensions.ObjectPool": "[9.0.0, )",
+          "OffDotNet.CodeAnalysis": "[1.0.0, )"
+        }
+      },
+      "offdotnet.codeanalysis.tests": {
+        "type": "Project",
+        "dependencies": {
+          "Microsoft.NET.Test.Sdk": "[17.11.1, )",
+          "NSubstitute": "[5.3.0, )",
+          "OffDotNet.CodeAnalysis": "[1.0.0, )",
+          "xunit": "[2.9.2, )"
+        }
+      },
       "Microsoft.Extensions.DependencyInjection.Abstractions": {
         "type": "CentralTransitive",
         "requested": "[9.0.0, )",

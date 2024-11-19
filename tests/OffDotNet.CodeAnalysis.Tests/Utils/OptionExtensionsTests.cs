@@ -54,7 +54,7 @@ public class OptionExtensionsTests
         var actual = option.Bind(static value => Option<int>.Some(value * 2));
 
         // Assert
-        Assert.False(actual.IsSome(out _));
+        Assert.False(actual.TryGetValue(out _));
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -69,7 +69,7 @@ public class OptionExtensionsTests
         var actual = option.Bind(static value => Option<int>.Some(value * 2));
 
         // Assert
-        Assert.True(actual.IsSome(out var actualValue));
+        Assert.True(actual.TryGetValue(out var actualValue));
         Assert.Equal(Expected * 2, actualValue);
     }
 
@@ -84,7 +84,7 @@ public class OptionExtensionsTests
         var actual = option.Select(static value => value * 2);
 
         // Assert
-        Assert.False(actual.IsSome(out _));
+        Assert.False(actual.TryGetValue(out _));
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -99,7 +99,7 @@ public class OptionExtensionsTests
         var actual = option.Select(static value => value * 2);
 
         // Assert
-        Assert.True(actual.IsSome(out var actualValue));
+        Assert.True(actual.TryGetValue(out var actualValue));
         Assert.Equal(Expected * 2, actualValue);
     }
 
@@ -114,7 +114,7 @@ public class OptionExtensionsTests
         var actual = option.Where(static value => value > 0);
 
         // Assert
-        Assert.False(actual.IsSome(out _));
+        Assert.False(actual.TryGetValue(out _));
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -129,7 +129,7 @@ public class OptionExtensionsTests
         var actual = option.Where(static value => value < 0);
 
         // Assert
-        Assert.False(actual.IsSome(out _));
+        Assert.False(actual.TryGetValue(out _));
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
@@ -144,7 +144,7 @@ public class OptionExtensionsTests
         var actual = option.Where(static value => value > 0);
 
         // Assert
-        Assert.True(actual.IsSome(out var actualValue));
+        Assert.True(actual.TryGetValue(out var actualValue));
         Assert.Equal(Expected, actualValue);
     }
 

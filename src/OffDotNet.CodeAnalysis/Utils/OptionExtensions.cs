@@ -21,17 +21,17 @@ public static class OptionExtensions
     /// <returns>The result of either <paramref name="some"/> or <paramref name="none"/>.</returns>
     /// <remarks>
     /// <para>
-    /// This method is preferred over using <see cref="Option{T}.IsSome"/> directly because it enforces handling
+    /// This method is preferred over using <see cref="Option{T}.TryGetValue"/> directly because it enforces handling
     /// of both the <see cref="Option{T}.Some"/> and <see cref="Option{T}.None"/> cases, ensuring that no case is missed.
     /// </para>
     /// <para>
-    /// Use <see cref="Option{T}.IsSome"/> when you do not need to return a value but want to perform side effects instead.
+    /// Use <see cref="Option{T}.TryGetValue"/> when you do not need to return a value but want to perform side effects instead.
     /// </para>
     /// </remarks>
     public static TOut Match<TIn, TOut>(this Option<TIn> option, Func<TIn, TOut> some, Func<TOut> none)
         where TIn : notnull
     {
-        return option.IsSome(out var value) ? some(value) : none();
+        return option.TryGetValue(out var value) ? some(value) : none();
     }
 
     /// <summary>
