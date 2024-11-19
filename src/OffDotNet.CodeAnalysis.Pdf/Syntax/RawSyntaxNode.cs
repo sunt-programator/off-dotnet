@@ -34,6 +34,11 @@ internal abstract class RawSyntaxNode : AbstractNode
     }
 
     /// <summary>
+    /// Gets the language of the syntax node.
+    /// </summary>
+    public static string Language => "PDF";
+
+    /// <summary>
     /// Gets the kind of the syntax node.
     /// </summary>
     public SyntaxKind Kind { get; }
@@ -42,9 +47,4 @@ internal abstract class RawSyntaxNode : AbstractNode
     /// Gets the text representation of the kind of the syntax node.
     /// </summary>
     public override string KindText => this.Kind.ToString();
-
-    /// <summary>
-    /// Gets the language of the syntax node.
-    /// </summary>
-    public string Language => "PDF";
 }

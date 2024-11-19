@@ -7,6 +7,7 @@ namespace OffDotNet.CodeAnalysis.Pdf.Lexer;
 
 using OffDotNet.CodeAnalysis.Lexer;
 
-public class Lexer : ILexer
-{
-}
+/// <summary>
+/// Represents the lexer for PDF code analysis.
+/// </summary>
+public class Lexer : ILexer;

@@ -5,6 +5,7 @@
 
 namespace OffDotNet.CodeAnalysis.Lexer;
 
-public interface ILexer
-{
-}
+/// <summary>
+/// Defines the interface for a lexer in the OffDotNet analysis.
+/// </summary>
+public interface ILexer;

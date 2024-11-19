@@ -122,10 +122,9 @@ public class RawSyntaxNodeTests
     public void LanguageProperty_ShouldReturnPDF()
     {
         // Arrange
-        var rawNode = Substitute.For<RawSyntaxNode>(SyntaxKind.None);
 
         // Act
-        var language = rawNode.Language;
+        var language = RawSyntaxNode.Language;
 
         // Assert
         Assert.Equal("PDF", language);

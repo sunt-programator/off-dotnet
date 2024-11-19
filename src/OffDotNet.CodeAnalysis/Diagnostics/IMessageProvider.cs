@@ -5,6 +5,7 @@
 
 namespace OffDotNet.CodeAnalysis.Diagnostics;
 
-internal interface IMessageProvider
-{
-}
+/// <summary>
+/// Defines the interface for message providers in diagnostics.
+/// </summary>
+internal interface IMessageProvider;

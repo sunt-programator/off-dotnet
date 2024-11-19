@@ -5,12 +5,14 @@
 
 namespace OffDotNet.CodeAnalysis.Tests.Lexer;
 
+using System.Diagnostics.CodeAnalysis;
 using Configs;
 using Microsoft.Extensions.Options;
 using OffDotNet.CodeAnalysis.Lexer;
 using OffDotNet.CodeAnalysis.Utils;
 
 [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/335")]
+[SuppressMessage("Performance", "CA1859:Use concrete types when possible for improved performance", Justification = "Test purposes")]
 public class TextCursorTests
 {
     private readonly IOptions<TextCursorOptions> _options = Substitute.For<IOptions<TextCursorOptions>>();

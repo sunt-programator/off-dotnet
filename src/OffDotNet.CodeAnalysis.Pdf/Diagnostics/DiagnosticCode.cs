@@ -5,7 +5,13 @@
 
 namespace OffDotNet.CodeAnalysis.Pdf.Diagnostics;
 
+/// <summary>
+/// Represents the diagnostic codes for the PDF analysis.
+/// </summary>
 public enum DiagnosticCode
 {
+    /// <summary>
+    /// Represents an unknown diagnostic code.
+    /// </summary>
     Unknown = 0,
 }

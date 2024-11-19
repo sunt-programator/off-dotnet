@@ -5,10 +5,28 @@
 
 namespace OffDotNet.CodeAnalysis.Diagnostics;
 
+/// <summary>
+/// Specifies the severity of a diagnostic.
+/// </summary>
 public enum DiagnosticSeverity
 {
+    /// <summary>
+    /// Hidden severity, used for diagnostics that should not be shown to the user.
+    /// </summary>
     Hidden = 0,
+
+    /// <summary>
+    /// Informational severity, used for diagnostics that provide information to the user.
+    /// </summary>
     Info = 1,
+
+    /// <summary>
+    /// Warning severity, used for diagnostics that indicate a potential issue.
+    /// </summary>
     Warning = 2,
+
+    /// <summary>
+    /// Error severity, used for diagnostics that indicate a definite issue.
+    /// </summary>
     Error = 3,
 }

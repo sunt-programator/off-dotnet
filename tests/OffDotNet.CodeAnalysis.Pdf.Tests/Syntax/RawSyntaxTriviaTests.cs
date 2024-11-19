@@ -136,14 +136,13 @@ public class RawSyntaxTriviaTests
     }
 
     [WorkItem("https://github.com/sunt-programator/off-dotnet/issues/339")]
-    [Fact(DisplayName = $"{nameof(RawSyntaxTrivia.Language)} property should return PDF")]
+    [Fact(DisplayName = $"{nameof(RawSyntaxNode.Language)} property should return PDF")]
     public void LanguageProperty_ShouldReturnPDF()
     {
         // Arrange
-        var rawNode = RawSyntaxTrivia.Create(SyntaxKind.WhitespaceTrivia, " "u8);
 
         // Act
-        var language = rawNode.Language;
+        var language = RawSyntaxNode.Language;
 
         // Assert
         Assert.Equal("PDF", language);

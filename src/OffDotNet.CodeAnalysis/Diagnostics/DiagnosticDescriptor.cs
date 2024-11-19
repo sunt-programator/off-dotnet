@@ -8,24 +8,51 @@ namespace OffDotNet.CodeAnalysis.Diagnostics;
 using System.Collections.Immutable;
 using Microsoft.Extensions.Localization;
 
+/// <summary>
+/// Represents a diagnostic descriptor which contains information about a diagnostic.
+/// </summary>
 public sealed record DiagnosticDescriptor
 {
+    private static ImmutableDictionary<ushort, DiagnosticDescriptor> s_errorCodeToDescriptorMap = ImmutableDictionary<ushort, DiagnosticDescriptor>.Empty;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiagnosticDescriptor"/> class.
+    /// </summary>
     internal DiagnosticDescriptor()
     {
     }
 
-    private static ImmutableDictionary<ushort, DiagnosticDescriptor> s_errorCodeToDescriptorMap = ImmutableDictionary<ushort, DiagnosticDescriptor>.Empty;
-
+    /// <summary>
+    /// Gets the ID of the diagnostic.
+    /// </summary>
     public required string Id { get; init; }
 
+    /// <summary>
+    /// Gets the title of the diagnostic.
+    /// </summary>
     public required LocalizedString Title { get; init; }
 
+    /// <summary>
+    /// Gets the description of the diagnostic.
+    /// </summary>
     public required LocalizedString Description { get; init; }
 
+    /// <summary>
+    /// Gets the help link for the diagnostic.
+    /// </summary>
     public required string HelpLink { get; init; }
 
+    /// <summary>
+    /// Gets the default severity of the diagnostic.
+    /// </summary>
     public DiagnosticSeverity DefaultSeverity { get; init; }
 
+    /// <summary>
+    /// Creates a diagnostic descriptor for the specified diagnostic code using the provided message provider.
+    /// </summary>
+    /// <param name="diagnosticCode">The diagnostic code.</param>
+    /// <param name="messageProvider">The message provider.</param>
+    /// <returns>The created diagnostic descriptor.</returns>
     internal static DiagnosticDescriptor CreateDescriptor(ushort diagnosticCode, AbstractMessageProvider messageProvider)
     {
         return ImmutableInterlocked.GetOrAdd(

@@ -7,12 +7,24 @@ namespace OffDotNet.CodeAnalysis.PooledObjects;
 
 using Microsoft.Extensions.ObjectPool;
 
+/// <summary>
+/// Provides a policy for pooling arrays with specified initial and maximum retained capacities.
+/// </summary>
+/// <typeparam name="T">The type of elements in the array.</typeparam>
 internal sealed class ArrayPooledObjectPolicy<T> : PooledObjectPolicy<T[]>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ArrayPooledObjectPolicy{T}"/> class.
+    /// </summary>
     public ArrayPooledObjectPolicy()
     {
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ArrayPooledObjectPolicy{T}"/> class with the specified capacities.
+    /// </summary>
+    /// <param name="initialCapacity">The initial capacity of pooled byte array instances.</param>
+    /// <param name="maximumRetainedCapacity">The maximum capacity of a single byte array instance that is allowed to be retained.</param>
     public ArrayPooledObjectPolicy(int initialCapacity, int maximumRetainedCapacity)
     {
         InitialCapacity = initialCapacity;
@@ -26,8 +38,7 @@ internal sealed class ArrayPooledObjectPolicy<T> : PooledObjectPolicy<T[]>
     public int InitialCapacity { get; init; } = 8;
 
     /// <summary>
-    /// Gets the maximum capacity of a single byte array instance that is allowed to be
-    /// retained, when <see cref="Return(T[])"/> is invoked.
+    /// Gets the maximum capacity of a single byte array instance that is allowed to be retained, when <see cref="Return(T[])"/> is invoked.
     /// </summary>
     /// <value>Defaults to <c>128</c>.</value>
     public int MaximumRetainedCapacity { get; init; } = 128;

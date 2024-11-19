@@ -5,7 +5,9 @@
 
 namespace OffDotNet.CodeAnalysis.Pdf.Configs;
 
+/// <summary>Represents the diagnostic options for the PDF analysis.</summary>
 public sealed record DiagnosticOptions
 {
+    /// <summary>Gets the help link associated with the diagnostic.</summary>
     public required string HelpLink { get; init; }
 }
