@@ -5,6 +5,8 @@
 
 namespace OffDotnet.Cli.Widgets;
 
+using System.CommandLine.Rendering;
+using System.Runtime.CompilerServices;
 using TreeNodeTuple = (TreeNode Node, List<bool> IsLastList);
 
 internal sealed class TreeWidget
@@ -14,17 +16,17 @@ internal sealed class TreeWidget
     private const string MidBranch = "├── ";
     private const string EndBranch = "└── ";
 
-    public TreeWidget(string rootName)
+    public TreeWidget(FormattableString rootName)
     {
         RootNode = new TreeNode { Name = rootName };
     }
 
     public TreeNode RootNode { get; }
 
-    public override string ToString()
+    public FormattableString ToFormattableString()
     {
-        var sb = new StringBuilder();
         var stack = new Stack<TreeNodeTuple>();
+        var strings = new List<FormattableString>();
         stack.Push((RootNode, []));
 
         while (stack.Count > 0)
@@ -32,7 +34,9 @@ internal sealed class TreeWidget
             var (node, isLastList) = stack.Pop();
 
             // Write the current node
-            sb.Append(BuildPrefix(isLastList)).AppendLine(node.Name);
+            strings.Add($"{ForegroundColorSpan.LightBlue()}{BuildPrefix(isLastList)}{ForegroundColorSpan.Reset()}");
+            strings.Add(node.Name);
+            strings.Add($"{ForegroundColorSpan.Reset()}{StyleSpan.AttributesOff()}\n");
 
             var children = node.Children;
             if (children.Count == 0)
@@ -51,7 +55,12 @@ internal sealed class TreeWidget
             }
         }
 
-        return sb.ToString();
+        return ConcatFormattableStrings(strings);
+    }
+
+    public override string ToString()
+    {
+        return ToFormattableString().ToString();
     }
 
     private static string BuildPrefix(List<bool> isLastList)
@@ -69,5 +78,13 @@ internal sealed class TreeWidget
         }
 
         return prefixBuilder.ToString();
+    }
+
+    private static FormattableString ConcatFormattableStrings(IEnumerable<FormattableString> strings)
+    {
+        var formattableStrings = strings.ToArray();
+        var combinedFormat = string.Concat(formattableStrings.Select(s => s.Format));
+        var combinedArgs = formattableStrings.SelectMany(s => s.GetArguments()).ToArray();
+        return FormattableStringFactory.Create(combinedFormat, combinedArgs);
     }
 }

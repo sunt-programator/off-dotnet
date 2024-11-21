@@ -7,7 +7,7 @@ namespace OffDotnet.Cli.Widgets;
 
 public sealed record TreeNode
 {
-    public required string Name { get; set; }
+    public required FormattableString Name { get; set; }
 
     public List<TreeNode> Children { get; set; } = [];
 }
